@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<robot>
+    <GENERIC>
+        <compressor></compressor>
+    </GENERIC>
+    <CHASSIS slow="0.6" normal="0.8" fast="1">
+        <group id="LEFT_SIDE" inverted="true">
+            <motor controller="TALON" port="1"></motor>
+        </group>
+        <group id="RIGHT_SIDE" inverted="false">
+            <motor controller="TALON" port="2"></motor>
+        </group>
+        <!--<motor id="LEFT_SIDE_FRONT" controller="TALON" port="8"></motor>
+        <motor id="LEFT_SIDE_BACK" controller="TALON" port="9"></motor>
+        <motor id="RIGHT_SIDE_FRONT" controller="TALON" port="0"></motor>
+        <motor id="RIGHT_SIDE_BACK" controller="TALON" port="1"></motor>-->
+    </CHASSIS>
+    <SHOOTER speed_table="XML/Tables/shotSpeed.txt" angle_table="XML/Tables/angleAdjustment.txt" default_speed="3750" close_speed= "4250" turret_upper="60" turret_lower="-220" shot_adjust_strength="500">
+        <motor id="SHOOTER_WHEEL" controller="SPARK_MAX" port="6" inverted="true">
+            <encoder type="NEO" port_one="0" port_two="0" distance_per_pulse="1">
+                <pid name="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
+            </encoder>
+        </motor>
+        <motor id="TURRET_AIM" controller="TALON" port="8" inverted="false">
+            <encoder type="775" port_one="4" port_two="5" distance_per_pulse="0.889">
+                <pid name="POSITION" kP="0.001" kI="0" kD="0" kF="0"></pid>
+            </encoder>
+        </motor>
+        <solenoid id="HOOD_ADJUST" type="SINGLE" port="5"></solenoid>
+    </SHOOTER>
+    <CLIMBER speed="1">
+        <motor id="WINCH_LEFT" controller="TALON" port="9"></motor>
+        <motor id="WINCH_RIGHT" controller="TALON" port="1"></motor>
+    </CLIMBER>
+    <INTAKE intake_speed="0.8" hopper_speed="0.3" kicker_speed="0.8">
+        <solenoid id="INTAKE_RAISE" type="SINGLE" port="7"></solenoid>
+        <motor id="INTAKE_WHEELS" controller="TALON" port="10" inverted="true"></motor>
+        <motor id="HOPPER" controller="TALON" port="4" inverted="true"></motor>
+        <motor id="KICKER_WHEEL" controller="TALON" port="0"></motor>
+    </INTAKE>
+    <PANEL speed="0.4">
+        <motor id="PANEL_SPINNER" controller="TALON" port="7"></motor>
+        <solenoid id="PANEL_RAISE" type="SINGLE" port="4"></solenoid>
+    </PANEL>
+</robot>
