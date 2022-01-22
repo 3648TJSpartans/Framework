@@ -20,28 +20,23 @@ public class ControllerWrapper{
 
         public SubsystemCollection(Element system){
             subsystemElement = system;
-            // NodeList buttonNodes = system.getElementsByTagName("button");
-            // for(int i = 0; i < buttonNodes.getLength(); i++){
-            //     Node currentButton = buttonNodes.item(i);
-            //     if(currentButton.getNodeType() == Node.ELEMENT_NODE){
-            //         Element buttonElement = (Element)currentButton;
-            //         buttons.put(buttonElement.getAttribute("function"), buttonElement.getAttribute("button"));
-            //     }
-            // }
+            NodeList buttonNodes = system.getElementsByTagName("button");
+            for(int i = 0; i < buttonNodes.getLength(); i++){
+                Node currentButton = buttonNodes.item(i);
+                if(currentButton.getNodeType() == Node.ELEMENT_NODE){
+                    Element buttonElement = (Element)currentButton;
+                    buttons.put(buttonElement.getAttribute("function"), buttonElement.getAttribute("button"));
+                }
+            }
 
-            // Element buttonElment = parser.parse("button", system);
-            // buttons.put(buttonElement.getAttribute("function"), buttonElement.getAttribute("button"));
-            // Element axisElement = parser.parse("axis", system);
-            // axes.put(axisElement.getAttribute("function"), axisElement.getAttribute("axis"));
-
-            //NodeList axisNodes = system.getElementsByTagName("axis");
-            // for(int i = 0; i < axisNodes.getLength(); i++){
-            //     Node currentAxis = axisNodes.item(i);
-            //     if(currentAxis.getNodeType() == Node.ELEMENT_NODE){
-            //         Element axisElement = (Element)currentAxis;
-                    
-            //     }
-            // }
+            NodeList axisNodes = system.getElementsByTagName("axis");
+            for(int i = 0; i < axisNodes.getLength(); i++){
+                Node currentAxis = axisNodes.item(i);
+                if(currentAxis.getNodeType() == Node.ELEMENT_NODE){
+                    Element axisElement = (Element)currentAxis;
+                    axes.put(axisElement.getAttribute("function"), axisElement.getAttribute("axis"));
+                }
+            }
         }
 
         public String getAttribute(String attribute){

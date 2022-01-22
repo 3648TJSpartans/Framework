@@ -9,7 +9,4 @@
         <motor id="RIGHT_SIDE_FRONT" controller="TALON" port="0"></motor>
         <motor id="RIGHT_SIDE_BACK" controller="TALON" port="1"></motor>-->
     </CHASSIS>
-    <SHOOTER>
-        <motor id="shooter" controller = "SPARK" port = "2"></motor>
-    </SHOOTER>
 </robot>

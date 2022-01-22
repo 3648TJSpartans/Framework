@@ -28,6 +28,6 @@ public class Shooter implements Subsystem{
     }
 
     public void teleopPeriodic(){
-        
+        output.setMotor("shooter", input.getAxis("SHOOT", "OPERATOR"));
     }
 }
