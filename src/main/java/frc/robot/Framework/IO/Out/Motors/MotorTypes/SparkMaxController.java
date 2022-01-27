@@ -1,9 +1,9 @@
 package frc.robot.Framework.IO.Out.Motors.MotorTypes;
 
-import com.revrobotics.CANEncoder;
-import com.revrobotics.CANPIDController;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,8 +12,8 @@ import frc.robot.Framework.Util.CommandMode;
 
 public class SparkMaxController implements MotorBase{
     private CANSparkMax controller;
-    private CANPIDController pidController;
-    private CANEncoder encoder;
+    private SparkMaxPIDController pidController;
+    private RelativeEncoder encoder;
 
     public SparkMaxController(int port){
         controller = new CANSparkMax(port, MotorType.kBrushless);

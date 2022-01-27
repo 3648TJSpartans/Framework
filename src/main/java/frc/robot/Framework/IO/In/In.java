@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import frc.robot.Framework.IO.In.Controllers.ControllerWrapper;
 import frc.robot.Framework.IO.In.Controllers.ControllerTypes.LogitechGamepad;
+import frc.robot.Framework.IO.In.Controllers.ControllerTypes.XboxGamepad;
 import frc.robot.Framework.Util.XMLMerger;
 import frc.robot.Framework.Util.XMLParser;
 import frc.robot.Subsystems.SubsystemID;
@@ -82,6 +83,11 @@ public class In {
                     String id = controllerElement.getAttribute("id");
                     controllers.put(id, new ControllerWrapper(new LogitechGamepad(port), controllerElement));
                 }
+                if (controllerElement.getAttribute("type").equals("XBOX")) {
+                    Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
+                    String id = controllerElement.getAttribute("id");
+                    controllers.put(id, new ControllerWrapper(new XboxGamepad(port), controllerElement));
+                }
                 //add new controller types here
 
             }
@@ -121,7 +127,7 @@ public class In {
      * [getButton] returns the value of requested button
      * 
      * @param function   the name of the function (ie "TURN" or "EXTEND_ARM")
-     * @param controller the name of the controller (ie "OPERATOR")
+     * @param controllerID the name of the controller (ie "OPERATOR")
      * @return information about the requested control interface.
      */
 
@@ -133,7 +139,7 @@ public class In {
      * [getAxis] returns the value of the requested axis
      * 
      * @param function   the name of the function (ie "TURN" or "EXTEND_ARM")
-     * @param controller the name of the controller (ie "OPERATOR")
+     * @param controllerID the name of the controller (ie "OPERATOR")
      * @return information about the requested control interface.
      */
     public double getAxis(String function, String controllerID) {
@@ -144,7 +150,7 @@ public class In {
      * [getAttribute] returns the value of the XML attributed named [name]
      * 
      * @param function   the name of the function (ie "TURN" or "EXTEND_ARM")
-     * @param controller the name of the controller (ie "OPERATOR")
+     * @param controllerID the name of the controller (ie "OPERATOR")
      * @return information about the requested control interface.
      */
     public String getAttribute(String name, String controllerID) {

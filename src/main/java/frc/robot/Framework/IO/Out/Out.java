@@ -87,20 +87,28 @@ public class Out {
 
     public static void Init(String... strings) {
         XMLMerger merger = new XMLMerger();
-        String XMLPath = merger.merger("robot", strings);
-        parser = new XMLParser("/home/lvuser/deploy/" + XMLPath);
+        String XMLPath = merger.merger("subsystem", strings);
+        parser = new XMLParser(XMLPath);
         Element root = parser.getRootElement();
-        NodeList subsystemList = root.getChildNodes();
-        for (int i = 0; i < subsystemList.getLength(); i++) {
-            Node currentSubsystem = subsystemList.item(i);
-            if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
-                Element systemElement = (Element) currentSubsystem;
-                subsystemCollections.put(systemElement.getTagName(), new SubsystemCollection(systemElement));
+        //NodeList subsystemList = root.getChildNodes();
+        NodeList systemList = root.getElementsByTagName("subsystem");
+        for (int i = 0; i < systemList.getLength(); i++) {
+            Node currentSystem = systemList.item(i);
+            if (currentSystem.getNodeType() == Node.ELEMENT_NODE) {
+                Element systemElement = (Element) currentSystem;
+                NodeList subsystemList = systemElement.getChildNodes();
+                for (int j = 0; j < subsystemList.getLength(); j++) {
+                    Node currentSubsystem = subsystemList.item(j);
+                    if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
+                        Element subsystemElement = (Element) currentSubsystem;
+                        subsystemCollections.put(subsystemElement.getTagName(), new SubsystemCollection(subsystemElement));
+                    }
+                }
             }
         }
     }
 
-    private SubsystemID id;
+    private SubsystemID subsystemID;
 
     /**
      * Constructor for [Out]. Sets which subsystem this instance of [Out] is for.
@@ -110,70 +118,115 @@ public class Out {
      */
 
     public Out(SubsystemID systemID) {
-        id = systemID;
+        subsystemID = systemID;
     };
-
-    public void setMotor(String name, double speed) {
-        MotorWrapper requestedMotor = getMotor(name);
+    /** 
+     * [setMotor] sets the speed of the requested motor or motor group
+     * 
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     * @param speed the speed of the motor
+     */
+    public void setMotor(String id, double speed) {
+        MotorWrapper requestedMotor = getMotor(id);
         requestedMotor.set(speed);
     }
-
-    public void setMotor(String name, double setpoint, CommandMode mode) {
-        MotorWrapper requestedMotor = getMotor(name);
+    /** 
+     * [setMotor] returns the value of requested button
+     * 
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     * @param setpoint 
+     * @param mode 
+     */
+    public void setMotor(String id, double setpoint, CommandMode mode) {
+        MotorWrapper requestedMotor = getMotor(id);
         requestedMotor.set(setpoint, mode);
     }
-
-    public void setPID(String name, double kP, double kI, double kD, double kF) {
-        MotorWrapper requestedMotor = getMotor(name);
+    /** 
+     * [setPID] returns the value of requested button
+     * 
+     *  @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     * @param kP 
+     * @param kI
+     * @param kD
+     * @param kF
+     */
+    public void setPID(String id, double kP, double kI, double kD, double kF) {
+        MotorWrapper requestedMotor = getMotor(id);
         requestedMotor.setPID(kP, kI, kD, kF);
     }
-
-    public double getVelocity(String name) {
-        MotorWrapper requestedMotor = getMotor(name);
+    /** 
+     * [getVelocity] returns the speed of requested motor
+     * 
+     *  @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     */
+    public double getVelocity(String id) {
+        MotorWrapper requestedMotor = getMotor(id);
         return requestedMotor.getVelocity();
     }
-
-    public double getPosition(String name) {
-        MotorWrapper requestedMotor = getMotor(name);
+    /** 
+     * [getPosition] returns the postion of requested motor
+     * 
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE"))
+     */
+    public double getPosition(String id) {
+        MotorWrapper requestedMotor = getMotor(id);
         return requestedMotor.getPosition();
     }
-
-    public void resetEncoder(String name) {
-        MotorWrapper requestedMotor = getMotor(name);
+    /** 
+     * [resetEncoder] returns the value of requested button
+     * 
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     */
+    public void resetEncoder(String id) {
+        MotorWrapper requestedMotor = getMotor(id);
         requestedMotor.resetEncoder();
     }
-
-    private MotorWrapper getMotor(String name) {
-        SubsystemCollection requestedSystem = subsystemCollections.get(id.name());
+    /** 
+     * [getMotor] returns the motor associated with the id
+     * 
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     */
+    private MotorWrapper getMotor(String id) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
         if (requestedSystem == null) {
-            System.out.println("Motor not found. Subsystem: " + id.name() + " not registered for output.");
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
             return null;
         }
-        MotorWrapper requestedMotor = requestedSystem.motors.get(name);
+        MotorWrapper requestedMotor = requestedSystem.motors.get(id);
         if (requestedMotor == null) {
-            System.out.println("Motor not found. Subsystem: " + id.name() + " not registered for output.");
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
             return null;
         }
 
         return requestedMotor;
     }
-
-    public void setSolenoid(String name, boolean extended) {
-        SubsystemCollection requestedSystem = subsystemCollections.get(id.name());
+    /** 
+     * [setSolenoid] returns the value of requested button
+     * 
+     * @param id the id of the Solenoid (ie "HOOD_ADJUST")
+     * @param extended whether or not the solenoid is extended or not
+     */
+    public void setSolenoid(String id, boolean extended) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
         if (requestedSystem == null) {
-            System.out.println("Solenoid not found. Subsystem: " + id.name() + " not registered for output.");
+            System.out.println("Solenoid not found. Subsystem: " + subsystemID.name() + " not registered for output.");
             return;
         }
-        SolenoidWrapper requestedSolenoid = requestedSystem.solenoids.get(name);
+        SolenoidWrapper requestedSolenoid = requestedSystem.solenoids.get(id);
         if (requestedSolenoid == null) {
-            System.out.println("Solenoid not found. Subsystem: " + id.name() + " not registered for output.");
+            System.out.println("Solenoid not found. Subsystem: " + subsystemID.name() + " not registered for output.");
             return;
         }
         requestedSolenoid.set(extended);
     }
-
+    /** 
+     * [getAttribute] returns the value associated with the requested attribute
+     * 
+     * @param attribute the name of the attribute (ie "default_speed="3750"" or turret_lower="-220")
+     * 
+     */
     public String getAttribute(String attribute) {
-        SubsystemCollection currentSystem = subsystemCollections.get(id.name());
+        SubsystemCollection currentSystem = subsystemCollections.get(subsystemID.name());
         return currentSystem.getAttribute(attribute);
     }
 }

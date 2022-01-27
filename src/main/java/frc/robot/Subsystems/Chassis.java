@@ -28,7 +28,8 @@ public class Chassis implements Subsystem{
     }
 
     public void teleopPeriodic(){
-        output.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * 0.5);
-        output.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
+        //output.setMotor("shooter", input.getAxis("SHOOT", "OPERATOR"));
+        //output.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
+        //output.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
     }
 }
