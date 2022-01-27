@@ -1,6 +1,10 @@
 <?xml version="1.0"?>
 <robot>
-    <SHOOTER>
-        <motor id="shooter" controller = "SPARK" port = "2"></motor>
-    </SHOOTER>
+    <subsystem>
+        <SHOOTER>
+            <!-- <motor id="shooter" controller="SPARK_MAX" port="10" inverted="false"></motor> -->
+            <motor id="shooter" controller = "SPARK" port = "2"></motor>
+            <!-- <motor id="TURRET_AIM" controller="TALON" port="8" inverted="true"></motor> -->
+        </SHOOTER>
+    </subsystem>
 </robot>

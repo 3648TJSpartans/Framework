@@ -1,10 +1,23 @@
+Small-
+
+*check solenoid files for both single and double
+add a ramp up state for the shooter
+*redo framework documentation for both in and out
+*fix varible naming of framework to match xml naming conventions ie
+ControllerType = <controller type="LOGITECH">
+*look/update at spark max controller file 
+*add xbox controller 
+add ps5 controller
+
+
+medium- 
+make a compressor wrapper and base in out
+*fix the turret for casper
+
+big-
 *configure a system that takes in a unknown number of controll files.
 *configure a system that takes in a unkown number of subsytem files.
-check compressor in out
-check solenoid files for both single and double
-add a ramp up state for the shooter
-redo framework documentation for both in and out
-fix varible naming of framework to match xml naming conventions ie ControllerType = <controller type="LOGITECH">
 read scotts email and/or start on behaviors
-look/update at spark max controller file 
-fix the turret for casper
+add sensor output to the framework
+integrate smartdashboard into the framework for easy of testing and for in game changes
+potientially integrate machine learning into the vision
