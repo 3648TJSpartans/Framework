@@ -1,6 +1,15 @@
 package frc.robot.Framework.IO.Out;
 
 import frc.robot.Framework.IO.Out.Motors.MotorWrapper;
+import frc.robot.Framework.IO.Out.Sensors.SensorBase;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLWrapper;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.DigitalIn.Digital_In;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.DigitalIn.DigitalInWrapper;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroWrapper;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Potentiometers.Analog_Potentiometer;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Potentiometers.PotentiometerWrapper;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Ultrasonic.Ping_Ultrasonic;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Ultrasonic.UltrasonicWrapper;
 import frc.robot.Framework.IO.Out.Solenoids.SolenoidWrapper;
 import frc.robot.Framework.Util.XMLParser;
 import frc.robot.Subsystems.SubsystemID;
@@ -24,6 +33,7 @@ public class Out {
     private static XMLParser parser;
     private static Map<String, SubsystemCollection> subsystemCollections = new HashMap<>();
     private static Compressor compressor;
+    public SensorBase sensors;
 
     /**
      * [SubsystemCollection] represents all of the outputs from a specific
@@ -33,6 +43,11 @@ public class Out {
     private static class SubsystemCollection {
         public Map<String, MotorWrapper> motors = new HashMap<>();
         public Map<String, SolenoidWrapper> solenoids = new HashMap<>();
+        public Map<String, ACLWrapper> ACL = new HashMap<>();
+        public Map<String, DigitalInWrapper> limits = new HashMap<>();
+        public Map<String, GyroWrapper> gyros = new HashMap<>();
+        public Map<String,PotentiometerWrapper> potentiometers = new HashMap<>();
+        public Map<String, UltrasonicWrapper> ultrasonics = new HashMap<>();
         private Element systemElement;
 
         /**
@@ -52,6 +67,16 @@ public class Out {
                     if (childElement.getTagName().equals("motor")) {
                         String id = childElement.getAttribute("id");
                         motors.put(id, new MotorWrapper(childElement));
+                        NodeList sensorList = childElement.getChildNodes();
+                        for(int j = 0; j < sensorList.getLength(); j++){
+                            Node currentSensor = sensorList.item(j);
+                            Element childSensor = (Element) currentSensor;
+                            if (childSensor.getTagName().equals("sensor")) {
+                                //needs sensor wrapper
+                                //String sensorID = childSensor.getAttribute("id");
+                                //sensors.put(sensorID, new SensorWrapper(childSensor));
+                            }
+                        }
                     } else if (childElement.getTagName().equals("group")) {
                         String id = childElement.getAttribute("id");
                         motors.put(id, new MotorWrapper(childElement, true));
@@ -61,7 +86,22 @@ public class Out {
                     } else if (childElement.getTagName().equals("compressor")) {
                         //needs fixing
                         compressor = new Compressor(null);
-                    } else {
+                    } else if (childElement.getTagName().equals("acl") || childElement.getTagName().equals("accelerometer")) {
+                        String id = childElement.getAttribute("id");
+                        ACL.put(id, new ACLWrapper(childElement));
+                    } else if (childElement.getTagName().equals("dio")||childElement.getTagName().equals("limitswitch")) {
+                        String id = childElement.getAttribute("id");
+                        limits.put(id, new DigitalInWrapper(childElement));
+                    } else if(childElement.getTagName().equals("gyro")||childElement.getTagName().equals("gyroscopes")){
+                        String id = childElement.getAttribute("id");
+                        gyros.put(id, new GyroWrapper(childElement));
+                    }else if (childElement.getTagName().equals("pot") || childElement.getTagName().equals("potientiometers")) {
+                        String id = childElement.getAttribute("id");
+                        potentiometers.put(id, new PotentiometerWrapper(childElement));
+                    } else if(childElement.getTagName().equals("sonic") || childElement.getTagName().equals("ultrasonic")){
+                        String id = childElement.getAttribute("id");
+                        ultrasonics.put(id, new UltrasonicWrapper(childElement));
+                    }else {
                         System.out.println("Output type: " + childElement.getTagName() + " on subsystem: "
                                 + system.getTagName() + " doesn't exist.");
                     }
@@ -101,6 +141,7 @@ public class Out {
                     Node currentSubsystem = subsystemList.item(j);
                     if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
                         Element subsystemElement = (Element) currentSubsystem;
+                        System.out.print(subsystemElement.getTagName());
                         subsystemCollections.put(subsystemElement.getTagName(), new SubsystemCollection(subsystemElement));
                     }
                 }
@@ -120,6 +161,115 @@ public class Out {
     public Out(SubsystemID systemID) {
         subsystemID = systemID;
     };
+    /** 
+     * [getMotor] returns the motor associated with the id
+     * 
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     */
+    private MotorWrapper getMotor(String id) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+        if (requestedSystem == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+        MotorWrapper requestedMotor = requestedSystem.motors.get(id);
+        if (requestedMotor == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+
+        return requestedMotor;
+    }
+    /** 
+     * [setSolenoid] returns the value of requested button
+     * 
+     * @param id the id of the Solenoid (ie "HOOD_ADJUST")
+     * @param extended whether or not the solenoid is extended or not
+     */
+    public void setSolenoid(String id, boolean extended) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+        if (requestedSystem == null) {
+            System.out.println("Solenoid not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return;
+        }
+        SolenoidWrapper requestedSolenoid = requestedSystem.solenoids.get(id);
+        if (requestedSolenoid == null) {
+            System.out.println("Solenoid not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return;
+        }
+        requestedSolenoid.set(extended);
+    }
+    private DigitalInWrapper getDio(String id) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+        if (requestedSystem == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+        DigitalInWrapper requestedsensor = requestedSystem.limits.get(id);
+        if (requestedsensor == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+
+        return requestedsensor;
+    } 
+    private ACLWrapper getACL(String id) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+        if (requestedSystem == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+        ACLWrapper requestedsensor = requestedSystem.ACL.get(id);
+        if (requestedsensor == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+
+        return requestedsensor;
+    } 
+    private PotentiometerWrapper getPOT(String id) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+        if (requestedSystem == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+        PotentiometerWrapper requestedsensor = requestedSystem.potentiometers.get(id);
+        if (requestedsensor == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+
+        return requestedsensor;
+    } 
+    private UltrasonicWrapper getSonic(String id) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+        if (requestedSystem == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+        UltrasonicWrapper requestedsensor = requestedSystem.ultrasonics.get(id);
+        if (requestedsensor == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+
+        return requestedsensor;
+    } 
+    private GyroWrapper getGyro(String id) {
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+        if (requestedSystem == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+        GyroWrapper requestedsensor = requestedSystem.gyros.get(id);
+        if (requestedsensor == null) {
+            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
+            return null;
+        }
+
+        return requestedsensor;
+    } 
+
     /** 
      * [setMotor] sets the speed of the requested motor or motor group
      * 
@@ -181,44 +331,7 @@ public class Out {
         MotorWrapper requestedMotor = getMotor(id);
         requestedMotor.resetEncoder();
     }
-    /** 
-     * [getMotor] returns the motor associated with the id
-     * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
-     */
-    private MotorWrapper getMotor(String id) {
-        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
-        if (requestedSystem == null) {
-            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
-            return null;
-        }
-        MotorWrapper requestedMotor = requestedSystem.motors.get(id);
-        if (requestedMotor == null) {
-            System.out.println("Motor not found. Subsystem: " + subsystemID.name() + " not registered for output.");
-            return null;
-        }
-
-        return requestedMotor;
-    }
-    /** 
-     * [setSolenoid] returns the value of requested button
-     * 
-     * @param id the id of the Solenoid (ie "HOOD_ADJUST")
-     * @param extended whether or not the solenoid is extended or not
-     */
-    public void setSolenoid(String id, boolean extended) {
-        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
-        if (requestedSystem == null) {
-            System.out.println("Solenoid not found. Subsystem: " + subsystemID.name() + " not registered for output.");
-            return;
-        }
-        SolenoidWrapper requestedSolenoid = requestedSystem.solenoids.get(id);
-        if (requestedSolenoid == null) {
-            System.out.println("Solenoid not found. Subsystem: " + subsystemID.name() + " not registered for output.");
-            return;
-        }
-        requestedSolenoid.set(extended);
-    }
+    
     /** 
      * [getAttribute] returns the value associated with the requested attribute
      * 
@@ -229,4 +342,11 @@ public class Out {
         SubsystemCollection currentSystem = subsystemCollections.get(subsystemID.name());
         return currentSystem.getAttribute(attribute);
     }
+    //sensors start
+    
+    public Boolean getDioPressed(String id) {
+        DigitalInWrapper requestedDio = getDio(id);
+        return requestedDio.getDigitalIn();
+    }
+    
 }
