@@ -8,6 +8,7 @@ import java.util.HashMap;
 
 import frc.robot.Framework.IO.In.Controllers.ControllerWrapper;
 import frc.robot.Framework.IO.In.Controllers.ControllerTypes.LogitechGamepad;
+import frc.robot.Framework.IO.In.Controllers.ControllerTypes.PSGamepad;
 import frc.robot.Framework.IO.In.Controllers.ControllerTypes.XboxGamepad;
 import frc.robot.Framework.Util.XMLMerger;
 import frc.robot.Framework.Util.XMLParser;
@@ -87,6 +88,11 @@ public class In {
                     Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
                     String id = controllerElement.getAttribute("id");
                     controllers.put(id, new ControllerWrapper(new XboxGamepad(port), controllerElement));
+                }
+                if (controllerElement.getAttribute("type").equals("PS")) {
+                    Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
+                    String id = controllerElement.getAttribute("id");
+                    controllers.put(id, new ControllerWrapper(new PSGamepad(port), controllerElement));
                 }
                 //add new controller types here
 

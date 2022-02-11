@@ -1,0 +1,41 @@
+package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLTypes;
+
+import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer;
+import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
+import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLBase;
+
+public class Built_In_Accelerometer implements ACLBase{
+    Accelerometer m_accelerometer;
+    public Built_In_Accelerometer(){
+        m_accelerometer = new BuiltInAccelerometer();
+    }
+    public double getAccelerometerAxis(String axis){
+        if(axis == "Z"|| axis == "z"){
+            return m_accelerometer.getZ();
+        }else if(axis == "X"|| axis == "x"){
+            return m_accelerometer.getX();
+        }else{
+            return m_accelerometer.getY();
+        }
+    }
+    public void setAccelerometerRange(String range){
+        Range m_range = Accelerometer.Range.valueOf(range);
+        m_accelerometer.setRange(m_range);
+    }
+    @Override
+    public double getAcceleration() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+    @Override
+    public void setAccelerometerZero(double zero) {
+        // TODO Auto-generated method stub
+        
+    }
+    @Override
+    public void setAccelerometerSensitivity(double sensitivity) {
+        // TODO Auto-generated method stub
+        
+    }
+}

@@ -4,11 +4,17 @@
         <CHASSIS slow="0.6" normal="0.8" fast="1">
             <motor controller="SPARK" id="LEFT_SIDE" port="1"></motor>
             <motor controller="SPARK" id="RIGHT_SIDE" port="0"></motor>
-
+            <dio id="switch1" port = "2"></dio>
             <!--<motor id="LEFT_SIDE_FRONT" controller="TALON" port="8"></motor>
             <motor id="LEFT_SIDE_BACK" controller="TALON" port="9"></motor>
             <motor id="RIGHT_SIDE_FRONT" controller="TALON" port="0"></motor>
             <motor id="RIGHT_SIDE_BACK" controller="TALON" port="1"></motor>-->
+            <acl id = "acl1" type = "" port = "" range = ""></acl>
+            <dio id = "limit1" type = ""></dio>
+            <gyro id = "gyro1" type = ""></gyro>
+            <pot id = "pot1" type = ""></pot>
+            <sonic id = "sonic1" type = ""></sonic>
+
         </CHASSIS>
     </subsystem>
 </robot>

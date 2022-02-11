@@ -1,8 +1,8 @@
-package frc.robot.Framework.IO.In.Sensors.Encoders.EncoderTypes;
+package frc.robot.Framework.IO.In.Encoders.EncoderTypes;
 
 import com.revrobotics.CANEncoder;
 
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderBase;
+import frc.robot.Framework.IO.In.Encoders.EncoderBase;
 import frc.robot.Framework.IO.Out.Motors.MotorBase;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkMaxController;
 

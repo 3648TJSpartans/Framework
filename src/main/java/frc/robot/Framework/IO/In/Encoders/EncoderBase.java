@@ -1,4 +1,4 @@
-package frc.robot.Framework.IO.In.Sensors.Encoders;
+package frc.robot.Framework.IO.In.Encoders;
 
 public interface EncoderBase{
     public int getTicks();

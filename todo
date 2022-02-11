@@ -21,3 +21,4 @@ read scotts email and/or start on behaviors
 add sensor output to the framework
 integrate smartdashboard into the framework for easy of testing and for in game changes
 potientially integrate machine learning into the vision
+go over the encoders and double check they work

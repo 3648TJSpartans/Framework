@@ -8,6 +8,7 @@ import frc.robot.Framework.IO.Out.Out;
 public class Shooter implements Subsystem{
     private In input = new In(SubsystemID.SHOOTER);
     private Out output = new Out(SubsystemID.SHOOTER);
+    //private Sensor sensor = new Sensor()
 
     public void robotInit(){
         System.out.println("Shooter init");

@@ -2,8 +2,8 @@ package frc.robot.Framework.IO.Out.Motors;
 
 import org.w3c.dom.*;
 
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderBase;
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderWrapper;
+import frc.robot.Framework.IO.In.Encoders.EncoderBase;
+import frc.robot.Framework.IO.In.Encoders.EncoderWrapper;
 import frc.robot.Framework.IO.Out.Motors.MotorBase;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.MotorGroup;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkController;

@@ -1,10 +1,10 @@
-package frc.robot.Framework.IO.In.Sensors.Encoders;
+package frc.robot.Framework.IO.In.Encoders;
 
 import org.w3c.dom.*;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderTypes.DIOEncoder;
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderTypes.NeoEncoder;
+import frc.robot.Framework.IO.In.Encoders.EncoderTypes.DIOEncoder;
+import frc.robot.Framework.IO.In.Encoders.EncoderTypes.NeoEncoder;
 import frc.robot.Framework.IO.Out.Motors.MotorWrapper;
 import frc.robot.Framework.Util.PID.PIDController;
 

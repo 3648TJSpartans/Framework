@@ -40,4 +40,7 @@ public class XboxGamepad implements ControllerBase{
     public double getAxis(String id){
         return controller.getRawAxis(axisIDs.get(id));
     }
+    public int getPOV(){
+        return controller.getPOV();
+    }
 }
