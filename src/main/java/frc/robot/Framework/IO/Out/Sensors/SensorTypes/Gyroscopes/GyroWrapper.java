@@ -3,7 +3,6 @@ package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes;
 import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
-import frc.robot.Framework.IO.Out.Sensors.SensorBase;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.ADIS_16448;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.ADIS_16470;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.ADXRS_450;
@@ -11,7 +10,7 @@ import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.Analo
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.Pigeon;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.nav_X;
 
-public class GyroWrapper implements SensorBase, GyroBase{
+public class GyroWrapper implements GyroBase{
     Element m_gyroElement;
     GyroBase m_gyro;
     public GyroWrapper(Element element){

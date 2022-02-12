@@ -13,7 +13,7 @@ public class DigitalInWrapper implements DigitalInBase{
         m_digitalIn = new Digital_In(port);
 
         if (m_digitalIn == null) {
-            System.out.println("For motor: " + id + " motor controller type: " + m_digitalInElement.getAttribute("controller") + " was not found!");
+            System.out.println("For DIO: " + id + " DIO controller type: " + m_digitalInElement.getAttribute("controller") + " was not found!");
             return;
         }
     }

@@ -34,16 +34,15 @@ public class Chassis implements Subsystem{
 
     public void teleopPeriodic(){
         //output
-        IMUAxis yaw_axis;
-        Port port;
-        CalibrationTime cal_time;
+
+        //output.sensors.getDioPressed("switch1");
         //ADIS16448_IMU gyro = new ADIS16448_IMU(yaw_axis, port, cal_time);
         //output.setMotor("shooter", input.getAxis("SHOOT", "OPERATOR"));
-        output.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
-        output.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
+        //output.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
+        //output.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
         //System.out.print("yes");
-        //System.out.print(output.getDioPressed("switch1").toString());
-        // SmartDashboard.putBoolean("test", output.getDioPressed("switch1"));
+        //System.out.print(output.sensors.getDioPressed("switch1").toString());
+        SmartDashboard.putBoolean("test", output.sensors.getDIO("switch1"));
         // if(output.getDioPressed("switch1")){
         //     output.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
         //     output.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);

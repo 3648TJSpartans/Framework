@@ -2,9 +2,9 @@ package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Potentiometers;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
-import frc.robot.Framework.IO.Out.Sensors.SensorBase;
 
-public class Analog_Potentiometer implements SensorBase, PotentiometerBase{
+
+public class Analog_Potentiometer implements PotentiometerBase{
 
     AnalogPotentiometer m_Potentiometer;
     public Analog_Potentiometer(final int port, double scale){
