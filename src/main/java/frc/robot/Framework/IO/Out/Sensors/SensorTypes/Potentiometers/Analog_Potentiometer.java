@@ -14,12 +14,6 @@ public class Analog_Potentiometer implements PotentiometerBase{
             m_Potentiometer = new AnalogPotentiometer(port);
         }
     }
-    public void test(){
-        //POT.
-    }
-    // public boolean equals(Object obj){
-    //    return m_Potentiometer.equals(obj);
-    // }
     public double getPotentiometer(){
         return m_Potentiometer.get();
     }

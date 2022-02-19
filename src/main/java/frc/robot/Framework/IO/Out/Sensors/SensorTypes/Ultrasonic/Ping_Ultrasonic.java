@@ -7,9 +7,6 @@ public class Ping_Ultrasonic implements UltrasonicBase{
     public Ping_Ultrasonic(int port1, int port2){
         m_ultrasonic = new Ultrasonic(port1, port2);
     }
-    public void test(){
-        //m_ultrasonic.
-    }
     public double getRangeInches(){
         return m_ultrasonic.getRangeInches();
     }

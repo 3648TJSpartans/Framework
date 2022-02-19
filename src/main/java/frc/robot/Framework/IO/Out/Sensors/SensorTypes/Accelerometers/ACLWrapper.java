@@ -41,29 +41,20 @@ public class ACLWrapper implements ACLBase{
             return null;
         }
     }
-    @Override
     public double getAccelerometerAxis(String axis) {
         return m_accelerometer.getAccelerometerAxis(axis);
     }
-
-    @Override
     public void setAccelerometerRange(String range) {
         m_accelerometer.setAccelerometerRange(range);
         
     }
-
-    @Override
     public double getAcceleration() {
         return m_accelerometer.getAcceleration();
     }
-
-    @Override
     public void setAccelerometerZero(double zero) {
         m_accelerometer.setAccelerometerZero(zero);
         
     }
-
-    @Override
     public void setAccelerometerSensitivity(double sensitivity) {
         m_accelerometer.setAccelerometerSensitivity(sensitivity);
         

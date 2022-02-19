@@ -28,20 +28,9 @@ public class ADXL_345_SPI implements ACLBase{
         Range m_range = Accelerometer.Range.valueOf(range);
         m_accelerometer.setRange(m_range);
     }
-    @Override
     public double getAcceleration() {
-        // TODO Auto-generated method stub
         return 0;
     }
-    @Override
-    public void setAccelerometerZero(double zero) {
-        // TODO Auto-generated method stub
-        
-    }
-    @Override
-    public void setAccelerometerSensitivity(double sensitivity) {
-        // TODO Auto-generated method stub
-        
-    }
-
+    public void setAccelerometerZero(double zero) {}
+    public void setAccelerometerSensitivity(double sensitivity) {}
 }

@@ -30,8 +30,5 @@ public class PotentiometerWrapper implements PotentiometerBase{
     public double getPotentiometer() {
         return m_Potentiometer.getPotentiometer();
     }
-    // public boolean equals(Object obj){
-    //     return m_Potentiometer.equals(obj);
-    // }
 
 }
