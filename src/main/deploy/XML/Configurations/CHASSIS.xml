@@ -2,11 +2,13 @@
 <robot>
     <subsystem>
         <CHASSIS slow="0.6" normal="0.8" fast="1" enabled = "true">
+            <var id = "Y" defaultValue = "0.0" valueType = "double" ></var>
+
             <dio id="switch1" port = "2" enabled = "true"></dio>
-            <dio id = "limit1" port = "3" enabled = "true"></dio>
-            <ut id = "sonic1" port1 = "0" port2 = "1" type = "PING" enabled = "true"></ut>
-            <motor controller="SPARK" id="RIGHT_SIDE" port="0" enabled = "true"></motor>
-            <motor controller="SPARK" id="LEFT_SIDE" port="1" enabled = "true"></motor>
+            <!-- <dio id = "limit1" port = "3" enabled = "true"></dio> -->
+            <!-- <ut id = "sonic1" port1 = "0" port2 = "1" type = "PING" enabled = "true"></ut> -->
+            <motor controller="SPARK" id="RIGHT_SIDE" port="0" defaultValue = "true"></motor>
+            <motor controller="SPARK" id="LEFT_SIDE" port="1" defaultValue = "true"></motor>
             
             <!--<motor id="LEFT_SIDE_FRONT" controller="TALON" port="8"></motor>
             <motor id="LEFT_SIDE_BACK" controller="TALON" port="9"></motor>

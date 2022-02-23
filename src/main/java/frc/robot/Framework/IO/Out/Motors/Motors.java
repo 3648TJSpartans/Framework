@@ -50,7 +50,7 @@ public class Motors {
     public void setMotor(String id, double speed) {
         MotorWrapper requestedMotor = getMotor(id);
         
-        if(tab.get(id, m_subsystemID.toString()))  requestedMotor.set(speed);
+        if(tab.getEnabled(id, m_subsystemID.toString()))  requestedMotor.set(speed);
     }
     /** 
      * [setMotor] returns the value of requested button
@@ -62,7 +62,7 @@ public class Motors {
     public void setMotor(String id, double setpoint, CommandMode mode) {
         MotorWrapper requestedMotor = getMotor(id);
         
-        if(tab.get(id, m_subsystemID.toString())) requestedMotor.set(setpoint, mode);
+        if(tab.getEnabled(id, m_subsystemID.toString())) requestedMotor.set(setpoint, mode);
     }
     /** 
      * [setPID] returns the value of requested button
@@ -75,7 +75,7 @@ public class Motors {
      */
     public void setPID(String id, double kP, double kI, double kD, double kF) {
         MotorWrapper requestedMotor = getMotor(id);
-        if(tab.get(id, m_subsystemID.toString())) requestedMotor.setPID(kP, kI, kD, kF);
+        if(tab.getEnabled(id, m_subsystemID.toString())) requestedMotor.setPID(kP, kI, kD, kF);
     }
     /** 
      * [getVelocity] returns the speed of requested motor
@@ -84,7 +84,7 @@ public class Motors {
      */
     public double getVelocity(String id) {
         MotorWrapper requestedMotor = getMotor(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedMotor.getVelocity() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedMotor.getVelocity() : 0.0;
         
     }
     /** 
@@ -94,7 +94,7 @@ public class Motors {
      */
     public double getPosition(String id) {
         MotorWrapper requestedMotor = getMotor(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedMotor.getPosition() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString())  ? requestedMotor.getPosition() : 0.0;
         
     }
     /** 
@@ -104,6 +104,6 @@ public class Motors {
      */
     public void resetEncoder(String id) {
         MotorWrapper requestedMotor = getMotor(id);
-        if(tab.get(id, m_subsystemID.toString())) requestedMotor.resetEncoder();
+        if(tab.getEnabled(id, m_subsystemID.toString())) requestedMotor.resetEncoder();
     }
 }

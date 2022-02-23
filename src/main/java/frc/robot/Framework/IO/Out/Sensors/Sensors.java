@@ -105,68 +105,68 @@ public class Sensors{
     //limit switches or DIOs
     public Boolean getDIO(String id) {
         DigitalInWrapper requestedDio = getDio(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedDio.getDigitalIn() : false;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedDio.getDigitalIn() : false;
     }
     //acclerometers
     public Double getACL(String id) {
         ACLWrapper requestedACL = getAccelerometer(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedACL.getAcceleration() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedACL.getAcceleration() : 0.0;
     }
     public Double getACLAxis(String id, String axis) {
         ACLWrapper requestedACL = getAccelerometer(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedACL.getAccelerometerAxis(axis) : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedACL.getAccelerometerAxis(axis) : 0.0;
     }
     public void setACLRange(String id, String range){
         ACLWrapper requestedACL = getAccelerometer(id);
-        if(tab.get(id, m_subsystemID.toString())) requestedACL.setAccelerometerRange(range) ;
+        if(tab.getEnabled(id, m_subsystemID.toString())) requestedACL.setAccelerometerRange(range) ;
     }
     public void setAClSensitivity(String id, double sensitivity) {
         ACLWrapper requestedACL = getAccelerometer(id);
-        if(tab.get(id, m_subsystemID.toString())) requestedACL.setAccelerometerSensitivity(sensitivity);
+        if(tab.getEnabled(id, m_subsystemID.toString())) requestedACL.setAccelerometerSensitivity(sensitivity);
     }
     public void setACLZero(String id, Double zero) {
         ACLWrapper requestedACL = getAccelerometer(id);
-        if(tab.get(id, m_subsystemID.toString())) requestedACL.setAccelerometerZero(zero);
+        if(tab.getEnabled(id, m_subsystemID.toString())) requestedACL.setAccelerometerZero(zero);
         requestedACL.setAccelerometerZero(zero);
     }
     //potetiometers
     public Double getPOT(String id) {
         PotentiometerWrapper requestedPOT = getPotentiometer(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedPOT.getPotentiometer() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedPOT.getPotentiometer() : 0.0;
     }
     //ultrasonic
     public double getUTRangeInches(String id) {
         UltrasonicWrapper requestedUT = getUltrasonic(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedUT.getRangeInches() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedUT.getRangeInches() : 0.0;
     }
     public double getUTRangeMM(String id) {
         UltrasonicWrapper requestedUT = getUltrasonic(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedUT.getRangeMM() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedUT.getRangeMM() : 0.0;
     }
     public double getUTEchoChannel(String id) {
         UltrasonicWrapper requestedUT = getUltrasonic(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedUT.getEchoChannel() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedUT.getEchoChannel() : 0.0;
     }
     //Gyroscopes
     public double getGYROAccel(String id, String axis) {
         GyroWrapper requestedGYRO = getGyroscope(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedGYRO.getGyroAccel(axis) : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedGYRO.getGyroAccel(axis) : 0.0;
     }
     public double getGYROAngle(String id) {
         GyroWrapper requestedGYRO = getGyroscope(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedGYRO.getGyroAngle() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedGYRO.getGyroAngle() : 0.0;
     }
     public double getGYRORate(String id) {
         GyroWrapper requestedGYRO = getGyroscope(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedGYRO.getGyroRate() : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedGYRO.getGyroRate() : 0.0;
     }
     public double getGYRORate(String id, String axis) {
         GyroWrapper requestedGYRO = getGyroscope(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedGYRO.getGyroRate(axis) : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedGYRO.getGyroRate(axis) : 0.0;
     }
     public double getGYROMagneticField(String id, String axis) {
         GyroWrapper requestedGYRO = getGyroscope(id);
-        return tab.get(id, m_subsystemID.toString()) ? requestedGYRO.getMagneticField(axis) : 0.0;
+        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedGYRO.getMagneticField(axis) : 0.0;
     }
     
 }

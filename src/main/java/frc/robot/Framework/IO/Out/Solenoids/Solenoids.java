@@ -40,7 +40,7 @@ public class Solenoids {
             return;
         }
         //might need testing
-        if(tab.get(id, m_subsystemID.toString())){
+        if(tab.getEnabled(id, m_subsystemID.toString())){
             requestedSolenoid.set(extended);
         }
         
