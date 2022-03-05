@@ -10,4 +10,6 @@ public interface MotorBase{
     public void setInverted(boolean invert);
 
     public void setPID(double kP, double kI, double kD, double kF);
+    public void setVoltage(double voltage);
+    
 }

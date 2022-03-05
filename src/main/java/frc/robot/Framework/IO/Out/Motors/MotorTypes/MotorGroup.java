@@ -40,4 +40,12 @@ public class MotorGroup implements MotorBase {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public void setVoltage(double voltage) {
+        for (int i = 0; i < motors.size(); i++) {
+            motors.get(i).setVoltage(voltage);
+        }
+        
+    }
 }

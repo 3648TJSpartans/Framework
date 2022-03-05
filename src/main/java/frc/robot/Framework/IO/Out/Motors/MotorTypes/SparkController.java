@@ -30,4 +30,10 @@ public class SparkController implements MotorBase {
         // TODO Auto-generated method stub
 
     }
+
+    @Override
+    public void setVoltage(double voltage) {
+        // TODO Auto-generated method stub
+        
+    }
 }

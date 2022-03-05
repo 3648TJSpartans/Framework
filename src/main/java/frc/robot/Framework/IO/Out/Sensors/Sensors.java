@@ -1,6 +1,8 @@
 package frc.robot.Framework.IO.Out.Sensors;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.*;
@@ -35,26 +37,26 @@ public class Sensors{
     private DigitalInWrapper getDio(String id) {
         SubsystemCollection requestedSystem = m_subsystemCollections.get(m_subsystemID.name());
         if (requestedSystem == null) {
-            System.out.println("Subsystem: " + m_subsystemID.name() + " not registered for output.");
+            subsystemError(m_subsystemID.name());
             return null;
         }
-        DigitalInWrapper requestedsensor = requestedSystem.limits.get(id);
-        if (requestedsensor == null) {
-            System.out.println("Dio not found in Subsystem: " + m_subsystemID.name());
+        DigitalInWrapper requestedSensor = requestedSystem.limits.get(id);
+        if (requestedSensor == null) {
+            sensorError("Gyro", id, m_subsystemID.name());
             return null;
         }
 
-        return requestedsensor;
+        return requestedSensor;
     } 
     private ACLWrapper getAccelerometer(String id) {
         SubsystemCollection requestedSystem = m_subsystemCollections.get(m_subsystemID.name());
         if (requestedSystem == null) {
-            System.out.println("Subsystem: " + m_subsystemID.name() + " not registered for output.");
+            subsystemError(m_subsystemID.name());
             return null;
         }
         ACLWrapper requestedsensor = requestedSystem.ACL.get(id);
         if (requestedsensor == null) {
-            System.out.println("Accelerometer not found in Subsystem: " + m_subsystemID.name());
+            sensorError("Gyro", id, m_subsystemID.name());
             return null;
         }
 
@@ -63,12 +65,12 @@ public class Sensors{
     private PotentiometerWrapper getPotentiometer(String id) {
         SubsystemCollection requestedSystem = m_subsystemCollections.get(m_subsystemID.name());
         if (requestedSystem == null) {
-            System.out.println("Subsystem: " + m_subsystemID.name() + " not registered for output.");
+            subsystemError(m_subsystemID.name());
             return null;
         }
         PotentiometerWrapper requestedsensor = requestedSystem.potentiometers.get(id);
         if (requestedsensor == null) {
-            System.out.println("Potentiometer not found in Subsystem: " + m_subsystemID.name());
+            sensorError("Gyro", id, m_subsystemID.name());
             return null;
         }
 
@@ -77,12 +79,12 @@ public class Sensors{
     private UltrasonicWrapper getUltrasonic(String id) {
         SubsystemCollection requestedSystem = m_subsystemCollections.get(m_subsystemID.name());
         if (requestedSystem == null) {
-            System.out.println("Subsystem: " + m_subsystemID.name() + " not registered for output.");
+            subsystemError(m_subsystemID.name());
             return null;
         }
         UltrasonicWrapper requestedsensor = requestedSystem.ultrasonics.get(id);
         if (requestedsensor == null) {
-            System.out.println("Ultrasonic not found in Subsystem: " + m_subsystemID.name());
+            sensorError("Gyro", id, m_subsystemID.name());
             return null;
         }
 
@@ -91,17 +93,46 @@ public class Sensors{
     private GyroWrapper getGyroscope(String id) {
         SubsystemCollection requestedSystem = m_subsystemCollections.get(m_subsystemID.name());
         if (requestedSystem == null) {
-            System.out.println("Subsystem: " + m_subsystemID.name() + " not registered for output.");
+            subsystemError(m_subsystemID.name());
             return null;
         }
         GyroWrapper requestedsensor = requestedSystem.gyros.get(id);
         if (requestedsensor == null) {
-            System.out.println("Gyro not found in Subsystem: " + m_subsystemID.name());
+            sensorError("Gyro", id, m_subsystemID.name());
             return null;
         }
 
         return requestedsensor;
     } 
+    
+    static List<String> subsystemErrorAry = new ArrayList<>();
+    static List<String> sensorErrorAry = new ArrayList<>();
+    private void subsystemError(String id){
+        boolean found = false;
+        for(var i = 0; i< subsystemErrorAry.size() ; i++){
+            if(subsystemErrorAry.get(i) == id){
+                found = true;
+            }
+        }
+        if(found == false){
+            System.out.println("Subsystem: " + id + " not registered for output.");
+            subsystemErrorAry.add(id);
+        }
+        
+    }
+    private void sensorError(String sensorType, String id, String subsystemID){
+        boolean found = false;
+        for(var i = 0; i< sensorErrorAry.size() ; i++){
+            if(sensorErrorAry.get(i) == id){
+                found = true;
+            }
+        }
+        if(found == false){
+            System.out.println(sensorType + ":" + id + " not found in Subsystem: " + subsystemID);
+            sensorErrorAry.add(id);
+        }
+             
+    }
     //limit switches or DIOs
     public Boolean getDIO(String id) {
         DigitalInWrapper requestedDio = getDio(id);

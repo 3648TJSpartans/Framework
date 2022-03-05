@@ -42,11 +42,14 @@ public class Chassis implements Subsystem{
 
     public void teleopPeriodic(){
 
-        SmartDashboard.putBoolean("test", output.sensors.getDIO("switch1"));
-        output.motors.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
-        output.motors.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
-
+        //SmartDashboard.putBoolean("test", output.sensors.getDIO("switch1"));
         
-
+        // output.motors.setMotor("LEFT_LEAD", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
+        // output.motors.setMotor("LEFT_FOLLOW", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
+        // output.motors.setMotor("RIGHT_FOLLOW", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
+        // output.motors.setMotor("RIGHT_LEAD", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
+        
+        output.motors.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
+        output.motors.setMotor("RIGHT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
     }
 }

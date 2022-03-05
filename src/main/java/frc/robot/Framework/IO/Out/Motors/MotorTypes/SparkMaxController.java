@@ -56,4 +56,7 @@ public class SparkMaxController implements MotorBase{
     public CANSparkMax getCANObject(){
         return controller;
     }
+    public void setVoltage(double voltage){
+        controller.setVoltage(voltage);
+    }
 }

@@ -12,6 +12,7 @@ import frc.robot.Framework.IO.Out.Solenoids.SolenoidWrapper;
 import frc.robot.Framework.IO.Out.Solenoids.Solenoids;
 import frc.robot.Framework.Util.XMLParser;
 import frc.robot.Subsystems.SubsystemID;
+import frc.robot.Framework.Util.BehaviorHandler;
 import frc.robot.Framework.Util.CommandMode;
 import frc.robot.Framework.Util.ShuffleboardHandler;
 import frc.robot.Framework.Util.XMLMerger;
@@ -104,8 +105,7 @@ public class Out {
                         String id = childElement.getAttribute("id");
                         ultrasonics.put(id, new UltrasonicWrapper(childElement));
                     }else {
-                        System.out.println("Output type: " + childElement.getTagName() + " on subsystem: "
-                                + system.getTagName() + " doesn't exist.");
+                        System.out.println("Output type: " + childElement.getTagName() + " on subsystem: "+ system.getTagName() + " doesn't exist.");
                     }
                 }
             }
@@ -144,6 +144,9 @@ public class Out {
                     Node currentSubsystem = subsystemList.item(j);
                     if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
                         Element subsystemElement = (Element) currentSubsystem;
+                        if(subsystemElement.getTagName().equals("BEHAVIORS") || subsystemElement.getTagName().equals("SYSTEMS")){
+                            BehaviorHandler(subsystemElement);
+                        }
                         subsystemCollections.put(subsystemElement.getTagName(), new SubsystemCollection(subsystemElement));
                         
                     }
@@ -151,6 +154,9 @@ public class Out {
             }
         }
         
+    }
+
+    private static void BehaviorHandler(Element subsystemElement) {
     }
 
     private SubsystemID subsystemID;

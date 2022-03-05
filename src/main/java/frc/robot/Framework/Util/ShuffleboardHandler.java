@@ -1,6 +1,8 @@
 package frc.robot.Framework.Util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -146,7 +148,8 @@ public class ShuffleboardHandler {
             NetworkTableEntry liveEntry = liveWindowWidgets.get(title);
             NetworkTableEntry liveSysEntry = liveWindowWidgets.get(title);
             if (entry == null) {
-                System.out.println("entry: " + title + " not found in tab: " + tab.getTitle());
+                networkTableError(title, tab.getTitle());
+                return false;
             }
             Boolean tempBool = entry.getBoolean(false) && sysEntry.getBoolean(false) && liveEntry.getBoolean(false) && liveSysEntry.getBoolean(false);
             return tempBool;
@@ -170,7 +173,19 @@ public class ShuffleboardHandler {
             entry.setValue(value);
             liveEntry.setValue(value);
         }
+        static List<String> tableErrorAry = new ArrayList<>();
+        private void networkTableError(String id, String tabName){
+            boolean found = false;
+            for(var i = 0; i< tableErrorAry.size() ; i++){
+                if(tableErrorAry.get(i) == id){
+                    found = true;
+                }
+            }
+            if(found == false){
+                System.out.println("entry: " + id + " not found in tab: " + tabName);
+                tableErrorAry.add(id);
+            }
+        }
     }
-    
-
 }
+    

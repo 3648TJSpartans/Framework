@@ -1,6 +1,8 @@
 package frc.robot.Framework.IO.Out.Solenoids;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -31,17 +33,33 @@ public class Solenoids {
     public void setSolenoid(String id, boolean extended) {
         SubsystemCollection requestedSystem = m_subsystemCollections.get(m_subsystemID.name());
         if (requestedSystem == null) {
-            System.out.println("Solenoid not found. Subsystem: " + m_subsystemID.name() + " not registered for output.");
+            solenoidError(id, m_subsystemID.name());
             return;
         }
         SolenoidWrapper requestedSolenoid = requestedSystem.solenoids.get(id);
         if (requestedSolenoid == null) {
-            System.out.println("Solenoid not found. Subsystem: " + m_subsystemID.name() + " not registered for output.");
+            solenoidError(id, m_subsystemID.name());
             return;
         }
         //might need testing
         if(tab.getEnabled(id, m_subsystemID.toString())){
             requestedSolenoid.set(extended);
+        }
+        
+    }
+    
+    static List<String> errorAry = new ArrayList<>();
+    private void solenoidError(String id, String subsystemID){
+        boolean found = false;
+        for(var i = 0; i< errorAry.size() ; i++){
+            
+            if(errorAry.get(i) == id){
+                found = true;
+            }
+        }
+        if(found == false){
+            System.out.println("Solenoid:" + id + " not found. Subsystem: " + subsystemID + " not registered for output.");
+            errorAry.add(id);
         }
         
     }
