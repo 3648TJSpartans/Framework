@@ -2,12 +2,9 @@
 <robot>
     <subsystem>
         <CHASSIS enabled = "true">
-       
-
         <motor id = "RIGHT_SIDE" controller="SPARK" port="0" defaultValue = "true"></motor>
         <motor id = "LEFT_SIDE" controller="SPARK" port="1" defaultValue = "true"></motor>
         </CHASSIS>
 
-        <ARMS></ARMS>
     </subsystem>
 </robot>

@@ -6,7 +6,5 @@
             <axis axis="LEFT_JOYSTICK_Y" function="LEFT_SPEED"></axis>
         </CHASSIS>
         
-        <CLIMBER></CLIMBER>
-        <INTAKE></INTAKE>
     </controller>
 </robot>
