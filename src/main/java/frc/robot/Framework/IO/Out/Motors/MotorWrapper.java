@@ -7,12 +7,13 @@ import frc.robot.Framework.IO.In.Encoders.EncoderWrapper;
 import frc.robot.Framework.IO.Out.Motors.MotorBase;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.MotorGroup;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkController;
+import frc.robot.Framework.IO.Out.Motors.MotorTypes.ServoController;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkMaxController;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.TalonController;
 import frc.robot.Framework.Util.CommandMode;
 import frc.robot.Framework.Util.PID.PIDController;
 
-public class MotorWrapper implements MotorBase{
+public class MotorWrapper implements MotorBase {
 
     private MotorBase motor;
     private Element motorElement;
@@ -26,14 +27,15 @@ public class MotorWrapper implements MotorBase{
         motor = getMotorType(motorElement.getAttribute("controller"), port);
 
         if (motor == null) {
-            System.out.println("For motor: " + id + " motor controller type: " + motorElement.getAttribute("controller") + " was not found!");
+            System.out.println("For motor: " + id + " motor controller type: " + motorElement.getAttribute("controller")
+                    + " was not found!");
             return;
         }
 
         if (motorElement.hasAttribute("inverted")) {
             motor.setInverted(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
         }
-        
+
         parseEncoder(element);
     }
 
@@ -51,7 +53,8 @@ public class MotorWrapper implements MotorBase{
                 if (controllerType != null) {
                     group.addMotor(new MotorWrapper(motorElement));
                 } else {
-                    System.out.println("For motor:" + motorElement.getAttribute("port") + " in group: " + groupID + " motor controller type: " + controllerType
+                    System.out.println("For motor:" + motorElement.getAttribute("port") + " in group: " + groupID
+                            + " motor controller type: " + controllerType
                             + " was not found!");
                     continue;
                 }
@@ -61,11 +64,11 @@ public class MotorWrapper implements MotorBase{
         if (groupElement.hasAttribute("inverted")) {
             motor.setInverted(Boolean.parseBoolean(groupElement.getAttribute("inverted")));
         }
-        
+
         parseEncoder(groupElement);
     }
 
-    private void parseEncoder(Element motorElement){
+    private void parseEncoder(Element motorElement) {
         NodeList encoderNodes = motorElement.getElementsByTagName("encoder");
         for (int o = 0; o < encoderNodes.getLength(); o++) {
             Node currentEncoder = encoderNodes.item(o);
@@ -74,17 +77,18 @@ public class MotorWrapper implements MotorBase{
                 encoder = new EncoderWrapper(encoderElement, this);
             }
         }
-    }  
+    }
 
     private MotorBase getMotorType(String controllerType, int port) {
         if (controllerType.equals("SPARK")) {
             return new SparkController(port);
         } else if (controllerType.equals("TALON")) {
             return new TalonController(port);
-        } else if(controllerType.equals("SPARK_MAX")){
+        } else if (controllerType.equals("SPARK_MAX")) {
             return new SparkMaxController(port);
-            
-        }else{
+        } else if (controllerType.equals("Servo")) {
+            return new ServoController(port);
+        } else {
             return null;
         }
     }
@@ -111,29 +115,29 @@ public class MotorWrapper implements MotorBase{
         motor.setPID(kP, kI, kD, kF);
     }
 
-    public MotorBase getMotor(){
+    public MotorBase getMotor() {
         return motor;
     }
 
-    public int getTicks(){
+    public int getTicks() {
         return encoder.getTicks();
     }
 
-    public double getVelocity(){
+    public double getVelocity() {
         return encoder.getVelocity();
     }
 
-    public double getPosition(){
+    public double getPosition() {
         return encoder.getPosition();
     }
 
-    public void resetEncoder(){
+    public void resetEncoder() {
         encoder.reset();
     }
 
     @Override
     public void setVoltage(double voltage) {
         motor.setVoltage(voltage);
-        
+
     }
 }

@@ -2,8 +2,9 @@
 <robot>
     <subsystem>
         <SHOOTER enabled = "true">
-            <motor id="FLY_WHEEL" controller = "SPARK" port = "2" enabled = "true"></motor>
-            <motor id="TURRET_AIM" controller="SPARK" port="3"  enabled = "true"></motor>
+            <motor id="FLY_WHEEL" controller = "SPARK" port="2" enabled = "true"></motor>
+            <motor id="TURRET_ANGLE" controller="SPARK" port="3"  enabled = "true"></motor>
+            <motor id="BALL_STOP" controller="SERVO" port="7" enabled = "true"></motor>
         </SHOOTER>
 
     </subsystem>
