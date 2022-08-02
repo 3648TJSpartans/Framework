@@ -32,8 +32,6 @@ public class Shooter implements Subsystem{
         output.motors.setMotor("FLY_WHEEL", input.getAxis("SHOOT", "OPERATOR") * -0.5);
         output.motors.setMotor("TURRET_AIM", input.getAxis("TURRET_ANGLE", "OPERATOR") * -0.5);
 
-        if(input.getButton("LOAD_BALL", "OPERATOR")){
-            output.motors.setMotor("BALL_STOP", 1);
-        }
+
     }
 }
