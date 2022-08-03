@@ -1,7 +1,10 @@
 package frc.robot.Framework.IO.In.Controllers;
 
 import java.util.Map;
+import java.io.Console;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import frc.robot.Framework.Util.XMLParser;
 import frc.robot.Subsystems.SubsystemID;
@@ -20,28 +23,23 @@ public class ControllerWrapper{
 
         public SubsystemCollection(Element system){
             subsystemElement = system;
-            // NodeList buttonNodes = system.getElementsByTagName("button");
-            // for(int i = 0; i < buttonNodes.getLength(); i++){
-            //     Node currentButton = buttonNodes.item(i);
-            //     if(currentButton.getNodeType() == Node.ELEMENT_NODE){
-            //         Element buttonElement = (Element)currentButton;
-            //         buttons.put(buttonElement.getAttribute("function"), buttonElement.getAttribute("button"));
-            //     }
-            // }
+            NodeList buttonNodes = system.getElementsByTagName("button");
+            for(int i = 0; i < buttonNodes.getLength(); i++){
+                Node currentButton = buttonNodes.item(i);
+                if(currentButton.getNodeType() == Node.ELEMENT_NODE){
+                    Element buttonElement = (Element)currentButton;
+                    buttons.put(buttonElement.getAttribute("function"), buttonElement.getAttribute("button"));
+                }
+            }
 
-            // Element buttonElment = parser.parse("button", system);
-            // buttons.put(buttonElement.getAttribute("function"), buttonElement.getAttribute("button"));
-            // Element axisElement = parser.parse("axis", system);
-            // axes.put(axisElement.getAttribute("function"), axisElement.getAttribute("axis"));
-
-            //NodeList axisNodes = system.getElementsByTagName("axis");
-            // for(int i = 0; i < axisNodes.getLength(); i++){
-            //     Node currentAxis = axisNodes.item(i);
-            //     if(currentAxis.getNodeType() == Node.ELEMENT_NODE){
-            //         Element axisElement = (Element)currentAxis;
-                    
-            //     }
-            // }
+            NodeList axisNodes = system.getElementsByTagName("axis");
+            for(int i = 0; i < axisNodes.getLength(); i++){
+                Node currentAxis = axisNodes.item(i);
+                if(currentAxis.getNodeType() == Node.ELEMENT_NODE){
+                    Element axisElement = (Element)currentAxis;
+                    axes.put(axisElement.getAttribute("function"), axisElement.getAttribute("axis"));
+                }
+            }
         }
 
         public String getAttribute(String attribute){
@@ -64,12 +62,12 @@ public class ControllerWrapper{
     public boolean getButton(String buttonName, SubsystemID subsystemID){
         SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
         if(requestedSystem == null){
-            System.out.println("Button not found. Subsystem :"+subsystemID.name()+" not registered on requested controller.");
+            controllerError("Button", buttonName, subsystemID.name());
             return false;
         }
         String requestedButton = requestedSystem.buttons.get(buttonName);
         if(requestedButton == null){
-            System.out.println("Button not found. Subsystem :"+subsystemID.name()+" not registered on requested controller.");
+            controllerError("Button", buttonName, subsystemID.name());
             return false;
         }
         return controller.getButton(requestedButton);
@@ -78,12 +76,12 @@ public class ControllerWrapper{
     public double getAxis(String axisName, SubsystemID subsystemID){
         SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
         if(requestedSystem == null){
-            System.out.println("Axis not found. Subsystem :"+subsystemID.name()+" not registered on requested controller.");
+            controllerError("Axis", axisName, subsystemID.name());
             return 0.0;
         }
         String requestedAxis = requestedSystem.axes.get(axisName);
         if(requestedAxis == null){
-            System.out.println("Axis not found. Subsystem :"+subsystemID.name()+" not registered on requested controller.");
+            controllerError("Axis", axisName, subsystemID.name());
             return 0.0;
         }
         return controller.getAxis(requestedAxis);
@@ -92,8 +90,23 @@ public class ControllerWrapper{
     public String getAttribute(String attribute, SubsystemID subsystemID){
         SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
         if(requestedSystem == null){
-            System.out.println("Attribute not found.");
+            System.out.println("Attribute:" + attribute + " not found.");
         }
         return requestedSystem.getAttribute(attribute);
+    }
+    static List<String> errorAry = new ArrayList<>();
+    private void controllerError(String type, String id, String subsystemID){
+        boolean found = false;
+        for(var i = 0; i< errorAry.size() ; i++){
+            
+            if(errorAry.get(i) == id){
+                found = true;
+            }
+        }
+        if(found == false){
+            System.out.println(type +  ":" + id + " not found. Subsystem:"+subsystemID +" not registered on requested controller.");
+            errorAry.add(id);
+        }
+        
     }
 }

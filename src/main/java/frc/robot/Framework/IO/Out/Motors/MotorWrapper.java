@@ -2,8 +2,8 @@ package frc.robot.Framework.IO.Out.Motors;
 
 import org.w3c.dom.*;
 
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderBase;
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderWrapper;
+import frc.robot.Framework.IO.In.Encoders.EncoderBase;
+import frc.robot.Framework.IO.In.Encoders.EncoderWrapper;
 import frc.robot.Framework.IO.Out.Motors.MotorBase;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.MotorGroup;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkController;
@@ -51,7 +51,7 @@ public class MotorWrapper implements MotorBase{
                 if (controllerType != null) {
                     group.addMotor(new MotorWrapper(motorElement));
                 } else {
-                    System.out.println("For motor in group: " + groupID + " motor controller type: " + controllerType
+                    System.out.println("For motor:" + motorElement.getAttribute("port") + " in group: " + groupID + " motor controller type: " + controllerType
                             + " was not found!");
                     continue;
                 }
@@ -83,6 +83,7 @@ public class MotorWrapper implements MotorBase{
             return new TalonController(port);
         } else if(controllerType.equals("SPARK_MAX")){
             return new SparkMaxController(port);
+            
         }else{
             return null;
         }
@@ -128,5 +129,11 @@ public class MotorWrapper implements MotorBase{
 
     public void resetEncoder(){
         encoder.reset();
+    }
+
+    @Override
+    public void setVoltage(double voltage) {
+        motor.setVoltage(voltage);
+        
     }
 }

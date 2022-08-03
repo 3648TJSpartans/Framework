@@ -28,6 +28,7 @@ public class Arms implements Subsystem{
     }
 
     public void teleopPeriodic(){
-        
+        output.motors.setVoltage("CLIMBER", input.getAxis("EXTEND", "DRIVE") * -0.5);
+        output.motors.setVoltage("CLIMBER", input.getAxis("RETRACT", "DRIVE") * 0.5);
     }
 }

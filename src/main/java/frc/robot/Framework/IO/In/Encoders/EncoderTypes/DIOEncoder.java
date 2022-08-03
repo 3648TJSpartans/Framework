@@ -1,8 +1,8 @@
-package frc.robot.Framework.IO.In.Sensors.Encoders.EncoderTypes;
+package frc.robot.Framework.IO.In.Encoders.EncoderTypes;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderBase;
+import frc.robot.Framework.IO.In.Encoders.EncoderBase;
 
 public class DIOEncoder implements EncoderBase{
 

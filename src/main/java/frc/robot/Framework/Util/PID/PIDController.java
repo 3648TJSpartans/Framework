@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderWrapper;
+import frc.robot.Framework.IO.In.Encoders.EncoderWrapper;
 
 public class PIDController{
     private String currentProfile;

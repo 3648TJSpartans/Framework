@@ -1,10 +1,11 @@
-package frc.robot.Framework.IO.In.Sensors.Encoders;
+package frc.robot.Framework.IO.In.Encoders;
 
 import org.w3c.dom.*;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderTypes.DIOEncoder;
-import frc.robot.Framework.IO.In.Sensors.Encoders.EncoderTypes.NeoEncoder;
+import frc.robot.Framework.IO.In.Encoders.EncoderTypes.DIOEncoder;
+import frc.robot.Framework.IO.In.Encoders.EncoderTypes.NeoEncoder;
+import frc.robot.Framework.IO.In.Encoders.EncoderTypes.SparkMaxEncoder;
 import frc.robot.Framework.IO.Out.Motors.MotorWrapper;
 import frc.robot.Framework.Util.PID.PIDController;
 
@@ -21,7 +22,7 @@ public class EncoderWrapper{
         int portOne = Integer.parseInt(element.getAttribute("port_one"));
         int portTwo = Integer.parseInt(element.getAttribute("port_two"));
         encoder = getEncoderType(encoderType, portOne, portTwo);
-        if(element.getAttribute("distance_per_pulse") != null){
+        if(element.getAttribute("distance_per_pulse").equals(null)){
             encoder.setDistancePerPulse(Double.parseDouble(element.getAttribute("distance_per_pulse")));
         }
 
@@ -48,6 +49,8 @@ public class EncoderWrapper{
             return new NeoEncoder(parent.getMotor());
         }else if(encoderType.equals("775")){
             return new DIOEncoder(portOne, portTwo, false, EncodingType.k4X);
+        }else if(encoderType.equals("SPARK_MAX")){
+            return new SparkMaxEncoder(parent.getMotor());
         }else{
             return null;
         }

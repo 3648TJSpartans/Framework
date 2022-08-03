@@ -4,7 +4,5 @@ public enum SubsystemID{
     CHASSIS,
     SHOOTER,
     ARMS,
-    INTAKE,
-    HOPPER,
-    //PANEL
+    INTAKE
 }

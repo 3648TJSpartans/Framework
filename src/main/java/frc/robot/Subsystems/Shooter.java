@@ -1,5 +1,6 @@
 package frc.robot.Subsystems;
 
+import edu.wpi.first.wpilibj.Timer;
 import frc.robot.Framework.Subsystem;
 import frc.robot.Framework.IO.In.In;
 import frc.robot.Framework.IO.Out.Out;
@@ -17,7 +18,7 @@ public class Shooter implements Subsystem{
     }
 
     public void autonomousInit(){
-
+        
     }
     public void autonomousPeriodic(){
         
@@ -28,6 +29,6 @@ public class Shooter implements Subsystem{
     }
 
     public void teleopPeriodic(){
-        
+        //output.motors.setMotor("shooter", input.getAxis("SHOOT", "OPERATOR") * -0.5);
     }
 }
