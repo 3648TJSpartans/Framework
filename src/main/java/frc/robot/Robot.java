@@ -23,7 +23,7 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotInit() {
-    In.Init("XML/Controls_IN/Caden.xml", "XML/Controls_IN/Dylan.xml");
+    In.Init("XML/Controls_IN/GarryChassis.xml", "XML/Controls_IN/GarryShooter.xml");
     Out.Init("XML/Config_OUT/CHASSIS.xml", "XML/Config_OUT/SHOOTER.xml");
     Subsystems.add(new Chassis(), SubsystemID.CHASSIS);
     Subsystems.add(new Shooter(), SubsystemID.SHOOTER);

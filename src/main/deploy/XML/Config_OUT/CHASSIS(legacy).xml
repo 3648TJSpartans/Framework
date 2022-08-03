@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<robot>
+    <subsystem>
+        <CHASSIS slow="0.6" normal="0.8" fast="1" enabled = "true">
+            <BEHAVIORS>
+                <ARCADE_DRIVE leftSide = "LEFT_SIDE" rightSide = "RIGHT_SIDE"></ARCADE_DRIVE>
+                <TANK_DRIVE>
+                    <group id="LEFT_SIDE" inverted="true" defaultValue = "true">
+                        <motor controller="TALON" port="11" defaultValue = "true"></motor>
+                        <motor controller="TALON" port="12" defaultValue = "true"></motor>
+                        <encoder type="TOUGH_BOX" port_one="6" port_two="7">
+                            <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
+                        </encoder>
+                    </group>
+                    <group id="RIGHT_SIDE" inverted="false" defaultValue = "true">
+                        <motor controller="TALON" port="2" defaultValue = "true"></motor>
+                        <motor controller="TALON" port="3" defaultValue = "true"></motor>
+                        <encoder type="DIO" port_one="2" port_two="3" distance_per_pulse="1">
+                            <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
+                        </encoder>
+                    </group>
+                </TANK_DRIVE>
+                <!-- <MANUAL_SHOOTER shooterWheel =  " "></MANUAL_SHOOTER> -->
+                <!-- <AUTO_SHOOTER shooterWheel = "" wheelSize = "" shooterAngle = "" limelightAngle = ""></AUTO_SHOOTER> -->
+                <!-- <INTAKE intakeMotor = ""></INTAKE> -->
+                <UPTAKE uptakeMotor = ""></UPTAKE>
+                <CLIMBER climberMotor = ""></CLIMBER>
+                <motorSystem systemID = "" systemMotor = ""></motorSystem>
+            </BEHAVIORS>
+            <SYSTEMS></SYSTEMS>
+            <var id = "Y" defaultValue = "0.0" valueType = "double" ></var>
+
+            <!-- <dio id="switch1" port = "2" enabled = "true"></dio> -->
+            <!-- <dio id = "limit1" port = "3" enabled = "true"></dio> -->
+            <!-- <ut id = "sonic1" port1 = "0" port2 = "1" type = "PING" enabled = "true"></ut> -->
+            <!-- <motor controller="SPARK" id="RIGHT_SIDE" port="0" defaultValue = "true"></motor>
+            <motor controller="SPARK" id="LEFT_SIDE" port="1" defaultValue = "true"></motor> -->
+            
+            <!--<motor id="LEFT_SIDE_FRONT" controller="TALON" port="8"></motor>
+            <motor id="LEFT_SIDE_BACK" controller="TALON" port="9"></motor>
+            <motor id="RIGHT_SIDE_FRONT" controller="TALON" port="0"></motor>
+            <motor id="RIGHT_SIDE_BACK" controller="TALON" port="1"></motor>-->
+
+            <!-- <acl id = "acl1" type = "" port = "" range = ""></acl>
+            <dio id = "limit1" type = ""></dio>
+            <gyro id = "gyro1" port = "" type = ""></gyro>
+            <pot id = "pot1" port = "" scale = "" type = ""></pot>
+            <ut id = "sonic1" port1 = "" port2 = "" type = ""></sonic> -->
+
+            <!-- <motor controller="SPARK_MAX" id="CLIMBER" port="6" defaultValue = "true"></motor> -->
+
+            <!-- <gyro id = "gyro1" port = "" type = ""></gyro> -->
+
+            <!-- <group id="RIGHT_SIDE" inverted="false">
+                <motor controller="SPARK_MAX" port="1" defaultValue = "true"></motor>
+                <motor controller="SPARK_MAX" port="10" defaultValue = "true"></motor>
+                <encoder type="TOUGH_BOX" port_one="0" port_two="1" distance_per_pulse="1">
+                    <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
+                </encoder>
+            </group>
+            <group id="LEFT_SIDE" inverted="false">
+                <motor controller="SPARK_MAX" port="2" defaultValue = "true"></motor>
+                <motor controller="SPARK_MAX" port="3" defaultValue = "true"></motor>
+                <encoder type="TOUGH_BOX" port_one="0" port_two="1" distance_per_pulse="1">
+                    <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
+                </encoder>
+            </group> -->
+            <group id="LEFT_SIDE" inverted="true" defaultValue = "true">
+                <motor controller="TALON" port="11" defaultValue = "true"></motor>
+                <motor controller="TALON" port="12" defaultValue = "true"></motor>
+                <encoder type="TOUGH_BOX" port_one="6" port_two="7">
+                    <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
+                </encoder>
+            </group>
+            <group id="RIGHT_SIDE" inverted="false" defaultValue = "true">
+                <motor controller="TALON" port="2" defaultValue = "true"></motor>
+                <motor controller="TALON" port="3" defaultValue = "true"></motor>
+                <encoder type="DIO" port_one="2" port_two="3" distance_per_pulse="1">
+                    <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
+                </encoder>
+            </group>
+
+        <!-- <motor id = "RIGHT_FOLLOW" controller="SPARK_MAX" port="1" defaultValue = "true"></motor>
+        <motor id = "RIGHT_LEAD" controller="SPARK_MAX" port="10" defaultValue = "true"></motor>
+        <motor id = "LEFT_LEAD" controller="SPARK_MAX" port="2" defaultValue = "true"></motor>
+        <motor id = "LEFT_FOLLOW" controller="SPARK_MAX" port="3" defaultValue = "true"></motor> -->
+        </CHASSIS>
+        <ARMS>
+            <motor controller="SPARK_MAX" id="CLIMBER" port="6" defaultValue = "true"></motor>
+        </ARMS>
+
+    </subsystem>
+</robot>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot>
+    <controller type="LOGITECH" port="0" id="DRIVE">
+        <CHASSIS>
+            <axis axis="RIGHT_JOYSTICK_Y" function="RIGHT_SPEED"></axis>
+            <axis axis="LEFT_JOYSTICK_Y" function="LEFT_SPEED"></axis>
+        </CHASSIS>
+        
+    </controller>
+</robot>

@@ -28,7 +28,6 @@ public class Intake implements Subsystem{
     }
 
     public void teleopPeriodic(){
-        output.motors.setMotor("uptake_lower", input.getAxis("UPTAKE_LOWER", "OPERATOR") * -0.5);
-        output.motors.setMotor("uptake_upper", input.getAxis("UPTAKE_UPPER", "OPERATOR") * -0.5);
+        
     }
 }

@@ -1,0 +1,9 @@
+<robot>
+    <controller type="LOGITECH" port="0" id="OPERATOR">
+        <SHOOTER>
+            <axis axis="RIGHT_TRIGGER" function="SHOOT"></axis>
+            <axis axis="LEFT_JOYSTICK_X" function="TURRET_AIM"></axis>
+            <button button="A" function="LOAD_BALL"></button>
+        </SHOOTER>
+    </controller>
+</robot>

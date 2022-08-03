@@ -2,6 +2,8 @@ package frc.robot.Framework.IO.Out;
 
 import frc.robot.Framework.IO.Out.Motors.MotorWrapper;
 import frc.robot.Framework.IO.Out.Motors.Motors;
+import frc.robot.Framework.IO.Out.Servos.ServoWrapper;
+import frc.robot.Framework.IO.Out.Servos.Servos;
 import frc.robot.Framework.IO.Out.Sensors.Sensors;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLWrapper;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.DigitalIn.DigitalInWrapper;
@@ -44,6 +46,7 @@ public class Out {
     private static Compressor compressor;
     public Sensors sensors;
     public Motors motors;
+    public Servos servos;
     public Solenoids solenoids;
 
     /**
@@ -53,6 +56,7 @@ public class Out {
 
     public static class SubsystemCollection {
         public Map<String, MotorWrapper> motors = new HashMap<>();
+        public Map<String, ServoWrapper> servos = new HashMap<>();
         public Map<String, SolenoidWrapper> solenoids = new HashMap<>();
         public Map<String, ACLWrapper> ACL = new HashMap<>();
         public Map<String, DigitalInWrapper> limits = new HashMap<>();
@@ -83,6 +87,9 @@ public class Out {
                     } else if (childElement.getTagName().equals("group")) {
                         String id = childElement.getAttribute("id");
                         motors.put(id, new MotorWrapper(childElement, true));
+                    } else if (childElement.getTagName().equals("servo")) {
+                        String id = childElement.getAttribute("id");
+                        servos.put(id, new ServoWrapper(childElement, true));
                     } else if (childElement.getTagName().equals("solenoid")) {
                         String id = childElement.getAttribute("id");                       
                         solenoids.put(id, new SolenoidWrapper(childElement));
@@ -172,6 +179,7 @@ public class Out {
         subsystemID = systemID;
         sensors = new Sensors(subsystemCollections, subsystemID);
         motors = new Motors(subsystemCollections, subsystemID);
+        servos = new Servos(subsystemCollections, subsystemID);
         solenoids = new Solenoids(subsystemCollections, subsystemID);
     };
     /** 

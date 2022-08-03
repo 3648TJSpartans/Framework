@@ -2,14 +2,10 @@
 <robot>
     <subsystem>
         <SHOOTER enabled = "true">
-            <!-- <motor id="shooter" controller="SPARK_MAX" port="10" inverted="false"></motor> -->
-            <!-- <motor id="shooter" controller = "SPARK" port = "2" enabled = "true"></motor>
-            <motor id="TURRET_AIM" controller="TALON" port="8" inverted= "true" enabled = "true"></motor> -->
-            <!-- <motor controller="SPARK_MAX" id="shooter" port="7" defaultValue = "true"></motor> -->
+            <motor id="FLY_WHEEL" controller = "SPARK" port="2" enabled = "true"></motor>
+            <motor id="TURRET_ANGLE" controller="SPARK" port="3"  enabled = "true"></motor>
+            <servo id="BALL_STOP" controller="SERVO" port="7" enabled = "true"></servo>
         </SHOOTER>
-        <INTAKE enabled = "true" >
-            <!-- <motor controller="SPARK" id="uptake_lower" port="2" defaultValue = "true"></motor>
-            <motor controller="SPARK" id="uptake_upper" port="3" defaultValue = "true"></motor> -->
-        </INTAKE>
+
     </subsystem>
 </robot>

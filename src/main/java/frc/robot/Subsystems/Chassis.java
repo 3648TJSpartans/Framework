@@ -50,6 +50,6 @@ public class Chassis implements Subsystem{
         // output.motors.setMotor("RIGHT_LEAD", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
         
         output.motors.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
-        output.motors.setMotor("RIGHT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
+        output.motors.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE") * 0.5);
     }
 }
