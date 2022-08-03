@@ -25,9 +25,9 @@ public class Servos {
         tab = new ShuffleboardHandler(subsystemID.toString());
     }
     /** 
-     * [getMotor] returns the motor associated with the id
+     * [getMotor] returns the Servo associated with the id
      * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     * @param id the id of the servo or Servo group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
      */
     private ServoWrapper getMotor(String id) {
         SubsystemCollection requestedSystem = m_subsystemCollections.get(m_subsystemID.name());
@@ -35,7 +35,7 @@ public class Servos {
             motorError(id, m_subsystemID.name());
             return null;
         }
-        ServoWrapper requestedMotor = requestedSystem.motors.get(id);
+        ServoWrapper requestedMotor = requestedSystem.servos.get(id);
         if (requestedMotor == null) {
             motorError(id, m_subsystemID.name());
             return null;
@@ -58,30 +58,21 @@ public class Servos {
         
     }
     /** 
-     * [setMotor] sets the speed of the requested motor or motor group
+     * [setServo] sets the speed of the requested motor or motor group
      * 
      * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
-     * @param speed the speed of the motor
+     * @param position the position of the servo (0 to 1)
      */
-    public void setMotor(String id, double speed) {
+    public void setServo(String id, double position) {
         ServoWrapper requestedMotor = getMotor(id);
         
-        if(tab.getEnabled(id, m_subsystemID.toString()))  requestedMotor.set(speed);
+        if(tab.getEnabled(id, m_subsystemID.toString()))  requestedMotor.set(position);
     }
  
-    /** 
-     * [setPID] returns the value of requested button
-     * 
-     *  @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
-     * @param kP 
-     * @param kI
-     * @param kD
-     * @param kF
-     */
-    public void setPID(String id, double kP, double kI, double kD, double kF) {
+    public void setServoAngle(String id, int angle) {
         ServoWrapper requestedMotor = getMotor(id);
-        if(tab.getEnabled(id, m_subsystemID.toString())) requestedMotor.setPID(kP, kI, kD, kF);
+        
+        if(tab.getEnabled(id, m_subsystemID.toString()))  requestedMotor.setAngle(angle);
     }
-
 
 }

@@ -4,18 +4,15 @@ import org.w3c.dom.*;
 
 import frc.robot.Framework.IO.In.Encoders.EncoderBase;
 import frc.robot.Framework.IO.In.Encoders.EncoderWrapper;
-import frc.robot.Framework.IO.Out.Motors.MotorBase;
-import frc.robot.Framework.IO.Out.Motors.MotorTypes.MotorGroup;
-import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkController;
-import frc.robot.Framework.IO.Out.Motors.MotorTypes.ServoController;
-import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkMaxController;
-import frc.robot.Framework.IO.Out.Motors.MotorTypes.TalonController;
+import frc.robot.Framework.IO.Out.Servos.ServoBase;
+import frc.robot.Framework.IO.Out.Servos.ServoGroup;
+import frc.robot.Framework.IO.Out.Servos.ServoController;
 import frc.robot.Framework.Util.CommandMode;
 import frc.robot.Framework.Util.PID.PIDController;
 
-public class ServoWrapper implements MotorBase {
+public class ServoWrapper implements ServoBase {
 
-    private MotorBase motor;
+    private ServoBase motor;
     private Element motorElement;
 
     private EncoderWrapper encoder;
@@ -31,24 +28,18 @@ public class ServoWrapper implements MotorBase {
                     + " was not found!");
             return;
         }
-
-        if (motorElement.hasAttribute("inverted")) {
-            motor.setInverted(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
-        }
-
-        parseEncoder(element);
     }
 
     public ServoWrapper(Element groupElement, boolean groupFlag) {
         String groupID = groupElement.getAttribute("id");
         NodeList groupMotorNodes = groupElement.getElementsByTagName("motor");
-        MotorGroup group = new MotorGroup();
+        ServoGroup group = new ServoGroup();
         for (int o = 0; o < groupMotorNodes.getLength(); o++) {
             Node currentMotor = groupMotorNodes.item(o);
             if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
                 Element motorElement = (Element) currentMotor;
                 int port = Integer.parseInt(motorElement.getAttribute("port"));
-                MotorBase controllerType = getMotorType(motorElement.getAttribute("controller"), port);
+                ServoBase controllerType = getMotorType(motorElement.getAttribute("controller"), port);
 
                 if (controllerType != null) {
                     group.addMotor(new ServoWrapper(motorElement));
@@ -61,83 +52,37 @@ public class ServoWrapper implements MotorBase {
             }
         }
         motor = group;
-        if (groupElement.hasAttribute("inverted")) {
-            motor.setInverted(Boolean.parseBoolean(groupElement.getAttribute("inverted")));
-        }
 
-        parseEncoder(groupElement);
     }
 
-    private void parseEncoder(Element motorElement) {
-        NodeList encoderNodes = motorElement.getElementsByTagName("encoder");
-        for (int o = 0; o < encoderNodes.getLength(); o++) {
-            Node currentEncoder = encoderNodes.item(o);
-            if (currentEncoder.getNodeType() == Node.ELEMENT_NODE) {
-                Element encoderElement = (Element) currentEncoder;
-                encoder = new ServoWrapper(encoderElement, this);
-            }
-        }
-    }
 
-    private MotorBase getMotorType(String controllerType, int port) {
-        if (controllerType.equals("SPARK")) {
-            return new SparkController(port);
-        } else if (controllerType.equals("TALON")) {
-            return new TalonController(port);
-        } else if (controllerType.equals("SPARK_MAX")) {
-            return new SparkMaxController(port);
-        } else if (controllerType.equals("Servo")) {
+    private ServoBase getMotorType(String controllerType, int port) {
+        if (controllerType.equals("SERVO")) {
             return new ServoController(port);
         } else {
             return null;
         }
     }
 
-    public void set(double speed) {
-        motor.set(speed);
+    public void set(double position) {
+        motor.set(position);
     }
 
-    public void setInverted(boolean invert) {
-        motor.setInverted(invert);
+    public void setAngle(int angle) {
+        motor.setAngle(angle);
     }
 
     public String getAttribute(String attribute) {
         return motorElement.getAttribute(attribute);
     }
 
-    @Override
-    public void set(double setpoint, CommandMode mode) {
-        motor.set(setpoint, mode);
-    }
 
-    @Override
-    public void setPID(double kP, double kI, double kD, double kF) {
-        motor.setPID(kP, kI, kD, kF);
-    }
 
-    public MotorBase getMotor() {
+    public ServoBase getMotor() {
         return motor;
-    }
-
-    public int getTicks() {
-        return encoder.getTicks();
-    }
-
-    public double getVelocity() {
-        return encoder.getVelocity();
-    }
-
-    public double getPosition() {
-        return encoder.getPosition();
     }
 
     public void resetEncoder() {
         encoder.reset();
-    }
-
-    @Override
-    public void setVoltage(double voltage) {
-        motor.setVoltage(voltage);
-
     }
 }
