@@ -30,12 +30,12 @@ public class Shooter implements Subsystem{
 
     public void teleopPeriodic(){
         output.motors.setMotor("FLY_WHEEL", input.getAxis("SHOOT", "OPERATOR") * -0.5);
-        output.motors.setMotor("TURRET_AIM", input.getAxis("TURRET_ANGLE", "OPERATOR") * -0.5);
+        output.motors.setMotor("TURRET_ANGLE", input.getAxis("TURRET_AIM", "OPERATOR") * -0.5);
 
         if(input.getButton("LOAD_BALL", "OPERATOR")){
-            output.servos.setServoAngle("BALL_STOP", 0);
+            output.servos.setServo("BALL_STOP", 0);
         }else{
-            output.servos.setServoAngle("BALL_STOP", 90);
+            output.servos.setServo("BALL_STOP", 1);
         }
 
     }
