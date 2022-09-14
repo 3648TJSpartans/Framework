@@ -87,7 +87,10 @@ public class Out {
                     } else if (childElement.getTagName().equals("group")) {
                         String id = childElement.getAttribute("id");
                         motors.put(id, new MotorWrapper(childElement, true));
-                    } else if (childElement.getTagName().equals("servo")) {
+                    }else if (childElement.getTagName().equals("servo")) {
+                        String id = childElement.getAttribute("id");
+                        servos.put(id, new ServoWrapper(childElement));
+                    } else if (childElement.getTagName().equals("group")) {
                         String id = childElement.getAttribute("id");
                         servos.put(id, new ServoWrapper(childElement, true));
                     } else if (childElement.getTagName().equals("solenoid")) {

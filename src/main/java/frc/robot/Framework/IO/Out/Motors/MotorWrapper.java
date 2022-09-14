@@ -7,7 +7,6 @@ import frc.robot.Framework.IO.In.Encoders.EncoderWrapper;
 import frc.robot.Framework.IO.Out.Motors.MotorBase;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.MotorGroup;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkController;
-import frc.robot.Framework.IO.Out.Motors.MotorTypes.ServoController;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkMaxController;
 import frc.robot.Framework.IO.Out.Motors.MotorTypes.TalonController;
 import frc.robot.Framework.Util.CommandMode;
@@ -86,8 +85,6 @@ public class MotorWrapper implements MotorBase {
             return new TalonController(port);
         } else if (controllerType.equals("SPARK_MAX")) {
             return new SparkMaxController(port);
-        } else if (controllerType.equals("Servo")) {
-            return new ServoController(port);
         } else {
             return null;
         }
