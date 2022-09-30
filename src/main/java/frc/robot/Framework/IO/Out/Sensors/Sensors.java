@@ -19,7 +19,7 @@ import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Potentiometers.Potentiomet
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Ultrasonic.UltrasonicWrapper;
 import frc.robot.Framework.Util.ShuffleboardHandler;
 import frc.robot.Framework.Util.XMLParser;
-import frc.robot.Subsystems.SubsystemID;
+import frc.robot.subsystems.SubsystemID;
 
 
 public class Sensors{

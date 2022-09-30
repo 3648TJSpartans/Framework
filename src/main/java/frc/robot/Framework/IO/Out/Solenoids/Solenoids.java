@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 import frc.robot.Framework.IO.Out.Out.SubsystemCollection;
 import frc.robot.Framework.Util.ShuffleboardHandler;
 import frc.robot.Framework.Util.XMLParser;
-import frc.robot.Subsystems.SubsystemID;
+import frc.robot.subsystems.SubsystemID;
 
 public class Solenoids {
     private static XMLParser parser;

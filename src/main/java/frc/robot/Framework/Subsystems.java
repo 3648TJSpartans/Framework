@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import frc.robot.Subsystems.SubsystemID;
+import frc.robot.subsystems.SubsystemID;
 
 /**
  * [Subsystems] is a class containing static methods to update all subsystems.

@@ -12,7 +12,7 @@ import frc.robot.Framework.IO.In.Controllers.ControllerTypes.PSGamepad;
 import frc.robot.Framework.IO.In.Controllers.ControllerTypes.XboxGamepad;
 import frc.robot.Framework.Util.XMLMerger;
 import frc.robot.Framework.Util.XMLParser;
-import frc.robot.Subsystems.SubsystemID;
+import frc.robot.subsystems.SubsystemID;
 
 import org.w3c.dom.*;
 

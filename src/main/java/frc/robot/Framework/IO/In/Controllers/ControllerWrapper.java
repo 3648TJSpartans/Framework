@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import frc.robot.Framework.Util.XMLParser;
-import frc.robot.Subsystems.SubsystemID;
+import frc.robot.subsystems.SubsystemID;
 
 import org.w3c.dom.*;
 
