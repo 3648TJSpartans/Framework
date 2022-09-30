@@ -1,14 +1,14 @@
 package frc.robot.subsystems;
 
-import frc.robot.Framework.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Framework.IO.In.In;
 import frc.robot.Framework.IO.Out.Out;
 
-public class Intake implements Subsystem{
+public class Intake extends SubsystemBase{
     private In input = new In(SubsystemID.INTAKE);
     private Out output = new Out(SubsystemID.INTAKE);
 
-    public void robotInit(){
+    public Intake(){
         System.out.println("Intake init");
     }
 

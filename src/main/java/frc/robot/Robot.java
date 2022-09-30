@@ -22,7 +22,7 @@ import java.util.*;
 
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.Framework.Subsystems;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Framework.IO.In.In;
 import frc.robot.Framework.IO.Out.Out;
 import frc.robot.Framework.Util.XMLMerger;
@@ -30,17 +30,16 @@ import frc.robot.Framework.Util.XMLParser;
 import frc.robot.subsystems.*;
 
 public class Robot extends TimedRobot {
+  ArrayList<SubsystemBase> subsystems = new ArrayList<>();
 
   @Override
   public void robotInit() {
     In.Init("XML/Controls_IN/GarryChassis.xml", "XML/Controls_IN/GarryShooter.xml");
     Out.Init("XML/Config_OUT/CHASSIS.xml", "XML/Config_OUT/SHOOTER.xml");
-    Subsystems.add(new Chassis(), SubsystemID.CHASSIS);
-    Subsystems.add(new Shooter(), SubsystemID.SHOOTER);
-    Subsystems.add(new Arms(), SubsystemID.ARMS);
-    Subsystems.add(new Intake(), SubsystemID.INTAKE);
-    
-    Subsystems.robotInit();
+    subsystems.add(new Chassis());
+    subsystems.add(new Shooter());
+    subsystems.add(new Arms());
+    subsystems.add(new Intake());
   }
 
   public void CommandThings(){
@@ -67,27 +66,22 @@ public class Robot extends TimedRobot {
 
   @Override
   public void robotPeriodic() {
-    Subsystems.robotPeriodic();
   }
 
   @Override
   public void autonomousInit() {
-    Subsystems.autonomousInit();
   }
 
   @Override
   public void autonomousPeriodic() {
-    Subsystems.autonomousPeriodic();
   }
 
   @Override
   public void teleopInit() {
-    Subsystems.teleopInit();
   }
 
   @Override
   public void teleopPeriodic() {
-    Subsystems.teleopPeriodic();
   }
 
   @Override

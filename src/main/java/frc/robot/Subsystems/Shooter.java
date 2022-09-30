@@ -1,15 +1,15 @@
 package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.Timer;
-import frc.robot.Framework.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Framework.IO.In.In;
 import frc.robot.Framework.IO.Out.Out;
 
-public class Shooter implements Subsystem{
+public class Shooter extends SubsystemBase{
     private In input = new In(SubsystemID.SHOOTER);
     private Out output = new Out(SubsystemID.SHOOTER);
 
-    public void robotInit(){
+    public Shooter(){
         System.out.println("Shooter init");
     }
 
