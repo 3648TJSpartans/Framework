@@ -1,3 +1,24 @@
+Create generic tank drive subsystem & commands (and swerve)
+Create generic velocity/position motor(s) subsystem & commands. Link to encoder? SetPower. Toggle. Coast/break? Hold (with off), Level(s) of speed/position. Analog input. Inverse input
+create generic motor(s) power subsystem & commands. Set Power. Toggle. Coast/break? Hold (with off), Level(s) of power. Analog input. Inverse input
+Create generic solenoid(s) subsystem & commands. Set state. Toggle. Hold (with default) Inverse input.
+All subsystems should support reloading of config. Config reload should be a command. 
+
+Create Pid util class
+Create motor util with configs such as pid, power/speed limit, etc.
+Create controller util class. button debounce, deadband, linear/
+create logging class. Time/mode/+otherstuff.
+
+create generic commnds (if needed) such as wait?
+
+integrate shuffleboard into the framework for easy of testing and for in game changes
+failsafe for sensors solienoid and motors might need testing
+
+
+
+old?
+-------------
+
 Small-
 
 *check solenoid files for both single and double
