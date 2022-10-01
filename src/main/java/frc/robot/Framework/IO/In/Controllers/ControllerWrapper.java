@@ -1,15 +1,15 @@
 package frc.robot.Framework.IO.In.Controllers;
 
-import java.util.Map;
-import java.io.Console;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import frc.robot.Framework.Util.XMLParser;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
 import frc.robot.subsystems.SubsystemID;
-
-import org.w3c.dom.*;
 
 public class ControllerWrapper{
 

@@ -1,6 +1,5 @@
 package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes;
 
-import edu.wpi.first.wpilibj.SPI;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroBase;
 
 public class nav_X implements GyroBase{

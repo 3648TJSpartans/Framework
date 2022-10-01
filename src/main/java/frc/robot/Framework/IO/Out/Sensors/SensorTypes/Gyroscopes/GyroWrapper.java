@@ -2,7 +2,6 @@ package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes;
 
 import org.w3c.dom.Element;
 
-import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.ADIS_16448;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.ADIS_16470;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroTypes.ADXRS_450;

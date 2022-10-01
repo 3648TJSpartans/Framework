@@ -1,14 +1,13 @@
 package frc.robot.Framework.IO.In.Encoders.EncoderTypes;
 
-import com.revrobotics.CANEncoder;
+import com.revrobotics.RelativeEncoder;
 
 import frc.robot.Framework.IO.In.Encoders.EncoderBase;
 import frc.robot.Framework.IO.Out.Motors.MotorBase;
-import frc.robot.Framework.IO.Out.Motors.MotorTypes.SparkMaxController;
 
 public class NeoEncoder implements EncoderBase{
 
-    private CANEncoder encoder;
+    private RelativeEncoder encoder;
 
     public NeoEncoder(MotorBase spark){
         //encoder = new CANEncoder(((SparkMaxController)spark).getCANObject());

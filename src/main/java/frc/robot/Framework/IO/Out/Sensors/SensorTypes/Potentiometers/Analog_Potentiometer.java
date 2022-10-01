@@ -1,6 +1,5 @@
 package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Potentiometers;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 
 

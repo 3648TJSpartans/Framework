@@ -1,38 +1,29 @@
 package frc.robot.Framework.IO.Out;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+
+import edu.wpi.first.wpilibj.Compressor;
 import frc.robot.Framework.IO.Out.Motors.MotorWrapper;
 import frc.robot.Framework.IO.Out.Motors.Motors;
-import frc.robot.Framework.IO.Out.Servos.ServoWrapper;
-import frc.robot.Framework.IO.Out.Servos.Servos;
 import frc.robot.Framework.IO.Out.Sensors.Sensors;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLWrapper;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.DigitalIn.DigitalInWrapper;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroWrapper;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Potentiometers.PotentiometerWrapper;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Ultrasonic.UltrasonicWrapper;
+import frc.robot.Framework.IO.Out.Servos.ServoWrapper;
+import frc.robot.Framework.IO.Out.Servos.Servos;
 import frc.robot.Framework.IO.Out.Solenoids.SolenoidWrapper;
 import frc.robot.Framework.IO.Out.Solenoids.Solenoids;
-import frc.robot.Framework.Util.XMLParser;
-import frc.robot.subsystems.SubsystemID;
-import frc.robot.Framework.Util.BehaviorHandler;
-import frc.robot.Framework.Util.CommandMode;
 import frc.robot.Framework.Util.ShuffleboardHandler;
 import frc.robot.Framework.Util.XMLMerger;
-
-import java.util.Map;
-import java.util.Set;
-import java.util.HashMap;
-import java.util.List;
-
-import org.w3c.dom.*;
-
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.Framework.Util.XMLParser;
+import frc.robot.subsystems.SubsystemID;
 
 /**
  * [Out] is a class containing static methods for controlling all outputs from

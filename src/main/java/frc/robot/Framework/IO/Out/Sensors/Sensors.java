@@ -5,12 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.Framework.IO.Out.Out.SubsystemCollection;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLWrapper;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.DigitalIn.DigitalInWrapper;
@@ -29,7 +25,7 @@ public class Sensors{
     public Element sensorElement;
     private ShuffleboardHandler tab;
 
-    public Sensors(Map subsystemCollections, SubsystemID subsystemID){
+    public Sensors(Map<String, SubsystemCollection> subsystemCollections, SubsystemID subsystemID){
         m_subsystemCollections = subsystemCollections;
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());

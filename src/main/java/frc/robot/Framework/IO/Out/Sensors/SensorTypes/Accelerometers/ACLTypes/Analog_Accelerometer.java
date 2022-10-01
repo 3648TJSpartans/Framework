@@ -1,7 +1,6 @@
 package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLTypes;
 
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
-import edu.wpi.first.wpilibj.SPI.Port;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLBase;
 
 public class Analog_Accelerometer implements ACLBase{

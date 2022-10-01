@@ -2,8 +2,6 @@ package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Potentiometers;
 
 import org.w3c.dom.Element;
 
-import edu.wpi.first.wpilibj.AnalogInput;
-
 public class PotentiometerWrapper implements PotentiometerBase{
     private PotentiometerBase m_Potentiometer;
     private Element m_PotentiometerElement;

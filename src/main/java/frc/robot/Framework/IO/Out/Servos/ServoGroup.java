@@ -2,10 +2,6 @@ package frc.robot.Framework.IO.Out.Servos;
 
 import java.util.ArrayList;
 
-import frc.robot.Framework.IO.Out.Servos.ServoBase;
-import frc.robot.Framework.IO.Out.Servos.ServoWrapper;
-import frc.robot.Framework.Util.CommandMode;
-
 public class ServoGroup implements ServoBase {
     private ArrayList<ServoWrapper> servos = new ArrayList<>();
 

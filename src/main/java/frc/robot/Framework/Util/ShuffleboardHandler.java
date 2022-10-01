@@ -10,12 +10,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.networktables.NetworkTableInstance;
-import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class ShuffleboardHandler {
     public static Map<String, ShuffleboardBase> Handlers = new HashMap<>();

@@ -19,7 +19,7 @@ public class Motors {
     private SubsystemID m_subsystemID;
     public Element sensorElement;
     private ShuffleboardHandler tab;
-    public Motors(Map subsystemCollections, SubsystemID subsystemID){
+    public Motors(Map<String, SubsystemCollection> subsystemCollections, SubsystemID subsystemID){
         m_subsystemCollections = subsystemCollections;
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());

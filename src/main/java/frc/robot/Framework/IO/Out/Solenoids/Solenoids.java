@@ -19,7 +19,7 @@ public class Solenoids {
     public Element sensorElement;
     private ShuffleboardHandler tab;
     
-    public Solenoids(Map subsystemCollections, SubsystemID subsystemID){
+    public Solenoids(Map<String, SubsystemCollection> subsystemCollections, SubsystemID subsystemID){
         m_subsystemCollections = subsystemCollections;
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());

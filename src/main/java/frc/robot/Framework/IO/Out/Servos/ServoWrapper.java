@@ -1,14 +1,10 @@
 package frc.robot.Framework.IO.Out.Servos;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import frc.robot.Framework.IO.In.Encoders.EncoderBase;
 import frc.robot.Framework.IO.In.Encoders.EncoderWrapper;
-import frc.robot.Framework.IO.Out.Servos.ServoBase;
-import frc.robot.Framework.IO.Out.Servos.ServoGroup;
-import frc.robot.Framework.IO.Out.Servos.ServoController;
-import frc.robot.Framework.Util.CommandMode;
-import frc.robot.Framework.Util.PID.PIDController;
 
 public class ServoWrapper implements ServoBase {
 
