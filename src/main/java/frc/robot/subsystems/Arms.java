@@ -1,15 +1,15 @@
-package frc.robot.Subsystems;
+package frc.robot.subsystems;
 
-//
-import frc.robot.Framework.Subsystem;
+
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Framework.IO.In.In;
 import frc.robot.Framework.IO.Out.Out;
 
-public class Arms implements Subsystem {
+public class Arms extends SubsystemBase {
     private In input = new In(SubsystemID.ARMS);
     private Out output = new Out(SubsystemID.ARMS);
 
-    public void robotInit() {
+    public Arms() {
         System.out.println("Arms init");
     }
 

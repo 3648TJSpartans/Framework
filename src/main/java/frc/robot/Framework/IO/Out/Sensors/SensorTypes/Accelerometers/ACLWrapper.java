@@ -2,9 +2,6 @@ package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers;
 
 import org.w3c.dom.Element;
 
-import edu.wpi.first.wpilibj.ADXL345_I2C;
-import edu.wpi.first.wpilibj.ADXL345_SPI;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLTypes.ADXL_345_I2C;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLTypes.ADXL_345_SPI;
 import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLTypes.ADXL_362;

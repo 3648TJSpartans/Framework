@@ -1,26 +1,15 @@
-package frc.robot.Subsystems;
+package frc.robot.subsystems;
 
-import java.util.Set;
-
-import edu.wpi.first.networktables.NetworkTableEntry;
-import edu.wpi.first.wpilibj.ADIS16448_IMU;
-import edu.wpi.first.wpilibj.ADIS16448_IMU.CalibrationTime;
-import edu.wpi.first.wpilibj.ADIS16448_IMU.IMUAxis;
-import edu.wpi.first.wpilibj.SPI.Port;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.Framework.Subsystem;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Framework.IO.In.In;
 import frc.robot.Framework.IO.Out.Out;
 import frc.robot.Framework.Util.ShuffleboardHandler;
 
-public class Chassis implements Subsystem{
+public class Chassis extends SubsystemBase{
     private In input = new In(SubsystemID.CHASSIS);
     private Out output = new Out(SubsystemID.CHASSIS);
     ShuffleboardHandler tab = new ShuffleboardHandler("CHASSIS");
-    public void robotInit(){
+    public Chassis(){
         System.out.println("Chassis init");
     }
 

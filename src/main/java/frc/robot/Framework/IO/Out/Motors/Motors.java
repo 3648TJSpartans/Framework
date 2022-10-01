@@ -11,7 +11,7 @@ import frc.robot.Framework.IO.Out.Out.SubsystemCollection;
 import frc.robot.Framework.Util.CommandMode;
 import frc.robot.Framework.Util.ShuffleboardHandler;
 import frc.robot.Framework.Util.XMLParser;
-import frc.robot.Subsystems.SubsystemID;
+import frc.robot.subsystems.SubsystemID;
 
 public class Motors {
     private static XMLParser parser;
@@ -19,7 +19,7 @@ public class Motors {
     private SubsystemID m_subsystemID;
     public Element sensorElement;
     private ShuffleboardHandler tab;
-    public Motors(Map subsystemCollections, SubsystemID subsystemID){
+    public Motors(Map<String, SubsystemCollection> subsystemCollections, SubsystemID subsystemID){
         m_subsystemCollections = subsystemCollections;
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());

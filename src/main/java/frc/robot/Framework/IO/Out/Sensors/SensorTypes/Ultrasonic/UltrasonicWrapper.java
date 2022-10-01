@@ -2,8 +2,6 @@ package frc.robot.Framework.IO.Out.Sensors.SensorTypes.Ultrasonic;
 
 import org.w3c.dom.Element;
 
-import edu.wpi.first.wpilibj.SPI.Port;
-
 public class UltrasonicWrapper implements UltrasonicBase{
     private UltrasonicBase m_ultrasonic;
     private Element m_UltrasonicElement;
