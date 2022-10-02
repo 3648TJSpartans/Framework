@@ -1,4 +1,4 @@
-package frc.robot.framework.io.out.sensor.Gyroscopes;
+package frc.robot.framework.io.out.sensor.gyroscope;
 
 public interface GyroBase{
     public double getGyroAccel(String axis);

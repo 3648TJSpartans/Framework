@@ -4,7 +4,7 @@ import org.w3c.dom.*;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import frc.robot.framework.io.out.motor.MotorWrapper;
-import frc.robot.framework.util.PID.PIDController;
+import frc.robot.framework.util.pid.PIDController;
 
 public class EncoderWrapper{
     private EncoderBase encoder;

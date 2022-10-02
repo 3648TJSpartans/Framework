@@ -1,13 +1,13 @@
-package frc.robot.framework.io.out.sensor.Gyroscopes;
+package frc.robot.framework.io.out.sensor.gyroscope;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes.ADIS_16448;
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes.ADIS_16470;
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes.ADXRS_450;
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes.Analog_Gyro;
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes.Pigeon;
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes.nav_X;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroTypes.ADIS_16448;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroTypes.ADIS_16470;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroTypes.ADXRS_450;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroTypes.Analog_Gyro;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroTypes.Pigeon;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroTypes.nav_X;
 
 public class GyroWrapper implements GyroBase{
     Element m_gyroElement;

@@ -1,4 +1,4 @@
-package frc.robot.framework.util.PID;
+package frc.robot.framework.util;
 
 public enum PIDMode{
     VELOCITY,

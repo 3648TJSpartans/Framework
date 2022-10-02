@@ -1,8 +1,8 @@
-package frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes;
+package frc.robot.framework.io.out.sensor.gyroscope.GyroTypes;
 
 import com.ctre.phoenix.sensors.WPI_PigeonIMU;
 
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroBase;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroBase;
 
 public class Pigeon implements GyroBase{
     WPI_PigeonIMU m_gyro;

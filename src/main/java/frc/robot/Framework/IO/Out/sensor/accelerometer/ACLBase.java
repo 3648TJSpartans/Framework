@@ -1,4 +1,4 @@
-package frc.robot.framework.io.out.sensor.Accelerometers;
+package frc.robot.framework.io.out.sensor.accelerometer;
 
 public interface ACLBase {
     public double getAccelerometerAxis(String axis);

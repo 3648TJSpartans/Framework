@@ -1,9 +1,8 @@
-package frc.robot.framework.io.out.solenoid.SolenoidTypes;
+package frc.robot.framework.io.out.solenoid;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import frc.robot.framework.io.out.solenoid.SolenoidBase;
 
 public class SolenoidDouble implements SolenoidBase{
     private DoubleSolenoid solenoid;

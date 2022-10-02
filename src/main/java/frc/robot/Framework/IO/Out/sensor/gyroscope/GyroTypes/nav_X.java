@@ -1,6 +1,6 @@
-package frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes;
+package frc.robot.framework.io.out.sensor.gyroscope.GyroTypes;
 
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroBase;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroBase;
 
 public class nav_X implements GyroBase{
     //AHRS gyro;

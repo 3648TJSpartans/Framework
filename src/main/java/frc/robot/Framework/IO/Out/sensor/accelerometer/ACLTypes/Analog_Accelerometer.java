@@ -1,7 +1,7 @@
-package frc.robot.framework.io.out.sensor.Accelerometers.ACLTypes;
+package frc.robot.framework.io.out.sensor.accelerometer.ACLTypes;
 
 import edu.wpi.first.wpilibj.AnalogAccelerometer;
-import frc.robot.framework.io.out.sensor.Accelerometers.ACLBase;
+import frc.robot.framework.io.out.sensor.accelerometer.ACLBase;
 
 public class Analog_Accelerometer implements ACLBase{
     AnalogAccelerometer m_accelerometer;

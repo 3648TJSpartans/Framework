@@ -1,14 +1,19 @@
-package frc.robot.framework.io.out.sensor.Accelerometers.ACLTypes;
+package frc.robot.framework.io.out.sensor.accelerometer.ACLTypes;
 
-import edu.wpi.first.wpilibj.BuiltInAccelerometer;
+import edu.wpi.first.wpilibj.ADXL362;
+import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import edu.wpi.first.wpilibj.interfaces.Accelerometer.Range;
-import frc.robot.framework.io.out.sensor.Accelerometers.ACLBase;
+import frc.robot.framework.io.out.sensor.accelerometer.ACLBase;
 
-public class Built_In_Accelerometer implements ACLBase{
+public class ADXL_362 implements ACLBase{
     Accelerometer m_accelerometer;
-    public Built_In_Accelerometer(){
-        m_accelerometer = new BuiltInAccelerometer();
+    
+    public ADXL_362(String port, String range){
+        Port m_port = SPI.Port.valueOf(port);
+        Range m_range = Accelerometer.Range.valueOf(range);
+        m_accelerometer = new ADXL362(m_port, m_range);
     }
     public double getAccelerometerAxis(String axis){
         if(axis == "Z"|| axis == "z"){

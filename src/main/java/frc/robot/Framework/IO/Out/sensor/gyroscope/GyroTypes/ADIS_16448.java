@@ -1,11 +1,11 @@
-package frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes;
+package frc.robot.framework.io.out.sensor.gyroscope.GyroTypes;
 
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.ADIS16448_IMU.CalibrationTime;
 //import edu.wpi.first.wpilibj.I2C.Port;
 import edu.wpi.first.wpilibj.ADIS16448_IMU.IMUAxis;
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroBase;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroBase;
 
 public class ADIS_16448 implements GyroBase{
     ADIS16448_IMU m_gyro;

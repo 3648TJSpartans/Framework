@@ -1,4 +1,4 @@
-package frc.robot.framework.io.out.sensor.Ultrasonic;
+package frc.robot.framework.io.out.sensor.ultrasonic;
 
 import org.w3c.dom.Element;
 

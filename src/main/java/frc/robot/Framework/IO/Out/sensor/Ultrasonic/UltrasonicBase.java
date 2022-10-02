@@ -1,4 +1,4 @@
-package frc.robot.framework.io.out.sensor.Ultrasonic;
+package frc.robot.framework.io.out.sensor.ultrasonic;
 
 public interface UltrasonicBase {
     public double getRangeInches();

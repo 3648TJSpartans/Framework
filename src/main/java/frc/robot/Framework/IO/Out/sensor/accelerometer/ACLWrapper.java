@@ -1,12 +1,12 @@
-package frc.robot.framework.io.out.sensor.Accelerometers;
+package frc.robot.framework.io.out.sensor.accelerometer;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.io.out.sensor.Accelerometers.ACLTypes.ADXL_345_I2C;
-import frc.robot.framework.io.out.sensor.Accelerometers.ACLTypes.ADXL_345_SPI;
-import frc.robot.framework.io.out.sensor.Accelerometers.ACLTypes.ADXL_362;
-import frc.robot.framework.io.out.sensor.Accelerometers.ACLTypes.Analog_Accelerometer;
-import frc.robot.framework.io.out.sensor.Accelerometers.ACLTypes.Built_In_Accelerometer;
+import frc.robot.framework.io.out.sensor.accelerometer.ACLTypes.ADXL_345_I2C;
+import frc.robot.framework.io.out.sensor.accelerometer.ACLTypes.ADXL_345_SPI;
+import frc.robot.framework.io.out.sensor.accelerometer.ACLTypes.ADXL_362;
+import frc.robot.framework.io.out.sensor.accelerometer.ACLTypes.Analog_Accelerometer;
+import frc.robot.framework.io.out.sensor.accelerometer.ACLTypes.Built_In_Accelerometer;
 
 public class ACLWrapper implements ACLBase{
     Element m_accelerometerElement;

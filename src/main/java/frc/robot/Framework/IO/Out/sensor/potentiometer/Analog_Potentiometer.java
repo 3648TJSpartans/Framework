@@ -1,4 +1,4 @@
-package frc.robot.framework.io.out.sensor.Potentiometers;
+package frc.robot.framework.io.out.sensor.potentiometer;
 
 import edu.wpi.first.wpilibj.AnalogPotentiometer;
 

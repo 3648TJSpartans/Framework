@@ -1,4 +1,4 @@
-package frc.robot.framework.io.out.sensor.DigitalIn;
+package frc.robot.framework.io.out.sensor.digitalinput;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 

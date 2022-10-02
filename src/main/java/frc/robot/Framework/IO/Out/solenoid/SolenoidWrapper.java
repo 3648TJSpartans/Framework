@@ -3,8 +3,6 @@ package frc.robot.framework.io.out.solenoid;
 import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj.PneumaticsModuleType;
-import frc.robot.framework.io.out.solenoid.SolenoidTypes.SolenoidDouble;
-import frc.robot.framework.io.out.solenoid.SolenoidTypes.SolenoidSingle;
 
 public class SolenoidWrapper implements SolenoidBase {
     private SolenoidBase solenoid;

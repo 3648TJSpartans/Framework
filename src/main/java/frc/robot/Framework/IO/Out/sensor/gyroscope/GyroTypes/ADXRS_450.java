@@ -1,8 +1,8 @@
-package frc.robot.framework.io.out.sensor.Gyroscopes.GyroTypes;
+package frc.robot.framework.io.out.sensor.gyroscope.GyroTypes;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.SPI;
-import frc.robot.framework.io.out.sensor.Gyroscopes.GyroBase;
+import frc.robot.framework.io.out.sensor.gyroscope.GyroBase;
 
 public class ADXRS_450 implements GyroBase{
     ADXRS450_Gyro m_gyro;
