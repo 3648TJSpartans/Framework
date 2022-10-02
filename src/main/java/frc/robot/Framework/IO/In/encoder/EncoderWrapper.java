@@ -3,9 +3,6 @@ package frc.robot.framework.io.in.encoder;
 import org.w3c.dom.*;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import frc.robot.framework.io.in.encoder.EncoderTypes.DIOEncoder;
-import frc.robot.framework.io.in.encoder.EncoderTypes.NeoEncoder;
-import frc.robot.framework.io.in.encoder.EncoderTypes.SparkMaxEncoder;
 import frc.robot.framework.io.out.motor.MotorWrapper;
 import frc.robot.framework.util.PID.PIDController;
 

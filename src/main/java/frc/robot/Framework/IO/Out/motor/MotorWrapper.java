@@ -5,10 +5,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import frc.robot.framework.io.in.encoder.EncoderWrapper;
-import frc.robot.framework.io.out.motor.types.MotorGroup;
-import frc.robot.framework.io.out.motor.types.SparkController;
-import frc.robot.framework.io.out.motor.types.SparkMaxController;
-import frc.robot.framework.io.out.motor.types.TalonController;
 import frc.robot.framework.util.CommandMode;
 
 public class MotorWrapper implements MotorBase {

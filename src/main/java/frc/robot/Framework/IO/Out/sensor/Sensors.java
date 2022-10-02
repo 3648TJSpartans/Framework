@@ -8,11 +8,11 @@ import java.util.Map;
 import org.w3c.dom.Element;
 
 import frc.robot.framework.io.out.Out.SubsystemCollection;
-import frc.robot.framework.io.out.sensor.SensorTypes.Accelerometers.ACLWrapper;
-import frc.robot.framework.io.out.sensor.SensorTypes.DigitalIn.DigitalInWrapper;
-import frc.robot.framework.io.out.sensor.SensorTypes.Gyroscopes.GyroWrapper;
-import frc.robot.framework.io.out.sensor.SensorTypes.Potentiometers.PotentiometerWrapper;
-import frc.robot.framework.io.out.sensor.SensorTypes.Ultrasonic.UltrasonicWrapper;
+import frc.robot.framework.io.out.sensor.Accelerometers.ACLWrapper;
+import frc.robot.framework.io.out.sensor.DigitalIn.DigitalInWrapper;
+import frc.robot.framework.io.out.sensor.Gyroscopes.GyroWrapper;
+import frc.robot.framework.io.out.sensor.Potentiometers.PotentiometerWrapper;
+import frc.robot.framework.io.out.sensor.Ultrasonic.UltrasonicWrapper;
 import frc.robot.framework.util.ShuffleboardHandler;
 import frc.robot.framework.util.XMLParser;
 import frc.robot.subsystem.SubsystemID;
