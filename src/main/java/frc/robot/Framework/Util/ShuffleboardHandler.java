@@ -1,4 +1,4 @@
-package frc.robot.Framework.Util;
+package frc.robot.framework.util;
 
 import java.util.ArrayList;
 import java.util.HashMap;

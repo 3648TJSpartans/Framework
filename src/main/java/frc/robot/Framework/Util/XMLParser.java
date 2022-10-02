@@ -1,4 +1,4 @@
-package frc.robot.Framework.Util;
+package frc.robot.framework.util;
 
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
