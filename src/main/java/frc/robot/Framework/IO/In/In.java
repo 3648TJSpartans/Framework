@@ -7,10 +7,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import frc.robot.framework.io.in.controller.ControllerWrapper;
-import frc.robot.framework.io.in.controller.LogitechGamepad;
-import frc.robot.framework.io.in.controller.PSGamepad;
-import frc.robot.framework.io.in.controller.XboxGamepad;
+import frc.robot.framework.controller.*;
 import frc.robot.framework.util.XMLMerger;
 import frc.robot.framework.util.XMLParser;
 import frc.robot.subsystem.SubsystemID;

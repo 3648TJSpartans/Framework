@@ -1,18 +1,21 @@
 package frc.robot.subsystem;
 
+import org.w3c.dom.Node;
+
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.io.in.In;
 import frc.robot.framework.io.out.Out;
+import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.util.ShuffleboardHandler;
 
-public class Chassis extends SubsystemBase{
+public class Chassis extends SubsystemBase implements RobotXML{
     private In input = new In(SubsystemID.CHASSIS);
     private Out output = new Out(SubsystemID.CHASSIS);
     ShuffleboardHandler tab = new ShuffleboardHandler("CHASSIS");
     public Chassis(){
         System.out.println("Chassis init");
     }
-
+    
     public void robotPeriodic(){
         
     }
@@ -40,5 +43,17 @@ public class Chassis extends SubsystemBase{
         
         output.motors.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -1);
         output.motors.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE"));
+    }
+
+    @Override
+    public void ReadXML(Node node) {
+        // TODO Auto-generated method stub
+        
+    }
+
+    @Override
+    public void ReloadConfig() {
+        // TODO Auto-generated method stub
+        
     }
 }

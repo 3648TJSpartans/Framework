@@ -5,17 +5,19 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.w3c.dom.Node;
+
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.io.in.In;
 import frc.robot.framework.io.out.Out;
+import frc.robot.framework.robot.RobotXML;
 import frc.robot.subsystem.Arms;
 import frc.robot.subsystem.Chassis;
-import frc.robot.subsystem.Intake;
 import frc.robot.subsystem.Shooter;
 
-public class Robot extends TimedRobot {
+public class Robot extends TimedRobot implements RobotXML{
   ArrayList<SubsystemBase> subsystems = new ArrayList<>();
 
   @Override
@@ -25,14 +27,13 @@ public class Robot extends TimedRobot {
     subsystems.add(new Chassis());
     subsystems.add(new Shooter());
     subsystems.add(new Arms());
-    subsystems.add(new Intake());
   }
-
+  
   public void CommandThings(){
     HashMap<String,Class<?>> commandClasses = new HashMap<>();
     var packageName = "frc.robot.subsystems.commands";
     try {
-      var classes = frc.robot.framework.util.ReflectionUtil.findAllClassesUsingClassLoader(packageName);
+      var classes = frc.robot.framework.util.Reflection.findAllClassesUsingClassLoader(packageName);
       for (Class<?> myClass : classes) {
         commandClasses.put(myClass.getName(), myClass);
         System.out.println(myClass.getName());
@@ -73,5 +74,17 @@ public class Robot extends TimedRobot {
 
   @Override
   public void testPeriodic() {
+  }
+
+  @Override
+  public void ReadXML(Node node) {
+    // TODO Auto-generated method stub
+    
+  }
+
+  @Override
+  public void ReloadConfig() {
+    // TODO Auto-generated method stub
+    
   }
 }
