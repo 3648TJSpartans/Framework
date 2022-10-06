@@ -1,38 +1,29 @@
-package frc.robot.Framework.IO.Out;
+package frc.robot.framework.io.out;
 
-import frc.robot.Framework.IO.Out.Motors.MotorWrapper;
-import frc.robot.Framework.IO.Out.Motors.Motors;
-import frc.robot.Framework.IO.Out.Servos.ServoWrapper;
-import frc.robot.Framework.IO.Out.Servos.Servos;
-import frc.robot.Framework.IO.Out.Sensors.Sensors;
-import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Accelerometers.ACLWrapper;
-import frc.robot.Framework.IO.Out.Sensors.SensorTypes.DigitalIn.DigitalInWrapper;
-import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Gyroscopes.GyroWrapper;
-import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Potentiometers.PotentiometerWrapper;
-import frc.robot.Framework.IO.Out.Sensors.SensorTypes.Ultrasonic.UltrasonicWrapper;
-import frc.robot.Framework.IO.Out.Solenoids.SolenoidWrapper;
-import frc.robot.Framework.IO.Out.Solenoids.Solenoids;
-import frc.robot.Framework.Util.XMLParser;
-import frc.robot.Subsystems.SubsystemID;
-import frc.robot.Framework.Util.BehaviorHandler;
-import frc.robot.Framework.Util.CommandMode;
-import frc.robot.Framework.Util.ShuffleboardHandler;
-import frc.robot.Framework.Util.XMLMerger;
-
-import java.util.Map;
-import java.util.Set;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
-import org.w3c.dom.*;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
 import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardComponent;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardContainer;
-import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.framework.io.out.motor.MotorWrapper;
+import frc.robot.framework.io.out.motor.Motors;
+import frc.robot.framework.io.out.sensor.Sensors;
+import frc.robot.framework.io.out.sensor.SensorTypes.Accelerometers.ACLWrapper;
+import frc.robot.framework.io.out.sensor.SensorTypes.DigitalIn.DigitalInWrapper;
+import frc.robot.framework.io.out.sensor.SensorTypes.Gyroscopes.GyroWrapper;
+import frc.robot.framework.io.out.sensor.SensorTypes.Potentiometers.PotentiometerWrapper;
+import frc.robot.framework.io.out.sensor.SensorTypes.Ultrasonic.UltrasonicWrapper;
+import frc.robot.framework.io.out.servo.ServoWrapper;
+import frc.robot.framework.io.out.servo.Servos;
+import frc.robot.framework.io.out.solenoid.SolenoidWrapper;
+import frc.robot.framework.io.out.solenoid.Solenoids;
+import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.XMLMerger;
+import frc.robot.framework.util.XMLParser;
+import frc.robot.subsystem.SubsystemID;
 
 /**
  * [Out] is a class containing static methods for controlling all outputs from
@@ -87,7 +78,10 @@ public class Out {
                     } else if (childElement.getTagName().equals("group")) {
                         String id = childElement.getAttribute("id");
                         motors.put(id, new MotorWrapper(childElement, true));
-                    } else if (childElement.getTagName().equals("servo")) {
+                    }else if (childElement.getTagName().equals("servo")) {
+                        String id = childElement.getAttribute("id");
+                        servos.put(id, new ServoWrapper(childElement));
+                    } else if (childElement.getTagName().equals("group")) {
                         String id = childElement.getAttribute("id");
                         servos.put(id, new ServoWrapper(childElement, true));
                     } else if (childElement.getTagName().equals("solenoid")) {

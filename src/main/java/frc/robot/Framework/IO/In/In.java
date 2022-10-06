@@ -1,20 +1,19 @@
-package frc.robot.Framework.IO.In;
+package frc.robot.framework.io.in;
 
-import java.util.Map;
-import java.util.Scanner;
-import java.io.File;
-import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map;
 
-import frc.robot.Framework.IO.In.Controllers.ControllerWrapper;
-import frc.robot.Framework.IO.In.Controllers.ControllerTypes.LogitechGamepad;
-import frc.robot.Framework.IO.In.Controllers.ControllerTypes.PSGamepad;
-import frc.robot.Framework.IO.In.Controllers.ControllerTypes.XboxGamepad;
-import frc.robot.Framework.Util.XMLMerger;
-import frc.robot.Framework.Util.XMLParser;
-import frc.robot.Subsystems.SubsystemID;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
-import org.w3c.dom.*;
+import frc.robot.framework.io.in.controller.ControllerWrapper;
+import frc.robot.framework.io.in.controller.ControllerTypes.LogitechGamepad;
+import frc.robot.framework.io.in.controller.ControllerTypes.PSGamepad;
+import frc.robot.framework.io.in.controller.ControllerTypes.XboxGamepad;
+import frc.robot.framework.util.XMLMerger;
+import frc.robot.framework.util.XMLParser;
+import frc.robot.subsystem.SubsystemID;
 
 /**
  * [In] is a class containing static methods for interfacing with all inputs to

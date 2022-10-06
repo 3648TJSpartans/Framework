@@ -1,4 +1,4 @@
-package frc.robot.Framework.Util.PID;
+package frc.robot.framework.util.PID;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -6,7 +6,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import frc.robot.Framework.IO.In.Encoders.EncoderWrapper;
+import frc.robot.framework.io.in.encoder.EncoderWrapper;
 
 public class PIDController{
     private String currentProfile;

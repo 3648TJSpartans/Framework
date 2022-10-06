@@ -1,4 +1,4 @@
-package frc.robot.Framework.Util;
+package frc.robot.framework.util;
 
 public class Buttons {
 	public static final int A = 1;
