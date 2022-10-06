@@ -3,12 +3,10 @@ package frc.robot.subsystem;
 import org.w3c.dom.Node;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.framework.io.in.In;
-import frc.robot.framework.io.out.Out;
+import frc.robot.framework.robot.Out;
 import frc.robot.framework.robot.RobotXML;
 
 public class Arms extends SubsystemBase implements RobotXML{
-    private In input = new In(SubsystemID.ARMS);
     private Out output = new Out(SubsystemID.ARMS);
 
     public Arms() {

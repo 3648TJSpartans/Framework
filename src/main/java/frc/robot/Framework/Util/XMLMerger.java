@@ -29,7 +29,7 @@ public class XMLMerger {
         
         
     }
-    public String merger(String element, String... strings){
+    public static String merger(String element, String... strings){
         try{
 
             File file = File.createTempFile("temp", ".xml");

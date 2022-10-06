@@ -10,8 +10,7 @@ import org.w3c.dom.Node;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.framework.io.in.In;
-import frc.robot.framework.io.out.Out;
+import frc.robot.framework.robot.Out;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.subsystem.Arms;
 import frc.robot.subsystem.Chassis;
@@ -22,11 +21,12 @@ public class Robot extends TimedRobot implements RobotXML{
 
   @Override
   public void robotInit() {
-    In.Init("XML/Controls_IN/GarryChassis.xml", "XML/Controls_IN/GarryShooter.xml");
-    Out.Init("XML/Config_OUT/CHASSIS.xml", "XML/Config_OUT/SHOOTER.xml");
-    subsystems.add(new Chassis());
-    subsystems.add(new Shooter());
-    subsystems.add(new Arms());
+    ReadXML(null);
+    //In.Init("XML/Controls_IN/GarryChassis.xml", "XML/Controls_IN/GarryShooter.xml");
+    //Out.Init("XML/Config_OUT/CHASSIS.xml", "XML/Config_OUT/SHOOTER.xml");
+    //subsystems.add(new Chassis());
+    //subsystems.add(new Shooter());
+    //subsystems.add(new Arms());
   }
   
   public void CommandThings(){
