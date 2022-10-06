@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.io.out.Out.SubsystemCollection;
+import frc.robot.framework.robot.Out.SubsystemCollection;
 import frc.robot.framework.sensor.accelerometer.ACLWrapper;
 import frc.robot.framework.sensor.digitalinput.DigitalInWrapper;
 import frc.robot.framework.sensor.gyroscope.GyroWrapper;

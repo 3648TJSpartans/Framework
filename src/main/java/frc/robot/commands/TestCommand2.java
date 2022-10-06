@@ -1,11 +1,16 @@
 package frc.robot.commands;
 
+import org.w3c.dom.Node;
+
 import edu.wpi.first.wpilibj2.command.*;
 
-public class TestCommand2 extends CommandBase{
+import frc.robot.framework.robot.*;
+
+public class TestCommand2 extends CommandBase implements RobotXML{
     
     private long start = System.currentTimeMillis();
-    public TestCommand2(){
+    public TestCommand2(Node node){
+      ReadXML(node);
     }
 
     
@@ -27,5 +32,19 @@ public class TestCommand2 extends CommandBase{
     @Override
     public boolean isFinished() {
       return true;
+    }
+
+
+    @Override
+    public void ReadXML(Node node) {
+      // TODO Auto-generated method stub
+      
+    }
+
+
+    @Override
+    public void ReloadConfig() {
+      // TODO Auto-generated method stub
+      
     }
 }

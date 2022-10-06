@@ -2,21 +2,21 @@
 <robot>
     <controller type="LOGITECH" port="0" id="DRIVE">
         <CHASSIS type="TANK" turning_gain="0.5">
-            <axis axis="LEFT_TRIGGER" function="CAMERA_AIM"></axis>
-            <axis axis="RIGHT_TRIGGER" function="MODE_FAST"></axis>
-            <axis axis="RIGHT_JOYSTICK_Y" function="RIGHT_SPEED"></axis>
-            <axis axis="LEFT_JOYSTICK_Y" function="LEFT_SPEED"></axis>
-            <button button="Y" function="CAMERA_AIM"></button>
+            <axis axis="LEFT_TRIGGER" command="CAMERA_AIM"></axis>
+            <axis axis="RIGHT_TRIGGER" command="MODE_FAST"></axis>
+            <axis axis="RIGHT_JOYSTICK_Y" command="RIGHT_SPEED"></axis>
+            <axis axis="LEFT_JOYSTICK_Y" command="LEFT_SPEED"></axis>
+            <button button="Y" command="CAMERA_AIM"></button>
         </CHASSIS>
         <CLIMBER>
-            <button button="LEFT_SHOULDER" function="EXTEND"></button>
-            <button button="RIGHT_SHOULDER" function="RETRACT"></button>
+            <button button="LEFT_SHOULDER" command="EXTEND"></button>
+            <button button="RIGHT_SHOULDER" command="RETRACT"></button>
         </CLIMBER>
         <INTAKE>
-            <!-- <button button="RIGHT_SHOULDER" function="INTAKE_IN"></button>
-            <button button="LEFT_SHOULDER" function="INTAKE_OUT"></button> -->
-            <button button="B" function="UPTAKE_LOWER"></button>
-            <button button="A" function="UPTAKE_UPPER"></button>
+            <!-- <button button="RIGHT_SHOULDER" command="INTAKE_IN"></button>
+            <button button="LEFT_SHOULDER" command="INTAKE_OUT"></button> -->
+            <button button="B" command="UPTAKE_LOWER"></button>
+            <button button="A" command="UPTAKE_UPPER"></button>
         </INTAKE>
     </controller>
 </robot>

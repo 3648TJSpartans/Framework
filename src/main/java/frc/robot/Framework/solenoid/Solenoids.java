@@ -7,7 +7,7 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.io.out.Out.SubsystemCollection;
+import frc.robot.framework.robot.Out.SubsystemCollection;
 import frc.robot.framework.util.ShuffleboardHandler;
 import frc.robot.framework.util.XMLParser;
 import frc.robot.subsystem.SubsystemID;

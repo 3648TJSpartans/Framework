@@ -1,4 +1,4 @@
-package frc.robot.framework.io.out;
+package frc.robot.framework.robot;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -145,19 +145,14 @@ public class Out {
                     Node currentSubsystem = subsystemList.item(j);
                     if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
                         Element subsystemElement = (Element) currentSubsystem;
-                        if(subsystemElement.getTagName().equals("BEHAVIORS") || subsystemElement.getTagName().equals("SYSTEMS")){
-                            BehaviorHandler(subsystemElement);
-                        }
                         subsystemCollections.put(subsystemElement.getTagName(), new SubsystemCollection(subsystemElement));
-                        
                     }
+                else {System.out.println("Isn't this always true? "+ currentSubsystem);}
                 }
             }
+            else {System.out.println("Isn't this always true? "+ currentSystem);}
         }
         
-    }
-
-    private static void BehaviorHandler(Element subsystemElement) {
     }
 
     private SubsystemID subsystemID;

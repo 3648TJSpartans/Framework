@@ -28,7 +28,7 @@ public class ControllerWrapper{
                 Node currentButton = buttonNodes.item(i);
                 if(currentButton.getNodeType() == Node.ELEMENT_NODE){
                     Element buttonElement = (Element)currentButton;
-                    buttons.put(buttonElement.getAttribute("function"), buttonElement.getAttribute("button"));
+                    buttons.put(buttonElement.getAttribute("command"), buttonElement.getAttribute("button"));
                 }
             }
 
@@ -37,7 +37,7 @@ public class ControllerWrapper{
                 Node currentAxis = axisNodes.item(i);
                 if(currentAxis.getNodeType() == Node.ELEMENT_NODE){
                     Element axisElement = (Element)currentAxis;
-                    axes.put(axisElement.getAttribute("function"), axisElement.getAttribute("axis"));
+                    axes.put(axisElement.getAttribute("command"), axisElement.getAttribute("axis"));
                 }
             }
         }
@@ -94,6 +94,7 @@ public class ControllerWrapper{
         }
         return requestedSystem.getAttribute(attribute);
     }
+    
     static List<String> errorAry = new ArrayList<>();
     private void controllerError(String type, String id, String subsystemID){
         boolean found = false;
