@@ -1,14 +1,13 @@
 package frc.robot.subsystem;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.framework.robot.Out;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.util.ShuffleboardHandler;
 
 public class Chassis extends SubsystemBase implements RobotXML{
-    private Out output = new Out(SubsystemID.CHASSIS);
+    //private Out output = new Out(SubsystemID.CHASSIS);
     ShuffleboardHandler tab = new ShuffleboardHandler("CHASSIS");
     public Chassis(){
         System.out.println("Chassis init");
@@ -44,7 +43,7 @@ public class Chassis extends SubsystemBase implements RobotXML{
     }
 
     @Override
-    public void ReadXML(Node node) {
+    public void ReadXML(Element element) {
         // TODO Auto-generated method stub
         
     }

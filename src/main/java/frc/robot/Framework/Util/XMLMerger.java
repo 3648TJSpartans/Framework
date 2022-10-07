@@ -22,16 +22,14 @@ import org.w3c.dom.NodeList;
 
 public class XMLMerger {
     public XMLMerger() {
-        System.out.println("Working Directory = " + System.getProperty("user.dir"));
-        Path currentRelativePath = Paths.get("");
-        String s = currentRelativePath.toAbsolutePath().toString();
-        System.out.println("Current absolute path is: " + s);
-        
         
     }
     public static String merger(String element, String... strings){
         try{
-
+            System.out.println("Working Directory = " + System.getProperty("user.dir"));
+            Path currentRelativePath = Paths.get("");
+            String s = currentRelativePath.toAbsolutePath().toString();
+            System.out.println("Current absolute path is: " + s);
             File file = File.createTempFile("temp", ".xml");
             System.out.println(file.getAbsolutePath());
             file.deleteOnExit();

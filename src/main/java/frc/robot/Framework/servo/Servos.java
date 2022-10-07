@@ -1,25 +1,19 @@
 package frc.robot.framework.servo;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.robot.Out.SubsystemCollection;
 import frc.robot.framework.util.ShuffleboardHandler;
-import frc.robot.framework.util.XMLParser;
 import frc.robot.subsystem.SubsystemID;
 
 public class Servos {
-    private static XMLParser parser;
-    private static Map<String, SubsystemCollection> m_subsystemCollections = new HashMap<>();
+    private static Map<String, ServoWrapper> servos = new HashMap<>();
     private SubsystemID m_subsystemID;
     public Element sensorElement;
     private ShuffleboardHandler tab;
-    public Servos(Map<String, SubsystemCollection> subsystemCollections, SubsystemID subsystemID){
-        m_subsystemCollections = subsystemCollections;
+    public Servos(SubsystemID subsystemID){
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());
     }
@@ -29,32 +23,16 @@ public class Servos {
      * @param id the id of the servo or Servo group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
      */
     private ServoWrapper getMotor(String id) {
-        SubsystemCollection requestedSystem = m_subsystemCollections.get(m_subsystemID.name());
-        if (requestedSystem == null) {
-            motorError(id, m_subsystemID.name());
-            return null;
-        }
-        ServoWrapper requestedMotor = requestedSystem.servos.get(id);
+        ServoWrapper requestedMotor = servos.get(id);
         if (requestedMotor == null) {
             motorError(id, m_subsystemID.name());
             return null;
         }
-
         return requestedMotor;
     }
-    static List<String> errorAry = new ArrayList<>();
+
     private void motorError(String id, String subsystemID){
-        boolean found = false;
-        for(var i = 0; i< errorAry.size() ; i++){
-            if(errorAry.get(i) == id){
-                found = true;
-            }
-        }
-        if(found == false){
-            System.out.println("Motor:" + id + " not found. Subsystem: " + subsystemID + " not registered for output.");
-            errorAry.add(id);
-        }
-        
+        System.out.println("Motor:" + id + " not found. Subsystem: " + subsystemID + " not registered for output.");
     }
     /** 
      * [setServo] sets the speed of the requested motor or motor group

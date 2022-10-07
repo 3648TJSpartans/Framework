@@ -1,6 +1,6 @@
 package frc.robot.commands;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
@@ -11,7 +11,7 @@ public class TestCommand extends CommandBase implements RobotXML{
     private long start = System.currentTimeMillis();
     private boolean finished = false;
 
-    public TestCommand(Node node){
+    public TestCommand(Element element){
     }
     
     public TestCommand(int a, int b, int c){
@@ -40,7 +40,7 @@ public class TestCommand extends CommandBase implements RobotXML{
     }
 
     @Override
-    public void ReadXML(Node node) {
+    public void ReadXML(Element element) {
       // TODO Auto-generated method stub
       
     }

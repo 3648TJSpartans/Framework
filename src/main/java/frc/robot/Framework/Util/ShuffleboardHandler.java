@@ -170,18 +170,9 @@ public class ShuffleboardHandler {
             entry.setValue(value);
             liveEntry.setValue(value);
         }
-        static List<String> tableErrorAry = new ArrayList<>();
+        
         private void networkTableError(String id, String tabName){
-            boolean found = false;
-            for(var i = 0; i< tableErrorAry.size() ; i++){
-                if(tableErrorAry.get(i) == id){
-                    found = true;
-                }
-            }
-            if(found == false){
-                System.out.println("entry: " + id + " not found in tab: " + tabName);
-                tableErrorAry.add(id);
-            }
+            System.out.println("entry: " + id + " not found in tab: " + tabName);
         }
     }
 }

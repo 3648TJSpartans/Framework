@@ -1,13 +1,12 @@
 package frc.robot.subsystem;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.framework.robot.Out;
 import frc.robot.framework.robot.RobotXML;
 
 public class Arms extends SubsystemBase implements RobotXML{
-    private Out output = new Out(SubsystemID.ARMS);
+    //private Out output = new Out(SubsystemID.ARMS);
 
     public Arms() {
         System.out.println("Arms init");
@@ -35,7 +34,7 @@ public class Arms extends SubsystemBase implements RobotXML{
     }
 
     @Override
-    public void ReadXML(Node node) {
+    public void ReadXML(Element element) {
         // TODO Auto-generated method stub
         
     }

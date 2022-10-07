@@ -51,8 +51,7 @@ public class In {
      */
 
     public static void Init(String... strings) {
-        XMLMerger merger = new XMLMerger();
-        String XMLPath = merger.merger("controller", strings);
+        String XMLPath = XMLMerger.merger("controller", strings);
         XMLParser parser = new XMLParser(XMLPath);
         Element root = parser.getRootElement();
         NodeList controllerList = root.getElementsByTagName("controller");
