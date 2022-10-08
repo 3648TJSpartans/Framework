@@ -20,6 +20,11 @@ public class Solenoids {
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());
     }
+    
+    public void put(String id, SolenoidWrapper solenoid){
+        solenoids.put(id, solenoid);
+    }
+
     /** 
      * [setSolenoid] returns the value of requested button
      * 

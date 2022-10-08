@@ -7,12 +7,10 @@ import org.w3c.dom.Element;
 
 
 import frc.robot.framework.util.ShuffleboardHandler;
-import frc.robot.framework.util.XMLParser;
 import frc.robot.subsystem.SubsystemID;
 
 
 public class Accelerometers{
-    private static XMLParser parser;
     private static Map<String, ACLWrapper> accelerometers = new HashMap<>();
     private SubsystemID m_subsystemID;
     public Element sensorElement;
@@ -21,6 +19,10 @@ public class Accelerometers{
     public Accelerometers(SubsystemID subsystemID){
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());
+    }
+
+    public void put(String id, ACLWrapper accelerometer){
+        accelerometers.put(id, accelerometer);
     }
 
     private ACLWrapper getAccelerometer(String id) {

@@ -4,23 +4,36 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
-import frc.robot.subsystem.Arms;
-import frc.robot.subsystem.Chassis;
-import frc.robot.subsystem.Shooter;
+import frc.robot.framework.util.XMLParser;
+import frc.robot.subsystem.*;
 
 public class Robot extends TimedRobot implements RobotXML{
-  ArrayList<SubsystemBase> subsystems = new ArrayList<>();
+  ArrayList<SubsystemBase> subsystems;
 
   @Override
   public void robotInit() {
-    
+    XMLParser parser = new XMLParser(Filesystem.getDeployDirectory()+"/robot.xml");
+    Element root = parser.getRootElement();
+    if (root==null){
+      System.out.println("Could not read robot.xml!");
+      return;
+    }
+    ReadXML(root);
+
+
+
     //In.Init("XML/Controls_IN/GarryChassis.xml", "XML/Controls_IN/GarryShooter.xml");
     //Out.Init("XML/Config_OUT/CHASSIS.xml", "XML/Config_OUT/SHOOTER.xml");
     //subsystems.add(new Chassis());
@@ -28,28 +41,7 @@ public class Robot extends TimedRobot implements RobotXML{
     //subsystems.add(new Arms());
   }
   
-  public void CommandThings(){
-    HashMap<String,Class<?>> commandClasses = new HashMap<>();
-    var packageName = "frc.robot.subsystems.commands";
-    try {
-      var classes = frc.robot.framework.util.Reflection.findAllClassesUsingClassLoader(packageName);
-      for (Class<?> myClass : classes) {
-        commandClasses.put(myClass.getName(), myClass);
-        System.out.println(myClass.getName());
-        Class<?>[] nullClass=null;
-        //myClass.getDeclaredConstructor( new Class<?>[]{int.class, int.class, int.class}).newInstance(1,2,3)
-        Object[] nullParameters=null;
-        var temp = (Command)(myClass.getDeclaredConstructor(nullClass).newInstance(nullParameters));
-        for (Method m : myClass.getDeclaredMethods()){
-            if (Modifier.isPublic(m.getModifiers()) && m.getName().contains("execute")){
-              m.invoke(temp,nullParameters);
-            }
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    } 
-  }
+  
 
   @Override
   public void robotPeriodic() {
@@ -82,8 +74,63 @@ public class Robot extends TimedRobot implements RobotXML{
   }
 
   @Override
-  public void ReadXML(Element node) {
-    // TODO Auto-generated method stub
-    
+  public void ReadXML(Element robot) {
+    subsystems = new ArrayList<SubsystemBase>();
+    GetAllSubSystems();
+    //ShuffleboardHandler tab = ShuffleboardCollections.get(systemElement.getTagName());
+    NodeList children = robot.getChildNodes();
+    for (int i = 0; i < children.getLength(); i++) {
+      Node currentChild = children.item(i);
+      if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
+        Element childElement = (Element) currentChild;
+        if (childElement.getTagName().equals("subsystem")) {
+          System.out.println("LoadingXML - Processing System:"+currentChild.getAttributes().getNamedItem("type"));
+        }
+      }
+    }
+  }
+
+  public HashMap<String,Class<?>> GetAllCommands(){
+    HashMap<String,Class<?>> commandClasses = new HashMap<>();
+   
+    String[] packageNames = {"frc.robot.subsystems.commands"};
+    Set<Class<?>> classes = new HashSet<Class<?>>();
+    try {
+      for(String packageName : packageNames){
+        var classesInPackage=frc.robot.framework.util.Reflection.findAllClassesUsingClassLoader(packageName);
+        if (classesInPackage != null)
+         classes.addAll(classesInPackage);
+      }
+      for (Class<?> myClass : classes) {
+        // TODO filter classes for subsystems
+        commandClasses.put(myClass.getName(), myClass);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } 
+    return commandClasses;
+  }
+
+  
+
+  public HashMap<String,Class<?>> GetAllSubSystems(){
+    HashMap<String,Class<?>> subsystemsReflection = new HashMap<>();
+    String[] packageNames = {"frc.robot.subsystem", "frc.robot.framework.subsystems"};
+    Set<Class<?>> classes = new HashSet<Class<?>>();
+    try {
+      for(String packageName : packageNames){
+        var classesInPackage=frc.robot.framework.util.Reflection.findAllClassesUsingClassLoader(packageName);
+        if (classesInPackage != null)
+         classes.addAll(classesInPackage);
+      }
+      for (Class<?> myClass : classes) {
+        // TODO filter classes for subsystems
+        subsystemsReflection.put(myClass.getName(), myClass);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } 
+
+    return subsystemsReflection;
   }
 }

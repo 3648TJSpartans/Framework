@@ -17,6 +17,11 @@ public class Servos {
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());
     }
+
+    public void put(String id, ServoWrapper servo){
+        servos.put(id, servo);
+    }
+
     /** 
      * [getMotor] returns the Servo associated with the id
      * 

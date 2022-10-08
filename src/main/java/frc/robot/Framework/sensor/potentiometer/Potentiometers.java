@@ -22,6 +22,10 @@ public class Potentiometers{
         tab = new ShuffleboardHandler(subsystemID.toString());
     }
     
+    public void put(String id, PotentiometerWrapper pot){
+        potentiometers.put(id, pot);
+    }
+
     private PotentiometerWrapper getPotentiometer(String id) {
         PotentiometerWrapper requestedsensor = potentiometers.get(id);
         if (requestedsensor == null) {

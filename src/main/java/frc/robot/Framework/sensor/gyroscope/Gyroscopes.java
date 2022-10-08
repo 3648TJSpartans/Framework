@@ -22,6 +22,10 @@ public class Gyroscopes{
         tab = new ShuffleboardHandler(subsystemID.toString());
     }
 
+    public void put(String id, GyroWrapper gyro){
+        gyroscopes.put(id, gyro);
+    }
+
     private GyroWrapper getGyroscope(String id) {
         GyroWrapper requestedsensor = gyroscopes.get(id);
         if (requestedsensor == null) {

@@ -21,6 +21,11 @@ public class Ultrasonics{
         m_subsystemID = subsystemID;
         tab = new ShuffleboardHandler(subsystemID.toString());
     }
+
+    public void put(String id, UltrasonicWrapper ultrasonic){
+        ultrasonics.put(id, ultrasonic);
+    }
+
     private UltrasonicWrapper getUltrasonic(String id) {
         UltrasonicWrapper requestedsensor = ultrasonics.get(id);
         if (requestedsensor == null) {

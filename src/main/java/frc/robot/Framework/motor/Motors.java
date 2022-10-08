@@ -32,6 +32,11 @@ public class Motors {
 
         return requestedMotor;
     }
+
+    public void put(String id, MotorWrapper motor){
+        motors.put(id, motor);
+    }
+
     private void motorError(String id, String subsystemID){
         System.out.println("Motor:" + id + " not found. Subsystem: " + subsystemID + " not registered for output.");
     }

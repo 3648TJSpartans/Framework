@@ -20,6 +20,10 @@ public class DigitalInputs{
         tab = new ShuffleboardHandler(subsystemID.toString());
     }
 
+    public void put(String id, DigitalInWrapper digital){
+        digitalinputs.put(id, digital);
+    }
+
     private DigitalInWrapper getDio(String id) {
         DigitalInWrapper requestedSensor = digitalinputs.get(id);
         if (requestedSensor == null) {
