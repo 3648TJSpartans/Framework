@@ -1,8 +1,6 @@
 package frc.robot.framework.util;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.w3c.dom.Element;
@@ -24,14 +22,15 @@ public class ShuffleboardHandler {
             Node currentSystem = systemList.item(i);
             if (currentSystem.getNodeType() == Node.ELEMENT_NODE) {
                 Element systemElement = (Element) currentSystem;
-                NodeList subsystemList = systemElement.getChildNodes();
-                for (int j = 0; j < subsystemList.getLength(); j++) {
-                    Node currentSubsystem = subsystemList.item(j);
-                    if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
-                        Element subsystemElement = (Element) currentSubsystem;
-                        Handlers.put(subsystemElement.getTagName(), new ShuffleboardBase(subsystemElement));
+            //    NodeList subsystemList = systemElement.getChildNodes();
+            //    for (int j = 0; j < subsystemList.getLength(); j++) {
+            //        Node currentSubsystem = subsystemList.item(j);
+                    if (systemElement.getNodeType() == Node.ELEMENT_NODE) {
+                        Element subsystemElement = (Element) systemElement;
+                        if (!subsystemElement.getAttribute("id").isEmpty()){
+                            Handlers.put(subsystemElement.getAttribute("id"), new ShuffleboardBase(subsystemElement));}
                     }
-                }
+            //    }
             }
         }
         
@@ -67,17 +66,17 @@ public class ShuffleboardHandler {
         public Map<String, NetworkTableEntry> liveWindowWidgets = new HashMap<>();
 
         public ShuffleboardBase(Element system){
-            tab = Shuffleboard.getTab(system.getTagName());
+            tab = Shuffleboard.getTab(system.getAttribute("id"));
             NodeList children = system.getChildNodes();
             Boolean sysEnabled = Boolean.parseBoolean(system.getAttribute("enabled"));
-            SimpleWidget sysWidget = tab.add(system.getTagName(), sysEnabled).withWidget("Toggle Button");
+            SimpleWidget sysWidget = tab.add(system.getAttribute("id"), sysEnabled).withWidget("Toggle Button");
             
             NetworkTableEntry sysEntry = sysWidget.getEntry();
-            Widgets.put(system.getTagName(), sysEntry);
-            SimpleWidget sysliveWindowWidget = liveWindow.add(system.getTagName(), sysEnabled).withWidget("Toggle Button");
+            Widgets.put(system.getAttribute("id"), sysEntry);
+            SimpleWidget sysliveWindowWidget = liveWindow.add(system.getAttribute("id"), sysEnabled).withWidget("Toggle Button");
             NetworkTableEntry sysliveWindowEntry = sysliveWindowWidget.getEntry();
 
-            liveWindowWidgets.put(system.getTagName(), sysliveWindowEntry);
+            liveWindowWidgets.put(system.getAttribute("id"), sysliveWindowEntry);
 
             for (int i = 0; i < children.getLength(); i++) {
                 Node currentChild = children.item(i);
@@ -170,18 +169,9 @@ public class ShuffleboardHandler {
             entry.setValue(value);
             liveEntry.setValue(value);
         }
-        static List<String> tableErrorAry = new ArrayList<>();
+        
         private void networkTableError(String id, String tabName){
-            boolean found = false;
-            for(var i = 0; i< tableErrorAry.size() ; i++){
-                if(tableErrorAry.get(i) == id){
-                    found = true;
-                }
-            }
-            if(found == false){
-                System.out.println("entry: " + id + " not found in tab: " + tabName);
-                tableErrorAry.add(id);
-            }
+            System.out.println("entry: " + id + " not found in tab: " + tabName);
         }
     }
 }

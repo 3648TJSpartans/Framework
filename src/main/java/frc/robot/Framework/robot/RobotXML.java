@@ -1,9 +1,9 @@
 package frc.robot.framework.robot;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 public interface RobotXML{
 
-    public void ReadXML(Node node);
+    public void ReadXML(Element node);
     public void ReloadConfig();
 }

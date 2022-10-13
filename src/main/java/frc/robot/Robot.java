@@ -1,27 +1,27 @@
 package frc.robot;
 
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
 import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
 
+import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.framework.robot.Out;
+import frc.robot.framework.robot.RobotInit;
 import frc.robot.framework.robot.RobotXML;
-import frc.robot.subsystem.Arms;
-import frc.robot.subsystem.Chassis;
-import frc.robot.subsystem.Shooter;
+import frc.robot.framework.util.XMLUtil;
+import frc.robot.subsystem.*;
 
-public class Robot extends TimedRobot implements RobotXML{
-  ArrayList<SubsystemBase> subsystems = new ArrayList<>();
+public class Robot extends TimedRobot{
 
   @Override
   public void robotInit() {
-    ReadXML(null);
+    RobotInit.Init();
     //In.Init("XML/Controls_IN/GarryChassis.xml", "XML/Controls_IN/GarryShooter.xml");
     //Out.Init("XML/Config_OUT/CHASSIS.xml", "XML/Config_OUT/SHOOTER.xml");
     //subsystems.add(new Chassis());
@@ -29,31 +29,11 @@ public class Robot extends TimedRobot implements RobotXML{
     //subsystems.add(new Arms());
   }
   
-  public void CommandThings(){
-    HashMap<String,Class<?>> commandClasses = new HashMap<>();
-    var packageName = "frc.robot.subsystems.commands";
-    try {
-      var classes = frc.robot.framework.util.Reflection.findAllClassesUsingClassLoader(packageName);
-      for (Class<?> myClass : classes) {
-        commandClasses.put(myClass.getName(), myClass);
-        System.out.println(myClass.getName());
-        Class<?>[] nullClass=null;
-        //myClass.getDeclaredConstructor( new Class<?>[]{int.class, int.class, int.class}).newInstance(1,2,3)
-        Object[] nullParameters=null;
-        var temp = (Command)(myClass.getDeclaredConstructor(nullClass).newInstance(nullParameters));
-        for (Method m : myClass.getDeclaredMethods()){
-            if (Modifier.isPublic(m.getModifiers()) && m.getName().contains("execute")){
-              m.invoke(temp,nullParameters);
-            }
-        }
-      }
-    } catch (Exception e) {
-      e.printStackTrace();
-    } 
-  }
+  
 
   @Override
   public void robotPeriodic() {
+    CommandScheduler.getInstance().run();
   }
 
   @Override
@@ -76,15 +56,4 @@ public class Robot extends TimedRobot implements RobotXML{
   public void testPeriodic() {
   }
 
-  @Override
-  public void ReadXML(Node node) {
-    // TODO Auto-generated method stub
-    
-  }
-
-  @Override
-  public void ReloadConfig() {
-    // TODO Auto-generated method stub
-    
-  }
 }

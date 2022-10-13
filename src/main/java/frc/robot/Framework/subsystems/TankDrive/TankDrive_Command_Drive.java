@@ -1,4 +1,4 @@
-package frc.robot.commands;
+package frc.robot.framework.subsystems.TankDrive;
 
 import org.w3c.dom.Element;
 
@@ -6,15 +6,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import frc.robot.framework.robot.*;
 
-public class TestCommand extends CommandBase implements RobotXML{
+public class TankDrive_Command_Drive extends CommandBase implements RobotXML{
     
     private long start = System.currentTimeMillis();
     private boolean finished = false;
 
-    public TestCommand(Element element){
+    public TankDrive_Command_Drive(Element element){
     }
     
-    public TestCommand(int a, int b, int c){
+    public TankDrive_Command_Drive(int a, int b, int c){
       System.out.println("testCommand Ans = "+(a+b+c));
     }
   
