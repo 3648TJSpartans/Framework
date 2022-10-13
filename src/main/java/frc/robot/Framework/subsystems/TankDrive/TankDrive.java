@@ -9,33 +9,22 @@ import frc.robot.framework.util.ShuffleboardHandler;
 public class TankDrive extends SubsystemBase implements RobotXML{
     ShuffleboardHandler tab = new ShuffleboardHandler("TankDrive");
 
-    public TankDrive(){
-        System.out.println("TankDrive init");
+    public TankDrive(Element subsystem){
+        ReadXML(subsystem);
     }
     
-    public void robotPeriodic(){
-        
+    @Override
+    public void periodic(){
+        //System.out.println("TankDrive periodic");
     }
 
-    public void autonomousInit(){
-
-    }
-    public void autonomousPeriodic(){
-        
-    }
-
-    public void teleopInit(){
-        
-        
-    }
-
-    public void teleopPeriodic(){
+    @Override
+    public void simulationPeriodic() {
     }
 
     @Override
     public void ReadXML(Element element) {
-        // TODO Auto-generated method stub
-        
+        System.out.println(element);
     }
 
     @Override

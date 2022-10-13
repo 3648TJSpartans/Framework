@@ -6,18 +6,18 @@ import java.util.Map;
 import org.w3c.dom.Element;
 
 import frc.robot.framework.util.ShuffleboardHandler;
-import frc.robot.subsystem.SubsystemID;
+
 
 
 public class DigitalInputs{
     private static Map<String, DigitalInWrapper> digitalinputs = new HashMap<>();
-    private SubsystemID m_subsystemID;
+    private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
 
-    public DigitalInputs(SubsystemID subsystemID){
-        m_subsystemID = subsystemID;
-        tab = new ShuffleboardHandler(subsystemID.toString());
+    public DigitalInputs(String subsystemName){
+        this.subsystemName = subsystemName;
+        tab = new ShuffleboardHandler(subsystemName.toString());
     }
 
     public void put(String id, DigitalInWrapper digital){
@@ -27,20 +27,20 @@ public class DigitalInputs{
     private DigitalInWrapper getDio(String id) {
         DigitalInWrapper requestedSensor = digitalinputs.get(id);
         if (requestedSensor == null) {
-            sensorError(id, m_subsystemID.name());
+            sensorError(id, subsystemName);
             return null;
         }
 
         return requestedSensor;
     } 
 
-    private void sensorError(String id, String subsystemID){
-        System.out.println("DigitalInput:" + id + " not found in Subsystem: " + subsystemID);
+    private void sensorError(String id, String subsystemName){
+        System.out.println("DigitalInput:" + id + " not found in Subsystem: " + subsystemName);
     }
 
     //limit switches or DIOs
     public Boolean getDIO(String id) {
         DigitalInWrapper requestedDio = getDio(id);
-        return tab.getEnabled(id, m_subsystemID.toString()) ? requestedDio.getDigitalIn() : false;
+        return tab.getEnabled(id, subsystemName) ? requestedDio.getDigitalIn() : false;
     }
 }

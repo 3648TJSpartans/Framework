@@ -1,14 +1,9 @@
-<robot>
-    <controller type="LOGITECH" port="1" id="OPERATOR">
-        <SHOOTER>
-            <axis axis="RIGHT_TRIGGER" function="SHOOT"></axis>
-            <axis axis="LEFT_JOYSTICK_X" function="TURRET_AIM"></axis>
-        </SHOOTER>
-        <INTAKE>
-            <!-- <button button="RIGHT_SHOULDER" function="INTAKE_IN"></button>
-            <button button="LEFT_SHOULDER" function="INTAKE_OUT"></button> -->
-            <button button="B" function="UPTAKE_LOWER"></button>
-            <button button="A" function="UPTAKE_UPPER"></button>
-        </INTAKE>
-    </controller>
-</robot>
+<?xml version="1.0"?>
+<controller type="LOGITECH" port="1" id="OPERATOR">
+        <axis axis="RIGHT_TRIGGER" function="SHOOT"></axis>
+        <axis axis="LEFT_JOYSTICK_X" function="TURRET_AIM"></axis>
+        <!-- <button button="RIGHT_SHOULDER" function="INTAKE_IN"></button>
+        <button button="LEFT_SHOULDER" function="INTAKE_OUT"></button> -->
+        <button button="B" function="UPTAKE_LOWER"></button>
+        <button button="A" function="UPTAKE_UPPER"></button>
+</controller>

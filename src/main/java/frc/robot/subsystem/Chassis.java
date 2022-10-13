@@ -7,30 +7,20 @@ import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.util.ShuffleboardHandler;
 
 public class Chassis extends SubsystemBase implements RobotXML{
-    //private Out output = new Out(SubsystemID.CHASSIS);
+    //private Out output = new Out(subsystemName.CHASSIS);
     ShuffleboardHandler tab = new ShuffleboardHandler("CHASSIS");
     public Chassis(){
         System.out.println("Chassis init");
     }
     
-    public void robotPeriodic(){
-        
+    @Override
+    public void periodic(){
+        //System.out.println("TankDrive periodic");
     }
 
-    public void autonomousInit(){
-
+    @Override
+    public void simulationPeriodic() {
     }
-    public void autonomousPeriodic(){
-        
-    }
-
-    public void teleopInit(){
-        
-        
-    }
-
-    public void teleopPeriodic(){
-
         //SmartDashboard.putBoolean("test", output.sensors.getDIO("switch1"));
         
         // output.motors.setMotor("LEFT_LEAD", input.getAxis("LEFT_SPEED", "DRIVE") * -0.5);
@@ -40,7 +30,6 @@ public class Chassis extends SubsystemBase implements RobotXML{
         
         //output.motors.setMotor("LEFT_SIDE", input.getAxis("LEFT_SPEED", "DRIVE") * -1);
         //output.motors.setMotor("RIGHT_SIDE", input.getAxis("RIGHT_SPEED", "DRIVE"));
-    }
 
     @Override
     public void ReadXML(Element element) {

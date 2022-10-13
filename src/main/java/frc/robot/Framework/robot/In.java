@@ -3,14 +3,14 @@ package frc.robot.framework.robot;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import frc.robot.framework.controller.*;
-import frc.robot.framework.util.XMLMerger;
-import frc.robot.framework.util.XMLParser;
-import frc.robot.subsystem.SubsystemID;
+import frc.robot.framework.util.XMLUtil;
+
 
 /**
  * [In] is a class containing static methods for interfacing with all inputs to
@@ -51,11 +51,11 @@ public class In {
      */
 
     public static void Init(String... strings) {
-        String XMLPath = XMLMerger.merger("controller", strings);
-        XMLParser parser = new XMLParser(XMLPath);
-        Element root = parser.getRootElement();
-        NodeList controllerList = root.getElementsByTagName("controller");
-        initControllers(controllerList);
+        // String XMLPath = XMLUtil.merger("controller", strings);
+        // Document doc = XMLUtil.Parse(XMLPath);
+        // Element root = doc.getDocumentElement();
+        // NodeList controllerList = root.getElementsByTagName("controller");
+        // initControllers(controllerList);
     };
 
     /**
@@ -106,7 +106,7 @@ public class In {
         // TODO: Implement [sensorList]
     }
 
-    private SubsystemID id;
+    private String subsystemName;
 
     /**
      * Constructor for [In]. Sets which subsystem this instance of [In] is for. That
@@ -115,8 +115,8 @@ public class In {
      * @param systemID the id of the subsystem
      */
 
-    public In(SubsystemID systemID) {
-        id = systemID;
+    public In(String subsystemName) {
+        this.subsystemName = subsystemName;
     }
 
     /**
@@ -134,7 +134,7 @@ public class In {
 
     public boolean getButton(String function, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getButton(function, id);
+        return requestedController.getButton(function, subsystemName);
     }
     /**
      * [getAxis] returns the value of the requested axis
@@ -145,7 +145,7 @@ public class In {
      */
     public double getAxis(String function, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getAxis(function, id);
+        return requestedController.getAxis(function, subsystemName);
     }
     /**
      * [getAttribute] returns the value of the XML attributed named [name]
@@ -156,6 +156,6 @@ public class In {
      */
     public String getAttribute(String name, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getAttribute(name, id);
+        return requestedController.getAttribute(name, subsystemName);
     }
 }

@@ -1,15 +1,11 @@
 package frc.robot.framework.util;
 
-
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.LinkedHashSet;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
+
+import org.w3c.dom.Node;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
@@ -65,4 +61,71 @@ public class Reflection {
       }
       return myFiles;
    }
+
+   public static Object CreateObjectFromXML(Class<?> myClass, Node currentChild){
+    try {
+      System.out.println("Creating object: "+myClass.getName());
+      Class<?>[] nullClass=null;
+      //myClass.getDeclaredConstructor( new Class<?>[]{int.class, int.class, int.class}).newInstance(1,2,3)
+      Object[] parameters={currentChild};
+      var temp = (Object)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(parameters));
+      // for (Method m : myClass.getDeclaredMethods()){
+      //     if (Modifier.isPublic(m.getModifiers()) && m.getName().contains("execute")){
+      //       m.invoke(temp,nullParameters);
+      //     }
+      // }
+      return temp;
+    } catch (Exception e) {
+      e.printStackTrace();
+    } 
+    return null;
   }
+
+
+  public static HashMap<String,Class<?>> GetAllCommands(){
+    HashMap<String,Class<?>> commandClasses = new HashMap<>();
+   
+    String[] packageNames = {"frc.robot.subsystems.commands"};
+    Set<Class<?>> classes = new HashSet<Class<?>>();
+    try {
+      for(String packageName : packageNames){
+        var classesInPackage=frc.robot.framework.util.Reflection.findAllClassesUsingClassLoader(packageName);
+        if (classesInPackage != null)
+         classes.addAll(classesInPackage);
+      }
+      Class<?> commandBase = Class.forName("edu.wpi.first.wpilibj2.command.CommandBase");
+      for (Class<?> myClass : classes) {
+        if(commandBase.isAssignableFrom(myClass)){
+          commandClasses.put(myClass.getSimpleName().toLowerCase(), myClass);
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } 
+    return commandClasses;
+  }
+
+  public static HashMap<String,Class<?>> GetAllSubSystems(){
+    HashMap<String,Class<?>> subsystemsReflection = new HashMap<>();
+    String[] packageNames = {"frc.robot.subsystem", "frc.robot.framework.subsystems"};
+    Set<Class<?>> classes = new HashSet<Class<?>>();
+    try {
+      for(String packageName : packageNames){
+        var classesInPackage=frc.robot.framework.util.Reflection.findAllClassesUsingClassLoader(packageName);
+        if (classesInPackage != null)
+         classes.addAll(classesInPackage);
+      }
+      Class<?> subsystemBase = Class.forName("edu.wpi.first.wpilibj2.command.SubsystemBase");
+      for (Class<?> myClass : classes) {
+        // TODO filter classes for subsystems
+        if(subsystemBase.isAssignableFrom(myClass)){
+          subsystemsReflection.put(myClass.getSimpleName().toLowerCase(), myClass);
+        }
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+    } 
+
+    return subsystemsReflection;
+  }
+}

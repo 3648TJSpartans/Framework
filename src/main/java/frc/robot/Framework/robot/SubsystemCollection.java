@@ -25,10 +25,7 @@ import frc.robot.framework.servo.ServoWrapper;
 import frc.robot.framework.servo.Servos;
 import frc.robot.framework.solenoid.SolenoidWrapper;
 import frc.robot.framework.solenoid.Solenoids;
-import frc.robot.framework.util.ShuffleboardHandler;
-import frc.robot.framework.util.XMLMerger;
-import frc.robot.framework.util.XMLParser;
-import frc.robot.subsystem.SubsystemID;
+
 
 /**
  * [Out] is a class containing static methods for controlling all outputs from
@@ -36,7 +33,7 @@ import frc.robot.subsystem.SubsystemID;
  */
 
 public class SubsystemCollection implements RobotXML {
-    private SubsystemID subsystemID;
+    public final String subsystemName;
     public Motors motors;
     public Servos servos;
     public Solenoids solenoids;
@@ -47,7 +44,8 @@ public class SubsystemCollection implements RobotXML {
     public Ultrasonics ultrasonics;
     private Element systemElement;
 
-    public SubsystemCollection(Element system) {
+    public SubsystemCollection(Element system, String subsystemName) {
+        this.subsystemName=subsystemName;
         ReadXML(system);
     }
     
@@ -58,6 +56,13 @@ public class SubsystemCollection implements RobotXML {
 
     public void ReadXML(Element system){
         systemElement = system;
+        motors = new Motors(subsystemName);
+        servos = new Servos(subsystemName);
+        solenoids = new Solenoids(subsystemName);
+        accelerometers = new Accelerometers(subsystemName);
+        gyroscopes = new Gyroscopes(subsystemName);
+        potentiometers = new Potentiometers(subsystemName);
+        ultrasonics = new Ultrasonics(subsystemName);
         //ShuffleboardHandler tab = ShuffleboardCollections.get(systemElement.getTagName());
         NodeList children = system.getChildNodes();
         System.out.println(systemElement.getNodeName());

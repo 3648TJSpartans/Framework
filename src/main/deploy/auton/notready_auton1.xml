@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <!-- maybe... I'm still thinking if it's worth writing this or writing commandgroup that reads parameters -->
 <auton name="auton1">
     <connect type="start" nextstep="delay"/>

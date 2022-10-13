@@ -6,16 +6,16 @@ import java.util.Map;
 import org.w3c.dom.Element;
 
 import frc.robot.framework.util.ShuffleboardHandler;
-import frc.robot.subsystem.SubsystemID;
+
 
 public class Servos {
     private static Map<String, ServoWrapper> servos = new HashMap<>();
-    private SubsystemID m_subsystemID;
+    private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
-    public Servos(SubsystemID subsystemID){
-        m_subsystemID = subsystemID;
-        tab = new ShuffleboardHandler(subsystemID.toString());
+    public Servos(String subsystemName){
+        this.subsystemName = subsystemName;
+        tab = new ShuffleboardHandler(subsystemName.toString());
     }
 
     public void put(String id, ServoWrapper servo){
@@ -30,14 +30,14 @@ public class Servos {
     private ServoWrapper getMotor(String id) {
         ServoWrapper requestedMotor = servos.get(id);
         if (requestedMotor == null) {
-            motorError(id, m_subsystemID.name());
+            motorError(id, subsystemName);
             return null;
         }
         return requestedMotor;
     }
 
-    private void motorError(String id, String subsystemID){
-        System.out.println("Motor:" + id + " not found. Subsystem: " + subsystemID + " not registered for output.");
+    private void motorError(String id, String subsystemName){
+        System.out.println("Motor:" + id + " not found. Subsystem: " + subsystemName + " not registered for output.");
     }
     /** 
      * [setServo] sets the speed of the requested motor or motor group
@@ -48,13 +48,13 @@ public class Servos {
     public void setServo(String id, double position) {
         ServoWrapper requestedMotor = getMotor(id);
         
-        if(tab.getEnabled(id, m_subsystemID.toString()))  requestedMotor.set(position);
+        if(tab.getEnabled(id, subsystemName))  requestedMotor.set(position);
     }
  
     public void setServoAngle(String id, int angle) {
         ServoWrapper requestedMotor = getMotor(id);
         
-        if(tab.getEnabled(id, m_subsystemID.toString()))  requestedMotor.setAngle(angle);
+        if(tab.getEnabled(id, subsystemName))  requestedMotor.setAngle(angle);
     }
 
 }

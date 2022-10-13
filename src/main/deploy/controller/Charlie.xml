@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<controller type="LOGITECH" port="0" id="COPILOT">
+        <axis axis="LEFT_TRIGGER" command="CAMERA_AIM"></axis>
+        <axis axis="RIGHT_TRIGGER" command="MODE_FAST"></axis>
+        <axis axis="RIGHT_JOYSTICK_Y" command="RIGHT_SPEED"></axis>
+        <axis axis="LEFT_JOYSTICK_Y" command="LEFT_SPEED"></axis>
+        <button button="Y" command="CAMERA_AIM"></button>
+        <button button="LEFT_SHOULDER" command="EXTEND"></button>
+        <button button="RIGHT_SHOULDER" command="RETRACT"></button>
+        <!-- <button button="RIGHT_SHOULDER" command="INTAKE_IN"></button>
+        <button button="LEFT_SHOULDER" command="INTAKE_OUT"></button> -->
+        <button button="B" command="UPTAKE_LOWER"></button>
+        <button button="A" command="UPTAKE_UPPER"></button>
+</controller>

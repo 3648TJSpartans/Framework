@@ -1,16 +1,22 @@
 package frc.robot.framework.robot;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import frc.robot.framework.controller.*;
-import frc.robot.framework.util.XMLMerger;
-import frc.robot.framework.util.XMLParser;
-import frc.robot.subsystem.SubsystemID;
+import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.XMLUtil;
+
+import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * [In] is a class containing static methods for interfacing with all inputs to
@@ -23,7 +29,9 @@ import frc.robot.subsystem.SubsystemID;
 
 public class RobotInit {
     private static Map<String, ControllerWrapper> controllers = new HashMap<>();
-
+    private static Map<String, SubsystemBase> subsystems = new HashMap<>();
+    private static ShuffleboardHandler shuffleboard;
+    //private static Map<String, AutonWrapper> autons = new HashMap<>();
     /**
      * [Init] initializes [In] using an XML file detailing the control scheme.
      * 
@@ -50,17 +58,46 @@ public class RobotInit {
      *       we make all sensors global scope (easier for auto)?
      */
 
-    public static void Init(String... fileNames) {
-        //XMLMerger merger = new XMLMerger();
-        //String XMLPath = merger.merger("controller", strings);
-        for (String fileName : fileNames) {
-            XMLParser parser = new XMLParser(fileName);
-            Element root = parser.getRootElement();
-            NodeList controllerList = root.getElementsByTagName("controller");
-            NodeList subsystems = root.getElementsByTagName("subsystem");
-            NodeList commands = root.getElementsByTagName("command");
+    public static void Init() {
+        // TODO find all xml files in deploy recurisvely and merge them into big xml.
+        File[] allConfigFiles= XMLUtil.listOfFiles(Filesystem.getDeployDirectory()).toArray(File[]::new); 
+        
+        //Document doc = XMLUtil.Parse(XMLUtil.merger("controller",allConfigFiles));
+        Document doc = XMLUtil.mergeNew(allConfigFiles);
+        Element root = doc.getDocumentElement();
+        if (root==null){
+            System.out.println("Could not find any controller!");
         }
-    };
+        //shuffleboard = new ShuffleboardHandler(root);
+        NodeList controllerNodeList = root.getElementsByTagName("controller");
+        initControllers(controllerNodeList);
+        NodeList subsystemNodeList = root.getElementsByTagName("subsystem");
+        initSubsystems(subsystemNodeList);
+        NodeList commandsNodeList = root.getElementsByTagName("command");
+        //initCommands(commandsNodeList);
+    }
+
+    private static void initSubsystems(NodeList subsystemNodeList){
+        subsystems = new HashMap<>();
+        HashMap<String,Class<?>> subsystemClasses = frc.robot.framework.util.Reflection.GetAllSubSystems();
+        for (int i = 0; i < subsystemNodeList.getLength(); i++) {
+            Node currentChild = subsystemNodeList.item(i);
+            if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
+                Element childElement = (Element) currentChild;
+                if (childElement.getTagName().equals("subsystem")) {
+                String subsystemType=currentChild.getAttributes().getNamedItem("type").getNodeValue().toLowerCase();
+                if (subsystemClasses.containsKey(subsystemType)){
+
+                    subsystems.put(subsystemType,((SubsystemBase)frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType),currentChild)));
+                    System.out.println("LoadingXML - Processing System:"+subsystemType);
+                }
+                else{
+                    System.out.println("Could not find java subsystem for "+subsystemType);
+                }
+            }
+        }
+    }
+}
 
     /**
      * [controllerList] is a helper function for [Init]. Takes in an XML nodeList
@@ -111,7 +148,7 @@ public class RobotInit {
         // TODO: Implement [sensorList]
     }
 
-    private SubsystemID id;
+    private String subsystemName;
 
     /**
      * Constructor for [In]. Sets which subsystem this instance of [In] is for. That
@@ -120,8 +157,8 @@ public class RobotInit {
      * @param systemID the id of the subsystem
      */
 
-    public RobotInit(SubsystemID systemID) {
-        id = systemID;
+    public RobotInit(String subsystemName) {
+        this.subsystemName = subsystemName;
     }
 
     /**
@@ -139,7 +176,7 @@ public class RobotInit {
 
     public boolean getButton(String function, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getButton(function, id);
+        return requestedController.getButton(function, subsystemName);
     }
     /**
      * [getAxis] returns the value of the requested axis
@@ -150,7 +187,7 @@ public class RobotInit {
      */
     public double getAxis(String function, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getAxis(function, id);
+        return requestedController.getAxis(function, subsystemName);
     }
     /**
      * [getAttribute] returns the value of the XML attributed named [name]
@@ -161,6 +198,6 @@ public class RobotInit {
      */
     public String getAttribute(String name, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getAttribute(name, id);
+        return requestedController.getAttribute(name, subsystemName);
     }
 }

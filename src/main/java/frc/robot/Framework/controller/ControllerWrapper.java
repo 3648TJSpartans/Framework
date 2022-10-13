@@ -9,7 +9,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import frc.robot.subsystem.SubsystemID;
+
 
 public class ControllerWrapper{
 
@@ -59,36 +59,36 @@ public class ControllerWrapper{
         }
     }
     
-    public boolean getButton(String buttonName, SubsystemID subsystemID){
-        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+    public boolean getButton(String buttonName, String subsystemName){
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemName);
         if(requestedSystem == null){
-            controllerError("Button", buttonName, subsystemID.name());
+            controllerError("Button", buttonName, subsystemName);
             return false;
         }
         String requestedButton = requestedSystem.buttons.get(buttonName);
         if(requestedButton == null){
-            controllerError("Button", buttonName, subsystemID.name());
+            controllerError("Button", buttonName, subsystemName);
             return false;
         }
         return controller.getButton(requestedButton);
     }
 
-    public double getAxis(String axisName, SubsystemID subsystemID){
-        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+    public double getAxis(String axisName, String subsystemName){
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemName);
         if(requestedSystem == null){
-            controllerError("Axis", axisName, subsystemID.name());
+            controllerError("Axis", axisName, subsystemName);
             return 0.0;
         }
         String requestedAxis = requestedSystem.axes.get(axisName);
         if(requestedAxis == null){
-            controllerError("Axis", axisName, subsystemID.name());
+            controllerError("Axis", axisName, subsystemName);
             return 0.0;
         }
         return controller.getAxis(requestedAxis);
     }
 
-    public String getAttribute(String attribute, SubsystemID subsystemID){
-        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemID.name());
+    public String getAttribute(String attribute, String subsystemName){
+        SubsystemCollection requestedSystem = subsystemCollections.get(subsystemName);
         if(requestedSystem == null){
             System.out.println("Attribute:" + attribute + " not found.");
         }
@@ -96,7 +96,7 @@ public class ControllerWrapper{
     }
     
     static List<String> errorAry = new ArrayList<>();
-    private void controllerError(String type, String id, String subsystemID){
+    private void controllerError(String type, String id, String subsystemName){
         boolean found = false;
         for(var i = 0; i< errorAry.size() ; i++){
             
@@ -105,7 +105,7 @@ public class ControllerWrapper{
             }
         }
         if(found == false){
-            System.out.println(type +  ":" + id + " not found. Subsystem:"+subsystemID +" not registered on requested controller.");
+            System.out.println(type +  ":" + id + " not found. Subsystem:"+subsystemName +" not registered on requested controller.");
             errorAry.add(id);
         }
         
