@@ -44,17 +44,16 @@ public class SubsystemCollection implements RobotXML {
     public Ultrasonics ultrasonics;
     private Element systemElement;
 
-    public SubsystemCollection(Element system, String subsystemName) {
-        this.subsystemName=subsystemName;
+    public SubsystemCollection(Element system) {
+        this.subsystemName = system.getAttribute("id");
         ReadXML(system);
     }
-    
-   public String getAttribute(String attribute) {
-       return systemElement.getAttribute(attribute);
-    }
-   
 
-    public void ReadXML(Element system){
+    public String getAttribute(String attribute) {
+        return systemElement.getAttribute(attribute);
+    }
+
+    public void ReadXML(Element system) {
         systemElement = system;
         motors = new Motors(subsystemName);
         servos = new Servos(subsystemName);
@@ -63,7 +62,8 @@ public class SubsystemCollection implements RobotXML {
         gyroscopes = new Gyroscopes(subsystemName);
         potentiometers = new Potentiometers(subsystemName);
         ultrasonics = new Ultrasonics(subsystemName);
-        //ShuffleboardHandler tab = ShuffleboardCollections.get(systemElement.getTagName());
+        // ShuffleboardHandler tab =
+        // ShuffleboardCollections.get(systemElement.getTagName());
         NodeList children = system.getChildNodes();
         System.out.println(systemElement.getNodeName());
         for (int i = 0; i < children.getLength(); i++) {
@@ -76,35 +76,38 @@ public class SubsystemCollection implements RobotXML {
                 } else if (childElement.getTagName().equals("group")) {
                     String id = childElement.getAttribute("id");
                     motors.put(id, new MotorWrapper(childElement, true));
-                }else if (childElement.getTagName().equals("servo")) {
+                } else if (childElement.getTagName().equals("servo")) {
                     String id = childElement.getAttribute("id");
                     servos.put(id, new ServoWrapper(childElement));
                 } else if (childElement.getTagName().equals("group")) {
                     String id = childElement.getAttribute("id");
                     servos.put(id, new ServoWrapper(childElement, true));
                 } else if (childElement.getTagName().equals("solenoid")) {
-                    String id = childElement.getAttribute("id");                       
+                    String id = childElement.getAttribute("id");
                     solenoids.put(id, new SolenoidWrapper(childElement));
                 } else if (childElement.getTagName().equals("compressor")) {
-                    //needs fixing
-                    //compressor = new Compressor(null);
-                } else if (childElement.getTagName().equals("acl") || childElement.getTagName().equals("accelerometer")) {
+                    // needs fixing
+                    // compressor = new Compressor(null);
+                } else if (childElement.getTagName().equals("acl")
+                        || childElement.getTagName().equals("accelerometer")) {
                     String id = childElement.getAttribute("id");
                     accelerometers.put(id, new ACLWrapper(childElement));
-                } else if (childElement.getTagName().equals("dio")||childElement.getTagName().equals("limitswitch")) {
+                } else if (childElement.getTagName().equals("dio") || childElement.getTagName().equals("limitswitch")) {
                     String id = childElement.getAttribute("id");
                     digitalInputs.put(id, new DigitalInWrapper(childElement));
-                } else if(childElement.getTagName().equals("gyro")||childElement.getTagName().equals("gyroscopes")){
+                } else if (childElement.getTagName().equals("gyro") || childElement.getTagName().equals("gyroscopes")) {
                     String id = childElement.getAttribute("id");
                     gyroscopes.put(id, new GyroWrapper(childElement));
-                }else if (childElement.getTagName().equals("pot") || childElement.getTagName().equals("potientiometers")) {
+                } else if (childElement.getTagName().equals("pot")
+                        || childElement.getTagName().equals("potientiometers")) {
                     String id = childElement.getAttribute("id");
                     potentiometers.put(id, new PotentiometerWrapper(childElement));
-                } else if(childElement.getTagName().equals("ut") || childElement.getTagName().equals("ultrasonic")){
+                } else if (childElement.getTagName().equals("ut") || childElement.getTagName().equals("ultrasonic")) {
                     String id = childElement.getAttribute("id");
                     ultrasonics.put(id, new UltrasonicWrapper(childElement));
-                }else {
-                    System.out.println("Output type: " + childElement.getTagName() + " on subsystem: "+ system.getTagName() + " doesn't exist.");
+                } else {
+                    System.out.println("Output type: " + childElement.getTagName() + " on subsystem: "
+                            + system.getTagName() + " doesn't exist.");
                 }
             }
         }
@@ -113,53 +116,47 @@ public class SubsystemCollection implements RobotXML {
     @Override
     public void ReloadConfig() {
         // TODO Auto-generated method stub
-        
+
     }
 
 }
 
-
-
-
-
-
-
-
-
 /* */
 
-
-    /**
-     * [Init] initializes [Out], registering all the outputs from the XML robot
-     * configuration file with [Out].
-     * 
-     * @param xmlPath path to the configuration file relative to /deploy
-     
-
-    public static void Init(String... strings) {
-        XMLMerger merger = new XMLMerger();
-        String XMLPath = merger.merger("subsystem", strings);
-        parser = new XMLParser(XMLPath);
-        Element root = parser.getRootElement();
-        //NodeList subsystemList = root.getChildNodes();
-        ShuffleboardHandler tab = new ShuffleboardHandler(root);
-        NodeList systemList = root.getElementsByTagName("subsystem");
-        for (int i = 0; i < systemList.getLength(); i++) {
-            Node currentSystem = systemList.item(i);
-            if (currentSystem.getNodeType() == Node.ELEMENT_NODE) {
-                Element systemElement = (Element) currentSystem;
-                NodeList subsystemList = systemElement.getChildNodes();
-                for (int j = 0; j < subsystemList.getLength(); j++) {
-                    Node currentSubsystem = subsystemList.item(j);
-                    if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
-                        Element subsystemElement = (Element) currentSubsystem;
-                        subsystemCollections.put(subsystemElement.getTagName(), new SubsystemCollection(subsystemElement));
-                    }
-                else {System.out.println("Isn't this always true? "+ currentSubsystem);}
-                }
-            }
-            else {System.out.println("Isn't this always true? "+ currentSystem);}
-        }
-        
-    }
-   */
+/**
+ * [Init] initializes [Out], registering all the outputs from the XML robot
+ * configuration file with [Out].
+ * 
+ * @param xmlPath path to the configuration file relative to /deploy
+ * 
+ * 
+ *                public static void Init(String... strings) {
+ *                XMLMerger merger = new XMLMerger();
+ *                String XMLPath = merger.merger("subsystem", strings);
+ *                parser = new XMLParser(XMLPath);
+ *                Element root = parser.getRootElement();
+ *                //NodeList subsystemList = root.getChildNodes();
+ *                ShuffleboardHandler tab = new ShuffleboardHandler(root);
+ *                NodeList systemList = root.getElementsByTagName("subsystem");
+ *                for (int i = 0; i < systemList.getLength(); i++) {
+ *                Node currentSystem = systemList.item(i);
+ *                if (currentSystem.getNodeType() == Node.ELEMENT_NODE) {
+ *                Element systemElement = (Element) currentSystem;
+ *                NodeList subsystemList = systemElement.getChildNodes();
+ *                for (int j = 0; j < subsystemList.getLength(); j++) {
+ *                Node currentSubsystem = subsystemList.item(j);
+ *                if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
+ *                Element subsystemElement = (Element) currentSubsystem;
+ *                subsystemCollections.put(subsystemElement.getTagName(), new
+ *                SubsystemCollection(subsystemElement));
+ *                }
+ *                else {System.out.println("Isn't this always true? "+
+ *                currentSubsystem);}
+ *                }
+ *                }
+ *                else {System.out.println("Isn't this always true? "+
+ *                currentSystem);}
+ *                }
+ * 
+ *                }
+ */
