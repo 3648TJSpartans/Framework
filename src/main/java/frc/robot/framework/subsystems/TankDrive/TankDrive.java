@@ -16,7 +16,7 @@ public class TankDrive extends SubsystemBase implements RobotXML{
     
     @Override
     public void periodic(){
-        System.out.println("TankDrive periodic"+ RobotInit.getAxis("",""));
+        System.out.println("TankDrive periodic"+ RobotInit.getAxis("LEFT_TRIGGER","PILOT"));
     }
 
     @Override

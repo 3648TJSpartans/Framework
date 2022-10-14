@@ -123,7 +123,7 @@ public class ShuffleboardHandler {
                             enabled = Boolean.parseBoolean(childElement.getAttribute("defaultValue"));
                         }
                         
-                        String title = childElement.getAttribute("id");
+                        String title = system.getAttribute("id")+"."+childElement.getAttribute("id");
                         SimpleWidget widget = tab.add(title, enabled).withWidget("Toggle Button");
                         NetworkTableEntry entry = widget.getEntry();
                         Widgets.put(title, entry);

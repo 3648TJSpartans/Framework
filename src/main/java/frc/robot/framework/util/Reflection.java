@@ -12,6 +12,9 @@ import edu.wpi.first.wpilibj.Filesystem;
 import java.io.File;
 
 public class Reflection {
+    private static HashMap<String,Class<?>> allCommands = new HashMap<>();
+    private static HashMap<String,Class<?>> allSubsystems = new HashMap<>();
+
     public Reflection(){};
     public static Set<Class<?>> findAllClassesUsingClassLoader(String packageName) {
 
@@ -81,11 +84,15 @@ public class Reflection {
     return null;
   }
 
-
   public static HashMap<String,Class<?>> GetAllCommands(){
-    HashMap<String,Class<?>> commandClasses = new HashMap<>();
+    return GetAllCommands(false);
+  }
+  public static HashMap<String,Class<?>> GetAllCommands(boolean reload){
+    if (!reload && allCommands.size()>0){
+      return allCommands;
+    }
    
-    String[] packageNames = {"frc.robot.subsystems.commands"};
+    String[] packageNames = {"frc.robot.commands", "frc.robot.framework.subsystems"};
     Set<Class<?>> classes = new HashSet<Class<?>>();
     try {
       for(String packageName : packageNames){
@@ -96,17 +103,24 @@ public class Reflection {
       Class<?> commandBase = Class.forName("edu.wpi.first.wpilibj2.command.CommandBase");
       for (Class<?> myClass : classes) {
         if(commandBase.isAssignableFrom(myClass)){
-          commandClasses.put(myClass.getSimpleName().toLowerCase(), myClass);
+          allCommands.put(myClass.getSimpleName().toLowerCase(), myClass);
         }
       }
     } catch (Exception e) {
       e.printStackTrace();
     } 
-    return commandClasses;
+    return allCommands;
   }
 
   public static HashMap<String,Class<?>> GetAllSubSystems(){
-    HashMap<String,Class<?>> subsystemsReflection = new HashMap<>();
+    return GetAllSubSystems(false);
+  }
+
+  public static HashMap<String,Class<?>> GetAllSubSystems(boolean reload){
+    if (!reload && allSubsystems.size()>0){
+      return allSubsystems;
+    }
+
     String[] packageNames = {"frc.robot.subsystem", "frc.robot.framework.subsystems"};
     Set<Class<?>> classes = new HashSet<Class<?>>();
     try {
@@ -119,13 +133,13 @@ public class Reflection {
       for (Class<?> myClass : classes) {
         // TODO filter classes for subsystems
         if(subsystemBase.isAssignableFrom(myClass)){
-          subsystemsReflection.put(myClass.getSimpleName().toLowerCase(), myClass);
+          allSubsystems.put(myClass.getSimpleName().toLowerCase(), myClass);
         }
       }
     } catch (Exception e) {
       e.printStackTrace();
     } 
 
-    return subsystemsReflection;
+    return allSubsystems;
   }
 }

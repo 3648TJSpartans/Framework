@@ -5,12 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.management.relation.Relation;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import frc.robot.framework.controller.*;
+import frc.robot.framework.util.Reflection;
 import frc.robot.framework.util.ShuffleboardHandler;
 import frc.robot.framework.util.XMLUtil;
 
@@ -29,6 +32,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RobotInit {
     private static Map<String, ControllerWrapper> controllers = new HashMap<>();
+    private static Map<String, Class<?>> autons = new HashMap<>();
     private static Map<String, SubsystemBase> subsystems = new HashMap<>();
     private static ShuffleboardHandler shuffleboard;
     //private static Map<String, AutonWrapper> autons = new HashMap<>();
@@ -68,18 +72,44 @@ public class RobotInit {
         if (root==null){
             System.out.println("Could not find any controller!");
         }
-        //shuffleboard = new ShuffleboardHandler(root);
+
+        shuffleboard = new ShuffleboardHandler(root);
+
         NodeList controllerNodeList = root.getElementsByTagName("controller");
         initControllers(controllerNodeList);
+
         NodeList subsystemNodeList = root.getElementsByTagName("subsystem");
         initSubsystems(subsystemNodeList);
-        NodeList commandsNodeList = root.getElementsByTagName("command");
-        //initCommands(commandsNodeList);
+
+        NodeList autNodeList = root.getElementsByTagName("auton");
+        initAutons(autNodeList);
+    }
+
+
+    private static void initAutons(NodeList autonList){
+        for (int i = 0; i < autonList.getLength(); i++) {
+            Node autonNode = autonList.item(i);
+            if (autonNode.getNodeType() == Node.ELEMENT_NODE)  {
+                Element autonElement = (Element) autonNode;
+                String autonName=autonElement.getAttributes().getNamedItem("id").getNodeValue().toLowerCase();
+                //TODO put auton in dashboard?
+
+                NodeList steps = autonElement.getElementsByTagName("step");
+                for (int j=0; j< steps.getLength(); j++){
+                    Node stepNode = steps.item(i);
+                    if (stepNode.getNodeType() == Node.ELEMENT_NODE)  {
+                        Element stepElement = (Element) stepNode;
+                        String stepName=stepElement.getAttributes().getNamedItem("id").getNodeValue().toLowerCase();
+                        //TODO read rest of step info, store in some type of datastructure
+                    }
+                }
+            }
+        }
     }
 
     private static void initSubsystems(NodeList subsystemNodeList){
         subsystems = new HashMap<>();
-        HashMap<String,Class<?>> subsystemClasses = frc.robot.framework.util.Reflection.GetAllSubSystems();
+        HashMap<String,Class<?>> subsystemClasses = Reflection.GetAllSubSystems();
         for (int i = 0; i < subsystemNodeList.getLength(); i++) {
             Node currentChild = subsystemNodeList.item(i);
             if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
@@ -132,6 +162,7 @@ public class RobotInit {
                 }
                 else {
                     System.out.println("Unknown controller type: "+ controllerElement.getAttribute("type"));
+                    continue;
                 }
             }
         }
@@ -176,7 +207,7 @@ public class RobotInit {
 
     public static boolean getButton(String function, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getButton(function, controllerID);
+        return requestedController.getButton(function);
     }
     /**
      * [getAxis] returns the value of the requested axis
@@ -187,7 +218,7 @@ public class RobotInit {
      */
     public static double getAxis(String function, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getAxis(function, controllerID);
+        return requestedController.getAxis(function);
     }
     /**
      * [getAttribute] returns the value of the XML attributed named [name]
@@ -198,6 +229,6 @@ public class RobotInit {
      */
     public static String getAttribute(String name, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
-        return requestedController.getAttribute(name, controllerID);
+        return requestedController.getAttribute(name);
     }
 }
