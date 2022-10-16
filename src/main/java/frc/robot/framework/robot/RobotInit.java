@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.management.relation.Relation;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -16,9 +15,12 @@ import frc.robot.framework.controller.*;
 import frc.robot.framework.util.Reflection;
 import frc.robot.framework.util.ShuffleboardHandler;
 import frc.robot.framework.util.XMLUtil;
-
+import frc.robot.framework.util.ShuffleboardHandler.ShuffleboardBase;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
+import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -87,13 +89,12 @@ public class RobotInit {
 
 
     private static void initAutons(NodeList autonList){
+        ArrayList<String> autonNames = new ArrayList<>();
         for (int i = 0; i < autonList.getLength(); i++) {
             Node autonNode = autonList.item(i);
             if (autonNode.getNodeType() == Node.ELEMENT_NODE)  {
                 Element autonElement = (Element) autonNode;
                 String autonName=autonElement.getAttributes().getNamedItem("id").getNodeValue().toLowerCase();
-                //TODO put auton in dashboard?
-
                 NodeList steps = autonElement.getElementsByTagName("step");
                 for (int j=0; j< steps.getLength(); j++){
                     Node stepNode = steps.item(i);
@@ -103,8 +104,14 @@ public class RobotInit {
                         //TODO read rest of step info, store in some type of datastructure
                     }
                 }
+                autonNames.add(autonName);
             }
         }
+        // shuffleboard.Handlers.put("Robot", new ShuffleboardBase("Robot"));
+        // var tab = Shuffleboard.getTab("Robot");
+        // SimpleWidget sysWidget = tab.add("Auton", "").withWidget(WidgetType)
+        )
+        //SmartDashboard.putStringArray("Auton", autonNames.toArray(String[]::new));
     }
 
     private static void initSubsystems(NodeList subsystemNodeList){

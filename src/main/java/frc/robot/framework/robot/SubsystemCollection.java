@@ -1,14 +1,10 @@
 package frc.robot.framework.robot;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import edu.wpi.first.wpilibj.Compressor;
-import edu.wpi.first.wpilibj.interfaces.Accelerometer;
 import frc.robot.framework.motor.MotorWrapper;
 import frc.robot.framework.motor.Motors;
 import frc.robot.framework.sensor.accelerometer.ACLWrapper;

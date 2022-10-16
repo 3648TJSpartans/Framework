@@ -13,8 +13,8 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 
 public class ShuffleboardHandler {
-    public static Map<String, ShuffleboardBase> Handlers = new HashMap<>();
-    ShuffleboardBase base;
+    public Map<String, ShuffleboardBase> Handlers = new HashMap<>();
+    public ShuffleboardBase base;
 
     public ShuffleboardHandler(Element root){
         NodeList systemList = root.getElementsByTagName("subsystem");
@@ -33,17 +33,15 @@ public class ShuffleboardHandler {
             //    }
             }
         }
-        
-
     }
     
     public ShuffleboardHandler(String system){
-        System.out.print(Handlers.size());
         base = Handlers.get(system);
         if(base == null){
             System.out.println("entry: " + system + " not found");
         }
     }
+
     public boolean getEnabled(String title, String system){
         if(base == null){
             System.out.println("entry not found");
@@ -51,15 +49,19 @@ public class ShuffleboardHandler {
         return base.getEnabled(title, system);
 
     }
+
     public Object get(String title){
         return base.get(title);
     }
+
     public void set(String title, Object value){
         base.set(title, value);
     }
 
 
     public static class ShuffleboardBase {
+        //TODO expand this to read all attributes in the element. Detect the type
+        //TODO add a <shuffleboardY
         ShuffleboardTab tab;
         ShuffleboardTab liveWindow = Shuffleboard.getTab("LiveWindow");
         public Map<String, NetworkTableEntry> Widgets = new HashMap<>();
@@ -135,7 +137,7 @@ public class ShuffleboardHandler {
                 }
             }
         }
-        ShuffleboardBase(String system){
+        public ShuffleboardBase(String system){
             tab = Shuffleboard.getTab(system);
         }
         public boolean getEnabled(String title, String system){
