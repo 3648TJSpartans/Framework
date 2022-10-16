@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <robot>
-        <controller type="LOGITECH" port="0" id="COPILOT">
+        <controller type="LOGITECH" port="1" id="COPILOT">
                 <axis axis="LEFT_TRIGGER" command="CAMERA_AIM"></axis>
                 <axis axis="RIGHT_TRIGGER" command="TANKDRIVE_MODE_FAST"></axis>
                 <axis axis="RIGHT_JOYSTICK_Y" command="RIGHT_SPEED"></axis>

@@ -107,10 +107,10 @@ public class RobotInit {
                 autonNames.add(autonName);
             }
         }
+        //TODO put auton selector on shuffleboard
         // shuffleboard.Handlers.put("Robot", new ShuffleboardBase("Robot"));
         // var tab = Shuffleboard.getTab("Robot");
         // SimpleWidget sysWidget = tab.add("Auton", "").withWidget(WidgetType)
-        )
         //SmartDashboard.putStringArray("Auton", autonNames.toArray(String[]::new));
     }
 

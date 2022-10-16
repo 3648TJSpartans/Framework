@@ -31,12 +31,39 @@ public class ControllerWrapper{
                 Element buttonElement = (Element)currentButton;
                 
                 try{
-                JoystickButton tempButton = new JoystickButton((GenericHID) controller,controller.GetButtonMap().get(buttonElement.getAttribute("button")));
-                String command =buttonElement.getAttribute("command");
-                Class<?> clazz= Reflection.GetAllCommands().get(command);
-                CommandBase base = (CommandBase)Reflection.CreateObjectFromXML(clazz, buttonElement);
-                tempButton.whenPressed(base);
-                buttons.put(buttonElement.getAttribute("button"),tempButton);
+                    JoystickButton tempButton = new JoystickButton((GenericHID) controller,controller.GetButtonMap().get(buttonElement.getAttribute("button")));
+                    String command =buttonElement.getAttribute("command").toLowerCase();
+                    Class<?> clazz= Reflection.GetAllCommands().get(command);
+                    if (clazz==null){
+                        System.out.println("Could not find command class for "+command);
+                        continue;
+                    }
+                    CommandBase base = (CommandBase)Reflection.CreateObjectFromXML(clazz, buttonElement);
+                    if (base==null){
+                        System.out.println("Could not create Command Object with XML");
+                        continue;
+                    }
+                    switch (buttonElement.getAttribute("action").toLowerCase()) {
+                        case "pressed":
+                            tempButton.whenPressed(base);
+                            break;
+                        case "released":
+                            tempButton.whenReleased(base);
+                            break;
+                        case "held":
+                            tempButton.whileHeld(base);
+                            break;
+                        case "whenheld":
+                            tempButton.whenPressed(base);
+                            break;
+                        case "toggle":
+                            tempButton.toggleWhenPressed(base);
+                            break;
+                        default:
+                            System.out.println("Could not find action:"+buttonElement.getAttribute("action"));
+                            break;
+                    }
+                    buttons.put(buttonElement.getAttribute("button"),tempButton);
                 }catch (Exception e){
                     System.out.println(e);
                 }

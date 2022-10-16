@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<robot>
+<!-- 
+actions=
+"Pressed"=tempButton.whenPressed(base); //if not running, starts 1 time when pressed
+"Held"=tempButton.whileHeld(base); //if not running, constantly runs or starts it while held.
+"WhenHeld"=tempButton.whenHeld(base); //if not running, starts it 1 time and continues it execution until finished or not held. Does not restart
+"Released"=tempButton.whenReleased(base); //if not running, starts it 1 time when released
+"Toggle"=tempButton.toggleWhenPressed(base); //Generally not recommended. If stopped, starts. If started, stops. 
+https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+ -->
+        <controller type="LOGITECH" port="0" id="PILOT">
+                <axis axis="LEFT_TRIGGER" command="CAMERA_AIM"></axis>
+                <axis axis="RIGHT_TRIGGER" command="MODE_FAST"></axis>
+                <axis axis="RIGHT_JOYSTICK_Y" command="RIGHT_SPEED"></axis>
+                <axis axis="LEFT_JOYSTICK_Y" command="LEFT_SPEED"></axis>
+                <button button="Y" command="CAMERA_AIM"></button>
+                <button button="LEFT_SHOULDER" command="EXTEND"></button>
+                <button button="RIGHT_SHOULDER" command="RETRACT"></button>
+<!--working below-->
+                <button button="A" command="TestCommand" action="Pressed" myParam="Pressed!A"></button>
+                <button button="B" command="TestCommand" action="Held" myParam="Held!B"></button>
+                <button button="A" command="TestCommand" action="Released" myParam="Released!A"></button>
+        </controller>
+</robot>

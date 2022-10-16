@@ -13,6 +13,8 @@ import frc.robot.framework.robot.RobotInit;
 public class TankDrive extends SubsystemBase implements RobotXML{
     ShuffleboardHandler tab = new ShuffleboardHandler("TankDrive");
     private SubsystemCollection subsystemColection;
+    private int count=0;
+    private String text="nooo";
     String[] headers = {"Left Encoder", "Right Encoder", "Left Speed", "Right Speed", "Left Voltage", "Right Voltage", "Left Current", "Right Current"};
 
     public TankDrive(Element subsystem){
@@ -21,7 +23,11 @@ public class TankDrive extends SubsystemBase implements RobotXML{
     
     @Override
     public void periodic(){
+    if (count%100==0){
         System.out.println("TankDrive periodic"+ RobotInit.getAxis("LEFT_TRIGGER","PILOT"));
+        count=0;
+        }
+    count++;
     }
 
     @Override

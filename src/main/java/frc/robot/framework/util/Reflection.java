@@ -68,7 +68,7 @@ public class Reflection {
    public static Object CreateObjectFromXML(Class<?> myClass, Node currentChild){
     try {
       System.out.println("Creating object: "+myClass.getName());
-      Class<?>[] nullClass=null;
+      // Class<?>[] nullClass=null;
       //myClass.getDeclaredConstructor( new Class<?>[]{int.class, int.class, int.class}).newInstance(1,2,3)
       Object[] parameters={currentChild};
       var temp = (Object)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(parameters));
