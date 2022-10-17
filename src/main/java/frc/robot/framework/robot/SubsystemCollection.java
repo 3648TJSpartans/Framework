@@ -66,44 +66,34 @@ public class SubsystemCollection implements RobotXML {
             Node currentChild = children.item(i);
             if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
                 Element childElement = (Element) currentChild;
+                String id = childElement.getAttribute("id");
                 if (childElement.getTagName().equals("motor")) {
-                    String id = childElement.getAttribute("id");
                     motors.put(id, new MotorWrapper(childElement));
                 } else if (childElement.getTagName().equals("group")) {
-                    String id = childElement.getAttribute("id");
                     motors.put(id, new MotorWrapper(childElement, true));
                 } else if (childElement.getTagName().equals("servo")) {
-                    String id = childElement.getAttribute("id");
                     servos.put(id, new ServoWrapper(childElement));
                 } else if (childElement.getTagName().equals("group")) {
-                    String id = childElement.getAttribute("id");
                     servos.put(id, new ServoWrapper(childElement, true));
                 } else if (childElement.getTagName().equals("solenoid")) {
-                    String id = childElement.getAttribute("id");
                     solenoids.put(id, new SolenoidWrapper(childElement));
                 } else if (childElement.getTagName().equals("compressor")) {
-                    // needs fixing
+                    //TODO figure out compressor in xml
                     // compressor = new Compressor(null);
-                } else if (childElement.getTagName().equals("acl")
-                        || childElement.getTagName().equals("accelerometer")) {
-                    String id = childElement.getAttribute("id");
+                } else if (childElement.getTagName().equals("acl") || childElement.getTagName().equals("accelerometer")) {
                     accelerometers.put(id, new ACLWrapper(childElement));
                 } else if (childElement.getTagName().equals("dio") || childElement.getTagName().equals("limitswitch")) {
-                    String id = childElement.getAttribute("id");
                     digitalInputs.put(id, new DigitalInWrapper(childElement));
                 } else if (childElement.getTagName().equals("gyro") || childElement.getTagName().equals("gyroscopes")) {
-                    String id = childElement.getAttribute("id");
                     gyroscopes.put(id, new GyroWrapper(childElement));
-                } else if (childElement.getTagName().equals("pot")
-                        || childElement.getTagName().equals("potientiometers")) {
-                    String id = childElement.getAttribute("id");
+                } else if (childElement.getTagName().equals("pot") || childElement.getTagName().equals("potientiometers")) {
                     potentiometers.put(id, new PotentiometerWrapper(childElement));
                 } else if (childElement.getTagName().equals("ut") || childElement.getTagName().equals("ultrasonic")) {
-                    String id = childElement.getAttribute("id");
                     ultrasonics.put(id, new UltrasonicWrapper(childElement));
+                } else if (childElement.getTagName().equals("pid")) {
+                    //TODO figure out pid in xml
                 } else {
-                    System.out.println("Output type: " + childElement.getTagName() + " on subsystem: "
-                            + system.getTagName() + " doesn't exist.");
+                    System.out.println("Unknown XML element: " + childElement.getTagName() + " on subsystem: "+ system.getTagName());
                 }
             }
         }

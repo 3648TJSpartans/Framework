@@ -77,11 +77,11 @@ public class RobotInit {
 
         shuffleboard = new ShuffleboardHandler(root);
 
-        NodeList controllerNodeList = root.getElementsByTagName("controller");
-        initControllers(controllerNodeList);
-
         NodeList subsystemNodeList = root.getElementsByTagName("subsystem");
         initSubsystems(subsystemNodeList);
+        
+        NodeList controllerNodeList = root.getElementsByTagName("controller");
+        initControllers(controllerNodeList);
 
         NodeList autNodeList = root.getElementsByTagName("auton");
         initAutons(autNodeList);
@@ -125,8 +125,7 @@ public class RobotInit {
                 String subsystemType=currentChild.getAttributes().getNamedItem("type").getNodeValue().toLowerCase();
                 if (subsystemClasses.containsKey(subsystemType)){
 
-                    subsystems.put(subsystemType,((SubsystemBase)frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType),currentChild)));
-                    System.out.println("LoadingXML - Processing System:"+subsystemType);
+                    subsystems.put(subsystemType,((SubsystemBase)frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType),childElement)));
                 }
                 else{
                     System.out.println("Could not find java subsystem for "+subsystemType);
@@ -186,19 +185,6 @@ public class RobotInit {
         // TODO: Implement [sensorList]
     }
 
-    private String subsystemName;
-
-    /**
-     * Constructor for [In]. Sets which subsystem this instance of [In] is for. That
-     * system will only have access to its designated controls + sensors.
-     * 
-     * @param systemID the id of the subsystem
-     */
-
-    public RobotInit(String subsystemName) {
-        this.subsystemName = subsystemName;
-    }
-
     /**
      * [getButton], [getAxis], [getAttribute] return information about the given
      * control interface.
@@ -237,5 +223,9 @@ public class RobotInit {
     public static String getAttribute(String name, String controllerID) {
         ControllerWrapper requestedController = controllers.get(controllerID);
         return requestedController.getAttribute(name);
+    }
+
+    public static SubsystemBase GetSubsystem(String subsystemName){
+        return subsystems.get(subsystemName);
     }
 }

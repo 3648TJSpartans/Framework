@@ -10,7 +10,8 @@ import org.w3c.dom.NodeList;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-
+import frc.robot.framework.robot.RobotInit;
+import frc.robot.framework.subsystems.TankDrive.TankDrive;
 import frc.robot.framework.util.Reflection;
 
 public class ControllerWrapper{
@@ -43,7 +44,7 @@ public class ControllerWrapper{
                         System.out.println("Could not create Command Object with XML");
                         continue;
                     }
-                    switch (buttonElement.getAttribute("action").toLowerCase()) {
+                    switch (buttonElement.getAttribute("trigger").toLowerCase()) {
                         case "pressed":
                             tempButton.whenPressed(base);
                             break;
@@ -76,13 +77,23 @@ public class ControllerWrapper{
             Node currentAxis = axisNodes.item(i);
             if(currentAxis.getNodeType() == Node.ELEMENT_NODE){
                 Element axisElement = (Element)currentAxis;
-
+                //<axis axis="RIGHT_JOYSTICK_X" subsystem="TankDrive" mapto="setInputTurn" scale="2"></axis>
+                
                 try{
-                    String command =axisElement.getAttribute("command");
-                    Class<?> clazz= Reflection.GetAllCommands().get(command);
-                    CommandBase base = (CommandBase)Reflection.CreateObjectFromXML(clazz, axisElement);
-                    base.schedule();
-                    axis.put(axisElement.getAttribute("button"),base);
+                    //String command =axisElement.getAttribute("command");
+                    // Class<?> clazz= Reflection.GetAllCommands().get(command);
+                    // if (clazz==null){
+                    //     System.out.println("Could not find command class for "+command);
+                    //     continue;
+                    // }
+                    // CommandBase base = (CommandBase)Reflection.CreateObjectFromXML(clazz, axisElement);
+                    // if (base==null){
+                    //     System.out.println("Could not create Command Object with XML");
+                    //     continue;
+                    // }
+                    String axisSubsystem=axisElement.getAttribute("subsystem");
+                    
+                    //axis.put(axisElement.getAttribute("axis"),base);
                 }catch (Exception e){
                     System.out.println(e);
                 }
@@ -103,7 +114,4 @@ public class ControllerWrapper{
         return controller.getAxis(axisName);
     }
     
-    private void controllerError(String type, String id, String subsystemName){
-        System.out.println(type +  ":" + id + " not found. Subsystem:"+subsystemName +" not registered on requested controller.");
-    }
 }

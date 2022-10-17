@@ -14,13 +14,6 @@ public class TestCommand extends CommandBase implements RobotXML{
       ReadXML(element);
     }
     
-    public void aaa(){
-        System.out.println("testCommand aaa");
-    }
-    public void bbb(int x, int y){
-        System.out.println("testCommand x+y="+(x+y));
-    }
-    
     @Override
     public void execute() {
       System.out.println("testCommand: "+text);
