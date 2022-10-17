@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
@@ -65,13 +65,13 @@ public class Reflection {
       return myFiles;
    }
 
-   public static Object CreateObjectFromXML(Class<?> myClass, Node currentChild){
+   public static <T> T CreateObjectFromXML(Class<T> myClass, Element element){
     try {
       System.out.println("Creating object: "+myClass.getName());
       // Class<?>[] nullClass=null;
       //myClass.getDeclaredConstructor( new Class<?>[]{int.class, int.class, int.class}).newInstance(1,2,3)
-      Object[] parameters={currentChild};
-      var temp = (Object)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(parameters));
+      Object[] parameters={element};
+      var temp = (T)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(parameters));
       // for (Method m : myClass.getDeclaredMethods()){
       //     if (Modifier.isPublic(m.getModifiers()) && m.getName().contains("execute")){
       //       m.invoke(temp,nullParameters);

@@ -38,7 +38,7 @@ public class ShuffleboardHandler {
     public ShuffleboardHandler(String system){
         base = Handlers.get(system);
         if(base == null){
-            System.out.println("entry: " + system + " not found");
+            System.out.println("Shuffleboard - Subsystem: " + system + " not found");
         }
     }
 
@@ -173,7 +173,7 @@ public class ShuffleboardHandler {
         }
         
         private void networkTableError(String id, String tabName){
-            System.out.println("entry: " + id + " not found in tab: " + tabName);
+            System.out.println("Shuffleboard:" + id + " not found in tab: " + tabName);
         }
     }
 }
