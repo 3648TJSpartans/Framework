@@ -94,13 +94,13 @@ public class RobotInit {
             Node autonNode = autonList.item(i);
             if (autonNode.getNodeType() == Node.ELEMENT_NODE)  {
                 Element autonElement = (Element) autonNode;
-                String autonName=autonElement.getAttributes().getNamedItem("id").getNodeValue().toLowerCase();
+                String autonName=autonElement.getAttributes().getNamedItem("id").getNodeValue();
                 NodeList steps = autonElement.getElementsByTagName("step");
                 for (int j=0; j< steps.getLength(); j++){
                     Node stepNode = steps.item(i);
                     if (stepNode.getNodeType() == Node.ELEMENT_NODE)  {
                         Element stepElement = (Element) stepNode;
-                        String stepName=stepElement.getAttributes().getNamedItem("id").getNodeValue().toLowerCase();
+                        String stepName=stepElement.getAttributes().getNamedItem("id").getNodeValue();
                         //TODO read rest of step info, store in some type of datastructure
                     }
                 }
@@ -122,7 +122,7 @@ public class RobotInit {
             if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
                 Element childElement = (Element) currentChild;
                 if (childElement.getTagName().equals("subsystem")) {
-                String subsystemType=currentChild.getAttributes().getNamedItem("type").getNodeValue().toLowerCase();
+                String subsystemType=currentChild.getAttributes().getNamedItem("type").getNodeValue();
                 if (subsystemClasses.containsKey(subsystemType)){
 
                     subsystems.put(subsystemType,((SubsystemBase)frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType),childElement)));
