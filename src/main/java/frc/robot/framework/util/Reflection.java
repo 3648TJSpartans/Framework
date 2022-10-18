@@ -67,7 +67,6 @@ public class Reflection {
 
    public static <T> T CreateObjectFromXML(Class<T> myClass, Element element){
     try {
-      System.out.println("Creating object: "+myClass.getName());
       Object[] params= new Object[]{element};
       var temp = (T)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(params));
       return temp;
@@ -79,7 +78,6 @@ public class Reflection {
 
   public static <T> T CreateObject(Class<T> myClass, Class<?>[] parametersClasses, Object[] params ){
     try {
-      System.out.println("Creating object: "+myClass.getName());
       var temp = (T)(myClass.getDeclaredConstructor(parametersClasses).newInstance(params));
       return temp;
     } catch (Exception e) {

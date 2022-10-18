@@ -27,7 +27,6 @@ public class TestCommand extends CommandBase implements RobotXML{
     @Override
     public void ReadXML(Element element) {
       text=element.getAttribute("myParam");
-      System.out.println("Createing Testcommand with XML - test is:"+text);
     }
     
     @Override

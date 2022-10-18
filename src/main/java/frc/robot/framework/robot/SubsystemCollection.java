@@ -5,6 +5,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import frc.robot.framework.encoder.EncoderWrapper;
+import frc.robot.framework.encoder.Encoders;
 import frc.robot.framework.motor.MotorWrapper;
 import frc.robot.framework.motor.Motors;
 import frc.robot.framework.sensor.accelerometer.ACLWrapper;
@@ -37,6 +39,7 @@ public class SubsystemCollection implements RobotXML {
     public Gyroscopes gyroscopes;
     public DigitalInputs digitalInputs;
     public Potentiometers potentiometers;
+    public Encoders encoders;
     public Ultrasonics ultrasonics;
     private Element systemElement;
 
@@ -57,6 +60,7 @@ public class SubsystemCollection implements RobotXML {
         accelerometers = new Accelerometers(subsystemName);
         gyroscopes = new Gyroscopes(subsystemName);
         potentiometers = new Potentiometers(subsystemName);
+        encoders = new Encoders(subsystemName);
         ultrasonics = new Ultrasonics(subsystemName);
         // ShuffleboardHandler tab =
         // ShuffleboardCollections.get(systemElement.getTagName());
@@ -73,8 +77,8 @@ public class SubsystemCollection implements RobotXML {
                     motors.put(id, new MotorWrapper(childElement, true));
                 } else if (childElement.getTagName().equals("servo")) {
                     servos.put(id, new ServoWrapper(childElement));
-                } else if (childElement.getTagName().equals("group")) {
-                    servos.put(id, new ServoWrapper(childElement, true));
+                } else if (childElement.getTagName().equals("encoder")) {
+              //      servos.put(id, new EncoderWrapper(childElement));
                 } else if (childElement.getTagName().equals("solenoid")) {
                     solenoids.put(id, new SolenoidWrapper(childElement));
                 } else if (childElement.getTagName().equals("compressor")) {

@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 
 public class ShuffleboardHandler {
-    public Map<String, ShuffleboardBase> Handlers = new HashMap<>();
+    public static Map<String, ShuffleboardBase> Handlers = new HashMap<>();
     public ShuffleboardBase base;
 
     public ShuffleboardHandler(Element root){
