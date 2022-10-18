@@ -1,7 +1,11 @@
 {
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Motor": "Subsystem",
+      "/LiveWindow/Solenoid": "Subsystem",
+      "/LiveWindow/TankDrive": "Subsystem",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler"
     }
   }
 }
