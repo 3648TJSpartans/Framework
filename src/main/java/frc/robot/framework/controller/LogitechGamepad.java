@@ -36,9 +36,18 @@ public class LogitechGamepad extends Joystick implements ControllerBase{
         return super.getRawButton(buttonIDs.get(id));
     }
 
+    public boolean getButton(int id){
+        return super.getRawButton(id);
+    }
+
     public double getAxis(String id){
         return super.getRawAxis(axisIDs.get(id));
     }
+
+    public double getAxis(int id){
+        return super.getRawAxis(id);
+    }
+
     public int getPOV(){
         return super.getPOV();
     }
