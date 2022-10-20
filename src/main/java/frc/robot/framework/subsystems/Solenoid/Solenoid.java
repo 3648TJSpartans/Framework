@@ -7,15 +7,15 @@ import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.util.ShuffleboardHandler;
 
 public class Solenoid extends SubsystemBase implements RobotXML{
-    ShuffleboardHandler tab = new ShuffleboardHandler("Solenoid");
+    ShuffleboardHandler tab;
 
     public Solenoid(Element subsystem){
+        tab= new ShuffleboardHandler(subsystem.getAttribute("id"));
         ReadXML(subsystem);
     }
     
     @Override
     public void periodic(){
-        //System.out.println("Solenoid periodic");
     }
 
     @Override

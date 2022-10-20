@@ -2,27 +2,27 @@
 <!-- maybe... I'm still thinking if it's worth writing this or writing commandgroup that reads parameters -->
 
 <robot>
-    <auton name="auton1">
-        <connect type="start" nextstep="delay"/>
+    <auton id="SpinInCircles">
+        <connect type="start" nextstep="delay1"/>
 
-        <step type="WaitCommand" name="delay" time="1.0">
+        <step type="WaitCommand" id="delay1" time="1.0">
             <connect type="next" nextstep="switch_select"/>
         </step>
-        <step type="ReadGameZoneCommand" name="switch_select" zone="near">
+        <step type="ReadGameZoneCommand" id="switch_select" zone="near">
             <connect type="left" nextstep="turn_left"/>
             <connect type="right" nextstep="turn_right"/>
             <connect type="invalid" nextstep="drive_forward"/>
         </step>
-        <step type="DrivePowerCommand" name="turn_left" forward="0.25" turn="0.55">
+        <step type="DrivePowerCommand" id="turn_left" forward="0.25" turn="0.55">
                 <connect type="next" nextstep="turn_left_wait"/>
         </step>
-        <step type="WaitCommand" name="turn_left_wait" time="0.2">
+        <step type="WaitCommand" id="turn_left_wait" time="0.2">
             <connect type="next" nextstep="drive_forward_left"/>
         </step>
-        <step type="DrivePowerCommand" name="drive_forward_left" forward="0.5" turn="0.0">
+        <step type="DrivePowerCommand" id="drive_forward_left" forward="0.5" turn="0.0">
             <connect type="next" nextstep="drive_forward_wait_left"/>
         </step>
-        <step type="WaitCommand" name="drive_forward_wait_left" time="3.0">
+        <step type="WaitCommand" id="drive_forward_wait_left" time="3.0">
             <connect type="next" nextstep="drive_stop_left"/>
         </step>
     </auton>

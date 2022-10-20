@@ -7,9 +7,10 @@ import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.util.ShuffleboardHandler;
 
 public class Motor extends SubsystemBase implements RobotXML{
-    ShuffleboardHandler tab = new ShuffleboardHandler("Motor");
+    ShuffleboardHandler tab;
 
     public Motor(Element subsystem){
+        tab= new ShuffleboardHandler(subsystem.getAttribute("id"));
         ReadXML(subsystem);
     }
     

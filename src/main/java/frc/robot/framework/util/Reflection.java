@@ -5,13 +5,16 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.w3c.dom.Node;
+import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj.Filesystem;
 
 import java.io.File;
 
 public class Reflection {
+    private static HashMap<String,Class<?>> allCommands = new HashMap<>();
+    private static HashMap<String,Class<?>> allSubsystems = new HashMap<>();
+
     public Reflection(){};
     public static Set<Class<?>> findAllClassesUsingClassLoader(String packageName) {
 
@@ -62,18 +65,10 @@ public class Reflection {
       return myFiles;
    }
 
-   public static Object CreateObjectFromXML(Class<?> myClass, Node currentChild){
+   public static <T> T CreateObjectFromXML(Class<T> myClass, Element element){
     try {
-      System.out.println("Creating object: "+myClass.getName());
-      Class<?>[] nullClass=null;
-      //myClass.getDeclaredConstructor( new Class<?>[]{int.class, int.class, int.class}).newInstance(1,2,3)
-      Object[] parameters={currentChild};
-      var temp = (Object)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(parameters));
-      // for (Method m : myClass.getDeclaredMethods()){
-      //     if (Modifier.isPublic(m.getModifiers()) && m.getName().contains("execute")){
-      //       m.invoke(temp,nullParameters);
-      //     }
-      // }
+      Object[] params= new Object[]{element};
+      var temp = (T)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(params));
       return temp;
     } catch (Exception e) {
       e.printStackTrace();
@@ -81,11 +76,25 @@ public class Reflection {
     return null;
   }
 
+  public static <T> T CreateObject(Class<T> myClass, Class<?>[] parametersClasses, Object[] params ){
+    try {
+      var temp = (T)(myClass.getDeclaredConstructor(parametersClasses).newInstance(params));
+      return temp;
+    } catch (Exception e) {
+      e.printStackTrace();
+    } 
+    return null;
+  }
 
   public static HashMap<String,Class<?>> GetAllCommands(){
-    HashMap<String,Class<?>> commandClasses = new HashMap<>();
+    return GetAllCommands(false);
+  }
+  public static HashMap<String,Class<?>> GetAllCommands(boolean reload){
+    if (!reload && allCommands.size()>0){
+      return allCommands;
+    }
    
-    String[] packageNames = {"frc.robot.subsystems.commands"};
+    String[] packageNames = {"frc.robot.commands", "frc.robot.framework.subsystems"};
     Set<Class<?>> classes = new HashSet<Class<?>>();
     try {
       for(String packageName : packageNames){
@@ -96,17 +105,24 @@ public class Reflection {
       Class<?> commandBase = Class.forName("edu.wpi.first.wpilibj2.command.CommandBase");
       for (Class<?> myClass : classes) {
         if(commandBase.isAssignableFrom(myClass)){
-          commandClasses.put(myClass.getSimpleName().toLowerCase(), myClass);
+          allCommands.put(myClass.getSimpleName(), myClass);
         }
       }
     } catch (Exception e) {
       e.printStackTrace();
     } 
-    return commandClasses;
+    return allCommands;
   }
 
   public static HashMap<String,Class<?>> GetAllSubSystems(){
-    HashMap<String,Class<?>> subsystemsReflection = new HashMap<>();
+    return GetAllSubSystems(false);
+  }
+
+  public static HashMap<String,Class<?>> GetAllSubSystems(boolean reload){
+    if (!reload && allSubsystems.size()>0){
+      return allSubsystems;
+    }
+
     String[] packageNames = {"frc.robot.subsystem", "frc.robot.framework.subsystems"};
     Set<Class<?>> classes = new HashSet<Class<?>>();
     try {
@@ -119,13 +135,13 @@ public class Reflection {
       for (Class<?> myClass : classes) {
         // TODO filter classes for subsystems
         if(subsystemBase.isAssignableFrom(myClass)){
-          subsystemsReflection.put(myClass.getSimpleName().toLowerCase(), myClass);
+          allSubsystems.put(myClass.getSimpleName(), myClass);
         }
       }
     } catch (Exception e) {
       e.printStackTrace();
     } 
 
-    return subsystemsReflection;
+    return allSubsystems;
   }
 }

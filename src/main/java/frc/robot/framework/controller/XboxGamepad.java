@@ -5,10 +5,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import java.util.Map;
 
 
-public class XboxGamepad implements ControllerBase{
-    private Joystick controller;
+public class XboxGamepad extends Joystick implements ControllerBase {
 
-    private Map<String, Integer> buttonIDs = Map.ofEntries(
+    private static final Map<String, Integer> buttonIDs = Map.ofEntries(
         Map.entry("A", 1),
         Map.entry("B", 2),
         Map.entry("X", 3),
@@ -20,7 +19,7 @@ public class XboxGamepad implements ControllerBase{
         Map.entry("LEFT_JOYSTICK_IN", 9),
         Map.entry("RIGHT_JOYSTICK_IN", 10)
     );
-    private Map<String, Integer> axisIDs = Map.ofEntries(
+    private static final Map<String, Integer> axisIDs = Map.ofEntries(
         Map.entry("LEFT_JOYSTICK_X", 0),
         Map.entry("LEFT_JOYSTICK_Y", 1),
         Map.entry("LEFT_TRIGGER", 2),
@@ -30,17 +29,36 @@ public class XboxGamepad implements ControllerBase{
     );
 
     public XboxGamepad(Integer port){
-        controller = new Joystick(port);
+        super(port);
     }
 
     public boolean getButton(String id){
-        return controller.getRawButton(buttonIDs.get(id));
+        return super.getRawButton(buttonIDs.get(id));
+    }
+
+    public boolean getButton(int id){
+        return super.getRawButton(id);
     }
 
     public double getAxis(String id){
-        return controller.getRawAxis(axisIDs.get(id));
+        return super.getRawAxis(axisIDs.get(id));
     }
+
+    public double getAxis(int id){
+        return super.getRawAxis(id);
+    }
+
     public int getPOV(){
-        return controller.getPOV();
+        return super.getPOV();
+    }
+
+    @Override
+    public Map<String, Integer> GetButtonMap() {
+        return buttonIDs;
+    }
+
+    @Override
+    public Map<String, Integer> GetAxisMap() {
+        return axisIDs;
     }
 }

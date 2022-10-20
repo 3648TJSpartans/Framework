@@ -8,30 +8,15 @@ import frc.robot.framework.robot.*;
 
 public class TestCommand extends CommandBase implements RobotXML{
     
-    private long start = System.currentTimeMillis();
-    private boolean finished = false;
+    private String text="noo";
 
     public TestCommand(Element element){
-    }
-    
-    public TestCommand(int a, int b, int c){
-      System.out.println("testCommand Ans = "+(a+b+c));
-    }
-  
-    public void aaa(){
-        System.out.println("testCommand aaa");
-    }
-    public void bbb(int x, int y){
-        System.out.println("testCommand x+y="+(x+y));
+      ReadXML(element);
     }
     
     @Override
     public void execute() {
-      var diff = System.currentTimeMillis()-start;
-      System.out.println("testCommand Time taken:"+diff);
-  
-      start=System.currentTimeMillis();
-      finished=true;
+      System.out.println("testCommand: "+text);
     }
   
     @Override
@@ -41,8 +26,7 @@ public class TestCommand extends CommandBase implements RobotXML{
 
     @Override
     public void ReadXML(Element element) {
-      // TODO Auto-generated method stub
-      
+      text=element.getAttribute("myParam");
     }
     
     @Override

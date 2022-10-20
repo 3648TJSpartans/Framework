@@ -5,10 +5,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import java.util.Map;
 
 
-public class PSGamepad implements ControllerBase{
-    private Joystick controller;
+public class PSGamepad extends Joystick implements ControllerBase{
 
-    private Map<String, Integer> buttonIDs = Map.ofEntries(
+    private static final Map<String, Integer> buttonIDs = Map.ofEntries(
         Map.entry("SQUARE", 1),
         Map.entry("X", 2),
         Map.entry("CIRCLE", 3),
@@ -24,7 +23,7 @@ public class PSGamepad implements ControllerBase{
         Map.entry("PS_BUTTON", 9),
         Map.entry("TOUCHPAD", 10)
     );
-    private Map<String, Integer> axisIDs = Map.ofEntries(
+    private static final Map<String, Integer> axisIDs = Map.ofEntries(
         Map.entry("LEFT_JOYSTICK_X", 0),
         Map.entry("LEFT_JOYSTICK_Y", 1),
         Map.entry("RIGHT_JOYSTICK_X", 2),
@@ -34,17 +33,36 @@ public class PSGamepad implements ControllerBase{
     );
 
     public PSGamepad(Integer port){
-        controller = new Joystick(port);
+        super(port);
     }
 
     public boolean getButton(String id){
-        return controller.getRawButton(buttonIDs.get(id));
+        return super.getRawButton(buttonIDs.get(id));
+    }
+
+    public boolean getButton(int id){
+        return super.getRawButton(id);
     }
 
     public double getAxis(String id){
-        return controller.getRawAxis(axisIDs.get(id));
+        return super.getRawAxis(axisIDs.get(id));
     }
+
+    public double getAxis(int id){
+        return super.getRawAxis(id);
+    }
+    
     public int getPOV(){
-        return controller.getPOV();
+        return super.getPOV();
+    }
+
+    @Override
+    public Map<String, Integer> GetButtonMap() {
+        return buttonIDs;
+    }
+
+    @Override
+    public Map<String, Integer> GetAxisMap() {
+        return axisIDs;
     }
 }
