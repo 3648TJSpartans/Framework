@@ -72,8 +72,8 @@ public class ShuffleboardHandler {
             NodeList children = system.getChildNodes();
             Boolean sysEnabled = Boolean.parseBoolean(system.getAttribute("enabled"));
             SimpleWidget sysWidget = tab.add(system.getAttribute("id"), sysEnabled).withWidget("Toggle Button");
-            
             NetworkTableEntry sysEntry = sysWidget.getEntry();
+
             Widgets.put(system.getAttribute("id"), sysEntry);
             SimpleWidget sysliveWindowWidget = liveWindow.add(system.getAttribute("id"), sysEnabled).withWidget("Toggle Button");
             NetworkTableEntry sysliveWindowEntry = sysliveWindowWidget.getEntry();
@@ -84,11 +84,11 @@ public class ShuffleboardHandler {
                 Node currentChild = children.item(i);
                 if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
                     Element childElement = (Element) currentChild;
-                    String valueType = childElement.getAttribute("valueType");
+                    String valueType = childElement.getAttribute("valueType").toLowerCase();
                     System.out.print(valueType);
                     System.out.print(valueType.equals("double"));
 
-                    if(valueType.equals("double") || valueType.equals("Double")){
+                    if(valueType.equals("double")){
                         System.out.print(childElement.getAttribute("id"));
                         Double enabled = Double.parseDouble((childElement.getAttribute("defaultValue")));
                         String title = childElement.getAttribute("id");
@@ -98,7 +98,7 @@ public class ShuffleboardHandler {
                         SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
                         NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
                         liveWindowWidgets.put(title, liveWindowEntry);
-                    }else if(valueType.equals("string") || valueType.equals("String")){
+                    }else if(valueType.equals("string")){
                         String enabled = childElement.getAttribute("defaultValue");
                         String title = childElement.getAttribute("id");
                         SimpleWidget widget = tab.add(title, enabled);
@@ -107,7 +107,7 @@ public class ShuffleboardHandler {
                         SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
                         NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
                         liveWindowWidgets.put(title, liveWindowEntry);
-                    }else if(valueType.equals("int") || valueType.equals("Int")){
+                    }else if(valueType.equals("int")){
                         int enabled = Integer.parseInt((childElement.getAttribute("defaultValue")));
                         String title = childElement.getAttribute("id");
                         SimpleWidget widget = tab.add(title, enabled);
