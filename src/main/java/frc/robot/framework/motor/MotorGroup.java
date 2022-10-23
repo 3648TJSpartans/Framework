@@ -50,11 +50,19 @@ public class MotorGroup implements MotorBase {
 
     @Override
     public boolean isCANEncoder() {
-        return motors.get(0).isCANEncoder();
+        for (MotorBase motorBase : motors) {
+            if (motorBase.isCANEncoder())
+                return true;
+        }
+        return false;
     }
 
     @Override
     public EncoderBase getEncoder(){
-        return motors.get(0).getEncoder();
+        for (MotorBase motorBase : motors) {
+            if (motorBase.getEncoder() != null)
+                return motorBase.getEncoder();
+        }
+        return null;
     }
 }
