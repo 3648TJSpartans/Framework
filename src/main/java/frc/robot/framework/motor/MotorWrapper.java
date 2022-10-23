@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.util.CommandMode;
 
@@ -11,7 +12,6 @@ public class MotorWrapper implements MotorBase {
 
     private MotorBase motor;
     private Element motorElement;
-
     private EncoderWrapper encoder;
 
     public MotorWrapper(Element element) {
@@ -20,21 +20,12 @@ public class MotorWrapper implements MotorBase {
         int port = Integer.parseInt(motorElement.getAttribute("port"));
         motor = getMotorType(motorElement.getAttribute("controller"), port);
 
-        if (motor == null) {
-            System.out.println("For motor: " + id + " motor controller type: " + motorElement.getAttribute("controller")
-                    + " was not found!");
-            return;
-        }
-
         if (motorElement.hasAttribute("inverted")) {
             motor.setInverted(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
         }
-
-        parseEncoder(element);
     }
 
     public MotorWrapper(Element groupElement, boolean groupFlag) {
-        String groupID = groupElement.getAttribute("id");
         NodeList groupMotorNodes = groupElement.getElementsByTagName("motor");
         MotorGroup group = new MotorGroup();
         for (int o = 0; o < groupMotorNodes.getLength(); o++) {
@@ -42,47 +33,36 @@ public class MotorWrapper implements MotorBase {
             if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
                 Element motorElement = (Element) currentMotor;
                 int port = Integer.parseInt(motorElement.getAttribute("port"));
-                MotorBase controllerType = getMotorType(motorElement.getAttribute("controller"), port);
-
-                if (controllerType != null) {
-                    group.addMotor(new MotorWrapper(motorElement));
-                } else {
-                    System.out.println("For motor:" + motorElement.getAttribute("port") + " in group: " + groupID
-                            + " motor controller type: " + controllerType
-                            + " was not found!");
-                    continue;
-                }
+                MotorBase controllerType=getMotorType(motorElement.getAttribute("controller"), port);
+                
+                group.addMotor(controllerType);
             }
         }
         motor = group;
         if (groupElement.hasAttribute("inverted")) {
             motor.setInverted(Boolean.parseBoolean(groupElement.getAttribute("inverted")));
         }
-
-        parseEncoder(groupElement);
-    }
-
-    private void parseEncoder(Element motorElement) {
-        NodeList encoderNodes = motorElement.getElementsByTagName("encoder");
-        for (int o = 0; o < encoderNodes.getLength(); o++) {
-            Node currentEncoder = encoderNodes.item(o);
-            if (currentEncoder.getNodeType() == Node.ELEMENT_NODE) {
-                Element encoderElement = (Element) currentEncoder;
-                encoder = new EncoderWrapper(encoderElement, this);
-            }
-        }
     }
 
     private MotorBase getMotorType(String controllerType, int port) {
-        if (controllerType.equals("SPARK")) {
-            return new SparkController(port);
-        } else if (controllerType.equals("TALON")) {
-            return new TalonController(port);
-        } else if (controllerType.equals("SPARK_MAX")) {
-            return new SparkMaxController(port);
-        } else {
-            return null;
+        MotorBase motorBase;
+        switch (controllerType) {
+            case "SPARK":
+                motorBase = new SparkController(port);
+                break;
+            case "TALONSRX":
+                motorBase = new TalonSRXController(port);
+                break;
+            case "SPARKMAX":
+                 motorBase = new SparkMaxController(port);
+                break;
+            default:
+                System.out.println("For motor:" + motorElement.getAttribute("port")
+                    + " motor controller type: " + motorElement.getAttribute("controller")
+                    + " was not found!");
+                return null;
         }
+        return motorBase;
     }
 
     public void set(double speed) {
@@ -131,5 +111,15 @@ public class MotorWrapper implements MotorBase {
     public void setVoltage(double voltage) {
         motor.setVoltage(voltage);
 
+    }
+
+    @Override
+    public boolean isCANEncoder() {
+        return motor.isCANEncoder();
+    }
+    
+    @Override
+    public EncoderBase getEncoder(){
+        return motor.getEncoder();
     }
 }

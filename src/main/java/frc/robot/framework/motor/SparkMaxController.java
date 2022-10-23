@@ -7,9 +7,10 @@ import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
-public class SparkMaxController implements MotorBase{
+public class SparkMaxController implements MotorBase, EncoderBase {
     private CANSparkMax controller;
     private SparkMaxPIDController pidController;
     private RelativeEncoder encoder;
@@ -57,5 +58,42 @@ public class SparkMaxController implements MotorBase{
     }
     public void setVoltage(double voltage){
         controller.setVoltage(voltage);
+    }
+
+    @Override
+    public int getTicks() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public double getVelocity() {
+        return encoder.getVelocity();
+    }
+
+    @Override
+    public double getPosition() {
+        return encoder.getPosition();
+    }
+
+    @Override
+    public void setDistancePerPulse(double factor) {
+        encoder.setPositionConversionFactor(factor);
+        encoder.setVelocityConversionFactor(factor);
+    }
+
+    @Override
+    public void reset() {
+        
+    }
+
+    @Override
+    public boolean isCANEncoder() {
+        return true;
+    }
+    
+    @Override
+    public EncoderBase getEncoder(){
+        return this;
     }
 }

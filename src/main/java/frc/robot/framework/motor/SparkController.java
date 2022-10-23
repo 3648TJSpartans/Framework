@@ -1,6 +1,7 @@
 package frc.robot.framework.motor;
 
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
+import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
 public class SparkController implements MotorBase {
@@ -34,5 +35,15 @@ public class SparkController implements MotorBase {
     public void setVoltage(double voltage) {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public boolean isCANEncoder() {
+        return false;
+    }
+
+    @Override
+    public EncoderBase getEncoder(){
+        return null;
     }
 }

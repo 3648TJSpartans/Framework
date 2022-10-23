@@ -25,7 +25,7 @@ public class Encoders{
         encoders.put(id, encoder);
     }
 
-    private EncoderWrapper getEncoder(String id) {
+    public EncoderWrapper getEncoder(String id) {
         EncoderWrapper requestedsensor = encoders.get(id);
         if (requestedsensor == null) {
             sensorError("Encoder", id, subsystemName);

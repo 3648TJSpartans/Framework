@@ -1,5 +1,6 @@
 package frc.robot.framework.motor;
 
+import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
 public interface MotorBase{
@@ -11,5 +12,7 @@ public interface MotorBase{
 
     public void setPID(double kP, double kI, double kD, double kF);
     public void setVoltage(double voltage);
-    
+
+    public boolean isCANEncoder();
+    public EncoderBase getEncoder();
 }
