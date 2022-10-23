@@ -16,7 +16,6 @@ public class MotorWrapper implements MotorBase {
 
     public MotorWrapper(Element element) {
         motorElement = element;
-        String id = motorElement.getAttribute("id");
         int port = Integer.parseInt(motorElement.getAttribute("port"));
         motor = getMotorType(motorElement.getAttribute("controller"), port);
 
@@ -46,14 +45,14 @@ public class MotorWrapper implements MotorBase {
 
     private MotorBase getMotorType(String controllerType, int port) {
         MotorBase motorBase;
-        switch (controllerType) {
-            case "SPARK":
+        switch (controllerType.toLowerCase()) {
+            case "sparkpwm":
                 motorBase = new SparkController(port);
                 break;
-            case "TALONSRX":
+            case "talonsrx":
                 motorBase = new TalonSRXController(port);
                 break;
-            case "SPARKMAX":
+            case "sparkmax":
                  motorBase = new SparkMaxController(port);
                 break;
             default:

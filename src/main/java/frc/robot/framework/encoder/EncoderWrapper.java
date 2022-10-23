@@ -1,18 +1,14 @@
 package frc.robot.framework.encoder;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.text.AsyncBoxView.ChildLocator;
 
 import org.w3c.dom.*;
 
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import frc.robot.framework.algorithm.PID;
-import frc.robot.framework.motor.MotorBase;
 import frc.robot.framework.motor.MotorWrapper;
-import frc.robot.framework.util.CommandMode;
 
 public class EncoderWrapper{
     private EncoderBase encoder;

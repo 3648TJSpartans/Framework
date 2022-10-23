@@ -9,10 +9,7 @@ import org.w3c.dom.NodeList;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.framework.robot.RobotInit;
-import frc.robot.framework.subsystems.TankDrive.TankDrive;
 import frc.robot.framework.util.Reflection;
 
 public class ControllerWrapper{

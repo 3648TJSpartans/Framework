@@ -4,22 +4,18 @@ create generic motor(s) power subsystem & commands. Set Power. Toggle. Coast/bre
 Create generic solenoid(s) subsystem & commands. Set state. Toggle. Hold (with default) Inverse input.
 --All subsystems should support reloading of config. Config reload should be a command.  (Kinda done - maybe button to just run code to restart entire robot?)
 
-fix Pid util class. I don't KI is being used. Create or link to visualizer for tuning
+
 Create motor util with configs such as pid, power/speed limit, etc. In motor config
 Create controller util class. button debounce, deadband, linear/non-linear mapping of input to output. In Controller config
 create logging class. Time/mode/+otherstuff.
 
-create generic commnds (if needed) such as wait?
+Create reading of AUTON from xml into command groups
 
 integrate shuffleboard into the framework for easy of testing and for in game changes. somewhat done already. Needs testing. Needs to dynamically pick value as well
 failsafe for sensors solienoid and motors might need testing
+-Need to add more properties or expand defaultValue architecture
 
 make a compressor object
-
-*look/update at spark max controller file?
-*add sensor output to the framework
-go over the encoders and double check they work
-
 
 RobotInit->controllers/auton/robotxml -- builds out commands for input/auton and starts subsystems
 Subsystem->subsystemcollection->motors/solenids/etc.

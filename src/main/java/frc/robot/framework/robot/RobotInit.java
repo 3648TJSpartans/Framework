@@ -174,16 +174,6 @@ public class RobotInit {
         }
     }
 
-    /**
-     * [sensorList] is a helper function for [Init]. It takes an XML nodeList
-     * representing sensors and registers those sensors with [In]
-     * 
-     * @param sensorList a list of XML nodes representing sensors
-     */
-
-    private static void initSensors(NodeList sensorList) {
-        // TODO: Implement [sensorList]
-    }
 
     /**
      * [getButton], [getAxis], [getAttribute] return information about the given

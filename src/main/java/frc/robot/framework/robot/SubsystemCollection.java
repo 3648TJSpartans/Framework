@@ -82,9 +82,6 @@ public class SubsystemCollection implements RobotXML {
                     motors.put(id, encoders.getEncoder(id).motor);
                 } else if (childElement.getTagName().equals("solenoid")) {
                     solenoids.put(id, new SolenoidWrapper(childElement));
-                } else if (childElement.getTagName().equals("compressor")) {
-                    //TODO figure out compressor in xml
-                    // compressor = new Compressor(null);
                 } else if (childElement.getTagName().equals("acl") || childElement.getTagName().equals("accelerometer")) {
                     accelerometers.put(id, new ACLWrapper(childElement));
                 } else if (childElement.getTagName().equals("dio") || childElement.getTagName().equals("limitswitch")) {
@@ -95,8 +92,6 @@ public class SubsystemCollection implements RobotXML {
                     potentiometers.put(id, new PotentiometerWrapper(childElement));
                 } else if (childElement.getTagName().equals("ut") || childElement.getTagName().equals("ultrasonic")) {
                     ultrasonics.put(id, new UltrasonicWrapper(childElement));
-                } else if (childElement.getTagName().equals("pid")) {
-                    //TODO figure out pid in xml
                 } else {
                     System.out.println("Unknown XML element: " + childElement.getTagName() + " on subsystem: "+ system.getTagName());
                 }

@@ -1,14 +1,6 @@
 package frc.robot.framework.algorithm;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-
 import org.w3c.dom.Element;
-
-import frc.robot.framework.encoder.EncoderWrapper;
 
 public class PID{
     private double kP, kI, kD, kF = 0;
