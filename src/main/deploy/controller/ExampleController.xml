@@ -12,7 +12,7 @@ Any number of addational parameters can be defined. It's up to the command to co
  -->
         <controller type="LOGITECH" port="0" id="PILOT">
                 <!-- <axis axis="LEFT_JOYSTICK_Y" command="TankDrive_Command_Forward" scale="0.5"></axis> -->
-                <defaultCommand subsystem="TankDrive" command="TankDrive_Default" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" scaleX="2" scaleY=".75"></defaultCommand>
+<!--                <defaultCommand subsystem="TankDrive" command="TankDrive_Default" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" scaleX="2" scaleY=".75"></defaultCommand> -->
 <!--working below-->
                 <button button="A" command="TestCommand" trigger="Pressed" myParam="Pressed!A"></button>
                 <button button="B" command="TestCommand" trigger="Held" myParam="Held!B"></button>

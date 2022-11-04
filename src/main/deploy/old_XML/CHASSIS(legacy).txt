@@ -8,7 +8,7 @@
                     <group id="LEFT_SIDE" inverted="true" defaultValue = "true">
                         <motor controller="TALONSRX" port="11" defaultValue = "true"></motor>
                         <motor controller="TALONSRX" port="12" defaultValue = "true"></motor>
-                        <encoder type="TOUGH_BOX" port_one="6" port_two="7">
+                        <encoder type="TOUGHBOX" port_one="6" port_two="7">
                             <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
                         </encoder>
                     </group>
@@ -54,21 +54,21 @@
             <!-- <group id="RIGHT_SIDE" inverted="false">
                 <motor controller="SPARK_MAX" port="1" defaultValue = "true"></motor>
                 <motor controller="SPARK_MAX" port="10" defaultValue = "true"></motor>
-                <encoder type="TOUGH_BOX" port_one="0" port_two="1" distance_per_pulse="1">
+                <encoder type="TOUGHBOX" port_one="0" port_two="1" distance_per_pulse="1">
                     <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
                 </encoder>
             </group>
             <group id="LEFT_SIDE" inverted="false">
                 <motor controller="SPARK_MAX" port="2" defaultValue = "true"></motor>
                 <motor controller="SPARK_MAX" port="3" defaultValue = "true"></motor>
-                <encoder type="TOUGH_BOX" port_one="0" port_two="1" distance_per_pulse="1">
+                <encoder type="TOUGHBOX" port_one="0" port_two="1" distance_per_pulse="1">
                     <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
                 </encoder>
             </group> -->
             <group id="LEFT_SIDE" inverted="true" defaultValue = "true">
                 <motor controller="TALONSRX" port="11" defaultValue = "true"></motor>
                 <motor controller="TALONSRX" port="12" defaultValue = "true"></motor>
-                <encoder type="TOUGH_BOX" port_one="6" port_two="7">
+                <encoder type="TOUGHBOX" port_one="6" port_two="7">
                     <pid type="VELOCITY" kP="0.001" kI="0" kD="0" kF="0"></pid>
                 </encoder>
             </group>

@@ -4,66 +4,92 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.RobotBase;
 
 import java.io.File;
+import java.io.FileInputStream;
 
 public class Reflection {
     private static HashMap<String,Class<?>> allCommands = new HashMap<>();
     private static HashMap<String,Class<?>> allSubsystems = new HashMap<>();
+    private static LinkedList<String> allClasses = new LinkedList<>();
 
     public Reflection(){};
-    public static Set<Class<?>> findAllClassesUsingClassLoader(String packageName) {
 
-      Set<Class<?>> classes = new HashSet<Class<?>>();
-      try{
-        File folder = new File(ClassLoader.getSystemClassLoader().getResource(packageName.replaceAll("[.]", "/")).getPath());
-        for (File file : listOfFiles(folder)) {
+    public static Set<Class<?>> findAllClassesUsingClassLoader(String packageName) {
+      if (allClasses.size()==0){
+        if (RobotBase.isReal()) {
           try {
-            classes.add(Class.forName(file.getPath().substring(Filesystem.getDeployDirectory().toString().length()-6,file.getPath().length()-6).replace(File.separator.charAt(0),'.')));
-          } catch (ClassNotFoundException e) {
+            allClasses=getAllClassesReal(Reflection.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath()); //Debugging location in simulation -- "C:\\src\\Framework\\build\\libs\\Framework.Jar"
+          } catch (Exception e) {
             e.printStackTrace();
           }
         }
-        //Old way
-        // InputStream stream = ClassLoader.getSystemClassLoader().getResourceAsStream(packageName.replaceAll("[.]", "/"));
-        // BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
-        // return reader.lines()
-        //   .filter(line -> line.endsWith(".class"))
-        //   .map(line -> getClass(line, packageName))
-        //   .collect(Collectors.toSet());
+        else{
+          allClasses=getAllClassesSimulation(ClassLoader.getSystemClassLoader().getResource("frc/robot/").getPath());
+        }
       }
-      catch(NullPointerException exception){
+
+      
+
+      Set<Class<?>> classes = new HashSet<Class<?>>();
+      try{
+        for (String className : allClasses.stream().filter(name -> name.startsWith(packageName)).collect(Collectors.toList())) {
+          try {
+            classes.add(Class.forName(className));
+          } catch (Exception e) {
+            e.printStackTrace();
+          }
+        }
+      }
+      catch(Exception exception){
         return null;
       }
       return classes;
     }
   
-    // private static Class<?> getClass(String className, String packageName) {
-    //   try {
-    //       return Class.forName(packageName + "."
-    //         + className.substring(0, className.lastIndexOf('.')));
-    //   } catch (ClassNotFoundException e) {
-    //       System.out.println(e);
-    //   }
-    //   return null;
-    // }
 
-    private static LinkedList<File> listOfFiles(File dirPath){
-      File filesList[] = dirPath.listFiles();
-      LinkedList<File> myFiles = new LinkedList<>();
-      for(File file : filesList) {
-         if(file.isFile()) {
-            myFiles.add(file);
-         } else {
-            myFiles.addAll(listOfFiles(file));
-         }
+   private static LinkedList<String> getAllClassesReal(String dirPath){
+    try{
+      LinkedList<String> classNames = new LinkedList<String>();
+      ZipInputStream zip = new ZipInputStream(new FileInputStream(dirPath));
+      for (ZipEntry entry = zip.getNextEntry(); entry != null; entry = zip.getNextEntry()) {
+          if (!entry.isDirectory() && entry.getName().endsWith(".class") && entry.getName().startsWith("frc")) {
+              // This ZipEntry represents a class. Now, what class does it represent?
+              String className = entry.getName().replace('/', '.'); // including ".class"
+              classNames.add(className.substring(0, className.length() - ".class".length()).replace(File.separator.charAt(0),'.')) ;
+          }
       }
-      return myFiles;
-   }
+      return classNames;
+    }
+    catch(Exception e){
+      System.out.println(e);
+    }
+    return null;
+  }
+  
+  private static LinkedList<String> getAllClassesSimulation(String dirPath){
+    File filesList[] = new File(dirPath).listFiles();
+    LinkedList<String> classNames = new LinkedList<>();
+    for(File file : filesList) {
+        if(file.isFile()) {
+          if (file.getName().endsWith(".class")){
+            classNames.add(file.getPath().substring(Filesystem.getDeployDirectory().toString().length()-".class".length(), file.getPath().length()- ".class".length()).replace(File.separator.charAt(0),'.'));
+          }
+        } else {
+          classNames.addAll(getAllClassesSimulation(file.getPath()));
+        }
+    }
+    return classNames;
+ }
 
    public static <T> T CreateObjectFromXML(Class<T> myClass, Element element){
     try {
