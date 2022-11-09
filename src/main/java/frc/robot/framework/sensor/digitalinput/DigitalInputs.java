@@ -10,7 +10,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class DigitalInputs{
-    private static Map<String, DigitalInWrapper> digitalinputs = new HashMap<>();
+    private Map<String, DigitalInWrapper> digitalinputs = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;

@@ -11,7 +11,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class Encoders{
-    private static Map<String, EncoderWrapper> encoders = new HashMap<>();
+    private Map<String, EncoderWrapper> encoders = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;

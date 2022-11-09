@@ -11,7 +11,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class Accelerometers{
-    private static Map<String, ACLWrapper> accelerometers = new HashMap<>();
+    private Map<String, ACLWrapper> accelerometers = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;

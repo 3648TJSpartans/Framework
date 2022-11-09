@@ -9,7 +9,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class Servos {
-    private static Map<String, ServoWrapper> servos = new HashMap<>();
+    private Map<String, ServoWrapper> servos = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;

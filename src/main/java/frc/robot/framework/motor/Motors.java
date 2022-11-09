@@ -11,7 +11,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class Motors {
-    private static Map<String, MotorWrapper> motors = new HashMap<>();
+    private Map<String, MotorWrapper> motors = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
