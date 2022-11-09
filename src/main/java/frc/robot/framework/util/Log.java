@@ -35,11 +35,15 @@ public class Log {
             }
         }
 
-        startTime = Instant.now().toEpochMilli();
-        File file = new File(Filesystem.getOperatingDirectory() + "/Logs/"
-                + java.time.LocalDateTime.now().format(DateTimeFormatter.ISO_DATE) + "-" + Instant.now().toEpochMilli() + "-" + subsystem + ".csv");
-
         try {
+            File folder = new File(Filesystem.getOperatingDirectory() + "/Logs/");
+            folder.mkdirs(); //checks and if folder doesn't exist, creates it
+
+            startTime = Instant.now().toEpochMilli();
+
+            File file = new File(Filesystem.getOperatingDirectory() + "/Logs/"
+                + java.time.LocalDateTime.now().format(DateTimeFormatter.ISO_DATE) + "-" + Instant.now().toEpochMilli() + "-" + subsystem + ".csv");
+            file.createNewFile();
             outputfile = new FileWriter(file);
 
             outputfile.write(String.join(",", headers));
@@ -71,6 +75,7 @@ public class Log {
 
     protected void finalize() throws IOException {
         outputfile.close();
+        //TODO: implement deletion of older logs
     }
     // File name locate in ./log/date-subsytsem
     // Delete logs more than 20
