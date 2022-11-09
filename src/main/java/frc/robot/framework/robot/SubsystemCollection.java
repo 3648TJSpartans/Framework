@@ -79,7 +79,7 @@ public class SubsystemCollection implements RobotXML {
                     servos.put(id, new ServoWrapper(childElement));
                 } else if (childElement.getTagName().equals("encoder")) {
                     encoders.put(id, new EncoderWrapper(childElement));
-                    motors.put(id, encoders.getEncoder(id).motor);
+                    motors.put(encoders.getEncoder(id).motorid, encoders.getEncoder(id).motor);
                 } else if (childElement.getTagName().equals("solenoid")) {
                     solenoids.put(id, new SolenoidWrapper(childElement));
                 } else if (childElement.getTagName().equals("acl") || childElement.getTagName().equals("accelerometer")) {

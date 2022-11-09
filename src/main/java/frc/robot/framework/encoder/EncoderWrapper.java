@@ -13,6 +13,7 @@ import frc.robot.framework.motor.MotorWrapper;
 public class EncoderWrapper{
     private EncoderBase encoder;
     public MotorWrapper motor;
+    public String motorid;
     public Map<String,PID> pidMap=new HashMap<String,PID>();
     public String pidProfile;
 
@@ -37,6 +38,7 @@ public class EncoderWrapper{
                         break;
                     }
                     motor = new MotorWrapper(childElement, true);
+                    motorid = childElement.getAttribute("id");
                     foundMotor=true;
                     break;
                 case "pid":;
@@ -83,6 +85,13 @@ public class EncoderWrapper{
 
     public void reset(){
         encoder.reset();
+    }
+
+    public void setPID(double kP, double kI, double kD, double kF){
+        if (!pidMap.containsKey("ShuffleBoard"))
+            pidMap.put("ShuffleBoard", new PID(kP, kI, kD, kF));
+        else
+            pidMap.get("ShuffleBoard").setPID(kP, kI, kD, kF);
     }
 
     public double getPIDOutput(){

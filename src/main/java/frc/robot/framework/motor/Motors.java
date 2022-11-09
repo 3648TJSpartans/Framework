@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
+import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardHandler;
 
@@ -34,6 +35,13 @@ public class Motors {
     }
 
     public void put(String id, MotorWrapper motor){
+        // tab = new ShuffleboardHandler(subsystemName.toString());
+        // SimpleWidget widget = tab.add
+        // NetworkTableEntry entry = widget.getEntry();
+        // Widgets.put(title, entry);
+        // SimpleWidget liveWindowWidget = liveWindow.add(id, enabled);
+        // NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+        // liveWindowWidgets.put(title, liveWindowEntry);
         motors.put(id, motor);
     }
 
@@ -67,19 +75,7 @@ public class Motors {
         
         if(tab.getEnabled(id, subsystemName)) requestedMotor.setVoltage(voltage);
     }
-    /** 
-     * [setPID] returns the value of requested button
-     * 
-     *  @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
-     * @param kP 
-     * @param kI
-     * @param kD
-     * @param kF
-     */
-    public void setPID(String id, double kP, double kI, double kD, double kF) {
-        MotorWrapper requestedMotor = getMotor(id);
-        if(tab.getEnabled(id, subsystemName)) requestedMotor.setPID(kP, kI, kD, kF);
-    }
+    
     /** 
      * [getVelocity] returns the speed of requested motor
      * 

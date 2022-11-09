@@ -9,10 +9,7 @@ public class PID{
     private double previousErrors[] = new double[5]; 
 
     public PID(double kP, double kI, double kD, double kF){
-        this.kP = kP;
-        this.kI = kI;
-        this.kD = kD;
-        this.kF = kF;
+        setPID(kP, kI, kD, kF);
     }
 
     public PID(Element element ){
@@ -20,6 +17,13 @@ public class PID{
         kI=Double.parseDouble(element.getAttribute("kI"));
         kD=Double.parseDouble(element.getAttribute("kD"));
         kF=Double.parseDouble(element.getAttribute("kF"));
+    }
+
+    public void setPID(double kP, double kI, double kD, double kF){
+        this.kP = kP;
+        this.kI = kI;
+        this.kD = kD;
+        this.kF = kF;
     }
 
     public double calculateOutput(double measuredValue, double desiredValue){
