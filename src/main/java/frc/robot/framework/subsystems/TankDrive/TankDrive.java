@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.Log;
 
 public class TankDrive extends SubsystemBase implements RobotXML{
     ShuffleboardHandler tab;
@@ -15,7 +16,9 @@ public class TankDrive extends SubsystemBase implements RobotXML{
     private double input_left=0;
     private double input_right=0;
 
-    String[] headers = {"Left Encoder", "Right Encoder", "Left Speed", "Right Speed", "Left Voltage", "Right Voltage", "Left Current", "Right Current"};
+    //String[] headers = {"Left Encoder", "Right Encoder", "Left Speed", "Right Speed", "Left Voltage", "Right Voltage", "Left Current", "Right Current"};
+    private String[] headers = {"left", "right"};
+    private Log log = new Log("TankDrive", headers);
 
     public TankDrive(Element subsystem){
         tab= new ShuffleboardHandler(subsystem.getAttribute("id"));
@@ -24,6 +27,59 @@ public class TankDrive extends SubsystemBase implements RobotXML{
     
     @Override
     public void periodic(){
+        if (Math.random() > .9) {
+            System.out.println("Forward:" + input_forward + " turn:" + input_turn + " left:" + input_left + " right:"
+                    + input_right);
+        }
+
+        double leftOutput = input_forward - input_turn;
+        double rightOutput = input_forward + input_turn;
+        double powerDiff = 0;
+        if (leftOutput > 1 || rightOutput > 1) {
+            powerDiff = Math.abs(Math.max(leftOutput, rightOutput) - 1);
+            leftOutput -= powerDiff;
+            rightOutput -= powerDiff;
+        } else if (leftOutput < -1 || rightOutput < -1) {
+            powerDiff = Math.abs(Math.min(leftOutput, rightOutput) + 1);
+            leftOutput += powerDiff;
+            rightOutput += powerDiff;
+        }
+
+        // Fix turning at high speeds
+
+        // Restricts output from exceeding 1
+        if (rightOutput > 1) {
+            rightOutput = 1;
+        } else if (rightOutput < -1) {
+            rightOutput = -1;
+        }
+
+        if (leftOutput > 1) {
+            leftOutput = 1;
+        } else if (leftOutput < -1) {
+            leftOutput = -1;
+        }
+
+        subsystemColection.motors.setMotor("left1", leftOutput);
+        subsystemColection.motors.setMotor("right1", rightOutput);
+        // System.out.println(leftOutput + " and " + rightOutput);
+
+        // log.LogData(subsystemColection.motors.getEncoder("left1").getDistance(),
+        // subsystemColection.motors.getEncoder("right1").getDistance(),
+        // subsystemColection.motors.getEncoder("left1").getRate(),
+        // subsystemColection.motors.getEncoder("right1").getRate(),
+        // subsystemColection.motors.getMotor("left1").getMotorOutputVoltage(),
+        // subsystemColection.motors.getMotor("right1").getMotorOutputVoltage(),
+        // subsystemColection.motors.getMotor("left1").getOutputCurrent(),
+        // subsystemColection.motors.getMotor("right1").getOutputCurrent());
+
+        if (Math.random() > .9) {
+            System.out.println(leftOutput + " and " + rightOutput);
+        }
+
+        String[] data = { String.valueOf(leftOutput), String.valueOf(leftOutput) };
+        log.Write("Teleop", data);
+
     }
 
     public void setInputForward(double forward){
