@@ -43,8 +43,9 @@ public class ShuffleboardHandler {
     }
 
     public boolean getEnabled(String title, String system){
-        if(base == null){
-            System.out.println("entry not found");
+        if(base == null || base.Widgets.get(title) == null){
+            //System.out.println("entry not found");
+            return true;
         }
         return base.getEnabled(title, system);
 
@@ -84,46 +85,40 @@ public class ShuffleboardHandler {
                 Node currentChild = children.item(i);
                 if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
                     Element childElement = (Element) currentChild;
-                    String valueType = childElement.getAttribute("valueType").toLowerCase();
-                    System.out.print(valueType);
-                    System.out.print(valueType.equals("double"));
+                    // String valueType = childElement.getAttribute("valueType").toLowerCase();
+                    //System.out.print(valueType);
+                    //System.out.print(valueType.equals("double"));
 
-                    if(valueType.equals("double")){
-                        System.out.print(childElement.getAttribute("id"));
-                        Double enabled = Double.parseDouble((childElement.getAttribute("defaultValue")));
-                        String title = childElement.getAttribute("id");
-                        SimpleWidget widget = tab.add(title, enabled);
-                        NetworkTableEntry entry = widget.getEntry();
-                        Widgets.put(title, entry);
-                        SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
-                        NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
-                        liveWindowWidgets.put(title, liveWindowEntry);
-                    }else if(valueType.equals("string")){
-                        String enabled = childElement.getAttribute("defaultValue");
-                        String title = childElement.getAttribute("id");
-                        SimpleWidget widget = tab.add(title, enabled);
-                        NetworkTableEntry entry = widget.getEntry();
-                        Widgets.put(title, entry);
-                        SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
-                        NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
-                        liveWindowWidgets.put(title, liveWindowEntry);
-                    }else if(valueType.equals("int")){
-                        int enabled = Integer.parseInt((childElement.getAttribute("defaultValue")));
-                        String title = childElement.getAttribute("id");
-                        SimpleWidget widget = tab.add(title, enabled);
-                        NetworkTableEntry entry = widget.getEntry();
-                        Widgets.put(title, entry);
-                        SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
-                        NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
-                        liveWindowWidgets.put(title, liveWindowEntry);
-                    }else {
-                        Boolean enabled;
-                          
-                        if(childElement.getAttribute("defaultValue") == ""){
-                            enabled = Boolean.parseBoolean(childElement.getAttribute("enabled"));
-                        }else{
-                            enabled = Boolean.parseBoolean(childElement.getAttribute("defaultValue"));
-                        }
+                    // if(valueType.equals("double")){
+                    //     System.out.print(childElement.getAttribute("id"));
+                    //     Double enabled = Double.parseDouble((childElement.getAttribute("defaultValue")));
+                    //     String title = childElement.getAttribute("id");
+                    //     SimpleWidget widget = tab.add(title, enabled);
+                    //     NetworkTableEntry entry = widget.getEntry();
+                    //     Widgets.put(title, entry);
+                    //     SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
+                    //     NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+                    //     liveWindowWidgets.put(title, liveWindowEntry);
+                    // }else if(valueType.equals("string")){
+                    //     String enabled = childElement.getAttribute("defaultValue");
+                    //     String title = childElement.getAttribute("id");
+                    //     SimpleWidget widget = tab.add(title, enabled);
+                    //     NetworkTableEntry entry = widget.getEntry();
+                    //     Widgets.put(title, entry);
+                    //     SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
+                    //     NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+                    //     liveWindowWidgets.put(title, liveWindowEntry);
+                    // }else if(valueType.equals("int")){
+                    //     int enabled = Integer.parseInt((childElement.getAttribute("defaultValue")));
+                    //     String title = childElement.getAttribute("id");
+                    //     SimpleWidget widget = tab.add(title, enabled);
+                    //     NetworkTableEntry entry = widget.getEntry();
+                    //     Widgets.put(title, entry);
+                    //     SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
+                    //     NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+                    //     liveWindowWidgets.put(title, liveWindowEntry);
+                    // }else {
+                        Boolean enabled = childElement.getAttribute("enabled")=="" ? true :  Boolean.parseBoolean(childElement.getAttribute("enabled"));
                         
                         String title = system.getAttribute("id")+"."+childElement.getAttribute("id");
                         SimpleWidget widget = tab.add(title, enabled).withWidget("Toggle Button");
@@ -132,7 +127,7 @@ public class ShuffleboardHandler {
                         SimpleWidget liveWindowWidget = liveWindow.add(title, enabled).withWidget("Toggle Button");
                         NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
                         liveWindowWidgets.put(title, liveWindowEntry);
-                    }
+                    // }
                     
                 }
             }

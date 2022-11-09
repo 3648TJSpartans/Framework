@@ -60,18 +60,18 @@ public class TankDrive extends SubsystemBase implements RobotXML{
             leftOutput = -1;
         }
 
-        subsystemColection.motors.setMotor("left1", leftOutput);
-        subsystemColection.motors.setMotor("right1", rightOutput);
+        subsystemColection.motors.setMotor("left", leftOutput);
+        subsystemColection.motors.setMotor("right", rightOutput);
         // System.out.println(leftOutput + " and " + rightOutput);
 
-        // log.LogData(subsystemColection.motors.getEncoder("left1").getDistance(),
-        // subsystemColection.motors.getEncoder("right1").getDistance(),
-        // subsystemColection.motors.getEncoder("left1").getRate(),
-        // subsystemColection.motors.getEncoder("right1").getRate(),
-        // subsystemColection.motors.getMotor("left1").getMotorOutputVoltage(),
-        // subsystemColection.motors.getMotor("right1").getMotorOutputVoltage(),
-        // subsystemColection.motors.getMotor("left1").getOutputCurrent(),
-        // subsystemColection.motors.getMotor("right1").getOutputCurrent());
+        // log.LogData(subsystemColection.motors.getEncoder("left").getDistance(),
+        // subsystemColection.motors.getEncoder("right").getDistance(),
+        // subsystemColection.motors.getEncoder("left").getRate(),
+        // subsystemColection.motors.getEncoder("right").getRate(),
+        // subsystemColection.motors.getMotor("left").getMotorOutputVoltage(),
+        // subsystemColection.motors.getMotor("right").getMotorOutputVoltage(),
+        // subsystemColection.motors.getMotor("left").getOutputCurrent(),
+        // subsystemColection.motors.getMotor("right").getOutputCurrent());
 
         if (Math.random() > .9) {
             System.out.println(leftOutput + " and " + rightOutput);

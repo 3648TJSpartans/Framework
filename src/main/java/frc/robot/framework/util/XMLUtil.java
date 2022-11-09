@@ -42,7 +42,7 @@ public class XMLUtil {
             Document doc = dBuilder.parse(file);
 
             doc.getDocumentElement().normalize();
-            System.out.println();
+            //System.out.println();
             return doc;
         } catch (Exception e) {
             e.printStackTrace();
@@ -120,7 +120,7 @@ public class XMLUtil {
     public static File merger(String element, File... files) {
         try {
             File file = File.createTempFile("temp", ".xml");
-            System.out.println(file.getAbsolutePath());
+            //System.out.println(file.getAbsolutePath());
             file.deleteOnExit();
 
             Document doc = Parse(files[0]);
@@ -150,7 +150,7 @@ public class XMLUtil {
             String xmlOutput = result.getWriter().toString();
             output.write(xmlOutput);
             output.close();
-            System.out.println("merge complete");
+            //System.out.println("merge complete");
 
             return file;
 
