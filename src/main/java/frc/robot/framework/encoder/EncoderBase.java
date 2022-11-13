@@ -5,5 +5,5 @@ public interface EncoderBase{
     public double getVelocity();
     public double getPosition();
     public void setDistancePerPulse(double factor);
-    public void reset();
+    public void resetEncoder();
 }

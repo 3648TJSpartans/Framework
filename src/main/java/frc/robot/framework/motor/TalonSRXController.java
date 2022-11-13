@@ -1,12 +1,13 @@
 package frc.robot.framework.motor;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
-public class TalonSRXController implements MotorBase, EncoderBase{
+public class TalonSRXController extends MotorController implements MotorBase, EncoderBase{
     private TalonSRX controller;
 
     public TalonSRXController(int port) {
@@ -14,40 +15,44 @@ public class TalonSRXController implements MotorBase, EncoderBase{
         controller.set(ControlMode.PercentOutput, 0);
     }
 
-    public void set(double speed) {
-        // System.out.println("Talon commanded to: "+speed);
-        controller.set(ControlMode.PercentOutput, speed);
-    };
+    @Override
+    public void setPower(double power) {
+        if (inverted)
+            power*=-1;
+        switch (mode) {
+            case PERCENTAGE:
+                controller.set(TalonSRXControlMode.PercentOutput,power);
+                break;        
+            case POSITION:
+                controller.set(TalonSRXControlMode.Position,power);
+                break;
+            case VELOCITY:
+                controller.set(TalonSRXControlMode.Velocity,power);
+                break;
+        }
+    }
 
-    public void setInverted(boolean invert) {
-        controller.setInverted(invert);
+    public void setReferencePoint(CommandMode mode, double reference) {
+        if (inverted)
+            reference*=-1;
+        this.mode=mode;
+        switch (this.mode) {
+            case PERCENTAGE:
+                controller.set(TalonSRXControlMode.PercentOutput,reference);
+                break;        
+            case POSITION:
+                controller.set(TalonSRXControlMode.Position,reference);
+                break;
+            case VELOCITY:
+                controller.set(TalonSRXControlMode.Velocity,reference);
+                break;
+        }
     }
 
     @Override
-    public void set(double setpoint, CommandMode mode) {
+    public EncoderBase getEncoder() {
         // TODO Auto-generated method stub
-
-    }
-
-    public void setPID(double kP, double kI, double kD, double kF) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setVoltage(double voltage) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public boolean isCANEncoder() {
-        return true;
-    }
-
-    @Override
-    public EncoderBase getEncoder(){
-        return this;
+        return null;
     }
 
     @Override
@@ -75,7 +80,7 @@ public class TalonSRXController implements MotorBase, EncoderBase{
     }
 
     @Override
-    public void reset() {
+    public void resetEncoder() {
         // TODO Auto-generated method stub
         
     }

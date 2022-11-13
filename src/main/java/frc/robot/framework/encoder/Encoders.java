@@ -55,16 +55,6 @@ public class Encoders{
 
     public void reset(String id){
         EncoderWrapper requestedEncoder = getEncoder(id);
-        requestedEncoder.reset();
-    }
-    
-    public void setPID(String id, double kP, double kI, double kD, double kF) {
-        EncoderWrapper requestedEncoder = getEncoder(id);
-        if(tab.getEnabled(id, subsystemName)) requestedEncoder.setPID(kP, kI, kD, kF);
-    }
-
-    public double getPIDOutput(String id){
-        EncoderWrapper requestedEncoder = getEncoder(id);
-        return tab.getEnabled(id, subsystemName) ? requestedEncoder.getPIDOutput() : 0;
+        requestedEncoder.resetEncoder();
     }
 }

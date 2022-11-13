@@ -31,7 +31,7 @@ public class DIOEncoder implements EncoderBase{
         encoder.setDistancePerPulse(factor);
     }
 
-    public void reset(){
+    public void resetEncoder(){
         encoder.reset();
     }
     

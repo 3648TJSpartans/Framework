@@ -3,9 +3,8 @@ package frc.robot.framework.motor;
 import java.util.ArrayList;
 
 import frc.robot.framework.encoder.EncoderBase;
-import frc.robot.framework.util.CommandMode;
 
-public class MotorGroup implements MotorBase {
+public class MotorGroup extends MotorController implements MotorBase {
     private ArrayList<MotorBase> motors = new ArrayList<>();
 
     public MotorGroup() {
@@ -15,47 +14,22 @@ public class MotorGroup implements MotorBase {
         motors.add(newMotor);
     }
 
-    public void set(double speed) {
-        for (int i = 0; i < motors.size(); i++) {
-            motors.get(i).set(speed);
-        }
-    }
-
-    public void setInverted(boolean invert) {
-        for (int i = 0; i < motors.size(); i++) {
-            motors.get(i).setInverted(invert);
-        }
-    }
-
     @Override
-    public void set(double setpoint, CommandMode mode) {
+    public void setPower(double power) {
         for (int i = 0; i < motors.size(); i++) {
-            motors.get(i).set(setpoint, mode);
+            motors.get(i).setPower(power);
         }
     }
 
-    @Override
-    public void setVoltage(double voltage) {
-        for (int i = 0; i < motors.size(); i++) {
-            motors.get(i).setVoltage(voltage);
-        }
-        
-    }
 
-    @Override
-    public void setPID(double kP, double kI, double kD, double kF) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public boolean isCANEncoder() {
-        for (MotorBase motorBase : motors) {
-            if (motorBase.isCANEncoder())
-                return true;
-        }
-        return false;
-    }
+    // @Override
+    // public boolean isCANEncoder() {
+    //     for (MotorBase motorBase : motors) {
+    //         if (motorBase.isCANEncoder())
+    //             return true;
+    //     }
+    //     return false;
+    // }
 
     @Override
     public EncoderBase getEncoder(){
@@ -65,4 +39,5 @@ public class MotorGroup implements MotorBase {
         }
         return null;
     }
+    
 }

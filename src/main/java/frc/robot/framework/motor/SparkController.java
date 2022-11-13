@@ -1,49 +1,24 @@
 package frc.robot.framework.motor;
 
+import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.framework.encoder.EncoderBase;
-import frc.robot.framework.util.CommandMode;
 
-public class SparkController implements MotorBase {
+public class SparkController extends MotorController implements MotorBase {
     private Spark controller;
 
     public SparkController(int port) {
         controller = new Spark(port);
     }
 
-    public void set(double speed) {
-        controller.set(speed);
-    };
-
-    public void setInverted(boolean invert) {
-        controller.setInverted(invert);
+    @Override
+    public void setPower(double power) {
+        controller.setVoltage(power*RobotController.getBatteryVoltage());
     }
 
     @Override
-    public void set(double setpoint, CommandMode mode) {
+    public EncoderBase getEncoder() {
         // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setPID(double kP, double kI, double kD, double kF) {
-        // TODO Auto-generated method stub
-
-    }
-
-    @Override
-    public void setVoltage(double voltage) {
-        // TODO Auto-generated method stub
-        
-    }
-
-    @Override
-    public boolean isCANEncoder() {
-        return false;
-    }
-
-    @Override
-    public EncoderBase getEncoder(){
         return null;
     }
 }

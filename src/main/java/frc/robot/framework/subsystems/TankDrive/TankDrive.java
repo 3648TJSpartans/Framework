@@ -60,8 +60,8 @@ public class TankDrive extends SubsystemBase implements RobotXML{
             leftOutput = -1;
         }
 
-        subsystemColection.motors.setMotor("left", leftOutput);
-        subsystemColection.motors.setMotor("right", rightOutput);
+        subsystemColection.motors.setPower("left", leftOutput);
+        subsystemColection.motors.setPower("right", rightOutput);
         // System.out.println(leftOutput + " and " + rightOutput);
 
         // log.LogData(subsystemColection.motors.getEncoder("left").getDistance(),

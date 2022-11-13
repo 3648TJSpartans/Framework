@@ -65,21 +65,19 @@ public class SubsystemCollection implements RobotXML {
         // ShuffleboardHandler tab =
         // ShuffleboardCollections.get(systemElement.getTagName());
         NodeList children = system.getChildNodes();
-        System.out.println(systemElement.getNodeName());
         for (int i = 0; i < children.getLength(); i++) {
             Node currentChild = children.item(i);
             if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
                 Element childElement = (Element) currentChild;
                 String id = childElement.getAttribute("id");
                 if (childElement.getTagName().equals("motor")) {
-                    motors.put(id, new MotorWrapper(childElement));
+                    motors.put(id, new MotorWrapper(childElement, false, this));
                 } else if (childElement.getTagName().equals("motorgroup")) {
-                    motors.put(id, new MotorWrapper(childElement, true));
+                    motors.put(id, new MotorWrapper(childElement, true, this));
                 } else if (childElement.getTagName().equals("servo")) {
                     servos.put(id, new ServoWrapper(childElement));
                 } else if (childElement.getTagName().equals("encoder")) {
                     encoders.put(id, new EncoderWrapper(childElement));
-                    motors.put(encoders.getEncoder(id).motorid, encoders.getEncoder(id).motor);
                 } else if (childElement.getTagName().equals("solenoid")) {
                     solenoids.put(id, new SolenoidWrapper(childElement));
                 } else if (childElement.getTagName().equals("acl") || childElement.getTagName().equals("accelerometer")) {

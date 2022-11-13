@@ -4,42 +4,86 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import frc.robot.framework.algorithm.PIDWrapper;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.encoder.EncoderWrapper;
+import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.CommandMode;
 
-public class MotorWrapper implements MotorBase {
+public class MotorWrapper implements MotorBase, EncoderBase {
 
     private MotorBase motor;
+    private double motor_lastOutput=0;
+    private boolean inverted=false;
+    private CommandMode commandMode=CommandMode.PERCENTAGE;
     private Element motorElement;
     private EncoderWrapper encoder;
+    private PIDWrapper pid;
+    private double setpoint=0;
 
-    public MotorWrapper(Element element) {
-        motorElement = element;
-        int port = Integer.parseInt(motorElement.getAttribute("port"));
-        motor = getMotorType(motorElement.getAttribute("controller"), port);
+    public MotorWrapper(Element element, boolean groupFlag, SubsystemCollection collection) {
+        if (!groupFlag){ // single motor, not motorgroup
+            motorElement = element;
+            int port = Integer.parseInt(motorElement.getAttribute("port"));
+            motor = getMotorType(motorElement.getAttribute("controller"), port);
 
-        if (motorElement.hasAttribute("inverted")) {
-            motor.setInverted(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
-        }
-    }
-
-    public MotorWrapper(Element groupElement, boolean groupFlag) {
-        NodeList groupMotorNodes = groupElement.getElementsByTagName("motor");
-        MotorGroup group = new MotorGroup();
-        for (int o = 0; o < groupMotorNodes.getLength(); o++) {
-            Node currentMotor = groupMotorNodes.item(o);
-            if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
-                Element motorElement = (Element) currentMotor;
-                int port = Integer.parseInt(motorElement.getAttribute("port"));
-                MotorBase controllerType=getMotorType(motorElement.getAttribute("controller"), port);
-                
-                group.addMotor(controllerType);
+            if (motorElement.hasAttribute("inverted")) {
+                inverted=(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
             }
         }
-        motor = group;
-        if (groupElement.hasAttribute("inverted")) {
-            motor.setInverted(Boolean.parseBoolean(groupElement.getAttribute("inverted")));
+        else{
+            //MotorGroup
+            NodeList groupMotorNodes = element.getElementsByTagName("motor");
+            MotorGroup group = new MotorGroup();
+            for (int o = 0; o < groupMotorNodes.getLength(); o++) {
+                Node currentMotor = groupMotorNodes.item(o);
+                if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
+                    Element motorElement = (Element) currentMotor;
+                    int port = Integer.parseInt(motorElement.getAttribute("port"));
+                    MotorBase motorInMotorGroup=getMotorType(motorElement.getAttribute("controller"), port);
+                    group.addMotor(motorInMotorGroup);
+                }
+            }
+            motor = group;
+            if (element.hasAttribute("inverted")) {
+                inverted = Boolean.parseBoolean(element.getAttribute("inverted"));
+            }
+        }
+        //read encoder
+        NodeList childNodeList = element.getChildNodes();
+        for (int i = 0; i < childNodeList.getLength(); i++) {
+            if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE){continue;}
+            Element childElement = (Element)childNodeList.item(i);
+            switch (childElement.getTagName().toLowerCase()) {
+                case "encoder":;
+                    if (childElement.getAttribute("type").toLowerCase().equals("talonsrx")){
+                        encoder = new EncoderWrapper(childElement);
+                        collection.encoders.put(childElement.getAttribute("id"), encoder);
+                    }
+                    else if ( childElement.getAttribute("type").toLowerCase().equals("sparkmax")){
+                        encoder = new EncoderWrapper(childElement, motor.getEncoder());
+                        collection.encoders.put(childElement.getAttribute("id"), encoder);
+                    }
+                    else {
+                        System.out.println("MotorWrapper: Encoder type: "+childElement.getAttribute("type")+" not found.");
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        //read pid
+        for (int i = 0; i < childNodeList.getLength(); i++) {
+            if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE){continue;}
+            Element childElement = (Element)childNodeList.item(i);
+            switch (childElement.getTagName().toLowerCase()) {
+                case "pid":;
+                    pid = new PIDWrapper(childElement, motor, encoder);
+                    break;
+                default:
+                    break;
+            }
         }
     }
 
@@ -64,26 +108,30 @@ public class MotorWrapper implements MotorBase {
         return motorBase;
     }
 
-    public void set(double speed) {
-        motor.set(speed);
+    public void setPower(double power) {
+        if (inverted)
+            power*=-1;
+        motor.setPower(power);
     }
 
-    public void setInverted(boolean invert) {
-        motor.setInverted(invert);
+    public void setInverted(boolean inverted) {
+        this.inverted =inverted;
     }
 
     public String getAttribute(String attribute) {
         return motorElement.getAttribute(attribute);
     }
 
-    @Override
-    public void set(double setpoint, CommandMode mode) {
-        motor.set(setpoint, mode);
+    public void setCommandMode(CommandMode mode) {
+        commandMode = mode;
     }
 
-    @Override
     public void setPID(double kP, double kI, double kD, double kF) {
-        motor.setPID(kP, kI, kD, kF);
+        // SmartDashboard.putNumber("KP", kP);
+        // SmartDashboard.putNumber("KI", kI);
+        // SmartDashboard.putNumber("KD", kD);
+        // SmartDashboard.putNumber("kF", kF);
+        pid.setPID(kP,kI,kD,kF);
     }
 
     public MotorBase getMotor() {
@@ -91,34 +139,48 @@ public class MotorWrapper implements MotorBase {
     }
 
     public int getTicks() {
+        if (encoder==null){
+            return 0;
+        }
         return encoder.getTicks();
     }
 
     public double getVelocity() {
+        if (encoder==null){
+            return 0;
+        }
         return encoder.getVelocity();
     }
 
     public double getPosition() {
-        return encoder.getPosition();
-    }
-
-    public void resetEncoder() {
-        encoder.reset();
-    }
-
-    @Override
-    public void setVoltage(double voltage) {
-        motor.setVoltage(voltage);
-
-    }
-
-    @Override
-    public boolean isCANEncoder() {
-        return motor.isCANEncoder();
+        if (encoder==null){
+            return 0;
+        }return encoder.getPosition();
     }
     
+    public EncoderWrapper getEncoder(){
+        return encoder;
+    }
+
+    public double getLastOutput() {
+        return motor_lastOutput;
+    }
+
+    public boolean hasEncoder() {
+        return encoder!=null;
+    }
+
+    public void setEncoder(EncoderWrapper encoder) {
+        this.encoder=encoder;       
+    }
+
     @Override
-    public EncoderBase getEncoder(){
-        return motor.getEncoder();
+    public void setDistancePerPulse(double factor) {
+        encoder.setDistancePerPulse(factor);
+    }
+
+    @Override
+    public void resetEncoder() {
+        encoder.resetEncoder();
     }
 }

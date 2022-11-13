@@ -79,6 +79,6 @@ public class ServoWrapper implements ServoBase {
     }
 
     public void resetEncoder() {
-        encoder.reset();
+        encoder.resetEncoder();
     }
 }
