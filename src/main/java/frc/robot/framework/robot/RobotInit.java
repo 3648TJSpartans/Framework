@@ -11,6 +11,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import frc.robot.commands.TestCommand2;
 import frc.robot.framework.controller.*;
 import frc.robot.framework.util.Reflection;
 import frc.robot.framework.util.ShuffleboardHandler;
@@ -21,6 +22,11 @@ import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
+import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
@@ -34,7 +40,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RobotInit {
     private static Map<String, ControllerWrapper> controllers = new HashMap<>();
-    private static Map<String, Class<?>> autons = new HashMap<>();
+    private static Map<String, CommandBase> autons = new HashMap<>();
     private static Map<String, SubsystemBase> subsystems = new HashMap<>();
     private static ShuffleboardHandler shuffleboard;
     //private static Map<String, AutonWrapper> autons = new HashMap<>();
@@ -90,28 +96,117 @@ public class RobotInit {
 
     private static void initAutons(NodeList autonList){
         ArrayList<String> autonNames = new ArrayList<>();
+
+        //for each auton
         for (int i = 0; i < autonList.getLength(); i++) {
             Node autonNode = autonList.item(i);
-            if (autonNode.getNodeType() == Node.ELEMENT_NODE)  {
-                Element autonElement = (Element) autonNode;
-                String autonName=autonElement.getAttributes().getNamedItem("id").getNodeValue();
-                NodeList steps = autonElement.getElementsByTagName("step");
-                for (int j=0; j< steps.getLength(); j++){
-                    Node stepNode = steps.item(i);
-                    if (stepNode.getNodeType() == Node.ELEMENT_NODE)  {
-                        Element stepElement = (Element) stepNode;
-                        String stepName=stepElement.getAttributes().getNamedItem("id").getNodeValue();
-                        //TODO read rest of step info, store in some type of datastructure
-                    }
+            if (autonNode.getNodeType() != Node.ELEMENT_NODE)  { continue;}
+
+            Element autonElement = (Element) autonNode;
+            String autonName=autonElement.getAttribute("id");
+            autonNames.add(autonName);
+
+            //find the start
+            NodeList autonSubNodeList = autonElement.getChildNodes();
+            Node autonSubNode=null;
+            Element autonSubElement=null;
+
+            for (int j=0; j<autonSubNodeList.getLength(); j++){
+                autonSubNode = autonSubNodeList.item(j);
+                if (autonSubNode.getNodeType() != Node.ELEMENT_NODE)  { continue;}
+                autonSubElement = (Element)autonSubNode;
+                if ( autonElement.getAttribute("nextstep").equals(autonSubElement.getAttribute("id"))){
+                    break;
                 }
-                autonNames.add(autonName);
+                autonSubElement=null;
             }
+            
+            if (autonSubElement == null){
+                System.out.println("RobotInit:initAutons - could not find the start of auton for "+autonName+" linking to "+autonElement.getAttribute("nextstep"));
+            }
+
+            CommandBase tempAutonCommand=buildCommandNodeListHelper(autonSubElement);
+            autons.put(autonName, tempAutonCommand);            
+            System.out.println("test");
         }
+
         //TODO put auton selector on shuffleboard
         // shuffleboard.Handlers.put("Robot", new ShuffleboardBase("Robot"));
         // var tab = Shuffleboard.getTab("Robot");
         // SimpleWidget sysWidget = tab.add("Auton", "").withWidget(WidgetType)
         //SmartDashboard.putStringArray("Auton", autonNames.toArray(String[]::new));
+    }
+
+    public static CommandBase buildCommandNodeListHelper(Element element){
+        HashMap<String, CommandBase> commandMap = new HashMap<>();
+        HashMap<String, Element> elementMap = new HashMap<>();
+
+        NodeList nodeList = element.getChildNodes();
+
+        //go through children, build them into commands, unordered
+        for (int i = 0; i < nodeList.getLength(); i++) {
+            Node stepNode = nodeList.item(i);
+            if (stepNode.getNodeType() != Node.ELEMENT_NODE)  { continue;}
+            Element stepElement = (Element) stepNode;
+            String stepId=stepElement.getAttribute("id");
+            elementMap.put(stepId, stepElement);
+
+            CommandBase subCommand=buildCommandNodeListHelper(stepElement);
+            commandMap.put(stepId, subCommand);
+        }
+
+        CommandBase commandToReturn = buildCommandNodeHelper(element, commandMap, elementMap);
+
+        return commandToReturn;
+    }
+
+    //This turns an element and a processed list of subcommands into a command. Does not traverse anything
+    public static CommandBase buildCommandNodeHelper(Element element, HashMap<String, CommandBase> commandMap, HashMap<String, Element> elementMap){
+        CommandBase[] commandArray =commandMap.values().toArray(new CommandBase[commandMap.size()]);
+
+        String stepType=element.getTagName().toLowerCase();
+        CommandBase myCommand;
+        switch (stepType) {
+            case "sequentialcommandgroup":
+                 //sort the child nodes
+                CommandBase[] sortedArray =new CommandBase[commandMap.size()];
+                String nextElementId = element.getAttribute("firststep");;
+                Element currentElement = elementMap.get(nextElementId);
+                int index=0;
+                while (currentElement != null){
+                    CommandBase commandToAdd = commandMap.get(nextElementId);
+                    sortedArray[index]=commandToAdd;
+                    
+                    nextElementId = elementMap.get(nextElementId).getAttribute("nextstep");
+                    currentElement = elementMap.get(nextElementId);
+                    index++;
+                }
+
+                myCommand = new SequentialCommandGroup(sortedArray);
+                break;
+            case "parallelcommandgroup":
+                myCommand = new ParallelCommandGroup(commandArray);
+                break;
+            case "parallelracegroup":
+                myCommand = new ParallelRaceGroup(commandArray);
+                break;
+            case "paralleldeadlinegroup":
+                String deadlineCommandName = element.getAttribute("deadlineCommand");
+                Class<?> deadlineCommandClass = Reflection.GetAllCommands().get(deadlineCommandName);
+                CommandBase deadlineCommand = (CommandBase) Reflection.CreateObjectFromXML(deadlineCommandClass,element);
+                myCommand = new ParallelDeadlineGroup(deadlineCommand, commandArray);
+                break;
+            case "command":
+                String myCommandName = element.getAttribute("type");
+                Class<?> myCommandClass = Reflection.GetAllCommands().get(myCommandName);
+                //myCommand = (CommandBase) Reflection.CreateObjectFromXML(myCommandClass,element);
+                myCommand = new TestCommand2(element);
+                break;
+            default:
+                System.out.println("Robotinit.buildCommandHelper: unknown command type: "+stepType);
+                return null;
+        }
+        return myCommand;
     }
 
     private static void initSubsystems(NodeList subsystemNodeList){
@@ -124,7 +219,6 @@ public class RobotInit {
                 if (childElement.getTagName().equals("subsystem")) {
                 String subsystemType=currentChild.getAttributes().getNamedItem("type").getNodeValue();
                 if (subsystemClasses.containsKey(subsystemType)){
-
                     subsystems.put(subsystemType,((SubsystemBase)frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType),childElement)));
                 }
                 else{
@@ -134,17 +228,6 @@ public class RobotInit {
         }
     }
 }
-
-    /**
-     * [controllerList] is a helper function for [Init]. Takes in an XML nodeList
-     * representing controllers and registers those controllers with [In].
-     * 
-     * @param controllerList a list of XML nodes representing controllers
-     * 
-     * @note currently is hardcoded to assume LogitechGamepads (standard to 3648 in
-     *       the 2020 season). This doesn't have to be the case, and could be
-     *       changed to allow further customizability for driver preference.
-     */
 
     private static void initControllers(NodeList controllerList) {
         for (int i = 0; i < controllerList.getLength(); i++) {

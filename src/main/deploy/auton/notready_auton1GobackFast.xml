@@ -2,28 +2,22 @@
 <!-- maybe... I'm still thinking if it's worth writing this or writing commandgroup that reads parameters -->
 
 <robot>
-    <auton id="GoBackFastIguess">
-        <connect type="start" nextstep="delay1"/>
-
-        <step type="WaitCommand" id="delay1" time="1.0">
-            <connect type="next" nextstep="switch_select"/>
-        </step>
-        <step type="ReadGameZoneCommand" id="switch_select" zone="near">
-            <connect type="left" nextstep="turn_left"/>
-            <connect type="right" nextstep="turn_right"/>
-            <connect type="invalid" nextstep="drive_forward"/>
-        </step>
-        <step type="DrivePowerCommand" id="turn_left" forward="0.25" turn="0.55">
-                <connect type="next" nextstep="turn_left_wait"/>
-        </step>
-        <step type="WaitCommand" id="turn_left_wait" time="0.2">
-            <connect type="next" nextstep="drive_forward_left"/>
-        </step>
-        <step type="DrivePowerCommand" id="drive_forward_left" forward="0.5" turn="0.0">
-            <connect type="next" nextstep="drive_forward_wait_left"/>
-        </step>
-        <step type="WaitCommand" id="drive_forward_wait_left" time="3.0">
-            <connect type="next" nextstep="drive_stop_left"/>
-        </step>
+    <auton id="Auton1" nextstep="start">
+        <SequentialCommandGroup id="start" firststep="something">
+            <command type="dosomething" id="something" nextstep="thing" thing="adsdsf" />
+            <command type="doAThing" id="thing" nextstep="multiGroup1" thing="asdfasdfsafd" />
+            <ParallelCommandGroup id = "multiGroup1" nextstep="deadline">
+                <command type="dotwothings1" id="multi1" nextstep="multi2" time="1.0" />
+                <command type="dotwothings2" id="multi2" time="1.0" />
+            </ParallelCommandGroup>
+            <ParallelDeadlineGroup id = "deadline" nextstep="race" deadlineCommand="TestCommand" someAttributeforDeadline="123">
+                <command type="dotwothings1" id="deadline1" time="1.0" />
+                <command type="dotwothings2" id="deadline2" time="1.0" />
+            </ParallelDeadlineGroup>
+            <ParallelRaceGroup id = "race">
+                <command type="dotwothings1" id="race1" time="1.0" />
+                <command type="dotwothings2" id="race2" time="1.0" />
+            </ParallelRaceGroup>
+        </SequentialCommandGroup>
     </auton>
 </robot>    
