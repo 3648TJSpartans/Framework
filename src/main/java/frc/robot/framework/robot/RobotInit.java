@@ -127,7 +127,6 @@ public class RobotInit {
 
             CommandBase tempAutonCommand=buildCommandNodeListHelper(autonSubElement);
             autons.put(autonName, tempAutonCommand);            
-            System.out.println("test");
         }
 
         //TODO put auton selector on shuffleboard
@@ -199,8 +198,8 @@ public class RobotInit {
             case "command":
                 String myCommandName = element.getAttribute("type");
                 Class<?> myCommandClass = Reflection.GetAllCommands().get(myCommandName);
-                //myCommand = (CommandBase) Reflection.CreateObjectFromXML(myCommandClass,element);
-                myCommand = new TestCommand2(element);
+                myCommand = (CommandBase) Reflection.CreateObjectFromXML(myCommandClass,element);
+                //myCommand = new TestCommand2(element);
                 break;
             default:
                 System.out.println("Robotinit.buildCommandHelper: unknown command type: "+stepType);
