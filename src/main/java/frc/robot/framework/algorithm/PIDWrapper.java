@@ -1,7 +1,5 @@
 package frc.robot.framework.algorithm;
 
-import java.security.spec.EncodedKeySpec;
-
 import org.w3c.dom.Element;
 
 import frc.robot.framework.encoder.EncoderBase;
@@ -30,7 +28,7 @@ public class PIDWrapper implements PIDBase{
                     System.out.println("PIDWrapper: Sparkmax PID requires SparkMax encoder and SparkMax Motor");
                     return;
                 }
-                pidController = new SparkMaxPID(kP, kI, kD, kF, null);
+                pidController = new SparkMaxPID(kP, kI, kD, kF, ((SparkMaxController)motor), ((SparkMaxEncoder)encoder));
                 break;
             case "talonsrx":
                 pidController = new SoftwarePID(kP,kI,kD,kF, motor, encoder);
@@ -54,7 +52,7 @@ public class PIDWrapper implements PIDBase{
 
 
     public double getLastOutput() {
-        return 0;
+        return pidController.getLastOutput();
     }
 
     @Override

@@ -7,4 +7,5 @@ public interface PIDBase{
 
     public void setReference(double value, CommandMode mode);
 
+    public double getLastOutput();
 }

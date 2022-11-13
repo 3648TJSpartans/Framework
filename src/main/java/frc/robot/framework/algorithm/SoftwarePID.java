@@ -74,4 +74,9 @@ public class SoftwarePID implements PIDBase{
         }
         motor.setPower(calculateOutput(currentValue, value));
     }
+
+    @Override
+    public double getLastOutput(){
+        return lastOutput;
+    }
 }

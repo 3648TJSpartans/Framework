@@ -5,7 +5,6 @@ import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.math.controller.PIDController;
 import frc.robot.framework.encoder.EncoderBase;
 
 
@@ -23,6 +22,10 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     public void setPower(double power){
         controller.set(power);
     };
+
+    public CANSparkMax getCanSparkMax(){
+        return controller;
+    }
 
 
     public void setVoltage(double voltage){
