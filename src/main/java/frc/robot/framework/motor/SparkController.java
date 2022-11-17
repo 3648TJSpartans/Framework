@@ -13,7 +13,15 @@ public class SparkController extends MotorController implements MotorBase {
 
     @Override
     public void setPower(double power) {
+        if (inverted)
+            power*=-1;
         controller.setVoltage(power*RobotController.getBatteryVoltage());
+    }
+
+    @Override
+    public void setInverted(boolean inverted)
+    {
+        super.setInverted(inverted);
     }
 
     @Override

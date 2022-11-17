@@ -5,7 +5,7 @@ import frc.robot.framework.util.CommandMode;
 
 public interface MotorBase{
     public void setPower(double power);
-    //public void setInverted(boolean invert);
+    public void setInverted(boolean invert);
     //public double getLastOutput();
 
     // public void setPID(double kP, double kI, double kD, double kF);

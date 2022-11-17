@@ -14,7 +14,6 @@ public class MotorWrapper implements MotorBase, EncoderBase {
 
     private MotorBase motor;
     private double motor_lastOutput=0;
-    private boolean inverted=false;
     private CommandMode commandMode=CommandMode.PERCENTAGE;
     private Element motorElement;
     private EncoderWrapper encoder;
@@ -26,27 +25,39 @@ public class MotorWrapper implements MotorBase, EncoderBase {
             motorElement = element;
             int port = Integer.parseInt(motorElement.getAttribute("port"));
             motor = getMotorType(motorElement.getAttribute("controller"), port);
-
+            boolean invertedMotor=false;
             if (motorElement.hasAttribute("inverted")) {
-                inverted=(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
+                invertedMotor=(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
             }
+            motor.setInverted(invertedMotor);
         }
         else{
             //MotorGroup
             NodeList groupMotorNodes = element.getElementsByTagName("motor");
             MotorGroup group = new MotorGroup();
+
+            //each motor in motor group
             for (int o = 0; o < groupMotorNodes.getLength(); o++) {
                 Node currentMotor = groupMotorNodes.item(o);
                 if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
                     Element motorElement = (Element) currentMotor;
                     int port = Integer.parseInt(motorElement.getAttribute("port"));
                     MotorBase motorInMotorGroup=getMotorType(motorElement.getAttribute("controller"), port);
+                    boolean invertedMotor=false;
+                    if (motorElement.hasAttribute("inverted")) {
+                        invertedMotor=(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
+                        motorInMotorGroup.setInverted(invertedMotor);
+                    }
                     group.addMotor(motorInMotorGroup);
                 }
             }
             motor = group;
+
+            //Motorgroup level config
+            boolean invertedMotor=false;
             if (element.hasAttribute("inverted")) {
-                inverted = Boolean.parseBoolean(element.getAttribute("inverted"));
+                invertedMotor=(Boolean.parseBoolean(element.getAttribute("inverted")));
+                motor.setInverted(invertedMotor);
             }
         }
         //read encoder
@@ -109,13 +120,11 @@ public class MotorWrapper implements MotorBase, EncoderBase {
     }
 
     public void setPower(double power) {
-        if (inverted)
-            power*=-1;
         motor.setPower(power);
     }
 
     public void setInverted(boolean inverted) {
-        this.inverted =inverted;
+        motor.setInverted(inverted);
     }
 
     public String getAttribute(String attribute) {

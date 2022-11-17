@@ -32,6 +32,12 @@ public class TalonSRXController extends MotorController implements MotorBase, En
         }
     }
 
+    @Override
+    public void setInverted(boolean inverted)
+    {
+        super.setInverted(inverted);
+    }
+
     public void setReferencePoint(CommandMode mode, double reference) {
         if (inverted)
             reference*=-1;

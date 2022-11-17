@@ -16,9 +16,17 @@ public class MotorGroup extends MotorController implements MotorBase {
 
     @Override
     public void setPower(double power) {
+        if (inverted)
+            power*=-1.0;
         for (int i = 0; i < motors.size(); i++) {
-            motors.get(i).setPower(power);
+                motors.get(i).setPower(power);
         }
+    }
+
+    @Override
+    public void setInverted(boolean inverted)
+    {
+        super.setInverted(inverted);
     }
 
 

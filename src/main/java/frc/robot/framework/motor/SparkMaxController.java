@@ -19,7 +19,15 @@ public class SparkMaxController extends MotorController implements MotorBase, En
         encoder = controller.getEncoder();
     }
 
+    @Override
+    public void setInverted(boolean inverted)
+    {
+        super.setInverted(inverted);
+    }
+
     public void setPower(double power){
+        if (inverted)
+            power*=-1;
         controller.set(power);
     };
 
