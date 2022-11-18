@@ -2,6 +2,7 @@ package frc.robot.framework.servo;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -20,6 +21,10 @@ public class Servos {
 
     public void put(String id, ServoWrapper servo){
         servos.put(id, servo);
+    }
+
+    public Set<String> GetAllServoIDs(){
+        return servos.keySet();
     }
 
     /** 

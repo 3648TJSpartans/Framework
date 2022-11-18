@@ -2,6 +2,7 @@ package frc.robot.framework.solenoid;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -21,6 +22,10 @@ public class Solenoids {
     
     public void put(String id, SolenoidWrapper solenoid){
         solenoids.put(id, solenoid);
+    }
+
+    public Set<String> GetAllSolenoidIDs(){
+        return solenoids.keySet();
     }
 
     /** 

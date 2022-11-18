@@ -2,6 +2,7 @@ package frc.robot.framework.sensor.potentiometer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -22,6 +23,10 @@ public class Potentiometers{
     
     public void put(String id, PotentiometerWrapper pot){
         potentiometers.put(id, pot);
+    }
+
+    public Set<String> GetAllPotentiometerIDs(){
+        return potentiometers.keySet();
     }
 
     private PotentiometerWrapper getPotentiometer(String id) {

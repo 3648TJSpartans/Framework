@@ -2,6 +2,7 @@ package frc.robot.framework.sensor.accelerometer;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -19,6 +20,10 @@ public class Accelerometers{
     public Accelerometers(String subsystemName){
         this.subsystemName = subsystemName;
         tab = new ShuffleboardHandler(subsystemName.toString());
+    }
+
+    public Set<String> GetAllAccelerometerIDs(){
+        return accelerometers.keySet();
     }
 
     public void put(String id, ACLWrapper accelerometer){

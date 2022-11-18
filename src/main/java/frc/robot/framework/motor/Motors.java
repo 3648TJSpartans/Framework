@@ -2,6 +2,7 @@ package frc.robot.framework.motor;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -32,6 +33,10 @@ public class Motors {
         }
 
         return requestedMotor;
+    }
+
+    public Set<String> GetAllMotorIDs(){
+        return motors.keySet();
     }
 
     public void put(String id, MotorWrapper motor){

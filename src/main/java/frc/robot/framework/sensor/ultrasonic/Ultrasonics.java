@@ -2,6 +2,7 @@ package frc.robot.framework.sensor.ultrasonic;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -21,6 +22,10 @@ public class Ultrasonics{
 
     public void put(String id, UltrasonicWrapper ultrasonic){
         ultrasonics.put(id, ultrasonic);
+    }
+
+    public Set<String> GetAllUltrasonicIDs(){
+        return ultrasonics.keySet();
     }
 
     private UltrasonicWrapper getUltrasonic(String id) {

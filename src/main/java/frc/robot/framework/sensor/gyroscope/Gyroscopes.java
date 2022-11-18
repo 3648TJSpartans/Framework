@@ -2,6 +2,7 @@ package frc.robot.framework.sensor.gyroscope;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -22,6 +23,10 @@ public class Gyroscopes{
 
     public void put(String id, GyroWrapper gyro){
         gyroscopes.put(id, gyro);
+    }
+
+    public Set<String> GetAllGyroscopeIDs(){
+        return gyroscopes.keySet();
     }
 
     private GyroWrapper getGyroscope(String id) {

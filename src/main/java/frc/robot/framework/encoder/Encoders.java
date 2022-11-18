@@ -2,6 +2,7 @@ package frc.robot.framework.encoder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.w3c.dom.Element;
 
@@ -23,6 +24,10 @@ public class Encoders{
 
     public void put(String id, EncoderWrapper encoder){
         encoders.put(id, encoder);
+    }
+    
+    public Set<String> GetAllEncoderIDs(){
+        return encoders.keySet();
     }
 
     public EncoderWrapper getEncoder(String id) {
