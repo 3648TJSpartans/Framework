@@ -297,7 +297,13 @@ public class RobotInit {
         return requestedController.getAttribute(name);
     }
 
-    public static SubsystemBase GetSubsystem(String subsystemName){
-        return subsystems.get(subsystemName);
+    public static SubsystemBase GetSubsystem(String subsystemID){
+        return subsystems.get(subsystemID);
     }
+
+    public static CommandBase GetAuton(String autonID){
+        return autons.get(autonID);
+    }
+
+    
 }
