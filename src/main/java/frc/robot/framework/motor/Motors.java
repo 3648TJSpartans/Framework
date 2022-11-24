@@ -59,9 +59,9 @@ public class Motors {
      * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
      * @param speed the speed of the motor
      */
-    public void setPower(String id, double power) {
+    public void setOutput(String id, double output, CommandMode mode) {
         MotorWrapper requestedMotor = getMotor(id);
-        if(tab.getEnabled(id, subsystemName))  requestedMotor.setPower(power);
+        if(tab.getEnabled(id, subsystemName))  requestedMotor.setOutput(output, mode);
     }
     /** 
      * [setMotor] returns the value of requested button
@@ -70,11 +70,6 @@ public class Motors {
      * @param setpoint 
      * @param mode 
      */
-    public void setCommandMode(String id, CommandMode mode) {
-        MotorWrapper requestedMotor = getMotor(id);
-        
-        if(tab.getEnabled(id, subsystemName)) requestedMotor.setCommandMode(mode);
-    }
     
     /** 
      * [getVelocity] returns the speed of requested motor

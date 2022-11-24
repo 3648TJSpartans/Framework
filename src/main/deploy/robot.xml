@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<robot>
+   
+    <subsystem type="Motor" id="IntakeSubsystem" commandMode="power" output=".05"> <!--velocity, position, or power. Power ignores pid/encoder.-->
+        <motor id="intake1" controller="sparkmax" port="2">
+            <encoder id="encoderIntake" type="sparkmax" port_one="2"/>
+            <pid id="pid" type="sparkmax" kP="0.001" kI="0.0" kD="0.0" kF="0.0"></pid>  
+        </motor>
+    </subsystem>
+
+    <!-- <subsystem type="Motor" id="Hopper" commandMode="power"> 
+        <motor id="hopper1" controller="sparkmax" port="3"/>
+    </subsystem> -->
+</robot>

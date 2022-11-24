@@ -218,7 +218,7 @@ public class RobotInit {
                 if (childElement.getTagName().equals("subsystem")) {
                 String subsystemType=currentChild.getAttributes().getNamedItem("type").getNodeValue();
                 if (subsystemClasses.containsKey(subsystemType)){
-                    subsystems.put(subsystemType,((SubsystemBase)frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType),childElement)));
+                    subsystems.put(childElement.getAttribute("id"),((SubsystemBase)frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType),childElement)));
                 }
                 else{
                     System.out.println("Could not find java subsystem for "+subsystemType);
@@ -265,7 +265,7 @@ public class RobotInit {
     /** 
      * [getButton] returns the value of requested button
      * 
-     * @param function   the name of the function (ie "TURN" or "EXTEND_ARM")
+     * @param function   the name of the function (ie "A" or "B")
      * @param controllerID the name of the controller (ie "OPERATOR")
      * @return information about the requested control interface.
      */
@@ -277,7 +277,7 @@ public class RobotInit {
     /**
      * [getAxis] returns the value of the requested axis
      * 
-     * @param function   the name of the function (ie "TURN" or "EXTEND_ARM")
+     * @param function   the name of the function (ie "LEFT_JOYSTICK_X"")
      * @param controllerID the name of the controller (ie "OPERATOR")
      * @return information about the requested control interface.
      */
