@@ -26,9 +26,9 @@ public class EncoderWrapper implements EncoderBase{
     }
 
     private EncoderBase getEncoderType(String encoderType, int portOne, int portTwo){
-        if (encoderType.equals("TOUGHBOX" ) || encoderType.equals("775")) {
+        if (encoderType.toLowerCase() == "toughbox"  || encoderType.toLowerCase() == "775") {
             return new DIOEncoder(portOne, portTwo, false, EncodingType.k4X);
-        }else if(encoderType.equals("SPARKMAX") || encoderType.equals("TALONSRX")){
+        }else if(encoderType.toLowerCase() == "sparkmax" || encoderType.toLowerCase() == "talonsrx"){
             System.out.println("CAN Encoder found, initalize by passing EncoderBase into the consturctor: "+encoderType);
             return null;
         }else{
