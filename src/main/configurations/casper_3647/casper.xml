@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+
+<robot>
+   <subsystem type="TankDrive" id="TankDrive" >
+   
+        <motorgroup id="left" inverted="true">
+            <motor id="left1" side="left" controller="sparkpwm" port="4" inverted="true"/>
+            <motor id="left2" side="left" controller="sparkpwm" port="5" inverted="true"/>
+        </motorgroup>
+        <motorgroup id="right">
+            <motor id="right1" side="right" controller="sparkpwm" port="3"/>
+            <motor id="right2" side="right" controller="sparkpwm" port="1"/>
+        </motorgroup>
+    </subsystem>
+    <!-- Use the same units for camera and target height.  Angle is in degrees--> 
+<!--    <vision id="Limelight" type="limelight" cameraheight="50" targetheight="108" cameraangle="30"/>
+-->
+
+    <subsystem type="Motor" id="Intake" commandMode="power"> <!--velocity, position, or power. Power ignores pid/encoder.-->
+        <motor id="intake1" controller="sparkpwm" port="6"/>
+    </subsystem>
+
+    <subsystem type="Motor" id="Hopper" commandMode="power"> <!--velocity, position, or power. Power ignores pid/encoder.-->
+        <motor id="hopper1" controller="sparkpwm" port="7"/>
+    </subsystem>
+
+    <subsystem type="Solenoid" id="latch" enabled="true"> 
+        <solenoid id="solenoid1" port="2" enabled="true"/>
+        <solenoid id="solenoid2" port="3" portInverted="4" enabled="true"/>
+    </subsystem>
+
+    <subsystem type="Compressor" id="compressor" moduleType="CTREPCM" enabled="true"> 
+    </subsystem>
+</robot>
