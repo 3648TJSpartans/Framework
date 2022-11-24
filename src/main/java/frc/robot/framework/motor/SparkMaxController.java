@@ -3,6 +3,7 @@ package frc.robot.framework.motor;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
+import com.revrobotics.CANSparkMax.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.framework.encoder.EncoderBase;
@@ -31,13 +32,14 @@ public class SparkMaxController extends MotorController implements MotorBase, En
             output*=-1;
         switch (mode) {
             case PERCENTAGE:
-                controller.set(output);
+                pidController.setReference(output, ControlType.kDutyCycle);
+                //controller.set(output);
                 break;
             case VELOCITY:
-                //controller.
+                pidController.setReference(output, ControlType.kVelocity);
                 break;
             case POSITION:
-                //
+                pidController.setReference(output, ControlType.kPosition);
                 break;
             default:
                 System.out.println("SparkMaxController - Unknown commandmode:"+mode);

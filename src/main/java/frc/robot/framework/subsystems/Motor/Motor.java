@@ -19,6 +19,10 @@ public class Motor extends SubsystemBase implements RobotXML{
         ReadXML(subsystem);
     }
 
+    public CommandMode getMode(){
+        return mode;
+    }
+
     public void setOutput(double output, CommandMode mode){
         this.output=output;
         this.mode=mode;
@@ -35,11 +39,13 @@ public class Motor extends SubsystemBase implements RobotXML{
     @Override
     public void periodic(){
         if (subsystemColection.encoders.GetAllEncoderIDs().size()>0 && Math.random()>.9){
-            System.out.println("Position:"+subsystemColection.motors.getPosition(subsystemColection.motors.GetAllMotorIDs().iterator().next()));
+            String motorID = subsystemColection.motors.GetAllMotorIDs().iterator().next();
+            System.out.println("Position:"+subsystemColection.motors.getPosition(motorID)+
+                " Velocity:"+subsystemColection.motors.getVelocity(motorID));
         }
 
         for (String motorId: subsystemColection.motors.GetAllMotorIDs()){
-            subsystemColection.motors.setOutput(motorId, output, CommandMode.PERCENTAGE);
+            subsystemColection.motors.setOutput(motorId, output, mode);
         }
     }
 

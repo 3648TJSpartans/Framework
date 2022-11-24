@@ -11,9 +11,12 @@ https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to
 Any number of addational parameters can be defined. It's up to the command to consume these.
  -->
         <controller type="LOGITECH" port="0" id="PILOT">
-                <defaultCommand subsystemID="IntakeSubsystem" command="Motor_Default" axisReference="LEFT_JOYSTICK_Y" scale="1" deadzone=".05"></defaultCommand>
-                <button button="A" subsystemID="IntakeSubsystem" command="Motor_SetPower" trigger="Pressed" incrementPower=".1"></button>
-                <button button="B" subsystemID="IntakeSubsystem" command="Motor_SetPower" trigger="Pressed" setPower="-.1"></button>
+                <!-- <defaultCommand subsystemID="IntakeSubsystem" command="Motor_Default" axisReference="LEFT_JOYSTICK_Y" scale="1" deadzone=".05"></defaultCommand> -->
+                <button button="A" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" incrementPower=".1"></button>
+                <button button="B" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setPower="-.1"></button>
+                <button button="X" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setVelocity="50"></button>
+                <button button="Y" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setVelocity="100"></button>
+                
                 <!-- <button button="B" command="TestCommand" trigger="Held" myParam="Held!B"></button> -->
                 <!-- <button button="A" command="Motor_setPower" trigger="Released" power="0"></button> -->
         </controller>
