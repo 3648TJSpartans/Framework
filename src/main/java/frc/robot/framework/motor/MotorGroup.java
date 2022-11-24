@@ -30,16 +30,6 @@ public class MotorGroup extends MotorController implements MotorBase {
         super.setInverted(inverted);
     }
 
-
-    // @Override
-    // public boolean isCANEncoder() {
-    //     for (MotorBase motorBase : motors) {
-    //         if (motorBase.isCANEncoder())
-    //             return true;
-    //     }
-    //     return false;
-    // }
-
     @Override
     public EncoderBase getEncoder(){
         for (MotorBase motorBase : motors) {
