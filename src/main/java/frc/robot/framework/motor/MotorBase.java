@@ -4,7 +4,7 @@ import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
 public interface MotorBase{
-    public void setPower(double power);
+    public void setOutput(double reference, CommandMode mode);
     public void setInverted(boolean invert);
     //public double getLastOutput();
 

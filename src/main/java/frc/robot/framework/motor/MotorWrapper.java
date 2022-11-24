@@ -119,8 +119,8 @@ public class MotorWrapper implements MotorBase, EncoderBase {
         return motorBase;
     }
 
-    public void setPower(double power) {
-        motor.setPower(power);
+    public void setOutput(double output, CommandMode mode) {
+        motor.setOutput(output, mode);
     }
 
     public void setInverted(boolean inverted) {
@@ -129,10 +129,6 @@ public class MotorWrapper implements MotorBase, EncoderBase {
 
     public String getAttribute(String attribute) {
         return motorElement.getAttribute(attribute);
-    }
-
-    public void setCommandMode(CommandMode mode) {
-        commandMode = mode;
     }
 
     public void setPID(double kP, double kI, double kD, double kF) {

@@ -66,13 +66,13 @@ public class SoftwarePID implements PIDBase{
                 currentValue=encoder.getVelocity();
                 break;
             case PERCENTAGE:
-                motor.setPower(value);
-                return;          
+                //not running pid here...
+                break;          
             default:
                 System.out.println("Invalid command mode :"+mode.toString()+" in SoftwarePID");
                 return;
         }
-        motor.setPower(calculateOutput(currentValue, value));
+        motor.setOutput(value, CommandMode.PERCENTAGE);
     }
 
     @Override

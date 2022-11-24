@@ -6,6 +6,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.Log;
 
 public class TankDrive extends SubsystemBase implements RobotXML{
@@ -60,8 +61,8 @@ public class TankDrive extends SubsystemBase implements RobotXML{
             leftOutput = -1;
         }
 
-        subsystemColection.motors.setPower("left", leftOutput);
-        subsystemColection.motors.setPower("right", rightOutput);
+        subsystemColection.motors.setOutput("left", leftOutput, CommandMode.PERCENTAGE);
+        subsystemColection.motors.setOutput("right", rightOutput, CommandMode.PERCENTAGE);
         // System.out.println(leftOutput + " and " + rightOutput);
 
         // log.LogData(subsystemColection.motors.getEncoder("left").getDistance(),

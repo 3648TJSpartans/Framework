@@ -3,6 +3,7 @@ package frc.robot.framework.motor;
 import edu.wpi.first.wpilibj.RobotController;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.framework.encoder.EncoderBase;
+import frc.robot.framework.util.CommandMode;
 
 public class SparkController extends MotorController implements MotorBase {
     private Spark controller;
@@ -12,10 +13,10 @@ public class SparkController extends MotorController implements MotorBase {
     }
 
     @Override
-    public void setPower(double power) {
+    public void setOutput(double output, CommandMode mode) {
         if (inverted)
-            power*=-1;
-        controller.setVoltage(power*RobotController.getBatteryVoltage());
+            output*=-1;
+        controller.setVoltage(output*RobotController.getBatteryVoltage());
     }
 
     @Override

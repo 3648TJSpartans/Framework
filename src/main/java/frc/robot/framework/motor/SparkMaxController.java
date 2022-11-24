@@ -6,6 +6,7 @@ import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.framework.encoder.EncoderBase;
+import frc.robot.framework.util.CommandMode;
 
 
 public class SparkMaxController extends MotorController implements MotorBase, EncoderBase {
@@ -25,10 +26,24 @@ public class SparkMaxController extends MotorController implements MotorBase, En
         super.setInverted(inverted);
     }
 
-    public void setPower(double power){
+    public void setOutput(double output, CommandMode mode){
         if (inverted)
-            power*=-1;
-        controller.set(power);
+            output*=-1;
+        switch (mode) {
+            case PERCENTAGE:
+                controller.set(output);
+                break;
+            case VELOCITY:
+                //controller.
+                break;
+            case POSITION:
+                //
+                break;
+            default:
+                System.out.println("SparkMaxController - Unknown commandmode:"+mode);
+                break;
+        }
+        controller.set(output);
     };
 
     public CANSparkMax getCanSparkMax(){

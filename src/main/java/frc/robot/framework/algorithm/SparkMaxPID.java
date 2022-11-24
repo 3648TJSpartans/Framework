@@ -3,7 +3,6 @@ package frc.robot.framework.algorithm;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
 
-import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.motor.SparkMaxController;
 import frc.robot.framework.util.CommandMode;
 
