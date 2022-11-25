@@ -44,9 +44,9 @@ public class Motor_Default extends CommandBase implements RobotXML{
     public void execute() {
       double input=myController.getAxis(axisNumberPower);
       if (Math.abs(input)<deadzone)
-        motorSubsystem.setOutput(0);
+        motorSubsystem.setReference(input);
       else
-        motorSubsystem.setOutput(input);
+        motorSubsystem.setReference(input);
     }
   
     @Override

@@ -16,18 +16,18 @@ public class TalonSRXController extends MotorController implements MotorBase, En
     }
 
     @Override
-    public void setOutput(double output, CommandMode mode) {
+    public void setReference(double reference, CommandMode mode) {
         if (inverted)
-            output*=-1;
+            reference*=-1;
         switch (mode) {
             case PERCENTAGE:
-                controller.set(TalonSRXControlMode.PercentOutput,output);
+                controller.set(TalonSRXControlMode.PercentOutput,reference);
                 break;        
             case POSITION:
-                controller.set(TalonSRXControlMode.Position,output);
+                controller.set(TalonSRXControlMode.Position,reference);
                 break;
             case VELOCITY:
-                controller.set(TalonSRXControlMode.Velocity,output);
+                controller.set(TalonSRXControlMode.Velocity,reference);
                 break;
         }
     }

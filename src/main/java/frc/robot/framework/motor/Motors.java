@@ -6,6 +6,8 @@ import java.util.Set;
 
 import org.w3c.dom.Element;
 
+import com.fasterxml.jackson.databind.JsonMappingException.Reference;
+
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardHandler;
@@ -59,9 +61,9 @@ public class Motors {
      * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
      * @param speed the speed of the motor
      */
-    public void setOutput(String id, double output, CommandMode mode) {
+    public void setOutput(String id, double reference, CommandMode mode) {
         MotorWrapper requestedMotor = getMotor(id);
-        if(tab.getEnabled(id, subsystemName))  requestedMotor.setOutput(output, mode);
+        if(tab.getEnabled(id, subsystemName))  requestedMotor.setReference(reference, mode);
     }
     /** 
      * [setMotor] returns the value of requested button

@@ -23,12 +23,12 @@ public class Motor extends SubsystemBase implements RobotXML{
         return mode;
     }
 
-    public void setOutput(double output, CommandMode mode){
+    public void setReference(double reference, CommandMode mode){
         this.output=output;
         this.mode=mode;
     }
 
-    public void setOutput(double output){
+    public void setReference(double reference){
         this.output=output;
     }
 

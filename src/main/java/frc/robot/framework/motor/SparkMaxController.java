@@ -17,8 +17,10 @@ public class SparkMaxController extends MotorController implements MotorBase, En
 
     public SparkMaxController(int port){
         controller = new CANSparkMax(port, MotorType.kBrushless);
+        controller.restoreFactoryDefaults();
         pidController = controller.getPIDController();
         encoder = controller.getEncoder();
+        encoder.setPosition(0);
     }
 
     @Override
@@ -27,25 +29,24 @@ public class SparkMaxController extends MotorController implements MotorBase, En
         super.setInverted(inverted);
     }
 
-    public void setOutput(double output, CommandMode mode){
+    public void setReference(double reference, CommandMode mode){
         if (inverted)
-            output*=-1;
+        reference*=-1;
         switch (mode) {
             case PERCENTAGE:
-                pidController.setReference(output, ControlType.kDutyCycle);
+                pidController.setReference(reference, ControlType.kDutyCycle);
                 //controller.set(output);
                 break;
             case VELOCITY:
-                pidController.setReference(output, ControlType.kVelocity);
+                pidController.setReference(reference, ControlType.kVelocity);
                 break;
             case POSITION:
-                pidController.setReference(output, ControlType.kPosition);
+                pidController.setReference(reference, ControlType.kPosition);
                 break;
             default:
                 System.out.println("SparkMaxController - Unknown commandmode:"+mode);
                 break;
         }
-        controller.set(output);
     };
 
     public CANSparkMax getCanSparkMax(){

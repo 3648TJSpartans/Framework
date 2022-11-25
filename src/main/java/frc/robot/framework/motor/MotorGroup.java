@@ -16,11 +16,11 @@ public class MotorGroup extends MotorController implements MotorBase {
     }
 
     @Override
-    public void setOutput(double output, CommandMode mode) {
+    public void setReference(double reference, CommandMode mode) {
         if (inverted)
-            output*=-1.0;
+            reference*=-1.0;
         for (int i = 0; i < motors.size(); i++) {
-                motors.get(i).setOutput(output, mode);
+                motors.get(i).setReference(reference, mode);
         }
     }
 

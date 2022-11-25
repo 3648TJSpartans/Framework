@@ -119,8 +119,8 @@ public class MotorWrapper implements MotorBase, EncoderBase {
         return motorBase;
     }
 
-    public void setOutput(double output, CommandMode mode) {
-        motor.setOutput(output, mode);
+    public void setReference(double reference, CommandMode mode) {
+        motor.setReference(reference, mode);
     }
 
     public void setInverted(boolean inverted) {

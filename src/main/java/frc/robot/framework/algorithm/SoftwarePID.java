@@ -56,23 +56,26 @@ public class SoftwarePID implements PIDBase{
     }
 
     @Override
-    public void setReference(double value, CommandMode mode) {
+    public void setReference(double reference, CommandMode mode) {
         double currentValue;
+        double output;
         switch (mode){
             case POSITION:
                 currentValue=encoder.getPosition();
+                output=calculateOutput(currentValue, reference);
                 break;
             case VELOCITY:
                 currentValue=encoder.getVelocity();
+                output=calculateOutput(currentValue, reference);
                 break;
             case PERCENTAGE:
-                //not running pid here...
+                output=reference;
                 break;          
             default:
                 System.out.println("Invalid command mode :"+mode.toString()+" in SoftwarePID");
                 return;
         }
-        motor.setOutput(value, CommandMode.PERCENTAGE);
+        motor.setReference(output, CommandMode.PERCENTAGE);
     }
 
     @Override

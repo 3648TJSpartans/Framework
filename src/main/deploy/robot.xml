@@ -5,7 +5,7 @@
     <subsystem type="Motor" id="IntakeSubsystem" commandMode="velocity" output=".05"> <!--velocity, position, or power. Power ignores pid/encoder.-->
         <motor id="intake1" controller="sparkmax" port="2" >
             <encoder id="encoderIntake" type="sparkmax" port_one="2"/>
-            <pid id="pid" type="sparkmax" kP="0.00006" kI="0.000000" kD="0.0" kF="0.000015"></pid>  
+            <pid id="pid" type="sparkmax" kP="0.00006" kI="0.000000" kD="0.0" kF="0.00012"></pid>  
         </motor>
     </subsystem>
 

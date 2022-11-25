@@ -28,19 +28,19 @@ public class Motor_Set extends CommandBase implements RobotXML{
     @Override
     public void execute() {
         if (myElement.hasAttribute("incrementPower") && motor.getMode()==CommandMode.PERCENTAGE){
-            motor.setOutput(motor.getOutput()+Double.parseDouble(myElement.getAttribute("incrementPower")));
+            motor.setReference(motor.getOutput()+Double.parseDouble(myElement.getAttribute("incrementPower")));
             return;
         }
         if (myElement.hasAttribute("setPower")){
-            motor.setOutput(Double.parseDouble(myElement.getAttribute("setPower")), CommandMode.PERCENTAGE);
+            motor.setReference(Double.parseDouble(myElement.getAttribute("setPower")), CommandMode.PERCENTAGE);
             return;
         }
         if (myElement.hasAttribute("setVelocity")){
-            motor.setOutput(Double.parseDouble(myElement.getAttribute("setVelocity")), CommandMode.VELOCITY);
+            motor.setReference(Double.parseDouble(myElement.getAttribute("setVelocity")), CommandMode.VELOCITY);
             return;
         }
         if (myElement.hasAttribute("setPosition")){
-            motor.setOutput(Double.parseDouble(myElement.getAttribute("setPosition")), CommandMode.POSITION);
+            motor.setReference(Double.parseDouble(myElement.getAttribute("setPosition")), CommandMode.POSITION);
             return;
         }
     }
