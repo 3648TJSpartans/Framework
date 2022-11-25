@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.controller.ControllerBase;
 import frc.robot.framework.robot.*;
+import frc.robot.framework.util.CommandMode;
 
 public class Motor_Default extends CommandBase implements RobotXML{
     
@@ -16,6 +17,7 @@ public class Motor_Default extends CommandBase implements RobotXML{
   private double deadzone=.05;
   
   private int axisNumberPower=-1;
+  private boolean axisBeingUsed=false;
 
     public Motor_Default(Element element, ControllerBase controller){
         myElement=element;
@@ -43,8 +45,11 @@ public class Motor_Default extends CommandBase implements RobotXML{
     @Override
     public void execute() {
       double input=myController.getAxis(axisNumberPower);
-      if (Math.abs(input)<deadzone)
-        motorSubsystem.setReference(input);
+      if (Math.abs(input)<deadzone){ 
+        if (axisBeingUsed) //Sets it one time. Doesn't keep overriding buttons
+          motorSubsystem.setReference(0, CommandMode.PERCENTAGE);
+        axisBeingUsed=false;
+      }
       else
         motorSubsystem.setReference(input);
     }
