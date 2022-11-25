@@ -28,7 +28,7 @@ public class Motor_Set extends CommandBase implements RobotXML{
     @Override
     public void execute() {
         if (myElement.hasAttribute("incrementPower") && motor.getMode()==CommandMode.PERCENTAGE){
-            motor.setReference(motor.getOutput()+Double.parseDouble(myElement.getAttribute("incrementPower")));
+            motor.setReference(motor.getReference()+Double.parseDouble(myElement.getAttribute("incrementPower")));
             return;
         }
         if (myElement.hasAttribute("setPower")){

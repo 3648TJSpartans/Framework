@@ -21,6 +21,7 @@ public class SparkMaxController extends MotorController implements MotorBase, En
         pidController = controller.getPIDController();
         encoder = controller.getEncoder();
         encoder.setPosition(0);
+
     }
 
     @Override
@@ -31,11 +32,10 @@ public class SparkMaxController extends MotorController implements MotorBase, En
 
     public void setReference(double reference, CommandMode mode){
         if (inverted)
-        reference*=-1;
+            controller.setInverted(inverted);
         switch (mode) {
             case PERCENTAGE:
                 pidController.setReference(reference, ControlType.kDutyCycle);
-                //controller.set(output);
                 break;
             case VELOCITY:
                 pidController.setReference(reference, ControlType.kVelocity);

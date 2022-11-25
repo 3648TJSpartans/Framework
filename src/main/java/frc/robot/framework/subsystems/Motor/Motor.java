@@ -11,7 +11,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 public class Motor extends SubsystemBase implements RobotXML{
     ShuffleboardHandler tab;
     private SubsystemCollection subsystemColection;
-    private double output=.03;
+    private double reference=.00;
     private CommandMode mode = CommandMode.PERCENTAGE;
 
     public Motor(Element subsystem){
@@ -24,16 +24,16 @@ public class Motor extends SubsystemBase implements RobotXML{
     }
 
     public void setReference(double reference, CommandMode mode){
-        this.output=output;
+        this.reference=reference;
         this.mode=mode;
     }
 
     public void setReference(double reference){
-        this.output=output;
+        this.reference=reference;
     }
 
-    public double getOutput(){
-        return output;
+    public double getReference(){
+        return reference;
     }
     
     @Override
@@ -45,7 +45,7 @@ public class Motor extends SubsystemBase implements RobotXML{
         }
 
         for (String motorId: subsystemColection.motors.GetAllMotorIDs()){
-            subsystemColection.motors.setOutput(motorId, output, mode);
+            subsystemColection.motors.setOutput(motorId, reference, mode);
         }
     }
 
@@ -71,8 +71,8 @@ public class Motor extends SubsystemBase implements RobotXML{
                     System.out.println("Motor subsystem does not support commandMode:"+ element.getAttribute("commandMode"));
                     break;
             }
-            if (element.hasAttribute("output")){
-                output=Double.parseDouble(element.getAttribute("output"));
+            if (element.hasAttribute("reference")){
+                reference=Double.parseDouble(element.getAttribute("reference"));
             }
         }
         else{
