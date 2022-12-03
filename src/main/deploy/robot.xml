@@ -1,12 +1,16 @@
 <?xml version="1.0"?>
 
 <robot>
-   
-    <subsystem type="Motor" id="IntakeSubsystem" commandMode="velocity" output=".05"> <!--velocity, position, or power. Power ignores pid/encoder.-->
-        <motor id="intake1" controller="sparkmax" port="2" >
-            <encoder id="encoderIntake" type="sparkmax" port_one="2"/>
-            <pid id="pid" type="sparkmax" kP="0.00006" kI="0.000000" kD="0.0" kF="0.00012"></pid>  
-        </motor>
+
+
+    <subsystem type="TankDrive" id="TankDrive">
+
+        <motorgroup id="left" inverted="true">
+            <motor id="left1" side="left" controller="spark" port="0" inverted="true" />
+        </motorgroup>
+        <motorgroup id="right">
+            <motor id="right1" side="right" controller="spark" port="1" />
+        </motorgroup>
     </subsystem>
 
     <!-- <subsystem type="Motor" id="Hopper" commandMode="power"> 
