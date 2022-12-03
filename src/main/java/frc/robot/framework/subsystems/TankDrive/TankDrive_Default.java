@@ -19,7 +19,7 @@ public class TankDrive_Default extends CommandBase implements RobotXML{
   private int axisNumberLeft=-1;
   private int axisNumberRight=-1;
   
-//<defaultCommand subsystem="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="2" scaleY=".75"></axis>
+//<defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="2" scaleY=".75"></axis>
 
     public TankDrive_Default(Element element, ControllerBase controller){
       myElement=element;
@@ -27,7 +27,7 @@ public class TankDrive_Default extends CommandBase implements RobotXML{
       
       SubsystemBase temp=RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
       if (temp==null || !(temp instanceof TankDrive)){
-        System.out.println("TankDrive_Default could not find TankDrive subsystem with id:"+ element.getAttribute("subSystemID"));
+        System.out.println("TankDrive_Default could not find TankDrive subsystem(subsystemID):"+ element.getAttribute("subSystemID"));
         return;
       }
       tankDrivSubsystem = (TankDrive) temp;
