@@ -13,39 +13,41 @@ import frc.robot.framework.util.CommandMode;
 public class MotorWrapper implements MotorBase, EncoderBase {
 
     private MotorBase motor;
-    private double motor_lastOutput=0;
-    private CommandMode commandMode=CommandMode.PERCENTAGE;
-    private Element motorElement;
+    private double motor_lastOutput = 0;
+    private CommandMode commandMode = CommandMode.PERCENTAGE;
+    
     private EncoderWrapper encoder;
     private PIDWrapper pid;
-    private double setpoint=0;
+    private double setpoint = 0;
+    private Element motorElement;
 
     public MotorWrapper(Element element, boolean groupFlag, SubsystemCollection collection) {
-        if (!groupFlag){ // single motor, not motorgroup
-            motorElement = element;
+        motorElement = element;
+        if (!groupFlag) { // single motor, not motorgroup
             int port = Integer.parseInt(motorElement.getAttribute("port"));
             motor = getMotorType(motorElement.getAttribute("controller"), port);
-            boolean invertedMotor=false;
+            boolean invertedMotor = false;
             if (motorElement.hasAttribute("inverted")) {
-                invertedMotor=(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
+                invertedMotor = (Boolean.parseBoolean(motorElement.getAttribute("inverted")));
             }
             motor.setInverted(invertedMotor);
-        }
-        else{
-            //MotorGroup
+        } else {
+
+            // MotorGroup
             NodeList groupMotorNodes = element.getElementsByTagName("motor");
             MotorGroup group = new MotorGroup();
+            Element motorGroupElement = null;
 
-            //each motor in motor group
+            // each motor in motor group
             for (int o = 0; o < groupMotorNodes.getLength(); o++) {
                 Node currentMotor = groupMotorNodes.item(o);
                 if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
-                    Element motorElement = (Element) currentMotor;
-                    int port = Integer.parseInt(motorElement.getAttribute("port"));
-                    MotorBase motorInMotorGroup=getMotorType(motorElement.getAttribute("controller"), port);
-                    boolean invertedMotor=false;
-                    if (motorElement.hasAttribute("inverted")) {
-                        invertedMotor=(Boolean.parseBoolean(motorElement.getAttribute("inverted")));
+                    motorGroupElement = (Element) currentMotor;
+                    int port = Integer.parseInt(motorGroupElement.getAttribute("port"));
+                    MotorBase motorInMotorGroup = getMotorType(motorGroupElement.getAttribute("controller"), port);
+                    boolean invertedMotor = false;
+                    if (motorGroupElement.hasAttribute("inverted")) {
+                        invertedMotor = (Boolean.parseBoolean(motorGroupElement.getAttribute("inverted")));
                         motorInMotorGroup.setInverted(invertedMotor);
                     }
                     group.addMotor(motorInMotorGroup);
@@ -53,30 +55,33 @@ public class MotorWrapper implements MotorBase, EncoderBase {
             }
             motor = group;
 
-            //Motorgroup level config
-            boolean invertedMotor=false;
+
+            // Motorgroup level config
+            boolean invertedMotor = false;
             if (element.hasAttribute("inverted")) {
-                invertedMotor=(Boolean.parseBoolean(element.getAttribute("inverted")));
+                invertedMotor = (Boolean.parseBoolean(element.getAttribute("inverted")));
                 motor.setInverted(invertedMotor);
             }
         }
-        //read encoder
+        // read encoder
         NodeList childNodeList = element.getChildNodes();
         for (int i = 0; i < childNodeList.getLength(); i++) {
-            if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE){continue;}
-            Element childElement = (Element)childNodeList.item(i);
+            if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            Element childElement = (Element) childNodeList.item(i);
             switch (childElement.getTagName().toLowerCase()) {
-                case "encoder":;
-                    if (childElement.getAttribute("type").toLowerCase().equals("talonsrx")){
+                case "encoder":
+                    ;
+                    if (childElement.getAttribute("type").toLowerCase().equals("talonsrx")) {
                         encoder = new EncoderWrapper(childElement);
                         collection.encoders.put(childElement.getAttribute("id"), encoder);
-                    }
-                    else if ( childElement.getAttribute("type").toLowerCase().equals("sparkmax")){
+                    } else if (childElement.getAttribute("type").toLowerCase().equals("sparkmax")) {
                         encoder = new EncoderWrapper(childElement, motor.getEncoder());
                         collection.encoders.put(childElement.getAttribute("id"), encoder);
-                    }
-                    else {
-                        System.out.println("MotorWrapper: Encoder type: "+childElement.getAttribute("type")+" not found.");
+                    } else {
+                        System.out.println(
+                                "MotorWrapper: Encoder type: " + childElement.getAttribute("type") + " not found.");
                     }
                     break;
                 default:
@@ -84,12 +89,15 @@ public class MotorWrapper implements MotorBase, EncoderBase {
             }
         }
 
-        //read pid
+        // read pid
         for (int i = 0; i < childNodeList.getLength(); i++) {
-            if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE){continue;}
-            Element childElement = (Element)childNodeList.item(i);
+            if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            Element childElement = (Element) childNodeList.item(i);
             switch (childElement.getTagName().toLowerCase()) {
-                case "pid":;
+                case "pid":
+                    ;
                     pid = new PIDWrapper(childElement, motor, encoder);
                     break;
                 default:
@@ -108,12 +116,11 @@ public class MotorWrapper implements MotorBase, EncoderBase {
                 motorBase = new TalonSRXController(port);
                 break;
             case "sparkmax":
-                 motorBase = new SparkMaxController(port);
+                motorBase = new SparkMaxController(port);
                 break;
             default:
-                System.out.println("For motor:" + motorElement.getAttribute("port")
-                    + " motor controller type: " + motorElement.getAttribute("controller")
-                    + " was not found!");
+                System.out.println("For motor:" + port +
+                         " motor controller type: " + controllerType + " not found.");
                 return null;
         }
         return motorBase;
@@ -136,7 +143,7 @@ public class MotorWrapper implements MotorBase, EncoderBase {
         // SmartDashboard.putNumber("KI", kI);
         // SmartDashboard.putNumber("KD", kD);
         // SmartDashboard.putNumber("kF", kF);
-        pid.setPID(kP,kI,kD,kF);
+        pid.setPID(kP, kI, kD, kF);
     }
 
     public MotorBase getMotor() {
@@ -144,26 +151,27 @@ public class MotorWrapper implements MotorBase, EncoderBase {
     }
 
     public int getTicks() {
-        if (encoder==null){
+        if (encoder == null) {
             return 0;
         }
         return encoder.getTicks();
     }
 
     public double getVelocity() {
-        if (encoder==null){
+        if (encoder == null) {
             return 0;
         }
         return encoder.getVelocity();
     }
 
     public double getPosition() {
-        if (encoder==null){
+        if (encoder == null) {
             return 0;
-        }return encoder.getPosition();
+        }
+        return encoder.getPosition();
     }
-    
-    public EncoderWrapper getEncoder(){
+
+    public EncoderWrapper getEncoder() {
         return encoder;
     }
 
@@ -172,11 +180,11 @@ public class MotorWrapper implements MotorBase, EncoderBase {
     }
 
     public boolean hasEncoder() {
-        return encoder!=null;
+        return encoder != null;
     }
 
     public void setEncoder(EncoderWrapper encoder) {
-        this.encoder=encoder;       
+        this.encoder = encoder;
     }
 
     @Override
