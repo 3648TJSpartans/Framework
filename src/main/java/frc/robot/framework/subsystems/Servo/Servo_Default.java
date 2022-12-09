@@ -40,8 +40,9 @@ public class Servo_Default extends CommandBase implements RobotXML {
 
   @Override
   public void execute() {
-    if (button || !button)
-      servoSubsystem.setInputTurn(myController.getButton(getName()));
+    if (button || !button){
+      //servoSubsystem.setInputTurn(myController.getButton(getName()));
+  }
   }
 
   @Override
