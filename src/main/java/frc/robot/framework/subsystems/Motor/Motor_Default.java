@@ -48,10 +48,11 @@ public class Motor_Default extends CommandBase implements RobotXML{
       if (Math.abs(input)<deadzone){ 
         if (axisBeingUsed) //Sets it one time. Doesn't keep overriding buttons
           motorSubsystem.setReference(0, CommandMode.PERCENTAGE);
-        axisBeingUsed=false;
+          axisBeingUsed=false;
       }
       else
         motorSubsystem.setReference(input);
+        axisBeingUsed = true;
     }
   
     @Override

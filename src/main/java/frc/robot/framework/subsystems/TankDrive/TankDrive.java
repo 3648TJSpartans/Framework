@@ -28,10 +28,7 @@ public class TankDrive extends SubsystemBase implements RobotXML{
     
     @Override
     public void periodic(){
-        if (Math.random() > .9) {
-            System.out.println("Forward:" + input_forward + " turn:" + input_turn + " left:" + input_left + " right:"
-                    + input_right);
-        }
+      
 
         double leftOutput = input_turn + input_forward;
         double rightOutput = input_turn - input_forward;
