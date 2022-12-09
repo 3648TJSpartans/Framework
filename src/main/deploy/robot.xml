@@ -6,11 +6,18 @@
     <subsystem type="TankDrive" id="TankDrive">
 
         <motorgroup id="left" inverted="true">
-            <motor id="left1" side="left" controller="spark" port="0" inverted="true" />
+            <motor id="left1" side="left" controller="sparkpwm" port="0" inverted="true" />
         </motorgroup>
         <motorgroup id="right">
-            <motor id="right1" side="right" controller="spark" port="1" />
+            <motor id="right1" side="right" controller="sparkpwm" port="1" />
         </motorgroup>
+    </subsystem>
+
+    <subsystem type="Motor" id="Turret">
+            <motor id="turret1" controller="sparkpwm" port="3" />
+    </subsystem>
+    <subsystem type="Motor" id="Shooter">
+        <motor id="shooter1" controller="sparkpwm" port="2" />
     </subsystem>
 
     <!-- <subsystem type="Motor" id="Hopper" commandMode="power"> 

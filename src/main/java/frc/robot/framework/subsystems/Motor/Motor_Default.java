@@ -26,7 +26,7 @@ public class Motor_Default extends CommandBase implements RobotXML{
             
         SubsystemBase temp=RobotInit.GetSubsystem(myElement.getAttribute("subsystemID"));
         if (temp==null || !(temp instanceof Motor)){
-            System.out.println("Motor_Default could not find Motor subsystem with id:"+ myElement.getAttribute("subSystemID"));
+            System.out.println("Motor_Default could not find Motor subsystem with id:"+ myElement.getAttribute("subsystemID"));
             return;
         }
         motorSubsystem = (Motor)temp;
@@ -48,10 +48,11 @@ public class Motor_Default extends CommandBase implements RobotXML{
       if (Math.abs(input)<deadzone){ 
         if (axisBeingUsed) //Sets it one time. Doesn't keep overriding buttons
           motorSubsystem.setReference(0, CommandMode.PERCENTAGE);
-        axisBeingUsed=false;
+          axisBeingUsed=false;
       }
       else
         motorSubsystem.setReference(input);
+        axisBeingUsed = true;
     }
   
     @Override
