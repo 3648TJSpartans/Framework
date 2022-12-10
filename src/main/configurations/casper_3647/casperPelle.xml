@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<robot>
+
+
+    <subsystem type="TankDrive" id="TankDrive">
+
+        <motorgroup id="left" inverted="true">
+            <motor id="left1" side="left" controller="sparkmax" port="3" inverted="true" />
+            <motor id="left2" side="left" controller="sparkmax" port="4" inverted="true" />
+        </motorgroup>
+        <motorgroup id="right">
+            <motor id="right1" side="right" controller="sparkmax" port="1" />
+            <motor id="right2" side="right" controller="sparkmax" port="2" />
+        </motorgroup>
+    </subsystem>
+
+    <subsystem type="Motor" id="Climber">
+            <motor id="climber1" controller="sparkmax" port="6" />
+    </subsystem>
+    <subsystem type="Motor" id="Shooter">
+        <motor id="shooter1" controller="sparkmax" port="5" />
+    </subsystem>
+    <subsystem type="Motor" id="Intake">
+        <motor id="intake1" controller="sparkpwm" port="2" />
+    </subsystem>
+    <subsystem type="Motor" id="Uptake1">
+        <motor id="uptake1-1" controller="sparkpwm" port="0" />
+    </subsystem>
+    <subsystem type="Motor" id="Uptake2">
+        <motor id="uptake2-1" controller="sparkpwm" port="1" />
+    </subsystem>
+
+    <!-- <subsystem type="Motor" id="Hopper" commandMode="power"> 
+        <motor id="hopper1" controller="sparkmax" port="3"/>
+    </subsystem> -->
+</robot>
