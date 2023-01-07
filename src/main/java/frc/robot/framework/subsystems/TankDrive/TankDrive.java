@@ -33,30 +33,6 @@ public class TankDrive extends SubsystemBase implements RobotXML{
         double leftOutput = input_turn + input_forward;
         double rightOutput = input_turn - input_forward;
         double powerDiff = 0;
-        if (leftOutput > 1 || rightOutput > 1) {
-            powerDiff = Math.abs(Math.max(leftOutput, rightOutput) - 1);
-            leftOutput -= powerDiff;
-            rightOutput -= powerDiff;
-        } else if (leftOutput < -1 || rightOutput < -1) {
-            powerDiff = Math.abs(Math.min(leftOutput, rightOutput) + 1);
-            leftOutput += powerDiff;
-            rightOutput += powerDiff;
-        }
-
-        // Fix turning at high speeds
-
-        // Restricts output from exceeding 1
-        if (rightOutput > 1) {
-            rightOutput = 1;
-        } else if (rightOutput < -1) {
-            rightOutput = -1;
-        }
-
-        if (leftOutput > 1) {
-            leftOutput = 1;
-        } else if (leftOutput < -1) {
-            leftOutput = -1;
-        }
 
         subsystemColection.motors.setOutput("left", leftOutput, CommandMode.PERCENTAGE);
         subsystemColection.motors.setOutput("right", rightOutput, CommandMode.PERCENTAGE);
