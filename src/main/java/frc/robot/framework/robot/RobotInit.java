@@ -2,7 +2,6 @@ package frc.robot.framework.robot;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,17 +11,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import frc.robot.commands.TestCommand2;
 import frc.robot.framework.controller.*;
 import frc.robot.framework.util.Reflection;
 import frc.robot.framework.util.ShuffleboardHandler;
 import frc.robot.framework.util.XMLUtil;
-import frc.robot.framework.util.ShuffleboardHandler.ShuffleboardBase;
 import edu.wpi.first.wpilibj.Filesystem;
-import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
-import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
-import edu.wpi.first.wpilibj.shuffleboard.WidgetType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -112,6 +105,7 @@ public class RobotInit {
             Node autonSubNode=null;
             Element autonSubElement=null;
 
+            //find linked item
             for (int j=0; j<autonSubNodeList.getLength(); j++){
                 autonSubNode = autonSubNodeList.item(j);
                 if (autonSubNode.getNodeType() != Node.ELEMENT_NODE)  { continue;}
@@ -124,10 +118,16 @@ public class RobotInit {
             
             if (autonSubElement == null){
                 System.out.println("RobotInit:initAutons - could not find the start of auton for "+autonName+" linking to "+autonElement.getAttribute("nextstep"));
+                continue;
             }
 
             CommandBase tempAutonCommand=buildCommandNodeListHelper(autonSubElement);
-            autons.put(autonName, tempAutonCommand);            
+            if (tempAutonCommand == null){
+                System.out.println("RobotInit:initAutons - could not parse auton '"+autonName+"'");
+            }
+            else{
+                autons.put(autonName, tempAutonCommand);
+            }         
         }
 
         //TODO put auton selector on shuffleboard
@@ -165,7 +165,7 @@ public class RobotInit {
         CommandBase[] commandArray =commandMap.values().toArray(new CommandBase[commandMap.size()]);
 
         String stepType=element.getTagName().toLowerCase();
-        CommandBase myCommand;
+        CommandBase myCommand=null;
         switch (stepType) {
             case "sequentialcommandgroup":
                  //sort the child nodes
@@ -182,8 +182,8 @@ public class RobotInit {
                     index++;
                 }
                 if (index != commandMap.size()){
-                    System.out.println("Error in auton sequentialcommandgroup - items do not form complete list");
-                    System.out.println("Could not find "+ nextElementId);
+                    System.out.println("RobotInit:buildCommandNodeHelper - auton sequentialcommandgroup - items do not form complete list. Could not find element #"+ index +" - "+ nextElementId);
+                    return null;
                 }
 
                 myCommand = new SequentialCommandGroup(sortedArray);
@@ -207,7 +207,7 @@ public class RobotInit {
                 //myCommand = new TestCommand2(element);
                 break;
             default:
-                System.out.println("Robotinit.buildCommandHelper: unknown command type: "+stepType);
+                System.out.println("Robotinit:buildCommandNodeHelper: unknown command type: "+stepType);
                 return null;
         }
         return myCommand;
@@ -226,7 +226,7 @@ public class RobotInit {
                     subsystems.put(childElement.getAttribute("id"),((SubsystemBase)frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType),childElement)));
                 }
                 else{
-                    System.out.println("Could not find java subsystem for "+subsystemType);
+                    System.out.println("RobotInit:initSubsystems - could not find java subsystem for "+subsystemType);
                 }
             }
         }
