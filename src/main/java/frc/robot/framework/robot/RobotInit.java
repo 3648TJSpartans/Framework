@@ -2,6 +2,7 @@ package frc.robot.framework.robot;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -179,6 +180,10 @@ public class RobotInit {
                     nextElementId = elementMap.get(nextElementId).getAttribute("nextstep");
                     currentElement = elementMap.get(nextElementId);
                     index++;
+                }
+                if (index != commandMap.size()){
+                    System.out.println("Error in auton sequentialcommandgroup - items do not form complete list");
+                    System.out.println("Could not find "+ nextElementId);
                 }
 
                 myCommand = new SequentialCommandGroup(sortedArray);
