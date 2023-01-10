@@ -92,11 +92,12 @@ public class Reflection {
  }
 
    public static <T> T CreateObjectFromXML(Class<T> myClass, Element element){
-    try {
-      Object[] params= new Object[]{element};
+    Object[] params= new Object[]{element};
+      try {
       var temp = (T)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(params));
       return temp;
     } catch (Exception e) {
+      System.out.println(myClass.getName() + ": constructor does not match parameters");
       e.printStackTrace();
     } 
     return null;

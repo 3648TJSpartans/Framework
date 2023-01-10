@@ -40,17 +40,6 @@ public class TankDrive extends SubsystemBase implements RobotXML {
         subsystemColection.motors.setOutput("left", leftOutput, CommandMode.PERCENTAGE);
         subsystemColection.motors.setOutput("right", rightOutput, CommandMode.PERCENTAGE);
 
-        // System.out.println(leftOutput + " and " + rightOutput);
-
-        // log.LogData(subsystemColection.motors.getEncoder("left").getDistance(),
-        // subsystemColection.motors.getEncoder("right").getDistance(),
-        // subsystemColection.motors.getEncoder("left").getRate(),
-        // subsystemColection.motors.getEncoder("right").getRate(),
-        // subsystemColection.motors.getMotor("left").getMotorOutputVoltage(),
-        // subsystemColection.motors.getMotor("right").getMotorOutputVoltage(),
-        // subsystemColection.motors.getMotor("left").getOutputCurrent(),
-        // subsystemColection.motors.getMotor("right").getOutputCurrent());
-
         String[] data = { String.valueOf(leftOutput), String.valueOf(leftOutput) };
         log.Write("Teleop", data);
 
