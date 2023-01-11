@@ -174,9 +174,9 @@ public class ShuffleboardHandler {
             entry.setValue(value);
             liveEntry.setValue(value);
         }
-
-        private void networkTableError(String id, String tabName) {
-            // System.out.println("Shuffleboard:" + id + " not found in tab: " + tabName);
+        
+        private void networkTableError(String id, String tabName){
+            System.out.println("Shuffleboard:" + id + " not found in tab: " + tabName);
         }
     }
 }

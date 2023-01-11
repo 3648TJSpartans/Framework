@@ -106,8 +106,8 @@ public class RobotInit {
             Node autonSubNode = null;
             Element autonSubElement = null;
 
-            // find linked item
-            for (int j = 0; j < autonSubNodeList.getLength(); j++) {
+            //find linked item
+            for (int j=0; j<autonSubNodeList.getLength(); j++){
                 autonSubNode = autonSubNodeList.item(j);
                 if (autonSubNode.getNodeType() != Node.ELEMENT_NODE) {
                     continue;
@@ -125,12 +125,13 @@ public class RobotInit {
                 continue;
             }
 
-            CommandBase tempAutonCommand = buildCommandNodeListHelper(autonSubElement);
-            if (tempAutonCommand == null) {
-                System.out.println("RobotInit:initAutons - could not parse auton '" + autonName + "'");
-            } else {
-                autons.put(autonName, tempAutonCommand);
+            CommandBase tempAutonCommand=buildCommandNodeListHelper(autonSubElement);
+            if (tempAutonCommand == null){
+                System.out.println("RobotInit:initAutons - could not parse auton '"+autonName+"'");
             }
+            else{
+                autons.put(autonName, tempAutonCommand);
+            }         
         }
 
         // TODO put auton selector on shuffleboard
