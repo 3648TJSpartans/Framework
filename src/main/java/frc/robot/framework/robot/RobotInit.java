@@ -164,8 +164,8 @@ public class RobotInit {
         CommandBase[] commandArray =commandMap.values().toArray(new CommandBase[commandMap.size()]);
 
         String stepType=element.getTagName().toLowerCase();
-        CommandBase myCommand;
-    // try {
+        CommandBase myCommand = null;
+
         switch (stepType) {
             case "sequentialcommandgroup":
                  //sort the child nodes
