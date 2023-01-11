@@ -168,7 +168,7 @@ public class ShuffleboardHandler {
         }
         
         private void networkTableError(String id, String tabName){
-            System.out.println("Shuffleboard:" + id + " not found in tab: " + tabName);
+            //System.out.println("Shuffleboard:" + id + " not found in tab: " + tabName);
         }
     }
 }
