@@ -4,7 +4,8 @@
 <robot>
     <auton id="auton1" nextstep="start">
         <SequentialCommandGroup id="start" firststep="forward1">
-            <command type="TankDrive_Set" id="foward1" subsystemID="TankDrive" nextstep="thing" input_turn="1" input_forward="1" />
+            <command type="TankDrive_Set" id="forward1" subsystemID="TankDrive" nextstep="thing" setInputTurn="0.3" setInputForward="0.3" delayLength="3"/>
+            
             <command type="TestCommand2" id="thing" nextstep="multiGroup1" thing="asdfasdfsafd" />
             <ParallelCommandGroup id = "multiGroup1" nextstep="deadline">
                 <command type="TestCommand" id="multi1" nextstep="multi2" time="1.0" />

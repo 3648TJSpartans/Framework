@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Filesystem;
 
 import java.time.Instant;
@@ -55,10 +55,17 @@ public class Log {
         }
     }
 
-    public void Write(String mode, String[] data) {
+    public void Write(String subsystem, String[] data) {
+        String mode;
+        if(DriverStation.isAutonomous()){
+            mode = "Auto";
+        }else{
+            mode = "Teleop";
+        }
+
         try {
             double time = (Instant.now().toEpochMilli() - startTime) /1000.0;
-            outputfile.write(time + "," + mode + "," + String.join(",", data) + "\r\n");
+            outputfile.write(time + "," + subsystem + "," + mode + "," +String.join(",", data) + "\r\n");
         } catch (Exception e) {
             // TODO: handle exception
         }

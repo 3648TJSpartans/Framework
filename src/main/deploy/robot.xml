@@ -35,12 +35,10 @@
     <subsystem type="TankDrive" id="TankDrive">
 
         <motorgroup id="left" inverted="true">
-            <motor id="left1" side="left" controller="sparkpwm" port="4" inverted="true" />
-            <motor id="left2" side="left" controller="sparkpwm" port="5" inverted="true" />
+            <motor id="left1" side="left" controller="sparkpwm" port="0" inverted="true" />
         </motorgroup>
         <motorgroup id="right">
             <motor id="right1" side="right" controller="sparkpwm" port="1" />
-            <motor id="right2" side="right" controller="sparkpwm" port="3" />
         </motorgroup>
     </subsystem>
 
