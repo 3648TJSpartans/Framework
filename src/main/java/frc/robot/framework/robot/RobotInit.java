@@ -165,7 +165,7 @@ public class RobotInit {
         CommandBase[] commandArray =commandMap.values().toArray(new CommandBase[commandMap.size()]);
 
         String stepType=element.getTagName().toLowerCase();
-        CommandBase myCommand=null;
+        CommandBase myCommand = null;
         switch (stepType) {
             case "sequentialcommandgroup":
                  //sort the child nodes
@@ -203,6 +203,9 @@ public class RobotInit {
             case "command":
                 String myCommandName = element.getAttribute("type");
                 Class<?> myCommandClass = Reflection.GetAllCommands().get(myCommandName);
+                if(myCommandClass == null){
+                    System.out.println("Can not find command: " + myCommandName);
+                }
                 myCommand = (CommandBase) Reflection.CreateObjectFromXML(myCommandClass,element);
                 //myCommand = new TestCommand2(element);
                 break;
@@ -211,6 +214,10 @@ public class RobotInit {
                 return null;
         }
         return myCommand;
+    // } catch (Exception e) {
+    //     e.printStackTrace();
+    //     return null;
+    // }
     }
 
     private static void initSubsystems(NodeList subsystemNodeList){

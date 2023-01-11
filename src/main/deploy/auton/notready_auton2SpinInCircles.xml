@@ -3,8 +3,7 @@
 
 <robot>
     <auton id="otherAuton2" nextstep="start">
-        <SequentialCommandGroup id="start" firststep="something">
-            <command type="TestCommand" id="something" nextstep="thing" thing="adsdsf" />
+        <SequentialCommandGroup id="start" firststep="thing">
             <command type="TestCommand2" id="thing" nextstep="multiGroup1" thing="asdfasdfsafd" />
             <ParallelCommandGroup id = "multiGroup1" nextstep="deadline">
                 <command type="TestCommand" id="multi1" nextstep="multi2" time="1.0" />
