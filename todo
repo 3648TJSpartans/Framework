@@ -23,3 +23,4 @@ Subsystem->subsystemcollection->motors/solenids/etc.
 
 Pelle:
 log auto delete
+gyro and encoders tankdrivesubsystem

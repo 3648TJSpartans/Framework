@@ -30,13 +30,11 @@ public class TankDrive_Set extends CommandBase implements RobotXML {
 
     public void initialize() {
         startTime = System.currentTimeMillis();
+        delayLength = Double.parseDouble((myElement.getAttribute("delayLength")));
     }
 
     @Override
     public void execute() {
-        delayLength = Double.parseDouble((myElement.getAttribute("delayLength")));
-        
-
         if (myElement.hasAttribute("setInputForward")) {
             tankDrive.setInputForward(Double.parseDouble(myElement.getAttribute("setInputForward")));
         }
