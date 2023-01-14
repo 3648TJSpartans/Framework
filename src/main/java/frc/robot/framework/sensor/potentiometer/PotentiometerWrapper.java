@@ -2,11 +2,11 @@ package frc.robot.framework.sensor.potentiometer;
 
 import org.w3c.dom.Element;
 
-public class PotentiometerWrapper implements PotentiometerBase{
+public class PotentiometerWrapper implements PotentiometerBase {
     private PotentiometerBase m_Potentiometer;
     private Element m_PotentiometerElement;
 
-    public PotentiometerWrapper(Element element){
+    public PotentiometerWrapper(Element element) {
         m_PotentiometerElement = element;
         String id = m_PotentiometerElement.getAttribute("id");
         int port = Integer.parseInt(m_PotentiometerElement.getAttribute("port"));
@@ -14,17 +14,20 @@ public class PotentiometerWrapper implements PotentiometerBase{
         m_Potentiometer = getPotentiometerType(m_PotentiometerElement.getAttribute("type"), port, scale);
 
         if (m_Potentiometer == null) {
-            System.out.println("For motor: " + id + " motor controller type: " + m_PotentiometerElement.getAttribute("controller") + " was not found!");
+            System.out.println("For motor: " + id + " potentiometer type: "
+                    + m_PotentiometerElement.getAttribute("controller") + " was not found!");
             return;
         }
     }
+
     private PotentiometerBase getPotentiometerType(String controllerType, int port, double scale) {
         if (controllerType.equals("ANALOG")) {
             return new Analog_Potentiometer(port, scale);
-        }else{
+        } else {
             return null;
         }
     }
+
     public double getPotentiometer() {
         return m_Potentiometer.getPotentiometer();
     }

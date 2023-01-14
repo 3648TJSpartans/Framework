@@ -32,11 +32,10 @@
     </subsystem> -->
 
 
-    <subsystem type="TankDrive" id="TankDrive">
+    <!-- <subsystem type="TankDrive" id="TankDrive">
 
         <motorgroup id="left" inverted="true">
             <motor id="left1" side="left" controller="sparkpwm" port="0" inverted="true" />
-            
         </motorgroup>
         <motorgroup id="right">
             <motor id="right1" side="right" controller="sparkpwm" port="1" />
@@ -45,8 +44,14 @@
         <gyro id="tankDriveGyro" type="ADIS16448" port="0"></gyro>
         
 
-    </subsystem>
+    </subsystem> -->
 
+
+
+    <subsystem type="Motor" id="Shooter">
+        <motor id="shooter1" controller="sparkmax" port="6" />
+        <encoder id="shooterEncoder" type="sparkmax" port_one="6" />
+    </subsystem>
 
     <!-- <subsystem type="Motor" id="Turret">
             <motor id="turret1" controller="sparkpwm" port="3" />

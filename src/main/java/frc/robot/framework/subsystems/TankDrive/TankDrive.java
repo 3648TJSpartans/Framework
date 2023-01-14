@@ -46,20 +46,12 @@ public class TankDrive extends SubsystemBase implements RobotXML {
             System.out.println(gyro());
         }
 
-        if (Math.random() > 0.9) {
-
-        }
-
         String[] data = { String.valueOf(leftOutput), String.valueOf(leftOutput) };
         log.Write("Tank", data);
 
     }
 
     public double gyro() {
-        return subsystemColection.gyroscopes.getGYROAngle("tankDriveGyro", "X");
-    }
-
-    public double encoder() {
         return subsystemColection.gyroscopes.getGYROAngle("tankDriveGyro", "X");
     }
 
