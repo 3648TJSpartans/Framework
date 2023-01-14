@@ -45,6 +45,10 @@ public class TankDrive extends SubsystemBase implements RobotXML {
         String[] data = { String.valueOf(leftOutput), String.valueOf(leftOutput) };
         log.Write("Tank", data);
 
+        if (Math.random() > 0.9) {
+            System.out.println(subsystemColection.analogInputs.getVoltage("analogTest"));
+        }
+
     }
 
     public double gyro() {

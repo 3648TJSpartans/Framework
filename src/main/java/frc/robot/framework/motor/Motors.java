@@ -12,20 +12,22 @@ import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardHandler;
 
-
 public class Motors {
     private Map<String, MotorWrapper> motors = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
-    public Motors(String subsystemName){
+
+    public Motors(String subsystemName) {
         this.subsystemName = subsystemName;
         tab = new ShuffleboardHandler(subsystemName.toString());
     }
-    /** 
+
+    /**
      * [getMotor] returns the motor associated with the id
      * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
+     *           "LEFT_SIDE")
      */
     private MotorWrapper getMotor(String id) {
         MotorWrapper requestedMotor = motors.get(id);
@@ -37,11 +39,11 @@ public class Motors {
         return requestedMotor;
     }
 
-    public Set<String> GetAllMotorIDs(){
+    public Set<String> GetAllMotorIDs() {
         return motors.keySet();
     }
 
-    public void put(String id, MotorWrapper motor){
+    public void put(String id, MotorWrapper motor) {
         // tab = new ShuffleboardHandler(subsystemName.toString());
         // SimpleWidget widget = tab.add
         // NetworkTableEntry entry = widget.getEntry();
@@ -52,54 +54,65 @@ public class Motors {
         motors.put(id, motor);
     }
 
-    private void motorError(String id, String subsystemName){
+    private void motorError(String id, String subsystemName) {
         System.out.println("Motor:" + id + " not found. Subsystem: " + subsystemName + " not registered for output.");
     }
-    /** 
+
+    /**
      * [setMotor] sets the speed of the requested motor or motor group
      * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     * @param id    the id of the motor or motor group (ie "SHOOTER_WHEEL" or
+     *              "LEFT_SIDE")
      * @param speed the speed of the motor
      */
     public void setOutput(String id, double reference, CommandMode mode) {
         MotorWrapper requestedMotor = getMotor(id);
-        if(tab.getEnabled(id, subsystemName))  requestedMotor.setReference(reference, mode);
+        if (tab.getEnabled(id, subsystemName))
+            requestedMotor.setReference(reference, mode);
     }
-    /** 
+
+    /**
      * [setMotor] returns the value of requested button
      * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
-     * @param setpoint 
-     * @param mode 
+     * @param id       the id of the motor or motor group (ie "SHOOTER_WHEEL" or
+     *                 "LEFT_SIDE")
+     * @param setpoint
+     * @param mode
      */
-    
-    /** 
+
+    /**
      * [getVelocity] returns the speed of requested motor
      * 
-     *  @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
+     *           "LEFT_SIDE")
      */
     public double getVelocity(String id) {
         MotorWrapper requestedMotor = getMotor(id);
         return tab.getEnabled(id, subsystemName) ? requestedMotor.getVelocity() : 0.0;
-        
+
     }
-    /** 
+
+    /**
      * [getPosition] returns the postion of requested motor
      * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE"))
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
+     *           "LEFT_SIDE"))
      */
     public double getPosition(String id) {
         MotorWrapper requestedMotor = getMotor(id);
-        return tab.getEnabled(id, subsystemName)  ? requestedMotor.getPosition() : 0.0;
-        
+        return tab.getEnabled(id, subsystemName) ? requestedMotor.getPosition() : 0.0;
+
     }
-    /** 
+
+    /**
      * [resetEncoder] returns the value of requested button
      * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
+     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
+     *           "LEFT_SIDE")
      */
     public void resetEncoder(String id) {
         MotorWrapper requestedMotor = getMotor(id);
-        if(tab.getEnabled(id, subsystemName)) requestedMotor.resetEncoder();
+        if (tab.getEnabled(id, subsystemName))
+            requestedMotor.resetEncoder();
     }
 }
