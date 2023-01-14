@@ -42,10 +42,6 @@ public class TankDrive extends SubsystemBase implements RobotXML {
         subsystemColection.motors.setOutput("left", leftOutput, CommandMode.PERCENTAGE);
         subsystemColection.motors.setOutput("right", rightOutput, CommandMode.PERCENTAGE);
 
-        if (Math.random() > 0.9) {
-            System.out.println(gyro());
-        }
-
         String[] data = { String.valueOf(leftOutput), String.valueOf(leftOutput) };
         log.Write("Tank", data);
 
