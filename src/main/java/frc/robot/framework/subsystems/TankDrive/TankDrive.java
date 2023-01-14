@@ -8,6 +8,7 @@ import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.ShuffleboardHandler;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.Log;
+import frc.robot.framework.sensor.gyroscope.*;
 
 public class TankDrive extends SubsystemBase implements RobotXML {
     ShuffleboardHandler tab;
@@ -18,6 +19,7 @@ public class TankDrive extends SubsystemBase implements RobotXML {
     private double input_right = 0;
     private double rightCurrentPower = 0;
     private double leftCurrentPower = 0;
+    private Element myElement;
 
     // String[] headers = {"Left Encoder", "Right Encoder", "Left Speed", "Right
     // Speed", "Left Voltage", "Right Voltage", "Left Current", "Right Current"};
@@ -27,6 +29,7 @@ public class TankDrive extends SubsystemBase implements RobotXML {
     public TankDrive(Element subsystem) {
         tab = new ShuffleboardHandler(subsystem.getAttribute("id"));
         ReadXML(subsystem);
+        myElement = subsystem;
     }
 
     @Override
@@ -36,13 +39,28 @@ public class TankDrive extends SubsystemBase implements RobotXML {
         double rightOutput = input_turn - input_forward;
         double powerDiff = 0;
 
-
         subsystemColection.motors.setOutput("left", leftOutput, CommandMode.PERCENTAGE);
         subsystemColection.motors.setOutput("right", rightOutput, CommandMode.PERCENTAGE);
+
+        if (Math.random() > 0.9) {
+            System.out.println(gyro());
+        }
+
+        if (Math.random() > 0.9) {
+
+        }
 
         String[] data = { String.valueOf(leftOutput), String.valueOf(leftOutput) };
         log.Write("Tank", data);
 
+    }
+
+    public double gyro() {
+        return subsystemColection.gyroscopes.getGYROAngle("tankDriveGyro", "X");
+    }
+
+    public double encoder() {
+        return subsystemColection.gyroscopes.getGYROAngle("tankDriveGyro", "X");
     }
 
     public void setInputForward(double forward) {
