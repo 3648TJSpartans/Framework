@@ -13,23 +13,23 @@ public class Solenoid_Set extends CommandBase implements RobotXML {
     private Element myElement;
     private double startTime;
     private double delayLength = 0;
-    // <command command="TankDrive_Default" scaleX="2" scaleY=".75"></axis>
+    private boolean extended;
 
     public Solenoid_Set(Element element) {
         myElement = element;
+        extended = Boolean.parseBoolean(myElement.getAttribute("extended"));
+
         SubsystemBase temp = RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
         if (temp == null || !(temp instanceof Solenoid)) {
-            System.out
-                    .println("Solenoid could not find Motor subsystem with id:" + element.getAttribute("subSystemID"));
+            System.out.println("Solenoid could not find Solenoid subsystem with id:" + element.getAttribute("subsystemID"));
             return;
         }
+        solenoid = (Solenoid) temp;
     }
 
     @Override
     public void execute() {
-        if (myElement.hasAttribute("extended")) {
             solenoid.setExtended(Boolean.parseBoolean(myElement.getAttribute("extended")));
-        }
     }
 
     @Override

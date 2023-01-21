@@ -45,8 +45,8 @@
     </subsystem> -->
 
 
-    <subsystem type="Solenoid" id="Solenoid">
-        <Solenoid id="solenoid1" port="6" type="SINGLE">
+    <subsystem type="Solenoid" id="Solenoid_Subsyststem" >
+        <solenoid id="solenoid1" vendor="CTREPCM" port="7" type="single" inverted="true"/>
     </subsystem>
 
 
@@ -58,7 +58,7 @@
         </motor>
         
     </subsystem> -->
-<!-- 
+    <!-- 
     <subsystem type="Motor" id="Turret">
             <motor id="turret1" controller="sparkpwm" port="3" />
     </subsystem> -->

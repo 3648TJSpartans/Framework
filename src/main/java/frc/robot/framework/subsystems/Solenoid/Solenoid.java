@@ -12,7 +12,7 @@ public class Solenoid extends SubsystemBase implements RobotXML {
     ShuffleboardHandler tab;
     Element myElement;
     private SubsystemCollection subsystemColection;
-    boolean exstended;
+    boolean extended;
 
     public Solenoid(Element element) {
         tab = new ShuffleboardHandler(element.getAttribute("id"));
@@ -23,15 +23,13 @@ public class Solenoid extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
-        if (exstended) {
-            subsystemColection.solenoids.setSolenoid(myElement.getAttribute("id"), true);
-        } else {
-            subsystemColection.solenoids.setSolenoid(myElement.getAttribute("id"), false);
+        for (String solenoidId : subsystemColection.solenoids.GetAllSolenoidIDs()) {
+            subsystemColection.solenoids.setSolenoid(solenoidId, extended);
         }
     }
 
-    public void setExtended(boolean input_exstended) {
-        input_exstended = exstended;
+    public void setExtended(boolean input_extended) {
+         extended= input_extended;
     }
 
     @Override
