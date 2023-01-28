@@ -1,5 +1,6 @@
 package frc.robot.framework.robot;
 
+import com.revrobotics.AnalogInput;
 
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -11,6 +12,8 @@ import frc.robot.framework.motor.MotorWrapper;
 import frc.robot.framework.motor.Motors;
 import frc.robot.framework.sensor.accelerometer.ACLWrapper;
 import frc.robot.framework.sensor.accelerometer.Accelerometers;
+import frc.robot.framework.sensor.analoginput.AnalogInputs;
+import frc.robot.framework.sensor.analoginput.AnaloginWrapper;
 import frc.robot.framework.sensor.digitalinput.DigitalInWrapper;
 import frc.robot.framework.sensor.digitalinput.DigitalInputs;
 import frc.robot.framework.sensor.gyroscope.GyroWrapper;
@@ -23,7 +26,6 @@ import frc.robot.framework.servo.ServoWrapper;
 import frc.robot.framework.servo.Servos;
 import frc.robot.framework.solenoid.SolenoidWrapper;
 import frc.robot.framework.solenoid.Solenoids;
-
 
 /**
  * [Out] is a class containing static methods for controlling all outputs from
@@ -38,6 +40,7 @@ public class SubsystemCollection implements RobotXML {
     public Accelerometers accelerometers;
     public Gyroscopes gyroscopes;
     public DigitalInputs digitalInputs;
+    public AnalogInputs analogInputs;
     public Potentiometers potentiometers;
     public Encoders encoders;
     public Ultrasonics ultrasonics;
@@ -62,6 +65,7 @@ public class SubsystemCollection implements RobotXML {
         potentiometers = new Potentiometers(subsystemName);
         encoders = new Encoders(subsystemName);
         ultrasonics = new Ultrasonics(subsystemName);
+        analogInputs = new AnalogInputs(subsystemName);
         // ShuffleboardHandler tab =
         // ShuffleboardCollections.get(systemElement.getTagName());
         NodeList children = system.getChildNodes();
@@ -72,26 +76,31 @@ public class SubsystemCollection implements RobotXML {
                 String id = childElement.getAttribute("id");
                 if (childElement.getTagName().equals("motor")) {
                     motors.put(id, new MotorWrapper(childElement, false, this));
-                } else if (childElement.getTagName().equals("motorgroup")) {
+                } else if (childElement.getTagName().toLowerCase().equals("motorgroup")) {
                     motors.put(id, new MotorWrapper(childElement, true, this));
-                } else if (childElement.getTagName().equals("servo")) {
+                } else if (childElement.getTagName().toLowerCase().equals("servo")) {
                     servos.put(id, new ServoWrapper(childElement));
-                } else if (childElement.getTagName().equals("encoder")) {
+                } else if (childElement.getTagName().toLowerCase().equals("encoder")) {
                     encoders.put(id, new EncoderWrapper(childElement));
-                } else if (childElement.getTagName().equals("solenoid")) {
+                } else if (childElement.getTagName().toLowerCase().equals("solenoid")) {
                     solenoids.put(id, new SolenoidWrapper(childElement));
-                } else if (childElement.getTagName().equals("acl") || childElement.getTagName().equals("accelerometer")) {
+                } else if (childElement.getTagName().toLowerCase().equals("acl")
+                        || childElement.getTagName().toLowerCase().equals("accelerometer")) {
                     accelerometers.put(id, new ACLWrapper(childElement));
-                } else if (childElement.getTagName().equals("dio") || childElement.getTagName().equals("limitswitch")) {
+                } else if (childElement.getTagName().toLowerCase().equals("analogInput")) {
+                    analogInputs.put(id, new AnaloginWrapper(childElement));
+                } else if (childElement.getTagName().toLowerCase().equals("dio") || childElement.getTagName().equals("limitswitch")) {
                     digitalInputs.put(id, new DigitalInWrapper(childElement));
-                } else if (childElement.getTagName().equals("gyro") || childElement.getTagName().equals("gyroscopes")) {
+                } else if (childElement.getTagName().toLowerCase().equals("gyro") || childElement.getTagName().equals("gyroscopes")) {
                     gyroscopes.put(id, new GyroWrapper(childElement));
-                } else if (childElement.getTagName().equals("pot") || childElement.getTagName().equals("potientiometers")) {
+                } else if (childElement.getTagName().toLowerCase().equals("pot")
+                        || childElement.getTagName().equals("potientiometers")) {
                     potentiometers.put(id, new PotentiometerWrapper(childElement));
-                } else if (childElement.getTagName().equals("ut") || childElement.getTagName().equals("ultrasonic")) {
+                } else if (childElement.getTagName().toLowerCase().equals("ut") || childElement.getTagName().equals("ultrasonic")) {
                     ultrasonics.put(id, new UltrasonicWrapper(childElement));
                 } else {
-                    System.out.println("Unknown XML element: " + childElement.getTagName() + " on subsystem: "+ system.getTagName());
+                    System.out.println("Unknown XML element: " + childElement.getTagName().toLowerCase() + " on subsystem: "
+                            + system.getTagName());
                 }
             }
         }

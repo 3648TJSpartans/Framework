@@ -12,11 +12,16 @@ public class SolenoidWrapper implements SolenoidBase {
         this.solenoidElement = element;
         String id = element.getAttribute("id");
         int port = Integer.parseInt(element.getAttribute("port"));
-        PneumaticsModuleType moduleType = PneumaticsModuleType.valueOf(element.getAttribute("type"));
-        if(element.getAttribute("type").equals("SINGLE")){
-            //
+
+        if(!element.getAttribute("vendor").toLowerCase().equals("revph") && !element.getAttribute("vendor").toLowerCase().equals("ctrepcm")){
+            System.out.println("For solenoid: "+id+" vendor: "+element.getAttribute("vendor").toLowerCase() + " was not found!");
+            return;
+        }
+        
+        PneumaticsModuleType moduleType = PneumaticsModuleType.valueOf(element.getAttribute("vendor").toUpperCase());
+        if(element.getAttribute("type").toLowerCase().equals("single")){
             solenoid = new SolenoidSingle(moduleType, port);
-        }else if(element.getAttribute("type").equals("DOUBLE")){
+        }else if(element.getAttribute("type").toLowerCase().equals("double")){
             String[] splitPorts = element.getAttribute("port").split(",");
             if(splitPorts.length != 2){
                 System.out.println("Double solenoid must have two ports defined (split by a comma).");
@@ -31,6 +36,12 @@ public class SolenoidWrapper implements SolenoidBase {
             solenoid = new SolenoidSingle(moduleType, port);
             System.out.println("For solenoid: "+id+" solenoid type: "+element.getAttribute("type")+" was not found!");
         }
+
+        boolean invertedSolenoid = false;
+        if (solenoidElement.hasAttribute("inverted")) {
+            invertedSolenoid = (Boolean.parseBoolean(solenoidElement.getAttribute("inverted")));
+        }
+        solenoid.setInverted(invertedSolenoid);
     }
 
     public void set(boolean extended){
@@ -39,5 +50,11 @@ public class SolenoidWrapper implements SolenoidBase {
 
     public String getAttribute(String attribute){
         return solenoidElement.getAttribute(attribute);
+    }
+
+    @Override
+    public void setInverted(boolean inverted) {
+        solenoid.setInverted(inverted);
+        
     }
 }

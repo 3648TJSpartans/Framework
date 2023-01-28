@@ -20,7 +20,7 @@ public class ServoWrapper implements ServoBase {
         motor = getMotorType(motorElement.getAttribute("controller"), port);
 
         if (motor == null) {
-            System.out.println("For motor: " + id + " motor controller type: " + motorElement.getAttribute("controller")
+            System.out.println("For motor: " + id + " servo motor type: " + motorElement.getAttribute("controller")
                     + " was not found!");
             return;
         }
@@ -51,7 +51,6 @@ public class ServoWrapper implements ServoBase {
 
     }
 
-
     private ServoBase getMotorType(String controllerType, int port) {
         if (controllerType.equals("SERVO")) {
             return new ServoController(port);
@@ -71,8 +70,6 @@ public class ServoWrapper implements ServoBase {
     public String getAttribute(String attribute) {
         return motorElement.getAttribute(attribute);
     }
-
-
 
     public ServoBase getMotor() {
         return motor;

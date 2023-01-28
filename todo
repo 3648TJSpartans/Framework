@@ -19,3 +19,8 @@ make a compressor object
 
 RobotInit->controllers/auton/robotxml -- builds out commands for input/auton and starts subsystems
 Subsystem->subsystemcollection->motors/solenids/etc.
+
+
+Pelle:
+log auto delete
+gyro and encoders tankdrivesubsystem

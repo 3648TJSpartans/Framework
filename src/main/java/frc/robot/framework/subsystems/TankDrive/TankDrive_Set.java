@@ -11,12 +11,15 @@ public class TankDrive_Set extends CommandBase implements RobotXML {
 
     private TankDrive tankDrive;
     private Element myElement;
+    private double startTime;
+    private double delayLength = 0;
     // <command command="TankDrive_Default" scaleX="2" scaleY=".75"></axis>
 
     public TankDrive_Set(Element element) {
         myElement = element;
 
         SubsystemBase temp = RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
+        addRequirements(temp);
         if (temp == null || !(temp instanceof TankDrive)) {
             System.out.println(
                     "TankDrive_SetPower could not find Motor subsystem with id:" + element.getAttribute("subSystemID"));
@@ -25,29 +28,29 @@ public class TankDrive_Set extends CommandBase implements RobotXML {
         tankDrive = (TankDrive) temp;
     }
 
+    public void initialize() {
+        startTime = System.currentTimeMillis();
+        delayLength = Double.parseDouble((myElement.getAttribute("delayLength")));
+    }
+
     @Override
     public void execute() {
         if (myElement.hasAttribute("setInputForward")) {
             tankDrive.setInputForward(Double.parseDouble(myElement.getAttribute("setInputForward")));
-            return;
         }
         if (myElement.hasAttribute("setInputTurn")) {
-            tankDrive.setInputForward(Double.parseDouble(myElement.getAttribute("setInputTurn")));
-            return;
-        }
-        if (myElement.hasAttribute("setInputLeft")) {
-            tankDrive.setInputForward(Double.parseDouble(myElement.getAttribute("setInputLeft")));
-            return;
-        }
-        if (myElement.hasAttribute("setInputRight")) {
-            tankDrive.setInputForward(Double.parseDouble(myElement.getAttribute("setInputRight")));
-            return;
+            tankDrive.setInputTurn(Double.parseDouble(myElement.getAttribute("setInputTurn")));
         }
     }
 
     @Override
     public boolean isFinished() {
-        return true;
+        System.out.println("Time Complete: " + (System.currentTimeMillis() - startTime) + " " + (delayLength * 1000)
+                + (System.currentTimeMillis() - startTime > delayLength * 1000));
+        if (System.currentTimeMillis() - startTime > delayLength * 1000) {
+            return true;
+        }
+        return false;
     }
 
     @Override

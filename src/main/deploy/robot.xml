@@ -32,22 +32,37 @@
     </subsystem> -->
 
 
-    <subsystem type="TankDrive" id="TankDrive">
+    <!-- <subsystem type="TankDrive" id="TankDrive">
 
-        <motorgroup id="left" inverted="true">
-            <motor id="left1" side="left" controller="sparkpwm" port="4" inverted="true" />
-            <motor id="left2" side="left" controller="sparkpwm" port="5" inverted="true" />
+        <motorgroup id="left" >
+            <motor id="left1" side="left" controller="sparkpwm" port="0" />
         </motorgroup>
         <motorgroup id="right">
             <motor id="right1" side="right" controller="sparkpwm" port="1" />
-            <motor id="right2" side="right" controller="sparkpwm" port="3" />
         </motorgroup>
+
+        <analogInput id="analogTest" port="0"/>
+    </subsystem> -->
+
+
+    <subsystem type="Solenoid" id="Solenoid_Subsyststem" >
+        <solenoid id="solenoid1" vendor="CTREPCM" port="7" type="single" inverted="true"/>
     </subsystem>
 
-    <!-- <subsystem type="Motor" id="Turret">
+
+    <!-- <gyro id="tankDriveGyro" type="ADIS16448" port="0"></gyro> -->
+
+    <!-- <subsystem type="Motor" id="Shooter">
+        <motor id="shooter1" controller="sparkmax" port="6">
+            <encoder id="shooterEncoder" type="sparkmax" port_one="6" />
+        </motor>
+        
+    </subsystem> -->
+    <!-- 
+    <subsystem type="Motor" id="Turret">
             <motor id="turret1" controller="sparkpwm" port="3" />
-    </subsystem>
-    <subsystem type="Motor" id="Shooter">
+    </subsystem> -->
+    <!-- <subsystem type="Motor" id="Shooter">
         <motor id="shooter1" controller="sparkpwm" port="2" />
     </subsystem> -->
 

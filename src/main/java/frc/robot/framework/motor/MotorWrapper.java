@@ -15,7 +15,7 @@ public class MotorWrapper implements MotorBase, EncoderBase {
     private MotorBase motor;
     private double motor_lastOutput = 0;
     private CommandMode commandMode = CommandMode.PERCENTAGE;
-    
+
     private EncoderWrapper encoder;
     private PIDWrapper pid;
     private double setpoint = 0;
@@ -54,7 +54,6 @@ public class MotorWrapper implements MotorBase, EncoderBase {
                 }
             }
             motor = group;
-
 
             // Motorgroup level config
             boolean invertedMotor = false;
@@ -120,7 +119,7 @@ public class MotorWrapper implements MotorBase, EncoderBase {
                 break;
             default:
                 System.out.println("For motor:" + port +
-                         " motor controller type: " + controllerType + " not found.");
+                        " motor controller type: " + controllerType + " not found.");
                 return null;
         }
         return motorBase;

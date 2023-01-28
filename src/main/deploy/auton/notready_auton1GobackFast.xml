@@ -3,17 +3,33 @@
 
 <robot>
     <auton id="auton1" nextstep="start">
-        <SequentialCommandGroup id="start" firststep="forward1">
-            <command type="TankDrive_Set" id="foward1" subsystemID="TankDrive" nextstep="thing" input_turn="1" input_forward="1" />
+        <SequentialCommandGroup id="start" firststep="thing">
+            <!-- <command type="TankDrive_Set" id="forward1" subsystemID="TankDrive" nextstep="stop"
+                setInputTurn="0.3" setInputForward="0.3" delayLength="3" />
+
+            <command type="TankDrive_Set" id="stop" subsystemID="TankDrive" nextstep="delay1"
+                setInputTurn="0" setInputForward="0" delayLength="0" />
+
+            <command type="Util_Delay" id="delay1" nextstep="forward3" delayLength="3" />
+
+            <command type="TankDrive_Set" id="forward3" subsystemID="TankDrive" nextstep="stop2"
+                setInputTurn="0.3" setInputForward="0.3" delayLength="3" />
+
+            <command type="TankDrive_Set" id="stop2" subsystemID="TankDrive" nextstep="thing"
+                setInputTurn="0" setInputForward="0" delayLength="0" /> -->
+
             <command type="TestCommand2" id="thing" nextstep="multiGroup1" thing="asdfasdfsafd" />
+
             <ParallelCommandGroup id = "multiGroup1" nextstep="deadline">
                 <command type="TestCommand" id="multi1" nextstep="multi2" time="1.0" />
                 <command type="TestCommand2" id="multi2" time="1.0" />
             </ParallelCommandGroup>
+
             <ParallelDeadlineGroup id = "deadline" nextstep="race" deadlineCommand="TestCommand" someAttributeforDeadline="123">
                 <command type="TestCommand" id="deadline1" time="1.0" />
                 <command type="TestCommand2" id="deadline2" time="1.0" />
             </ParallelDeadlineGroup>
+
             <ParallelRaceGroup id = "race">
                 <command type="TestCommand" id="race1" time="1.0" />
                 <command type="TestCommand2" id="race2" time="1.0" />

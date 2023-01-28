@@ -8,43 +8,43 @@ import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardHandler;
 
-public class Motor extends SubsystemBase implements RobotXML{
+public class Motor extends SubsystemBase implements RobotXML {
     ShuffleboardHandler tab;
     private SubsystemCollection subsystemColection;
-    private double reference=.00;
+    private double reference = .00;
     private CommandMode mode = CommandMode.PERCENTAGE;
 
-    public Motor(Element subsystem){
-        tab= new ShuffleboardHandler(subsystem.getAttribute("id"));
+    public Motor(Element subsystem) {
+        tab = new ShuffleboardHandler(subsystem.getAttribute("id"));
         ReadXML(subsystem);
     }
 
-    public CommandMode getMode(){
+    public CommandMode getMode() {
         return mode;
     }
 
-    public void setReference(double reference, CommandMode mode){
-        this.reference=reference;
-        this.mode=mode;
+    public void setReference(double reference, CommandMode mode) {
+        this.reference = reference;
+        this.mode = mode;
     }
 
-    public void setReference(double reference){
-        this.reference=reference;
+    public void setReference(double reference) {
+        this.reference = reference;
     }
 
-    public double getReference(){
+    public double getReference() {
         return reference;
     }
-    
+
     @Override
-    public void periodic(){
-        if (subsystemColection.encoders.GetAllEncoderIDs().size()>0 && Math.random()>.9){
+    public void periodic() {
+        if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0 && Math.random() > .9) {
             String motorID = subsystemColection.motors.GetAllMotorIDs().iterator().next();
-            System.out.println("Position:"+subsystemColection.motors.getPosition(motorID)+
-                " Velocity:"+subsystemColection.motors.getVelocity(motorID));
+            System.out.println("Position:" + subsystemColection.motors.getPosition(motorID) +
+                    " Velocity:" + subsystemColection.motors.getVelocity(motorID));
         }
 
-        for (String motorId: subsystemColection.motors.GetAllMotorIDs()){
+        for (String motorId : subsystemColection.motors.GetAllMotorIDs()) {
             subsystemColection.motors.setOutput(motorId, reference, mode);
         }
     }
@@ -55,34 +55,34 @@ public class Motor extends SubsystemBase implements RobotXML{
 
     @Override
     public void ReadXML(Element element) {
-        //XMLUtil.prettyPrint(element);
+        // XMLUtil.prettyPrint(element);
         subsystemColection = new SubsystemCollection(element);
-        if (element.hasAttribute("commandMode")){
+        if (element.hasAttribute("commandMode")) {
             switch (element.getAttribute("commandMode")) {
                 case "power":
-                    mode=CommandMode.PERCENTAGE;
+                    mode = CommandMode.PERCENTAGE;
                     break;
                 case "velocity":
-                    mode=CommandMode.VELOCITY;
+                    mode = CommandMode.VELOCITY;
                     break;
                 case "position":
-                    mode=CommandMode.POSITION;
+                    mode = CommandMode.POSITION;
                 default:
-                    System.out.println("Motor subsystem does not support commandMode:"+ element.getAttribute("commandMode"));
+                    System.out.println(
+                            "Motor subsystem does not support commandMode:" + element.getAttribute("commandMode"));
                     break;
             }
-            if (element.hasAttribute("reference")){
-                reference=Double.parseDouble(element.getAttribute("reference"));
+            if (element.hasAttribute("reference")) {
+                reference = Double.parseDouble(element.getAttribute("reference"));
             }
-        }
-        else{
-            mode=CommandMode.PERCENTAGE;
+        } else {
+            mode = CommandMode.PERCENTAGE;
         }
     }
 
     @Override
     public void ReloadConfig() {
         // TODO Auto-generated method stub
-        
+
     }
 }
