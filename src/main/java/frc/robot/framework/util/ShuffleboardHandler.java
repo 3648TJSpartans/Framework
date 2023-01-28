@@ -120,17 +120,17 @@ public class ShuffleboardHandler {
                     // NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
                     // liveWindowWidgets.put(title, liveWindowEntry);
                     // }else {
-                    Boolean enabled = childElement.getAttribute("enabled") == "" ? true
-                            : Boolean.parseBoolean(childElement.getAttribute("enabled"));
+                    // Boolean enabled = childElement.getAttribute("enabled") == "" ? true
+                    //         : Boolean.parseBoolean(childElement.getAttribute("enabled"));
 
-                    String title = system.getAttribute("id") + "." + childElement.getAttribute("id");
-                    SimpleWidget widget = tab.add(title, enabled).withWidget("Toggle Button");
-                    NetworkTableEntry entry = widget.getEntry();
-                    Widgets.put(title, entry);
-                    SimpleWidget liveWindowWidget = liveWindow.add(title, enabled).withWidget("Toggle Button");
-                    NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
-                    liveWindowWidgets.put(title, liveWindowEntry);
-                    // }
+                    // String title = system.getAttribute("id") + "." + childElement.getAttribute("id");
+                    // SimpleWidget widget = tab.add(title, enabled).withWidget("Toggle Button");
+                    // NetworkTableEntry entry = widget.getEntry();
+                    // Widgets.put(title, entry);
+                    // SimpleWidget liveWindowWidget = liveWindow.add(title, enabled).withWidget("Toggle Button");
+                    // NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+                    // liveWindowWidgets.put(title, liveWindowEntry);
+                    // // }
 
                 }
             }

@@ -87,7 +87,7 @@ public class SubsystemCollection implements RobotXML {
                 } else if (childElement.getTagName().toLowerCase().equals("acl")
                         || childElement.getTagName().toLowerCase().equals("accelerometer")) {
                     accelerometers.put(id, new ACLWrapper(childElement));
-                } else if (childElement.getTagName().toLowerCase().equals("analogInput")) {
+                } else if (childElement.getTagName().toLowerCase().equals("analoginput")) {
                     analogInputs.put(id, new AnaloginWrapper(childElement));
                 } else if (childElement.getTagName().toLowerCase().equals("dio") || childElement.getTagName().equals("limitswitch")) {
                     digitalInputs.put(id, new DigitalInWrapper(childElement));

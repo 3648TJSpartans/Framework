@@ -23,4 +23,5 @@ public class Analog_In implements AnalogInBase{
     public double getAverageVoltage(){
         return m_input.getAverageVoltage();
     }
+
 }
