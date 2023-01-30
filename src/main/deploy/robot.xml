@@ -31,13 +31,13 @@
         <module id="front_right" minV="1" maxV="3" fieldOriented="true">
             <motor id="drive" controller="sparkmax" port="2" type="turn" />
             <motor id="turn" controller="sparkmax" port="3" type="drive" />
-            <analogInput id="analog_encoder" port="0" />
+            <analoginput id="analog_encoder" port="0" />
         </module>
 
         <module id="back_right" minV="1" maxV="3" fieldOriented="true">
             <motor id="drive" controller="sparkmax" port="4" type="turn" />
             <motor id="turn" controller="sparkmax" port="5" type="drive" />
-            <analogInput id="analog_encoder" port="1" />
+            <analoginput id="analog_encoder" port="1" />
         </module>
 
         <module id="front_left" minV="1" maxV="3" fieldOriented="true">
@@ -49,7 +49,7 @@
         <module id="back_left" minV="1" maxV="3" fieldOriented="true">
             <motor id="drive" controller="sparkmax" port="8" type="turn" />
             <motor id="turn" controller="sparkmax" port="9" type="drive" />
-            <analogInput id="analog_encoder" port="3" />
+            <analoginput id="analog_encoder" port="3" />
         </module>
 
         <gyro id="swerveGyro" type="ADIS16448" port="0"></gyro>

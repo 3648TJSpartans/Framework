@@ -3,6 +3,8 @@ package frc.robot.framework.subsystems.SwerveDrive;
 import java.io.File;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -50,6 +52,9 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double ySpeed;
     private double turningSpeed;
 
+    private String[] headers = { "Time", "Subsystem", "controlMode","FRspeed", "FRrad", "FLspeed", "FLrad", "BRspeed", "BRrad", "BLspeed", "BLrad" };
+    private Log log = new Log("Swerve_Drive", headers);
+
     public SwerveDrive(Element subsystem) {
         myElement = subsystem;
         subsystemColection = new SubsystemCollection(myElement);
@@ -65,6 +70,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 new Translation2d(wheelBase / 2, trackWidth / 2),
                 new Translation2d(-wheelBase / 2, -trackWidth / 2),
                 new Translation2d(-wheelBase / 2, trackWidth / 2));
+
 
         odometer = new SwerveDriveOdometry(driveKinematics,
                 new Rotation2d(0));
@@ -123,13 +129,31 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         setModuleStates(moduleStates);
 
         if(Math.random() > 0.9){
-            System.out.println(moduleStates[0]);
-            System.out.println(odometer.getPoseMeters());
+            System.out.println(stringToSpeed(moduleStates[0].toString()) + ", " + stringToRad(moduleStates[0].toString()));
         }
+        
+        
+        String[] data = {stringToSpeed(moduleStates[0].toString()), stringToRad(moduleStates[0].toString()), stringToSpeed(moduleStates[1].toString()), stringToRad(moduleStates[1].toString()), stringToSpeed(moduleStates[2].toString()), stringToRad(moduleStates[2].toString()), stringToSpeed(moduleStates[3].toString()), stringToRad(moduleStates[3].toString())};
+        log.Write("Swerve_Drive", data);
+    }
 
-        SmartDashboard.putNumber("Robot Heading", getHeading());
-        SmartDashboard.putString("Robot Location", getPose().getTranslation().toString());
+    public String stringToSpeed(String _str){
+        Pattern pattern = Pattern.compile("Speed: (-?\\d+(?:\\.\\d+)?)");
+        Matcher matcher = pattern.matcher(_str);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        else return "Not found";
+    }
 
+
+    public String stringToRad(String _str){
+        Pattern pattern = Pattern.compile("Rotation2d\\(Rads: (-?\\d+(?:\\.\\d+)?)");
+        Matcher matcher = pattern.matcher(_str);
+        if (matcher.find()) {
+            return matcher.group(1);
+        }
+        else return "Not found";
     }
 
     @Override
@@ -158,7 +182,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     }
 
     public void setTurningSpeed (double _turningSpeed){
-
+        turningSpeed = _turningSpeed;
     }
 
     public double getHeading() {
