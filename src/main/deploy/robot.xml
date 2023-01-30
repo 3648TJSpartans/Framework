@@ -56,6 +56,19 @@
 
     </subsystem>
 
+    <subsystem type="Motor" id="joint1">
+        <motor id="joint1" controller="sparkpwm" port="1"/>
+    </subsystem>
+
+    <subsystem type="Motor" id="joint2">
+        <motor id="joint1" controller="sparkpwm" port="2"/>
+    </subsystem>
+
+    <subsystem type="Motor" id="claw">
+        <motor id="claw" controller="sparkpwm" port="3"/>
+    </subsystem>
+
+
 <!-- 
 
     <subsystem type="Motor" id="Turret">
