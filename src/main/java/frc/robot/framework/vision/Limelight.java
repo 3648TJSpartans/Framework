@@ -125,6 +125,38 @@ public class Limelight implements RobotXML {
         return (targetHeight - cameraHeight) / Math.tan(Math.toRadians(cameraAngle + y));
     }
 
+    public static double[] getBotPosition(){
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose").getDoubleArray(new double[6]); 
+    }
+
+    public static double[] getBtpose_wpiblue(){
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpiblue").getDoubleArray(new double[6]); 
+    }
+
+    public static double[] getBotpose_wpired(){
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_wpired").getDoubleArray(new double[6]); 
+    }
+
+    public static double[] getCamerapose_targetspace(){
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("camerapose_targetspace").getDoubleArray(new double[6]); 
+    }
+
+    public static double[] getTargetpose_cameraspace(){
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("targetpose_cameraspace").getDoubleArray(new double[6]); 
+    }
+
+    public static double[] getTargetpose_robotspace(){
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("targetpose_robotspace").getDoubleArray(new double[6]); 
+    }
+
+    public static double[] getBotpose_targetspace(){
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("botpose_targetspace").getDoubleArray(new double[6]); 
+    }
+
+    public static double[] getAprilTagId(){
+        return NetworkTableInstance.getDefault().getTable("limelight").getEntry("tid").getDoubleArray(new double[6]); 
+    }
+
     @Override
     public void ReadXML(Element node) {
         try {

@@ -4,6 +4,7 @@
       "/FMSInfo": "FMSInfo",
       "/LiveWindow/Motor": "Subsystem",
       "/LiveWindow/Solenoid": "Subsystem",
+      "/LiveWindow/SwerveDrive": "Subsystem",
       "/LiveWindow/TankDrive": "Subsystem",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/LiveWindow/Ungrouped/Spark[0]": "Motor Controller",

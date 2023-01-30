@@ -1,75 +1,89 @@
 <?xml version="1.0"?>
 
 <robot>
-
-<!-- 
-    <subsystem type="Motor" id="FRD">
-        <motor id="FrontRightDrive" controller="sparkmax" port="1" />
-    </subsystem>
-    <subsystem type="Motor" id="FRS">
-        <motor id="FrontRightSteer" controller="sparkmax" port="2" />
-    </subsystem>
-
-    <subsystem type="Motor" id="FLD">
-        <motor id="FrontLeftDrive" controller="sparkmax" port="3" />
-    </subsystem>
-    <subsystem type="Motor" id="FLS">
-        <motor id="FrontLeftSteer" controller="sparkmax" port="4" />
-    </subsystem>
-
-    <subsystem type="Motor" id="BRD">
-        <motor id="BackRightDrive" controller="sparkmax" port="7" />
-    </subsystem>
-    <subsystem type="Motor" id="BRS">
-        <motor id="BackRightSteer" controller="sparkmax" port="8" />
-    </subsystem>
-
-    <subsystem type="Motor" id="BLD">
-        <motor id="BackLeftDrive" controller="sparkmax" port="5" />
-    </subsystem>
-    <subsystem type="Motor" id="BLS">
-        <motor id="BackLeftSteer" controller="sparkmax" port="6" />
-    </subsystem> -->
-
-
     <!-- <subsystem type="TankDrive" id="TankDrive">
 
         <motorgroup id="left" >
-            <motor id="left1" side="left" controller="sparkpwm" port="0" />
+            <motor id="left1" side="left" controller="sparkmax" port="2" />
         </motorgroup>
         <motorgroup id="right">
-            <motor id="right1" side="right" controller="sparkpwm" port="1" />
+            <motor id="right1" side="right" controller="sparkmax" port="1" />
         </motorgroup>
 
         <analogInput id="analogTest" port="0"/>
     </subsystem> -->
 
 
-    <subsystem type="Solenoid" id="Solenoid_Subsyststem" >
+    <!-- <subsystem type="Solenoid" id="Solenoid_Subsyststem" >
         <solenoid id="solenoid1" vendor="CTREPCM" port="7" type="single" inverted="true"/>
-    </subsystem>
+    </subsystem> -->
 
+<!-- 
+    
 
-    <!-- <gyro id="tankDriveGyro" type="ADIS16448" port="0"></gyro> -->
-
-    <!-- <subsystem type="Motor" id="Shooter">
+    <subsystem type="Motor" id="Shooter">
         <motor id="shooter1" controller="sparkmax" port="6">
             <encoder id="shooterEncoder" type="sparkmax" port_one="6" />
         </motor>
-        
     </subsystem> -->
-    <!-- 
+
+    <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5">
+        <module id="front_right" minV="1" maxV="3" fieldOriented="true">
+            <motor id="drive" controller="sparkmax" port="2" type="turn" />
+            <motor id="turn" controller="sparkmax" port="3" type="drive" />
+            <analoginput id="analog_encoder" port="0" />
+        </module>
+
+        <module id="back_right" minV="1" maxV="3" fieldOriented="true">
+            <motor id="drive" controller="sparkmax" port="4" type="turn" />
+            <motor id="turn" controller="sparkmax" port="5" type="drive" />
+            <analoginput id="analog_encoder" port="1" />
+        </module>
+
+        <module id="front_left" minV="1" maxV="3" fieldOriented="true">
+            <motor id="drive" controller="sparkmax" port="6" type="turn" />
+            <motor id="turn" controller="sparkmax" port="7" type="drive" />
+            <analogInput id="analog_encoder" port="2" />
+        </module>
+
+        <module id="back_left" minV="1" maxV="3" fieldOriented="true">
+            <motor id="drive" controller="sparkmax" port="8" type="turn" />
+            <motor id="turn" controller="sparkmax" port="9" type="drive" />
+            <analoginput id="analog_encoder" port="3" />
+        </module>
+
+        <gyro id="swerveGyro" type="ADIS16448" port="0"></gyro>
+
+    </subsystem>
+
+    <subsystem type="Motor" id="joint1">
+        <motor id="joint1" controller="sparkpwm" port="1"/>
+    </subsystem>
+
+    <subsystem type="Motor" id="joint2">
+        <motor id="joint1" controller="sparkpwm" port="2"/>
+    </subsystem>
+
+    <subsystem type="Motor" id="claw">
+        <motor id="claw" controller="sparkpwm" port="3"/>
+    </subsystem>
+
+
+<!-- 
+
     <subsystem type="Motor" id="Turret">
-            <motor id="turret1" controller="sparkpwm" port="3" />
-    </subsystem> -->
-    <!-- <subsystem type="Motor" id="Shooter">
-        <motor id="shooter1" controller="sparkpwm" port="2" />
-    </subsystem> -->
+            <motor id="turret1" controller="sparkpwm" port="3">
 
-    <!-- <subsystem type="RestartCode" id="RestartCode">
-    </subsystem> -->
+        </motor>
 
-    <!-- <subsystem type="Motor" id="Hopper" commandMode="power"> 
+    </subsystem>
+
+    <subsystem type="Motor" id="Shooter">
+        <motor id="shooter1" controller="sparkpwm" port="2" inverted="true" />
+    </subsystem>
+
+
+    <subsystem type="Motor" id="Hopper" commandMode="power"> 
         <motor id="hopper1" controller="sparkmax" port="3"/>
     </subsystem> -->
 </robot>
