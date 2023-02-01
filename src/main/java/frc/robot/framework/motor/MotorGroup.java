@@ -29,14 +29,4 @@ public class MotorGroup extends MotorController implements MotorBase {
     {
         super.setInverted(inverted);
     }
-
-    @Override
-    public EncoderBase getEncoder(){
-        for (MotorBase motorBase : motors) {
-            if (motorBase.getEncoder() != null)
-                return motorBase.getEncoder();
-        }
-        return null;
-    }
-    
 }

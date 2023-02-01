@@ -14,7 +14,7 @@ public interface MotorBase{
     // public boolean hasEncoder();
     // public boolean isCANEncoder();
     // public void setEncoder(EncoderBase encoder);
-    public EncoderBase getEncoder();
+    // public EncoderBase getEncoder();
 
     // public int getTicks();
     // public double getVelocity();

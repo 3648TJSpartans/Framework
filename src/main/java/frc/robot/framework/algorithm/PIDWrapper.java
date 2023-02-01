@@ -9,20 +9,15 @@ import frc.robot.framework.util.CommandMode;
 
 public class PIDWrapper implements PIDBase{
     private PIDBase pidController;
-    private MotorBase motor;
-    private EncoderBase encoder;
     private double kP, kI, kD, kF = 0;
     public double measuredValue=0;
 
     public PIDWrapper(Element element, MotorBase motor, EncoderBase encoder){
         
-        kP=Double.parseDouble(element.getAttribute("kP"));
-        kI=Double.parseDouble(element.getAttribute("kI"));
-        kD=Double.parseDouble(element.getAttribute("kD"));
-        kF=Double.parseDouble(element.getAttribute("kF"));
-        
-        this.motor=motor;
-        this.encoder=encoder;
+        kP=Double.parseDouble(element.getAttribute("kp"));
+        kI=Double.parseDouble(element.getAttribute("ki"));
+        kD=Double.parseDouble(element.getAttribute("kd"));
+        kF=Double.parseDouble(element.getAttribute("kf"));
 
         switch (element.getAttribute("type")){
             case "sparkmax":

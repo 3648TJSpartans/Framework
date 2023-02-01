@@ -10,7 +10,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class AnalogInputs{
-    private Map<String, AnaloginWrapper> analoginputs = new HashMap<>();
+    private Map<String, AnalogInBase> analoginputs = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
@@ -20,12 +20,12 @@ public class AnalogInputs{
         tab = new ShuffleboardHandler(subsystemName.toString());
     }
 
-    public void put(String id, AnaloginWrapper digital){
+    public void put(String id, AnalogInBase digital){
         analoginputs.put(id, digital);
     }
 
-    private AnaloginWrapper getAnalog(String id) {
-        AnaloginWrapper requestedSensor = analoginputs.get(id);
+    private AnalogInBase getAnalog(String id) {
+        AnalogInBase requestedSensor = analoginputs.get(id);
         if (requestedSensor == null) {
             sensorError(id, subsystemName);
             return null;
@@ -38,22 +38,22 @@ public class AnalogInputs{
     }
 
     public int getValue(String id) {
-        AnaloginWrapper requestedAnalog = getAnalog(id);
+        AnalogInBase requestedAnalog = getAnalog(id);
         return tab.getEnabled(id, subsystemName) ? requestedAnalog.getValue() : 0;
     }
 
     public int getAverageValue(String id) {
-        AnaloginWrapper requestedAnalog = getAnalog(id);
+        AnalogInBase requestedAnalog = getAnalog(id);
         return tab.getEnabled(id, subsystemName) ? requestedAnalog.getAverageValue() : 0;
     }
 
     public double getVoltage(String id) {
-        AnaloginWrapper requestedAnalog = getAnalog(id);
+        AnalogInBase requestedAnalog = getAnalog(id);
         return tab.getEnabled(id, subsystemName) ? requestedAnalog.getVoltage() : 0;
     }
 
     public double getAverageVoltage(String id) {
-        AnaloginWrapper requestedAnalog = getAnalog(id);
+        AnalogInBase requestedAnalog = getAnalog(id);
         return tab.getEnabled(id, subsystemName) ? requestedAnalog.getAverageVoltage() : 0;
     }
 

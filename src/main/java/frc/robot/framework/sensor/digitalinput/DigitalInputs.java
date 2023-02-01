@@ -10,7 +10,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class DigitalInputs{
-    private Map<String, DigitalInWrapper> digitalinputs = new HashMap<>();
+    private Map<String, DigitalInBase> digitalinputs = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
@@ -20,12 +20,12 @@ public class DigitalInputs{
         tab = new ShuffleboardHandler(subsystemName.toString());
     }
 
-    public void put(String id, DigitalInWrapper digital){
+    public void put(String id, DigitalInBase digital){
         digitalinputs.put(id, digital);
     }
 
-    private DigitalInWrapper getDio(String id) {
-        DigitalInWrapper requestedSensor = digitalinputs.get(id);
+    private DigitalInBase getDio(String id) {
+        DigitalInBase requestedSensor = digitalinputs.get(id);
         if (requestedSensor == null) {
             sensorError(id, subsystemName);
             return null;
@@ -40,7 +40,7 @@ public class DigitalInputs{
 
     //limit switches or DIOs
     public Boolean getDIO(String id) {
-        DigitalInWrapper requestedDio = getDio(id);
+        DigitalInBase requestedDio = getDio(id);
         return tab.getEnabled(id, subsystemName) ? requestedDio.getDigitalIn() : false;
     }
 }

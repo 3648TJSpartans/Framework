@@ -2,9 +2,9 @@ package frc.robot.framework.sensor.digitalinput;
 
 import edu.wpi.first.wpilibj.DigitalInput;
 
-public class Digital_In implements DigitalInBase{
+public class RoboRioDigitalIn implements DigitalInBase{
     private DigitalInput m_input;
-    public Digital_In(Integer port){
+    public RoboRioDigitalIn(Integer port){
         m_input = new DigitalInput(port); 
     }
     public Boolean getDigitalIn() {

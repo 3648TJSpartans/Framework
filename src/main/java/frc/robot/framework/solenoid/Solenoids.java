@@ -10,7 +10,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class Solenoids {
-    private Map<String, SolenoidWrapper> solenoids = new HashMap<>();
+    private Map<String, SolenoidBase> solenoids = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
@@ -20,7 +20,7 @@ public class Solenoids {
         tab = new ShuffleboardHandler(subsystemName.toString());
     }
     
-    public void put(String id, SolenoidWrapper solenoid){
+    public void put(String id, SolenoidBase solenoid){
         solenoids.put(id, solenoid);
     }
 
@@ -35,7 +35,7 @@ public class Solenoids {
      * @param extended whether or not the solenoid is extended or not
      */
     public void setSolenoid(String id, boolean extended) {
-        SolenoidWrapper requestedSolenoid = solenoids.get(id);
+        SolenoidBase requestedSolenoid = solenoids.get(id);
         if (requestedSolenoid == null) {
             solenoidError(id, subsystemName);
             return;

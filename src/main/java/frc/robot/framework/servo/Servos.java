@@ -10,7 +10,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class Servos {
-    private Map<String, ServoWrapper> servos = new HashMap<>();
+    private Map<String, ServoBase> servos = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
@@ -19,7 +19,7 @@ public class Servos {
         tab = new ShuffleboardHandler(subsystemName.toString());
     }
 
-    public void put(String id, ServoWrapper servo){
+    public void put(String id, ServoBase servo){
         servos.put(id, servo);
     }
 
@@ -32,8 +32,8 @@ public class Servos {
      * 
      * @param id the id of the servo or Servo group (ie "SHOOTER_WHEEL" or "LEFT_SIDE")
      */
-    private ServoWrapper getMotor(String id) {
-        ServoWrapper requestedMotor = servos.get(id);
+    private ServoBase getMotor(String id) {
+        ServoBase requestedMotor = servos.get(id);
         if (requestedMotor == null) {
             motorError(id, subsystemName);
             return null;
@@ -51,13 +51,13 @@ public class Servos {
      * @param position the position of the servo (0 to 1)
      */
     public void setServo(String id, double position) {
-        ServoWrapper requestedMotor = getMotor(id);
+        ServoBase requestedMotor = getMotor(id);
         
         if(tab.getEnabled(id, subsystemName))  requestedMotor.set(position);
     }
  
     public void setServoAngle(String id, int angle) {
-        ServoWrapper requestedMotor = getMotor(id);
+        ServoBase requestedMotor = getMotor(id);
         
         if(tab.getEnabled(id, subsystemName))  requestedMotor.setAngle(angle);
     }

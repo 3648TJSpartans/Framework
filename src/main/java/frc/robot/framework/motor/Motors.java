@@ -13,7 +13,7 @@ import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardHandler;
 
 public class Motors {
-    private Map<String, MotorWrapper> motors = new HashMap<>();
+    private Map<String, MotorBase> motors = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
@@ -29,8 +29,8 @@ public class Motors {
      * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
      *           "LEFT_SIDE")
      */
-    private MotorWrapper getMotor(String id) {
-        MotorWrapper requestedMotor = motors.get(id);
+    private MotorBase getMotor(String id) {
+        MotorBase requestedMotor = motors.get(id);
         if (requestedMotor == null) {
             motorError(id, subsystemName);
             return null;
@@ -43,7 +43,7 @@ public class Motors {
         return motors.keySet();
     }
 
-    public void put(String id, MotorWrapper motor) {
+    public void put(String id, MotorBase motor) {
         // tab = new ShuffleboardHandler(subsystemName.toString());
         // SimpleWidget widget = tab.add
         // NetworkTableEntry entry = widget.getEntry();
@@ -66,53 +66,8 @@ public class Motors {
      * @param speed the speed of the motor
      */
     public void setOutput(String id, double reference, CommandMode mode) {
-        MotorWrapper requestedMotor = getMotor(id);
+        MotorBase requestedMotor = getMotor(id);
         if (tab.getEnabled(id, subsystemName))
             requestedMotor.setReference(reference, mode);
-    }
-
-    /**
-     * [setMotor] returns the value of requested button
-     * 
-     * @param id       the id of the motor or motor group (ie "SHOOTER_WHEEL" or
-     *                 "LEFT_SIDE")
-     * @param setpoint
-     * @param mode
-     */
-
-    /**
-     * [getVelocity] returns the speed of requested motor
-     * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
-     *           "LEFT_SIDE")
-     */
-    public double getVelocity(String id) {
-        MotorWrapper requestedMotor = getMotor(id);
-        return tab.getEnabled(id, subsystemName) ? requestedMotor.getVelocity() : 0.0;
-
-    }
-
-    /**
-     * [getPosition] returns the postion of requested motor
-     * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
-     *           "LEFT_SIDE"))
-     */
-    public double getPosition(String id) {
-        MotorWrapper requestedMotor = getMotor(id);
-        return tab.getEnabled(id, subsystemName) ? requestedMotor.getPosition() : 0.0;
-
-    }
-
-    /**
-     * [resetEncoder] returns the value of requested button
-     * 
-     * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
-     *           "LEFT_SIDE")
-     */
-    public void resetEncoder(String id) {
-        MotorWrapper requestedMotor = getMotor(id);
-        if (tab.getEnabled(id, subsystemName))
-            requestedMotor.resetEncoder();
     }
 }
