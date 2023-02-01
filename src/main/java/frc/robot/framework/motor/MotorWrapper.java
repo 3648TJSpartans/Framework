@@ -10,22 +10,16 @@ import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.CommandMode;
 
-public class MotorWrapper implements MotorBase, EncoderBase {
+public class MotorWrapper implements MotorBase {
 
     private MotorBase motor;
-    private double motor_lastOutput = 0;
-    private CommandMode commandMode = CommandMode.PERCENTAGE;
 
-    private EncoderWrapper encoder;
-    private PIDWrapper pid;
-    private double setpoint = 0;
     private Element motorElement;
 
     public MotorWrapper(Element element, boolean groupFlag, SubsystemCollection collection) {
         motorElement = element;
         if (!groupFlag) { // single motor, not motorgroup
-            int port = Integer.parseInt(motorElement.getAttribute("port"));
-            motor = getMotorType(motorElement.getAttribute("controller"), port);
+            motor = createMotorBase(element, collection);
             boolean invertedMotor = false;
             if (motorElement.hasAttribute("inverted")) {
                 invertedMotor = (Boolean.parseBoolean(motorElement.getAttribute("inverted")));
@@ -44,7 +38,7 @@ public class MotorWrapper implements MotorBase, EncoderBase {
                 if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
                     motorGroupElement = (Element) currentMotor;
                     int port = Integer.parseInt(motorGroupElement.getAttribute("port"));
-                    MotorBase motorInMotorGroup = getMotorType(motorGroupElement.getAttribute("controller"), port);
+                    MotorBase motorInMotorGroup = createMotorBase(element, collection);
                     boolean invertedMotor = false;
                     if (motorGroupElement.hasAttribute("inverted")) {
                         invertedMotor = (Boolean.parseBoolean(motorGroupElement.getAttribute("inverted")));
@@ -62,60 +56,21 @@ public class MotorWrapper implements MotorBase, EncoderBase {
                 motor.setInverted(invertedMotor);
             }
         }
-        // read encoder
-        NodeList childNodeList = element.getChildNodes();
-        for (int i = 0; i < childNodeList.getLength(); i++) {
-            if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
-            Element childElement = (Element) childNodeList.item(i);
-            switch (childElement.getTagName().toLowerCase()) {
-                case "encoder":
-                    ;
-                    if (childElement.getAttribute("type").toLowerCase().equals("talonsrx")) {
-                        encoder = new EncoderWrapper(childElement);
-                        collection.encoders.put(childElement.getAttribute("id"), encoder);
-                    } else if (childElement.getAttribute("type").toLowerCase().equals("sparkmax")) {
-                        encoder = new EncoderWrapper(childElement, motor.getEncoder());
-                        collection.encoders.put(childElement.getAttribute("id"), encoder);
-                    } else {
-                        System.out.println(
-                                "MotorWrapper: Encoder type: " + childElement.getAttribute("type") + " not found.");
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-
-        // read pid
-        for (int i = 0; i < childNodeList.getLength(); i++) {
-            if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE) {
-                continue;
-            }
-            Element childElement = (Element) childNodeList.item(i);
-            switch (childElement.getTagName().toLowerCase()) {
-                case "pid":
-                    ;
-                    pid = new PIDWrapper(childElement, motor, encoder);
-                    break;
-                default:
-                    break;
-            }
-        }
     }
 
-    private MotorBase getMotorType(String controllerType, int port) {
+    //we need collection because some motors might have nested element like sparkmax
+    private MotorBase createMotorBase(Element element, SubsystemCollection collection) {
+        int port = Integer.parseInt(motorElement.getAttribute("port"));
+        String controllerType=motorElement.getAttribute("controller");
         MotorBase motorBase;
         switch (controllerType.toLowerCase()) {
             case "sparkpwm":
                 motorBase = new SparkController(port);
                 break;
             case "talonsrx":
-                motorBase = new TalonSRXController(port);
-                break;
+                throw new UnsupportedOperationException("TalonSRX not implemented in MotorWrapper");
             case "sparkmax":
-                motorBase = new SparkMaxController(port);
+                motorBase = new SparkMaxController(element, collection);
                 break;
             default:
                 System.out.println("For motor:" + port +
@@ -137,62 +92,7 @@ public class MotorWrapper implements MotorBase, EncoderBase {
         return motorElement.getAttribute(attribute);
     }
 
-    public void setPID(double kP, double kI, double kD, double kF) {
-        // SmartDashboard.putNumber("KP", kP);
-        // SmartDashboard.putNumber("KI", kI);
-        // SmartDashboard.putNumber("KD", kD);
-        // SmartDashboard.putNumber("kF", kF);
-        pid.setPID(kP, kI, kD, kF);
-    }
-
     public MotorBase getMotor() {
         return motor;
-    }
-
-    public int getTicks() {
-        if (encoder == null) {
-            return 0;
-        }
-        return encoder.getTicks();
-    }
-
-    public double getVelocity() {
-        if (encoder == null) {
-            return 0;
-        }
-        return encoder.getVelocity();
-    }
-
-    public double getPosition() {
-        if (encoder == null) {
-            return 0;
-        }
-        return encoder.getPosition();
-    }
-
-    public EncoderWrapper getEncoder() {
-        return encoder;
-    }
-
-    public double getLastOutput() {
-        return motor_lastOutput;
-    }
-
-    public boolean hasEncoder() {
-        return encoder != null;
-    }
-
-    public void setEncoder(EncoderWrapper encoder) {
-        this.encoder = encoder;
-    }
-
-    @Override
-    public void setDistancePerPulse(double factor) {
-        encoder.setDistancePerPulse(factor);
-    }
-
-    @Override
-    public void resetEncoder() {
-        encoder.resetEncoder();
     }
 }
