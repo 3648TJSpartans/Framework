@@ -1,6 +1,34 @@
 <?xml version="1.0"?>
 
 <robot>
+
+
+
+    <!-- new sparkmax xml layout test -->
+    <subsystem type="Motor" id="Shooter">
+        <!-- motor element
+        motortype="brushed" or "brushless"
+        port=CAN id 
+        -->
+        <motor id="shooter1" controller="sparkmax" motortype="brushless" port="13">
+            <!-- encoder element 
+            port="encoder" or "data" - encoder port is the 6pin JST on the side. data is the 10 pin on the top
+            -->
+            <encoder id="shooterEncoder" port="encoder"/>
+            <encoder id="shooterEncoder" port="data"/>
+            <pid type="sparkmax" kp="0" ki="0" kd="0" kf="0" encoderID="shooterEncoder" />
+        </motor>
+    </subsystem> 
+
+
+
+
+
+
+
+
+
+
     <!-- <subsystem type="TankDrive" id="TankDrive">
 
         <motorgroup id="left" >
@@ -29,26 +57,42 @@
 
     <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5">
         <module id="front_right" minV="1" maxV="3" fieldOriented="true">
-            <motor id="drive" controller="sparkmax" port="2" type="turn" />
-            <motor id="turn" controller="sparkmax" port="3" type="drive" />
+            <motor id="drive" controller="sparkmax" port="2" type="turn">
+                <encoder id="driveEncoder" port="encoder"/>
+            </motor>
+            <motor id="turn" controller="sparkmax" port="3" type="drive">
+                <encoder id="turnEncoder" port="encoder"/>
+            </motor>
             <analoginput id="analog_encoder" port="0" />
         </module>
 
         <module id="back_right" minV="1" maxV="3" fieldOriented="true">
-            <motor id="drive" controller="sparkmax" port="4" type="turn" />
-            <motor id="turn" controller="sparkmax" port="5" type="drive" />
+            <motor id="drive" controller="sparkmax" port="4" type="turn">
+                <encoder id="driveEncoder" port="encoder"/>
+            </motor>
+            <motor id="turn" controller="sparkmax" port="5" type="drive">
+                <encoder id="turnEncoder" port="encoder"/>
+            </motor>
             <analoginput id="analog_encoder" port="1" />
         </module>
 
         <module id="front_left" minV="1" maxV="3" fieldOriented="true">
-            <motor id="drive" controller="sparkmax" port="6" type="turn" />
-            <motor id="turn" controller="sparkmax" port="7" type="drive" />
+            <motor id="drive" controller="sparkmax" port="6" type="turn">
+                <encoder id="driveEncoder" port="encoder"/>
+            </motor>
+            <motor id="turn" controller="sparkmax" port="7" type="drive">
+                <encoder id="turnEncoder" port="encoder"/>
+            </motor>
             <analogInput id="analog_encoder" port="2" />
         </module>
 
         <module id="back_left" minV="1" maxV="3" fieldOriented="true">
-            <motor id="drive" controller="sparkmax" port="8" type="turn" />
-            <motor id="turn" controller="sparkmax" port="9" type="drive" />
+            <motor id="drive" controller="sparkmax" port="8" type="turn">
+                <encoder id="driveEncoder" port="encoder"/>
+            </motor>
+            <motor id="turn" controller="sparkmax" port="9" type="drive">
+                <encoder id="turnEncoder" port="encoder"/>
+            </motor>
             <analoginput id="analog_encoder" port="3" />
         </module>
 

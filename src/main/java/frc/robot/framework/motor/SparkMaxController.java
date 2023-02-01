@@ -29,22 +29,16 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     private RelativeEncoder encoder;
     private RelativeEncoder alternateEncoder;
 
-    public SparkMaxController(int port) {
-        controller = new CANSparkMax(port, MotorType.kBrushless);
-        controller.restoreFactoryDefaults();
-        pidController = controller.getPIDController();
-        encoder = controller.getEncoder();
-        alternateEncoder=controller.getAlternateEncoder(8192);
-        encoder.setPosition(0);
-
-    }
-
     public SparkMaxController(Element element, SubsystemCollection collection) {
         MotorType motorType=MotorType.kBrushless;
         if (element.getAttribute("motortype").toLowerCase().equals("brushed")){
             motorType=MotorType.kBrushed;
         }
         controller = new CANSparkMax(Integer.parseInt(element.getAttribute("port")) , motorType);
+        controller.restoreFactoryDefaults();
+
+        pidController = controller.getPIDController();
+        
 
         //Get encoders.
         NodeList childNodeList = element.getChildNodes();
@@ -59,11 +53,19 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     String xml_port=childElement.getAttribute("port").toLowerCase();
                     //data encoder on top
                     if (xml_port.equals("data")){
+                        
+                        int countsPerRev=8192;
+                        if (childElement.hasAttribute("countsPerRev")){
+                            countsPerRev=Integer.parseInt(childElement.getAttribute("countsPerRev"));
+                        }
+                        alternateEncoder=controller.getAlternateEncoder(countsPerRev);
+                        
                         EncoderWrapper encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoder(alternateEncoder) ); 
                         collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);
                     }
                     //Normal encoder on side
                     else if (xml_port.equals("encoder")) {
+                        encoder = controller.getEncoder();
                         EncoderWrapper encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoder(encoder) ); 
                         collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);
                     }
@@ -72,7 +74,9 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     }
                     break;
                 case "pid":
-                    collection.pids.put(element.getAttribute("id"), new SparkMaxPID(childElement, this));
+                    SparkMaxPID pid = new SparkMaxPID(childElement, this);
+                    pidController.setFeedbackDevice(encoder);
+                    collection.pids.put(element.getAttribute("id"), pid);
                     break;
                 case "analog":
                     AnalogInBase analogSparkMax = new SparkMaxAnalogIn(controller.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute)); 
@@ -83,11 +87,7 @@ public class SparkMaxController extends MotorController implements MotorBase, En
             }
         }
 
-        controller.restoreFactoryDefaults();
-        pidController = controller.getPIDController();
-        encoder = controller.getEncoder();
-        alternateEncoder=controller.getAlternateEncoder(8192);
-        encoder.setPosition(0);
+        
 
     }
 
