@@ -6,6 +6,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import frc.robot.framework.algorithm.PIDWrapper;
+import frc.robot.framework.algorithm.Pids;
 import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.encoder.Encoders;
 import frc.robot.framework.motor.MotorWrapper;
@@ -44,6 +46,7 @@ public class SubsystemCollection implements RobotXML {
     public Potentiometers potentiometers;
     public Encoders encoders;
     public Ultrasonics ultrasonics;
+    public Pids pids;
     private Element systemElement;
 
     public SubsystemCollection(Element system) {
@@ -66,6 +69,7 @@ public class SubsystemCollection implements RobotXML {
         encoders = new Encoders(subsystemName);
         ultrasonics = new Ultrasonics(subsystemName);
         analogInputs = new AnalogInputs(subsystemName);
+        pids = new Pids(subsystemName);
         // ShuffleboardHandler tab =
         // ShuffleboardCollections.get(systemElement.getTagName());
         NodeList children = system.getChildNodes();
@@ -93,6 +97,8 @@ public class SubsystemCollection implements RobotXML {
                     digitalInputs.put(id, new DigitalInWrapper(childElement));
                 } else if (childElement.getTagName().toLowerCase().equals("gyro") || childElement.getTagName().equals("gyroscopes")) {
                     gyroscopes.put(id, new GyroWrapper(childElement));
+                } else if (childElement.getTagName().toLowerCase().equals("pid")){
+                    pids.put(id, new PIDWrapper(childElement, null, null));
                 } else if (childElement.getTagName().toLowerCase().equals("pot")
                         || childElement.getTagName().equals("potientiometers")) {
                     potentiometers.put(id, new PotentiometerWrapper(childElement));

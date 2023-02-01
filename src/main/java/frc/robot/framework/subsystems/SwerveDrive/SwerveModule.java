@@ -16,6 +16,8 @@ public class SwerveModule {
     private SubsystemCollection subsystemColection;
     private String driveMotorID = "drive";
     private String turnMotorID = "turn";
+    private String driveEncoderID= "driveEncoder";
+    private String turnEncoderID= "turnEncoder";
     private String analogID = "analog_encoder";
 
     double minV;
@@ -32,7 +34,7 @@ public class SwerveModule {
     }
 
     public double getDrivePosition() {
-        return subsystemColection.motors.getPosition(driveMotorID);
+        return subsystemColection.encoders.getPosition(driveMotorID);
     }
 
     public double getTurningPosition() {
@@ -53,11 +55,11 @@ public class SwerveModule {
     }
 
     public double getDriveVelocity() {
-        return subsystemColection.motors.getVelocity(driveMotorID);
+        return subsystemColection.encoders.getVelocity(driveEncoderID);
     }
 
     public double getTurningVelocity() {
-        return subsystemColection.motors.getVelocity(turnMotorID);
+        return subsystemColection.encoders.getVelocity(turnEncoderID);
     }
 
     public SwerveModuleState getState() {

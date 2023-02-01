@@ -2,6 +2,8 @@ package frc.robot.framework.encoder;
 
 import org.w3c.dom.*;
 
+import com.revrobotics.RelativeEncoder;
+
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 public class EncoderWrapper implements EncoderBase {

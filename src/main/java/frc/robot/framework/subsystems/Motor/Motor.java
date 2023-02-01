@@ -3,6 +3,8 @@ package frc.robot.framework.subsystems.Motor;
 import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.framework.encoder.EncoderBase;
+import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.CommandMode;
@@ -39,9 +41,9 @@ public class Motor extends SubsystemBase implements RobotXML {
     @Override
     public void periodic() {
         if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0 && Math.random() > .9) {
-            String motorID = subsystemColection.motors.GetAllMotorIDs().iterator().next();
-            System.out.println("Position:" + subsystemColection.motors.getPosition(motorID) +
-                    " Velocity:" + subsystemColection.motors.getVelocity(motorID));
+            EncoderBase encoder = subsystemColection.encoders.getEncoder(subsystemColection.encoders.GetAllEncoderIDs().iterator().next());
+            System.out.println("Position:" + encoder.getPosition() +
+                    " Velocity:" + encoder.getVelocity());
         }
 
         for (String motorId : subsystemColection.motors.GetAllMotorIDs()) {

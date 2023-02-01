@@ -56,12 +56,6 @@ public class TalonSRXController extends MotorController implements MotorBase, En
     }
 
     @Override
-    public EncoderBase getEncoder() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
     public int getTicks() {
         // TODO Auto-generated method stub
         return 0;

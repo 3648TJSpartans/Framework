@@ -1,16 +1,7 @@
 integrate shuffleboard into the framework for easy of testing and for in game changes. somewhat done already. Needs testing. Needs to dynamically pick value as well
 
-Finish generic tank drive subsystem & commands (and swerve)
-Finish generic velocity/position motor(s) subsystem & commands. Toggle. Coast/break? Hold (with off)
-Create generic solenoid(s) subsystem & commands. Set state. Toggle. Hold (with default) Inverse input.
-
-
---All subsystems should support reloading of config. Config reload should be a command.  (Kinda done - maybe button to just run code to restart entire robot?)
-
-
 Create controller util class. button debounce, deadband, linear/non-linear mapping of input to output. In Controller config
 create logging class. Time/mode/+otherstuff.
-
 
 failsafe for sensors solienoid and motors might need testing
 -Need to add more properties or expand defaultValue architecture

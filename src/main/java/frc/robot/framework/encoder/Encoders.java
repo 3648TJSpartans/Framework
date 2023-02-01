@@ -12,7 +12,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class Encoders{
-    private Map<String, EncoderWrapper> encoders = new HashMap<>();
+    private Map<String, EncoderBase> encoders = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
@@ -22,7 +22,7 @@ public class Encoders{
         tab = new ShuffleboardHandler(subsystemName.toString());
     }
 
-    public void put(String id, EncoderWrapper encoder){
+    public void put(String id, EncoderBase encoder){
         encoders.put(id, encoder);
     }
     
@@ -30,8 +30,8 @@ public class Encoders{
         return encoders.keySet();
     }
 
-    public EncoderWrapper getEncoder(String id) {
-        EncoderWrapper requestedsensor = encoders.get(id);
+    public EncoderBase getEncoder(String id) {
+        EncoderBase requestedsensor = encoders.get(id);
         if (requestedsensor == null) {
             sensorError("Encoder", id, subsystemName);
             return null;
@@ -44,22 +44,22 @@ public class Encoders{
     }
 
     public int getTicks(String id){
-        EncoderWrapper requestedEncoder = getEncoder(id);
+        EncoderBase requestedEncoder = getEncoder(id);
         return tab.getEnabled(id, subsystemName) ? requestedEncoder.getTicks() : 0;
     }
 
     public double getVelocity(String id){
-        EncoderWrapper requestedEncoder = getEncoder(id);
+        EncoderBase requestedEncoder = getEncoder(id);
         return tab.getEnabled(id, subsystemName) ? requestedEncoder.getVelocity() : 0;
     }
 
     public double getPosition(String id){
-        EncoderWrapper requestedEncoder = getEncoder(id);
+        EncoderBase requestedEncoder = getEncoder(id);
         return tab.getEnabled(id, subsystemName) ? requestedEncoder.getPosition() : 0;
     }
 
     public void reset(String id){
-        EncoderWrapper requestedEncoder = getEncoder(id);
+        EncoderBase requestedEncoder = getEncoder(id);
         requestedEncoder.resetEncoder();
     }
 }

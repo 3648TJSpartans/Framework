@@ -11,7 +11,7 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 
 public class Potentiometers{
-    private Map<String, PotentiometerWrapper> potentiometers = new HashMap<>();
+    private Map<String, PotentiometerBase> potentiometers = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
     private ShuffleboardHandler tab;
@@ -21,7 +21,7 @@ public class Potentiometers{
         tab = new ShuffleboardHandler(subsystemName.toString());
     }
     
-    public void put(String id, PotentiometerWrapper pot){
+    public void put(String id, PotentiometerBase pot){
         potentiometers.put(id, pot);
     }
 
@@ -29,8 +29,8 @@ public class Potentiometers{
         return potentiometers.keySet();
     }
 
-    private PotentiometerWrapper getPotentiometer(String id) {
-        PotentiometerWrapper requestedsensor = potentiometers.get(id);
+    private PotentiometerBase getPotentiometer(String id) {
+        PotentiometerBase requestedsensor = potentiometers.get(id);
         if (requestedsensor == null) {
             sensorError(id, subsystemName);
             return null;
@@ -43,7 +43,7 @@ public class Potentiometers{
     }
 
     public Double getPOT(String id) {
-        PotentiometerWrapper requestedPOT = getPotentiometer(id);
+        PotentiometerBase requestedPOT = getPotentiometer(id);
         return tab.getEnabled(id, subsystemName) ? requestedPOT.getPotentiometer() : 0.0;
     }
 }

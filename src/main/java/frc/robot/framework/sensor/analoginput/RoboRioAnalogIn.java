@@ -2,9 +2,9 @@ package frc.robot.framework.sensor.analoginput;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
-public class Analog_In implements AnalogInBase{
+public class RoboRioAnalogIn implements AnalogInBase{
     private AnalogInput m_input;
-    public Analog_In(Integer port){
+    public RoboRioAnalogIn(Integer port){
         m_input = new AnalogInput(port); 
     }
     

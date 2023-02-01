@@ -24,10 +24,4 @@ public class SparkController extends MotorController implements MotorBase {
     {
         super.setInverted(inverted);
     }
-
-    @Override
-    public EncoderBase getEncoder() {
-        // TODO Auto-generated method stub
-        return null;
-    }
 }

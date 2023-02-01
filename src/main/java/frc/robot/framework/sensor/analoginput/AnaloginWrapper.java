@@ -10,7 +10,7 @@ public class AnaloginWrapper implements AnalogInBase{
         m_analogInElement = element;
         String id = m_analogInElement.getAttribute("id");
         int port = Integer.parseInt(m_analogInElement.getAttribute("port"));
-        m_analogIn = new Analog_In(port);
+        m_analogIn = new RoboRioAnalogIn(port);
 
         if (m_analogIn == null) {
             System.out.println("For AnalogInput: " + id + " AnalogInput controller type: " + m_analogInElement.getAttribute("controller") + " was not found!");
