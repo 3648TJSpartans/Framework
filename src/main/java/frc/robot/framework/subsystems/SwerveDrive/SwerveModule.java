@@ -38,15 +38,7 @@ public class SwerveModule {
     }
 
     public double getTurningPosition() {
-        double v = subsystemColection.analogInputs.getVoltage(analogID);
-        updateBounds(v);
-
-        double vSlope = 360.0 / (maxV - minV);
-        double vOffset = -vSlope * minV;
-
-        double angle = (vSlope * v + vOffset) % 360;
-
-        return angle;
+        return subsystemColection.encoders.getPosition(turnEncoderID);
     }
 
     private void updateBounds(double v) {

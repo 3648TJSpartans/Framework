@@ -10,7 +10,7 @@
         motortype="brushed" or "brushless"
         port=CAN id 
         -->
-        <motor id="shooter1" controller="sparkmax" motortype="brushless" port="13">
+        <motor id="shooter1" controller="sparkmax" motortype="brushless" port="2">
             <!-- encoder element 
             port="encoder" or "data" - encoder port is the 6pin JST on the side. data is the 10 pin on the top
             -->
@@ -55,7 +55,7 @@
         </motor>
     </subsystem> -->
 
-    <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5">
+    <!-- <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5">
         <module id="front_right" minV="1" maxV="3" fieldOriented="true">
             <motor id="drive" controller="sparkmax" port="2" type="turn">
                 <encoder id="driveEncoder" port="encoder"/>
@@ -110,7 +110,7 @@
 
     <subsystem type="Motor" id="claw">
         <motor id="claw" controller="sparkpwm" port="3"/>
-    </subsystem>
+    </subsystem> -->
 
 
 <!-- 

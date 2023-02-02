@@ -73,7 +73,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
 
         odometer = new SwerveDriveOdometry(driveKinematics,
-                new Rotation2d(0));
+                new Rotation2d(0), null);
 
     }
 
@@ -108,8 +108,9 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
-        odometer.update(getRotation2d(), frontRight.getState(), frontLeft.getState(), backLeft.getState(),
-                backRight.getState());
+        
+        // odometer.update(getRotation2d(), frontRight.getState(), frontLeft.getState(), backLeft.getState(),
+        //         backRight.getState());
 
         // 4. Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;
