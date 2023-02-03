@@ -5,21 +5,20 @@
 
 
     <!-- new sparkmax xml layout test -->
-    <subsystem type="Motor" id="Shooter">
+    <!-- <subsystem type="Motor" id="Shooter"> -->
         <!-- motor element
         motortype="brushed" or "brushless"
         port=CAN id 
         -->
-        <motor id="shooter1" controller="sparkmax" motortype="brushless" port="2">
+        <!-- <motor id="shooter1" controller="sparkmax" motortype="brushless" port="2"> -->
             <!-- encoder element 
             port="encoder" or "data" - encoder port is the 6pin JST on the side. data is the 10 pin on the top
             -->
-            <encoder id="shooterEncoder" port="encoder"/>
+            <!-- <encoder id="shooterEncoder" port="encoder"/>
             <encoder id="shooterEncoder" port="data"/>
             <pid type="sparkmax" kp="0" ki="0" kd="0" kf="0" encoderID="shooterEncoder" />
         </motor>
-    </subsystem> 
-
+    </subsystem>  -->
 
 
 
@@ -55,7 +54,7 @@
         </motor>
     </subsystem> -->
 
-    <!-- <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5">
+    <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5">
         <module id="front_right" minV="1" maxV="3" fieldOriented="true">
             <motor id="drive" controller="sparkmax" port="2" type="turn">
                 <encoder id="driveEncoder" port="encoder"/>
@@ -100,7 +99,7 @@
 
     </subsystem>
 
-    <subsystem type="Motor" id="joint1">
+    <!-- <subsystem type="Motor" id="joint1">
         <motor id="joint1" controller="sparkpwm" port="1"/>
     </subsystem>
 
