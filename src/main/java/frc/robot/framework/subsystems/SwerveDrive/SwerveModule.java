@@ -20,15 +20,15 @@ public class SwerveModule {
     private String turnEncoderID= "turnEncoder";
     private String analogID = "analog_encoder";
 
-    double minV;
-    double maxV;
+    // double minV;
+    // double maxV;
 
     Element myElement;
 
     public SwerveModule(Element _myElement) {
         myElement = _myElement;
-        minV = Double.parseDouble(myElement.getAttribute("minV"));
-        maxV = Double.parseDouble(myElement.getAttribute("maxV"));
+        // minV = Double.parseDouble(myElement.getAttribute("minV"));
+        // maxV = Double.parseDouble(myElement.getAttribute("maxV"));
         subsystemColection = new SubsystemCollection(_myElement);
 
     }
@@ -41,10 +41,10 @@ public class SwerveModule {
         return subsystemColection.encoders.getPosition(turnEncoderID);
     }
 
-    private void updateBounds(double v) {
-        minV = Math.min(minV, v);
-        maxV = Math.max(maxV, v);
-    }
+    // private void updateBounds(double v) {
+    //     minV = Math.min(minV, v);
+    //     maxV = Math.max(maxV, v);
+    // }
 
     public double getDriveVelocity() {
         return subsystemColection.encoders.getVelocity(driveEncoderID);
