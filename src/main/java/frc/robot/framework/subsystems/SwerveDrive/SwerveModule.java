@@ -48,7 +48,7 @@ public class SwerveModule {
     }
 
     public double getTurningVelocity() {
-        return subsystemColection.encoders.getVelocity(turnEncoderID) * -1;
+        return subsystemColection.encoders.getVelocity(turnEncoderID);
     }
 
     public SwerveModulePosition getState() {

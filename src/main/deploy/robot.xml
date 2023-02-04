@@ -27,14 +27,14 @@
 
 
 
-
-    <!-- <subsystem type="TankDrive" id="TankDrive">
+<!-- 
+    <subsystem type="TankDrive" id="TankDrive">
 
         <motorgroup id="left">
             <motor id="left1" side="left" controller="sparkmax" port="2" />
         </motorgroup>
         <motorgroup id="right">
-            <motor id="right1" side="right" controller="sparkmax" port="4" />
+            <motor id="right1" side="right" controller="sparkmax" port="8" />
         </motorgroup>
     </subsystem> -->
 
@@ -58,9 +58,8 @@
                 <encoder id="driveEncoder" port="encoder"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="3" type="drive">
-                <encoder id="turnEncoder" port="encoder"/>
+                <encoder id="turnEncoder" port="encoder" inverted="true"/>
             </motor>
-            <analoginput id="analog_encoder" port="0" />
         </module>
 
         <module id="back_right">
@@ -68,9 +67,8 @@
                 <encoder id="driveEncoder" port="encoder"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="5" type="drive">
-                <encoder id="turnEncoder" port="encoder"/>
+                <encoder id="turnEncoder" port="encoder" inverted="true"/>
             </motor>
-            <analoginput id="analog_encoder" port="1" />
         </module>
 
         <module id="front_left">
@@ -78,9 +76,8 @@
                 <encoder id="driveEncoder" port="encoder"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="7" type="drive">
-                <encoder id="turnEncoder" port="encoder"/>
+                <encoder id="turnEncoder" port="encoder" inverted="true"/>
             </motor>
-            <analogInput id="analog_encoder" port="2" />
         </module>
 
         <module id="back_left">
@@ -88,9 +85,8 @@
                 <encoder id="driveEncoder" port="encoder"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="9" type="drive">
-                <encoder id="turnEncoder" port="encoder"/>
+                <encoder id="turnEncoder" port="encoder" inverted="true"/>
             </motor>
-            <analoginput id="analog_encoder" port="3" />
         </module>
 
         <gyro id="swerveGyro" type="ADIS16448" port="0"></gyro>

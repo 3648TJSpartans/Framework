@@ -3,7 +3,7 @@ package frc.robot.framework.encoder;
 import com.revrobotics.RelativeEncoder;
 
 
-public class SparkMaxEncoder implements EncoderBase{
+public class SparkMaxEncoder extends EncoderController implements EncoderBase{
 
     private RelativeEncoder encoder;
 
@@ -35,5 +35,11 @@ public class SparkMaxEncoder implements EncoderBase{
     @Override
     public void resetEncoder() {
         encoder.setPosition(0);        
+    }
+
+    @Override
+    public void setInverted(boolean inverted) {
+        super.setInverted(inverted);
+        
     }
 }
