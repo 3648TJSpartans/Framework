@@ -7,7 +7,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import edu.wpi.first.networktables.NetworkTableEntry;
+import edu.wpi.first.networktables.GenericEntry;
+import edu.wpi.first.networktables.GenericEntry;
 import edu.wpi.first.wpilibj.shuffleboard.Shuffleboard;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
@@ -65,20 +66,20 @@ public class ShuffleboardHandler {
         // TODO add a <shuffleboardY
         ShuffleboardTab tab;
         ShuffleboardTab liveWindow = Shuffleboard.getTab("LiveWindow");
-        public Map<String, NetworkTableEntry> Widgets = new HashMap<>();
-        public Map<String, NetworkTableEntry> liveWindowWidgets = new HashMap<>();
+        public Map<String, GenericEntry> Widgets = new HashMap<>();
+        public Map<String, GenericEntry> liveWindowWidgets = new HashMap<>();
 
         public ShuffleboardBase(Element system) {
             tab = Shuffleboard.getTab(system.getAttribute("id"));
             NodeList children = system.getChildNodes();
             Boolean sysEnabled = Boolean.parseBoolean(system.getAttribute("enabled"));
             SimpleWidget sysWidget = tab.add(system.getAttribute("id"), sysEnabled).withWidget("Toggle Button");
-            NetworkTableEntry sysEntry = sysWidget.getEntry();
+            GenericEntry sysEntry = sysWidget.getEntry();
 
             Widgets.put(system.getAttribute("id"), sysEntry);
             SimpleWidget sysliveWindowWidget = liveWindow.add(system.getAttribute("id"), sysEnabled)
                     .withWidget("Toggle Button");
-            NetworkTableEntry sysliveWindowEntry = sysliveWindowWidget.getEntry();
+                    GenericEntry sysliveWindowEntry = sysliveWindowWidget.getEntry();
 
             liveWindowWidgets.put(system.getAttribute("id"), sysliveWindowEntry);
 
@@ -96,28 +97,28 @@ public class ShuffleboardHandler {
                     // Double.parseDouble((childElement.getAttribute("defaultValue")));
                     // String title = childElement.getAttribute("id");
                     // SimpleWidget widget = tab.add(title, enabled);
-                    // NetworkTableEntry entry = widget.getEntry();
+                    // GenericEntry entry = widget.getEntry();
                     // Widgets.put(title, entry);
                     // SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
-                    // NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+                    // GenericEntry liveWindowEntry = liveWindowWidget.getEntry();
                     // liveWindowWidgets.put(title, liveWindowEntry);
                     // }else if(valueType.equals("string")){
                     // String enabled = childElement.getAttribute("defaultValue");
                     // String title = childElement.getAttribute("id");
                     // SimpleWidget widget = tab.add(title, enabled);
-                    // NetworkTableEntry entry = widget.getEntry();
+                    // GenericEntry entry = widget.getEntry();
                     // Widgets.put(title, entry);
                     // SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
-                    // NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+                    // GenericEntry liveWindowEntry = liveWindowWidget.getEntry();
                     // liveWindowWidgets.put(title, liveWindowEntry);
                     // }else if(valueType.equals("int")){
                     // int enabled = Integer.parseInt((childElement.getAttribute("defaultValue")));
                     // String title = childElement.getAttribute("id");
                     // SimpleWidget widget = tab.add(title, enabled);
-                    // NetworkTableEntry entry = widget.getEntry();
+                    // GenericEntry entry = widget.getEntry();
                     // Widgets.put(title, entry);
                     // SimpleWidget liveWindowWidget = liveWindow.add(title, enabled);
-                    // NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+                    // GenericEntry liveWindowEntry = liveWindowWidget.getEntry();
                     // liveWindowWidgets.put(title, liveWindowEntry);
                     // }else {
                     // Boolean enabled = childElement.getAttribute("enabled") == "" ? true
@@ -125,10 +126,10 @@ public class ShuffleboardHandler {
 
                     // String title = system.getAttribute("id") + "." + childElement.getAttribute("id");
                     // SimpleWidget widget = tab.add(title, enabled).withWidget("Toggle Button");
-                    // NetworkTableEntry entry = widget.getEntry();
+                    // GenericEntry entry = widget.getEntry();
                     // Widgets.put(title, entry);
                     // SimpleWidget liveWindowWidget = liveWindow.add(title, enabled).withWidget("Toggle Button");
-                    // NetworkTableEntry liveWindowEntry = liveWindowWidget.getEntry();
+                    // GenericEntry liveWindowEntry = liveWindowWidget.getEntry();
                     // liveWindowWidgets.put(title, liveWindowEntry);
                     // // }
 
@@ -141,10 +142,10 @@ public class ShuffleboardHandler {
         }
 
         public boolean getEnabled(String title, String system) {
-            NetworkTableEntry entry = Widgets.get(title);
-            NetworkTableEntry sysEntry = Widgets.get(system);
-            NetworkTableEntry liveEntry = liveWindowWidgets.get(title);
-            NetworkTableEntry liveSysEntry = liveWindowWidgets.get(title);
+            GenericEntry entry = Widgets.get(title);
+            GenericEntry sysEntry = Widgets.get(system);
+            GenericEntry liveEntry = liveWindowWidgets.get(title);
+            GenericEntry liveSysEntry = liveWindowWidgets.get(title);
             if (entry == null) {
                 networkTableError(title, tab.getTitle());
                 return false;
@@ -156,20 +157,18 @@ public class ShuffleboardHandler {
         }
 
         public Object get(String title) {
-            NetworkTableEntry entry = Widgets.get(title);
-            NetworkTableEntry liveEntry = liveWindowWidgets.get(title);
-            Object obj;
-            if (entry.getValue().getValue() == liveEntry.getValue().getValue()) {
-                return entry.getValue().getValue();
+            GenericEntry entry = Widgets.get(title);
+            GenericEntry liveEntry = liveWindowWidgets.get(title);
+            if (entry.get() == liveEntry.get()) {
+                return entry.get();
             } else {
-                return liveEntry.getValue().getValue();
+                return liveEntry.get();
             }
-
         }
 
         public void set(String title, Object value) {
-            NetworkTableEntry entry = Widgets.get(title);
-            NetworkTableEntry liveEntry = liveWindowWidgets.get(title);
+            GenericEntry entry = Widgets.get(title);
+            GenericEntry liveEntry = liveWindowWidgets.get(title);
 
             entry.setValue(value);
             liveEntry.setValue(value);
