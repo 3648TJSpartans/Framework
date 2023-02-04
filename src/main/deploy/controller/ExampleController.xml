@@ -34,10 +34,10 @@ Any number of addational parameters can be defined. It's up to the command to co
                         ySpeed="LEFT_JOYSTICK_Y" turningspeed="RIGHT_JOYSTICK_X" command="SwerveDrive_Default" scaleX="0.1"
                         scaleY="0.1">
                 </defaultCommand>
-
+<!-- 
                 <defaultCommand subsystemID="joint1" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
                 <defaultCommand subsystemID="joint2" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
-                <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
+                <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default"></defaultCommand> -->
 
                 <!-- <defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="0.1" scaleY="0.1"></defaultCommand> -->
 

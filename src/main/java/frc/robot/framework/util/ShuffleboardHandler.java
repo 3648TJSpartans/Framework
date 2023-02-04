@@ -76,12 +76,12 @@ public class ShuffleboardHandler {
             SimpleWidget sysWidget = tab.add(system.getAttribute("id"), sysEnabled).withWidget("Toggle Button");
             GenericEntry sysEntry = sysWidget.getEntry();
 
-            Widgets.put(system.getAttribute("id"), sysEntry);
+            // Widgets.put(system.getAttribute("id"), sysEntry);
             SimpleWidget sysliveWindowWidget = liveWindow.add(system.getAttribute("id"), sysEnabled)
                     .withWidget("Toggle Button");
                     GenericEntry sysliveWindowEntry = sysliveWindowWidget.getEntry();
 
-            liveWindowWidgets.put(system.getAttribute("id"), sysliveWindowEntry);
+            // liveWindowWidgets.put(system.getAttribute("id"), sysliveWindowEntry);
 
             for (int i = 0; i < children.getLength(); i++) {
                 Node currentChild = children.item(i);
