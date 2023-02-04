@@ -28,17 +28,15 @@
 
 
 
-    <!-- <subsystem type="TankDrive" id="TankDrive">
+    <subsystem type="TankDrive" id="TankDrive">
 
-        <motorgroup id="left" >
+        <motorgroup id="left">
             <motor id="left1" side="left" controller="sparkmax" port="2" />
         </motorgroup>
         <motorgroup id="right">
             <motor id="right1" side="right" controller="sparkmax" port="1" />
         </motorgroup>
-
-        <analogInput id="analogTest" port="0"/>
-    </subsystem> -->
+    </subsystem>
 
 
     <!-- <subsystem type="Solenoid" id="Solenoid_Subsyststem" >
@@ -53,7 +51,7 @@
             <encoder id="shooterEncoder" type="sparkmax" port_one="6" />
         </motor>
     </subsystem> -->
-
+<!-- 
     <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5">
         <module id="front_right" minV="1" maxV="3" fieldOriented="true">
             <motor id="drive" controller="sparkmax" port="2" type="turn">
@@ -97,19 +95,19 @@
 
         <gyro id="swerveGyro" type="ADIS16448" port="0"></gyro>
 
-    </subsystem>
+    </subsystem> -->
 
-    <!-- <subsystem type="Motor" id="joint1">
-        <motor id="joint1" controller="sparkpwm" port="1"/>
+    <subsystem type="Motor" id="joint1">
+        <motor id="joint1" controller="sparkpwm" port="3"/>
     </subsystem>
 
     <subsystem type="Motor" id="joint2">
-        <motor id="joint1" controller="sparkpwm" port="2"/>
+        <motor id="joint1" controller="sparkpwm" port="4"/>
     </subsystem>
 
     <subsystem type="Motor" id="claw">
-        <motor id="claw" controller="sparkpwm" port="3"/>
-    </subsystem> -->
+        <motor id="claw" controller="sparkpwm" port="5"/>
+    </subsystem>
 
 
 <!-- 

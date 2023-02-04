@@ -38,7 +38,7 @@ public class MotorWrapper implements MotorBase {
                 if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
                     motorGroupElement = (Element) currentMotor;
                     int port = Integer.parseInt(motorGroupElement.getAttribute("port"));
-                    MotorBase motorInMotorGroup = createMotorBase(element, collection);
+                    MotorBase motorInMotorGroup = createMotorBase(motorGroupElement, collection);
                     boolean invertedMotor = false;
                     if (motorGroupElement.hasAttribute("inverted")) {
                         invertedMotor = (Boolean.parseBoolean(motorGroupElement.getAttribute("inverted")));
@@ -60,8 +60,8 @@ public class MotorWrapper implements MotorBase {
 
     //we need collection because some motors might have nested element like sparkmax
     private MotorBase createMotorBase(Element element, SubsystemCollection collection) {
-        int port = Integer.parseInt(motorElement.getAttribute("port"));
-        String controllerType=motorElement.getAttribute("controller");
+        int port = Integer.parseInt(element.getAttribute("port"));
+        String controllerType=element.getAttribute("controller");
         MotorBase motorBase;
         switch (controllerType.toLowerCase()) {
             case "sparkpwm":

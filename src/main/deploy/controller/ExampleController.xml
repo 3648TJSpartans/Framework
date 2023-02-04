@@ -30,16 +30,13 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- <button button="A" subsystemID="TankDrive" command="TankDrive_Set" trigger="Pressed" setInputTurn="1" setInputForward="1"></button> -->
                 <!-- <defaultCommand subsystemID="Shooter" axisReference="RIGHT_TRIGGER" command="Motor_Default"></defaultCommand> -->
 
-                <defaultCommand subsystemID="SwerveDrive" xSpeed="LEFT_JOYSTICK_X"
+                <!-- <defaultCommand subsystemID="SwerveDrive" xSpeed="LEFT_JOYSTICK_X"
                         ySpeed="LEFT_JOYSTICK_Y" turningspeed="RIGHT_JOYSTICK_X" command="SwerveDrive_Default" scaleX="0.1"
                         scaleY="0.1">
-                </defaultCommand>
-<!-- 
-                <defaultCommand subsystemID="joint1" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
-                <defaultCommand subsystemID="joint2" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
-                <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default"></defaultCommand> -->
+                </defaultCommand> -->
 
-                <!-- <defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="0.1" scaleY="0.1"></defaultCommand> -->
+
+                <defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="0.1" scaleY="0.1"></defaultCommand>
 
                 <!-- <button button="A" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" incrementPower=".1"></button>
                 <button button="B" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setPower=".05"></button>
@@ -54,5 +51,13 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="Y" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setVelocity="200"></button> -->
                 <!-- <button button="B" command="       " trigger="Held" myParam="Held!B"></button> -->
                 <!-- <button button="A" command="Motor_setPower" trigger="Released" power="0"></button> -->
+        </controller>
+
+        <controller type="LOGITECH" port="1" id="COPILOT">
+
+                <defaultCommand subsystemID="joint1" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
+                <defaultCommand subsystemID="joint2" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
+                <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
+
         </controller>
 </robot>
