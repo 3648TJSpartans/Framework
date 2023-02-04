@@ -73,14 +73,14 @@ public class ShuffleboardHandler {
             NodeList children = system.getChildNodes();
             Boolean sysEnabled = Boolean.parseBoolean(system.getAttribute("enabled"));
             SimpleWidget sysWidget = tab.add(system.getAttribute("id"), sysEnabled).withWidget("Toggle Button");
-            NetworkTableEntry sysEntry = sysWidget.getEntry();
+            // NetworkTableEntry sysEntry = sysWidget.getEntry();
 
-            Widgets.put(system.getAttribute("id"), sysEntry);
+            // Widgets.put(system.getAttribute("id"), sysEntry);
             SimpleWidget sysliveWindowWidget = liveWindow.add(system.getAttribute("id"), sysEnabled)
                     .withWidget("Toggle Button");
-            NetworkTableEntry sysliveWindowEntry = sysliveWindowWidget.getEntry();
+            // NetworkTableEntry sysliveWindowEntry = sysliveWindowWidget.getEntry();
 
-            liveWindowWidgets.put(system.getAttribute("id"), sysliveWindowEntry);
+            // liveWindowWidgets.put(system.getAttribute("id"), sysliveWindowEntry);
 
             for (int i = 0; i < children.getLength(); i++) {
                 Node currentChild = children.item(i);

@@ -17,6 +17,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Filesystem;
@@ -73,7 +74,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
 
         odometer = new SwerveDriveOdometry(driveKinematics,
-                new Rotation2d(0));
+                new Rotation2d(0), null);
 
     }
 
@@ -108,8 +109,9 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
-        odometer.update(getRotation2d(), frontRight.getState(), frontLeft.getState(), backLeft.getState(),
-                backRight.getState());
+        
+        odometer.update(getRotation2d(),new SwerveModulePosition[]{ frontRight.getState(), frontLeft.getState(), backLeft.getState(),
+                backRight.getState()});
 
         // 4. Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;

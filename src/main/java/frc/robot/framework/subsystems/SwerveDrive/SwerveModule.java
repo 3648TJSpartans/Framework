@@ -3,6 +3,7 @@ package frc.robot.framework.subsystems.SwerveDrive;
 import org.w3c.dom.Element;
 
 import edu.wpi.first.math.geometry.Rotation2d;
+import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
@@ -20,15 +21,15 @@ public class SwerveModule {
     private String turnEncoderID= "turnEncoder";
     private String analogID = "analog_encoder";
 
-    double minV;
-    double maxV;
+    // double minV;
+    // double maxV;
 
     Element myElement;
 
     public SwerveModule(Element _myElement) {
         myElement = _myElement;
-        minV = Double.parseDouble(myElement.getAttribute("minV"));
-        maxV = Double.parseDouble(myElement.getAttribute("maxV"));
+        // minV = Double.parseDouble(myElement.getAttribute("minV"));
+        // maxV = Double.parseDouble(myElement.getAttribute("maxV"));
         subsystemColection = new SubsystemCollection(_myElement);
 
     }
@@ -38,21 +39,13 @@ public class SwerveModule {
     }
 
     public double getTurningPosition() {
-        double v = subsystemColection.analogInputs.getVoltage(analogID);
-        updateBounds(v);
-
-        double vSlope = 360.0 / (maxV - minV);
-        double vOffset = -vSlope * minV;
-
-        double angle = (vSlope * v + vOffset) % 360;
-
-        return angle;
+        return subsystemColection.encoders.getPosition(turnEncoderID);
     }
 
-    private void updateBounds(double v) {
-        minV = Math.min(minV, v);
-        maxV = Math.max(maxV, v);
-    }
+    // private void updateBounds(double v) {
+    //     minV = Math.min(minV, v);
+    //     maxV = Math.max(maxV, v);
+    // }
 
     public double getDriveVelocity() {
         return subsystemColection.encoders.getVelocity(driveEncoderID);
@@ -62,8 +55,8 @@ public class SwerveModule {
         return subsystemColection.encoders.getVelocity(turnEncoderID);
     }
 
-    public SwerveModuleState getState() {
-        return new SwerveModuleState(getDriveVelocity(), new Rotation2d(getTurningPosition()));
+    public SwerveModulePosition getState() {
+        return new SwerveModulePosition(getDriveVelocity(), new Rotation2d(getTurningPosition()));
     }
 
     public void setDesiredState(SwerveModuleState state) {
