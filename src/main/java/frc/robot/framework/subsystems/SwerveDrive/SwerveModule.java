@@ -35,7 +35,7 @@ public class SwerveModule {
     }
 
     public double getDrivePosition() {
-        return subsystemColection.encoders.getPosition(driveMotorID);
+        return subsystemColection.encoders.getPosition(driveEncoderID);
     }
 
     public double getTurningPosition() {
@@ -56,7 +56,8 @@ public class SwerveModule {
     }
 
     public SwerveModulePosition getState() {
-        return new SwerveModulePosition(getDriveVelocity(), new Rotation2d(getTurningPosition()));
+        //IDK about this check later if theres an error
+        return new SwerveModulePosition(getDrivePosition(), new Rotation2d(getTurningPosition()));
     }
 
     public void setDesiredState(SwerveModuleState state) {
