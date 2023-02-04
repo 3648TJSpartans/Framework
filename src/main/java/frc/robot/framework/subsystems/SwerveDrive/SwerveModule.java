@@ -19,10 +19,6 @@ public class SwerveModule {
     private String turnMotorID = "turn";
     private String driveEncoderID= "driveEncoder";
     private String turnEncoderID= "turnEncoder";
-    private String analogID = "analog_encoder";
-
-    // double minV;
-    // double maxV;
 
     Element myElement;
 
@@ -39,7 +35,7 @@ public class SwerveModule {
     }
 
     public double getTurningPosition() {
-        return subsystemColection.encoders.getPosition(turnEncoderID);
+        return subsystemColection.encoders.getPosition(turnEncoderID)  * -1;
     }
 
     // private void updateBounds(double v) {
@@ -52,7 +48,7 @@ public class SwerveModule {
     }
 
     public double getTurningVelocity() {
-        return subsystemColection.encoders.getVelocity(turnEncoderID);
+        return subsystemColection.encoders.getVelocity(turnEncoderID) * -1;
     }
 
     public SwerveModulePosition getState() {
@@ -61,10 +57,10 @@ public class SwerveModule {
     }
 
     public void setDesiredState(SwerveModuleState state) {
-        if (Math.abs(state.speedMetersPerSecond) < 0.001) {
-            stop();
-            return;
-        }
+        // if (Math.abs(state.speedMetersPerSecond) < 0.001) {
+        //     stop();
+        //     return;
+        // }
         state = SwerveModuleState.optimize(state, getState().angle);
         subsystemColection.motors.setOutput(driveMotorID, state.speedMetersPerSecond / 5, CommandMode.PERCENTAGE);
         subsystemColection.motors.setOutput(turnMotorID, (state.angle.getDegrees() % 360) / 360, CommandMode.POSITION);
