@@ -19,6 +19,12 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
   private int ySpeed = -1;
   private int turningSpeed = -1;
 
+  private double deadzone;
+  private double x = 0;
+  private double y = 0;
+  private double turning = 0;
+
+
 
   public SwerveDrive_Default(Element element, ControllerBase controller) {
     myElement = element;
@@ -40,17 +46,35 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
       ySpeed = myController.GetAxisMap().get(myElement.getAttribute("ySpeed"));
     if (myElement.getAttribute("turningSpeed") != "")
       turningSpeed = myController.GetAxisMap().get(myElement.getAttribute("turningSpeed"));
+
+    if (element.hasAttribute("deadzone"))
+      deadzone = Double.parseDouble(element.getAttribute("deadzone"));
   }
 
   @Override
   public void execute() {
     if (xSpeed == -1 || ySpeed == -1 || turningSpeed == -1)
       return;
-    double x = myController.getAxis(xSpeed);
-    double y = myController.getAxis(ySpeed);
-    double turning = myController.getAxis(turningSpeed);
-    swerveDriveSubsystem.drive(x, y, turning, false);
+      ;
 
+    if (Math.abs(myController.getAxis("LEFT_JOYSTICK_X"))<deadzone){
+      x = myController.getAxis(xSpeed);
+    }else{
+      x = 0;
+    }
+    if (Math.abs(myController.getAxis("LEFT_JOYSTICK_Y"))<deadzone){
+      y = myController.getAxis(ySpeed);
+    }else{
+      y = 0;
+    }
+    if (Math.abs(myController.getAxis("RIGHT_JOYSTICK_X"))<deadzone){
+      turning = myController.getAxis(turningSpeed);
+    }else{
+      turning = 0;
+    }
+
+    swerveDriveSubsystem.drive(x, y, turning, false);
+    
   }
 
   @Override

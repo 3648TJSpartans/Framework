@@ -5,20 +5,20 @@
 
 
     <!-- new sparkmax xml layout test -->
-    <!-- <subsystem type="Motor" id="Shooter"> -->
+    <subsystem type="Motor" id="Shooter">
         <!-- motor element
         motortype="brushed" or "brushless"
         port=CAN id 
         -->
-        <!-- <motor id="shooter1" controller="sparkmax" motortype="brushless" port="2"> -->
+        <motor id="shooter1" controller="sparkmax" motortype="brushless" port="2">
             <!-- encoder element 
             port="encoder" or "data" - encoder port is the 6pin JST on the side. data is the 10 pin on the top
             -->
-            <!-- <encoder id="shooterEncoder" port="encoder"/>
+            <encoder id="shooterEncoder" port="encoder"/>
             <encoder id="shooterEncoder" port="data"/>
             <pid type="sparkmax" kp="0" ki="0" kd="0" kf="0" encoderID="shooterEncoder" />
         </motor>
-    </subsystem>  -->
+    </subsystem> 
 
 
 
@@ -52,7 +52,7 @@
         </motor>
     </subsystem> -->
 
-<subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5" maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
+<!-- <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5" maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
         <module id="front_right" angularOffset="0">
             <motor id="drive" controller="sparkmax" port="2" type="turn" kp="0.04" kf="0.2081708518741928">
                 <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683"/>
@@ -91,7 +91,7 @@
 
         <gyro id="swerveGyro" type="ADIS16448" port="0"></gyro>
 
-    </subsystem>
+    </subsystem> -->
 
     <!-- <subsystem type="Motor" id="joint1">
         <motor id="joint1" controller="sparkpwm" port="0"/>
