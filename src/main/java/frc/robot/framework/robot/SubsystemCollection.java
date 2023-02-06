@@ -49,7 +49,7 @@ public class SubsystemCollection implements RobotXML {
     public Pids pids;
     private Element systemElement;
 
-    public SubsystemCollection(javax.lang.model.element.Element element) {
+    public SubsystemCollection(Element element) {
         this.subsystemName = element.getAttribute("id");
         ReadXML(element);
     }

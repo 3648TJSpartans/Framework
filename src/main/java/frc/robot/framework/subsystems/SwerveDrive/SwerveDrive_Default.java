@@ -44,12 +44,12 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
 
   @Override
   public void execute() {
-    if (xSpeed != -1)
-      swerveDriveSubsystem.getXSpeed(myController.getAxis(xSpeed));
-    if (ySpeed != -1)
-      swerveDriveSubsystem.setYSpeed(myController.getAxis(ySpeed));
-    if (turningSpeed != -1)
-      swerveDriveSubsystem.setTurningSpeed(myController.getAxis(turningSpeed));
+    if (xSpeed == -1 || ySpeed == -1 || turningSpeed == -1)
+      return;
+    double x = myController.getAxis(xSpeed);
+    double y = myController.getAxis(ySpeed);
+    double turning = myController.getAxis(turningSpeed);
+    swerveDriveSubsystem.drive(x, y, turning, false);
 
   }
 

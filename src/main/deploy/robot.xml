@@ -52,40 +52,40 @@
         </motor>
     </subsystem> -->
 
-    <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5" fieldOriented="true">
-        <module id="front_right">
-            <motor id="drive" controller="sparkmax" port="2" type="turn">
-                <encoder id="driveEncoder" port="encoder"/>
+<subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5" maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
+        <module id="front_right" angularOffset="0">
+            <motor id="drive" controller="sparkmax" port="2" type="turn" kp="0.04" kf="0.2081708518741928">
+                <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683"/>
             </motor>
-            <motor id="turn" controller="sparkmax" port="3" type="drive">
-                <encoder id="turnEncoder" port="encoder" inverted="true" distance_per_pulse=""/>
+            <motor id="turn" controller="sparkmax" port="3" type="drive" kp="1.0">
+                <encoder id="turnEncoder" port="encoder" inverted="true" distance_per_pulse="6.283185307179586"/>
             </motor>
         </module>
 
-        <module id="back_right">
+        <module id="back_right" angularOffset="1.5707963267948966">
             <motor id="drive" controller="sparkmax" port="4" type="turn">
-                <encoder id="driveEncoder" port="encoder"/>
+                <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="5" type="drive">
-                <encoder id="turnEncoder" port="encoder" inverted="true"/>
+                <encoder id="turnEncoder" port="encoder" inverted="true" distance_per_pulse="6.283185307179586"/>
             </motor>
         </module>
 
-        <module id="front_left">
+        <module id="front_left" angularOffset="-1.5707963267948966">
             <motor id="drive" controller="sparkmax" port="6" type="turn">
-                <encoder id="driveEncoder" port="encoder"/>
+                <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="7" type="drive">
-                <encoder id="turnEncoder" port="encoder" inverted="true"/>
+                <encoder id="turnEncoder" port="encoder" inverted="true" distance_per_pulse="6.283185307179586"/>
             </motor>
         </module>
 
-        <module id="back_left">
+        <module id="back_left" angularOffset="3.141592653589793">
             <motor id="drive" controller="sparkmax" port="8" type="turn">
-                <encoder id="driveEncoder" port="encoder"/>
+                <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="9" type="drive">
-                <encoder id="turnEncoder" port="encoder" inverted="true"/>
+                <encoder id="turnEncoder" port="encoder" inverted="true" distance_per_pulse="6.283185307179586"/>
             </motor>
         </module>
 
