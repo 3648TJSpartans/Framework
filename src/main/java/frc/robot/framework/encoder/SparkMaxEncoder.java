@@ -29,7 +29,7 @@ public class SparkMaxEncoder extends EncoderController implements EncoderBase{
     @Override
     public void setDistancePerPulse(double factor) {
         encoder.setPositionConversionFactor(factor);
-        encoder.setVelocityConversionFactor(factor);
+        encoder.setVelocityConversionFactor(factor / 60);
     }
 
     @Override

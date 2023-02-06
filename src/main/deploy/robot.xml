@@ -58,7 +58,7 @@
                 <encoder id="driveEncoder" port="encoder"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="3" type="drive">
-                <encoder id="turnEncoder" port="encoder" inverted="true"/>
+                <encoder id="turnEncoder" port="encoder" inverted="true" distance_per_pulse=""/>
             </motor>
         </module>
 
