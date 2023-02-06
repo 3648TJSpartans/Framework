@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAnalogSensor;
@@ -76,6 +77,39 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                 case "pid":
                     SparkMaxPID pid = new SparkMaxPID(childElement, this);
                     pidController.setFeedbackDevice(encoder);
+                    pidController.setPositionPIDWrappingEnabled(inverted);
+                    if (childElement.hasAttribute("setPositionPIDWrappingEnabled") && childElement.hasAttribute("setPositionPIDWrappingMinInput") && childElement.hasAttribute("setPositionPIDWrappingMaxInput")){
+                        try{
+                        boolean boolValue = Boolean.parseBoolean(childElement.getAttribute("setPositionPIDWrappingEnabled"));
+                        double min = Double.parseDouble(childElement.getAttribute("setPositionPIDWrappingMinInput")); 
+                        double max = Double.parseDouble(childElement.getAttribute("setPositionPIDWrappingMaxInput")); 
+                        pidController.setPositionPIDWrappingEnabled(boolValue);
+                        pidController.setPositionPIDWrappingMinInput(min);
+                        pidController.setPositionPIDWrappingMaxInput(max);
+                        }catch (Exception e){
+                            System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"+
+                            element.getAttribute("id")+" - setPositionPIDWrappingEnabled: " 
+                            +childElement.getAttribute("setPositionPIDWrappingEnabled")+
+                            " setPositionPIDWrappingMinInput:"+childElement.getAttribute("setPositionPIDWrappingMinInput")+" setPositionPIDWrappingMaxInput:"+childElement.getAttribute("setPositionPIDWrappingMaxInput")+" not supported varible type");
+                        }     
+                    }else if(childElement.hasAttribute("setPositionPIDWrappingEnabled") || childElement.hasAttribute("setPositionPIDWrappingMinInput") || childElement.hasAttribute("setPositionPIDWrappingMaxInput")){
+                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+
+                            element.getAttribute("id")+" - setPositionPIDWrappingEnabled: " 
+                            +childElement.getAttribute("setPositionPIDWrappingEnabled")+
+                            " setPositionPIDWrappingMinInput:"+childElement.getAttribute("setPositionPIDWrappingMinInput")+" setPositionPIDWrappingMaxInput:"+childElement.getAttribute("setPositionPIDWrappingMaxInput")+" not supported varible type");
+                    }
+
+                    if(childElement.hasAttribute("kTurningMinOutput")&& childElement.hasAttribute("kTurningMaxOutput")){
+                            try{
+                                double min = Double.parseDouble(childElement.getAttribute("kTurningMinOutput"));
+                                double max = Double.parseDouble(childElement.getAttribute("kTurningMaxOutput"));
+                                pidController.setOutputRange(min, max);
+                            }catch (Exception e){
+                                System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kTurningMinOutput: "+childElement.getAttribute("kTurningMinOutput")+"kTurningMaxOutput"+childElement.getAttribute("kTurningMaxOutput"));
+                            }
+                    }else if (childElement.hasAttribute("kTurningMinOutput") || childElement.hasAttribute("kTurningMaxOutput")){
+                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kTurningMinOutput: "+childElement.getAttribute("kTurningMinOutput")+"kTurningMaxOutput"+childElement.getAttribute("kTurningMaxOutput"));
+                    }
                     collection.pids.put(element.getAttribute("id"), pid);
                     break;
                 case "analog":
