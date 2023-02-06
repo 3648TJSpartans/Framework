@@ -179,7 +179,7 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     @Override
     public void setDistancePerPulse(double factor) {
         encoder.setPositionConversionFactor(factor);
-        encoder.setVelocityConversionFactor(factor);
+        encoder.setVelocityConversionFactor(factor / 60);
     }
 
     @Override
