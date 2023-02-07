@@ -99,16 +99,16 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                             " setPositionPIDWrappingMinInput:"+childElement.getAttribute("setPositionPIDWrappingMinInput")+" setPositionPIDWrappingMaxInput:"+childElement.getAttribute("setPositionPIDWrappingMaxInput")+" not supported varible type");
                     }
 
-                    if(childElement.hasAttribute("kTurningMinOutput")&& childElement.hasAttribute("kTurningMaxOutput")){
+                    if(childElement.hasAttribute("kMinOutput")&& childElement.hasAttribute("kMaxOutput")){
                             try{
-                                double min = Double.parseDouble(childElement.getAttribute("kTurningMinOutput"));
-                                double max = Double.parseDouble(childElement.getAttribute("kTurningMaxOutput"));
+                                double min = Double.parseDouble(childElement.getAttribute("kMinOutput"));
+                                double max = Double.parseDouble(childElement.getAttribute("kMaxOutput"));
                                 pidController.setOutputRange(min, max);
                             }catch (Exception e){
-                                System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kTurningMinOutput: "+childElement.getAttribute("kTurningMinOutput")+"kTurningMaxOutput"+childElement.getAttribute("kTurningMaxOutput"));
+                                System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kMinOutput: "+childElement.getAttribute("kMinOutput")+"kMaxOutput"+childElement.getAttribute("kMaxOutput"));
                             }
-                    }else if (childElement.hasAttribute("kTurningMinOutput") || childElement.hasAttribute("kTurningMaxOutput")){
-                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kTurningMinOutput: "+childElement.getAttribute("kTurningMinOutput")+"kTurningMaxOutput"+childElement.getAttribute("kTurningMaxOutput"));
+                    }else if (childElement.hasAttribute("kMinOutput") || childElement.hasAttribute("kMaxOutput")){
+                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kMinOutput: "+childElement.getAttribute("kMinOutput")+"kMaxOutput"+childElement.getAttribute("kMaxOutput"));
                     }
                     collection.pids.put(element.getAttribute("id"), pid);
                     break;
