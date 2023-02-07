@@ -77,7 +77,7 @@
             <motor id="drive" controller="sparkmax" port="6" type="turn">
                 <encoder id="driveEncoder" port="encoder"/>
                 <pid id="PID" setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"
-                kTurningMinOutput="-1.0" kTurningMaxOutput="1.0" distance_per_pulse="0.05077956125529683"/>
+                kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.05077956125529683"/>
             </motor>
             <motor id="turn" controller="sparkmax" port="7" type="drive">
                 <encoder id="turnEncoder" port="encoder" inverted="true" distance_per_pulse="6.283185307179586"/>
