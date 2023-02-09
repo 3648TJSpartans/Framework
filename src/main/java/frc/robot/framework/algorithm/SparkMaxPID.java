@@ -20,10 +20,24 @@ public class SparkMaxPID implements PIDBase{
     }
 
     public SparkMaxPID(Element element, SparkMaxController motor) {
-        double kP=Double.parseDouble(element.getAttribute("kp"));
-        double kI=Double.parseDouble(element.getAttribute("ki"));
-        double kD=Double.parseDouble(element.getAttribute("kd"));
-        double kF=Double.parseDouble(element.getAttribute("kf"));
+        double kP = 0, kI = 0, kD = 0, kF = 0;
+
+        if(!element.getAttribute("kp").isEmpty()){
+            kP=Double.parseDouble(element.getAttribute("kp"));
+        }
+        if(!element.getAttribute("ki").isEmpty()){
+            kI=Double.parseDouble(element.getAttribute("ki"));
+        }
+        if(!element.getAttribute("kd").isEmpty()){
+            kD=Double.parseDouble(element.getAttribute("kd"));
+        }
+        if(!element.getAttribute("kf").isEmpty()){
+            kF=Double.parseDouble(element.getAttribute("kf"));
+        }
+        
+        
+        
+        
 
         this.pid=motor.getPidController();
         this.motor=motor;

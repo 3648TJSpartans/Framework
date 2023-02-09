@@ -30,9 +30,9 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- <button button="A" subsystemID="TankDrive" command="TankDrive_Set" trigger="Pressed" setInputTurn="1" setInputForward="1"></button> -->
                 <!-- <defaultCommand subsystemID="Shooter" axisReference="RIGHT_TRIGGER" command="Motor_Default"></defaultCommand> -->
 
-                <!-- <defaultCommand subsystemID="SwerveDrive" xSpeed="LEFT_JOYSTICK_X"
+                <defaultCommand subsystemID="SwerveDrive" xSpeed="LEFT_JOYSTICK_X"
                         ySpeed="LEFT_JOYSTICK_Y" turningspeed="RIGHT_JOYSTICK_X" command="SwerveDrive_Default" deadzone="0.08">
-                </defaultCommand> -->
+                </defaultCommand>
 
 
                 <!-- <defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="0.1" scaleY="0.1"></defaultCommand> -->

@@ -38,6 +38,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private ShuffleboardHandler tab;
     private double maxAngularSpeed;
     private double maxSpeedMetersPerSecond;
+    SwerveDriveOdometry m_odometry;
 
     // The gyro sensor
     private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
@@ -48,16 +49,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
-    // Odometry class for tracking robot pose
-    SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
-            driveKinematics,
-            Rotation2d.fromDegrees(m_gyro.getAngle()),
-            new SwerveModulePosition[] {
-                    m_frontLeft.getPosition(),
-                    m_frontRight.getPosition(),
-                    m_backLeft.getPosition(),
-                    m_backRight.getPosition()
-            });
+
 
     /** Creates a new DriveSubsystem. */
     public SwerveDrive(Element _element) {
@@ -69,8 +61,22 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
         maxSpeedMetersPerSecond = Double.parseDouble(element.getAttribute("maxSpeedMetersPerSecond"));
         maxAngularSpeed = Double.parseDouble(element.getAttribute("maxSpeedMetersPerSecond"));
+        
+        // Odometry class for tracking robot pose
+        m_odometry = new SwerveDriveOdometry(
+        driveKinematics,
+        Rotation2d.fromDegrees(m_gyro.getAngle()),
+        new SwerveModulePosition[] {
+                m_frontLeft.getPosition(),
+                m_frontRight.getPosition(),
+                m_backLeft.getPosition(),
+                m_backRight.getPosition()
+        });
     }
 
+
+
+    
     @Override
     public void periodic() {
         // Update the odometry in the periodic block
