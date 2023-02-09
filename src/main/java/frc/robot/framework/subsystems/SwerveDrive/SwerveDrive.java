@@ -207,7 +207,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 if (childElement.getTagName().equals("module")) {
                     switch (childElement.getAttribute("id").toLowerCase()) {
                         case "front_right":
-                            m_frontLeft = new SwerveModule(childElement);
+                            m_frontRight = new SwerveModule(childElement);
                             break;
 
                         case "front_left":
