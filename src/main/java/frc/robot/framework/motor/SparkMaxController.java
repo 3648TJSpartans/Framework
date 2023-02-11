@@ -76,7 +76,13 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     break;
                 case "pid":
                     SparkMaxPID pid = new SparkMaxPID(childElement, this);
-                    pidController.setFeedbackDevice(encoder);
+                    if (childElement.getAttribute("encoderPort").toLowerCase().equals("encoder")){
+                        pidController.setFeedbackDevice(encoder);
+                    }else if (childElement.getAttribute("encoderPort").toLowerCase().equals("data")){
+                        pidController.setFeedbackDevice(alternateEncoder);
+                    }else{
+                        throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - PID encoderPort: "+ childElement.getAttribute("encoderPort") +" not supported. Only 'encoder' or 'data' ports supported");
+                    }
                     pidController.setPositionPIDWrappingEnabled(inverted);
                     if (childElement.hasAttribute("setPositionPIDWrappingEnabled") && childElement.hasAttribute("setPositionPIDWrappingMinInput") && childElement.hasAttribute("setPositionPIDWrappingMaxInput")){
                         try{

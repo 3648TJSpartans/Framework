@@ -30,9 +30,11 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- <button button="A" subsystemID="TankDrive" command="TankDrive_Set" trigger="Pressed" setInputTurn="1" setInputForward="1"></button> -->
                 <!-- <defaultCommand subsystemID="Shooter" axisReference="RIGHT_TRIGGER" command="Motor_Default"></defaultCommand> -->
 
-                <!-- <defaultCommand subsystemID="SwerveDrive" xSpeed="LEFT_JOYSTICK_X"
+                <!-- Swerve Drive -->
+
+                <defaultCommand subsystemID="SwerveDrive" xSpeed="LEFT_JOYSTICK_X"
                         ySpeed="LEFT_JOYSTICK_Y" turningspeed="RIGHT_JOYSTICK_X" command="SwerveDrive_Default" deadzone="0.08">
-                </defaultCommand> -->
+                </defaultCommand>
 
                 <!-- Arm Test -->
                 
@@ -46,7 +48,7 @@ Any number of addational parameters can be defined. It's up to the command to co
 
                 <!-- motor test -->
 
-                <defaultCommand subsystemID="test" axisReference1="LEFT_TRIGGER" axisReference2="RIGHT_TRIGGER" inverted1="true" command="Motor_Default" deadzone="0.05"></defaultCommand>
+                <!-- <defaultCommand subsystemID="test" axisReference1="LEFT_TRIGGER" axisReference2="RIGHT_TRIGGER" inverted1="true" command="Motor_Default" deadzone="0.05"></defaultCommand> -->
 
 
 

@@ -44,19 +44,18 @@
             <encoder id="shooterEncoder" type="sparkmax" port_one="6" />
         </motor>
     </subsystem> -->
-    <!-- 
+
     <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5"
         maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
         <module id="front_right" angularOffset="0">
             <motor id="drive" controller="sparkmax" port="2">
                 <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683" />
-                <pid id="PID" kp="0.04" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
+                <pid id="PID" kp="0.04" encoderPort="encoder" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
                     distance_per_pulse="0.05077956125529683" />
             </motor>
             <motor id="turn" controller="sparkmax" port="9">
-                <encoder id="turnEncoder" port="encoder" inverted="true"
-                    distance_per_pulse="0.0008463260209216138" />
-                <pid id="PID" kp="1" setPositionPIDWrappingEnabled="true"
+                <encoder id="turnEncoder" port="data" inverted="true" distance_per_pulse="0.0008463260209216138"/>
+                <pid id="PID" kp="1" encoderPort="data" setPositionPIDWrappingEnabled="true"
                     setPositionPIDWrappingMinInput="0"
                     setPositionPIDWrappingMaxInput="6.283185307179586" kMinOutput="-1.0"
                     kMaxOutput="1.0" distance_per_pulse="6.283185307179586" />
@@ -66,13 +65,13 @@
         <module id="back_right" angularOffset="1.5707963267948966">
             <motor id="drive" controller="sparkmax" port="4">
                 <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683" />
-                <pid id="PID" kp="0.04" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
+                <pid id="PID" kp="0.04" encoderPort="encoder" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
                     distance_per_pulse="0.05077956125529683" />
             </motor>
             <motor id="turn" controller="sparkmax" port="3">
-                <encoder id="turnEncoder" port="encoder" inverted="true"
+                <encoder id="turnEncoder" port="data" inverted="true"
                     distance_per_pulse="0.0008463260209216138" />
-                <pid id="PID" kp="1" setPositionPIDWrappingEnabled="true"
+                <pid id="PID" kp="1" encoderPort="data" setPositionPIDWrappingEnabled="true"
                     setPositionPIDWrappingMinInput="0"
                     setPositionPIDWrappingMaxInput="6.283185307179586" kMinOutput="-1.0"
                     kMaxOutput="1.0" distance_per_pulse="6.283185307179586" />
@@ -82,13 +81,13 @@
         <module id="front_left" angularOffset="-1.5707963267948966">
             <motor id="drive" controller="sparkmax" port="6">
                 <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683" />
-                <pid id="PID" kp="0.04" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
+                <pid id="PID" encoderPort="encoder" kp="0.04" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
                     distance_per_pulse="0.05077956125529683" />
             </motor>
             <motor id="turn" controller="sparkmax" port="5">
-                <encoder id="turnEncoder" port="encoder" inverted="true"
+                <encoder id="turnEncoder" port="data" inverted="true"
                     distance_per_pulse="0.0008463260209216138" />
-                <pid id="PID" kp="1" setPositionPIDWrappingEnabled="true"
+                <pid id="PID" kp="1" encoderPort="data" setPositionPIDWrappingEnabled="true"
                     setPositionPIDWrappingMinInput="0"
                     setPositionPIDWrappingMaxInput="6.283185307179586" kMinOutput="-1.0"
                     kMaxOutput="1.0" distance_per_pulse="6.283185307179586" />
@@ -98,22 +97,22 @@
         <module id="back_left" angularOffset="3.141592653589793">
             <motor id="drive" controller="sparkmax" port="8">
                 <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683" />
-                <pid id="PID" kp="0.04" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
+                <pid id="PID" kp="0.04" encoderPort="encoder" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
                     distance_per_pulse="0.05077956125529683" />
             </motor>
             <motor id="turn" controller="sparkmax" port="7">
-                <encoder id="turnEncoder" port="encoder" inverted="true"
+                <encoder id="turnEncoder" port="data" inverted="true"
                     distance_per_pulse="0.0008463260209216138" />
-                <pid id="PID" kp="1" setPositionPIDWrappingEnabled="true"
+                <pid id="PID" kp="1" encoderPort="data" setPositionPIDWrappingEnabled="true"
                     setPositionPIDWrappingMinInput="0"
                     setPositionPIDWrappingMaxInput="6.283185307179586" kMinOutput="-1.0"
                     kMaxOutput="1.0" distance_per_pulse="6.283185307179586" />
             </motor>
         </module>
 
-        <gyro id="swerveGyro" type="ADIS16448" port="0"></gyro>
+        <gyro id="swerveGyro" type="ADIS16470" port="0"></gyro>
 
-    </subsystem> -->
+    </subsystem>
 
     <!-- <subsystem type="Motor" id="joint1">
         <motor id="joint1" controller="sparkpwm" port="0" />
@@ -143,10 +142,10 @@
     </subsystem> -->
 
 
-    <subsystem type="Motor" id="test">
+    <!-- <subsystem type="Motor" id="test">
         <motor id="shooter1" controller="sparkmax" motortype="brushless" port="6" />
     </subsystem>
-
+ -->
 
     <!-- 
 
