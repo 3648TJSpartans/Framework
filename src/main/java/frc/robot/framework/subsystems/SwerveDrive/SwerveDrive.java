@@ -40,9 +40,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double maxSpeedMetersPerSecond;
     SwerveDriveOdometry m_odometry;
 
-    // The gyro sensor
-    private final ADIS16470_IMU m_gyro = new ADIS16470_IMU();
-
     private SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
             new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -54,7 +51,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     /** Creates a new DriveSubsystem. */
     public SwerveDrive(Element _element) {
         element = _element;
-        SubsystemCollection subsystemColection = new SubsystemCollection(element);
+        ReadXML(element);
         tab = new ShuffleboardHandler(element.getAttribute("id"));
         NodeList moduleNodeList = element.getElementsByTagName("module");
         initSwerveModules(moduleNodeList);
@@ -65,7 +62,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         // Odometry class for tracking robot pose
         m_odometry = new SwerveDriveOdometry(
         driveKinematics,
-        Rotation2d.fromDegrees(m_gyro.getAngle()),
+        Rotation2d.fromDegrees(getGyroAngle()),
         new SwerveModulePosition[] {
                 m_frontLeft.getPosition(),
                 m_frontRight.getPosition(),
@@ -81,7 +78,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     public void periodic() {
         // Update the odometry in the periodic block
         m_odometry.update(
-                Rotation2d.fromDegrees(m_gyro.getAngle()),
+                Rotation2d.fromDegrees(getGyroAngle()),
                 new SwerveModulePosition[] {
                         m_frontLeft.getPosition(),
                         m_frontRight.getPosition(),
@@ -106,7 +103,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
      */
     public void resetOdometry(Pose2d pose) {
         m_odometry.resetPosition(
-                Rotation2d.fromDegrees(m_gyro.getAngle()),
+                Rotation2d.fromDegrees(getGyroAngle()),
                 new SwerveModulePosition[] {
                         m_frontLeft.getPosition(),
                         m_frontRight.getPosition(),
@@ -134,7 +131,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         var swerveModuleStates = driveKinematics.toSwerveModuleStates(
                 fieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-                                Rotation2d.fromDegrees(m_gyro.getAngle()))
+                                Rotation2d.fromDegrees(getGyroAngle()))
                         : new ChassisSpeeds(xSpeed, ySpeed, rot));
         SwerveDriveKinematics.desaturateWheelSpeeds(
                 swerveModuleStates, maxSpeedMetersPerSecond);
@@ -176,28 +173,16 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         m_backRight.resetEncoders();
     }
 
-    /** Zeroes the heading of the robot. */
-    public void zeroHeading() {
-        m_gyro.reset();
-    }
-
     /**
      * Returns the heading of the robot.
      *
      * @return the robot's heading in degrees, from -180 to 180
      */
     public double getHeading() {
-        return Rotation2d.fromDegrees(m_gyro.getAngle()).getDegrees();
+        return Rotation2d.fromDegrees(getGyroAngle()).getDegrees();
     }
 
-    /**
-     * Returns the turn rate of the robot.
-     *
-     * @return The turn rate of the robot, in degrees per second
-     */
-    public double getTurnRate() {
-        return m_gyro.getRate();
-    }
+
 
     private static void initSwerveModules(NodeList _moduleNodeList) {
         for (int i = 0; i < _moduleNodeList.getLength(); i++) {
@@ -228,9 +213,13 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         }
     }
 
+    public double getGyroAngle() {
+        return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "X");
+    }
+
     @Override
     public void ReadXML(Element node) {
-        // TODO Auto-generated method stub
+        subsystemColection = new SubsystemCollection(element);
 
     }
 
