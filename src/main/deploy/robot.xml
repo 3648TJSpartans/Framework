@@ -45,8 +45,9 @@
         </motor>
     </subsystem> -->
 
-    <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5"
-        maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
+<subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5" maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
+        
+        <!-- < // add theta/turning pid, xPid/ yPid >> -->
         <module id="front_right" angularOffset="0">
             <motor id="drive" controller="sparkmax" port="2">
                 <encoder id="driveEncoder" port="encoder" distance_per_pulse="0.05077956125529683" />

@@ -79,10 +79,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
             List.of(new Translation2d(desired_xTranslation, desired_yTranslation)),
             new Pose2d(desired_xTranslation, desired_yTranslation, new Rotation2d((desired_degree*Math.PI)/180)),
             config);
-            ProfiledPIDController m_controller = new ProfiledPIDController(
-                AutoConstants.kPThetaController, 0, 0, AutoConstants.kThetaControllerConstraints);
-        m_controller.enableContinuousInput(-Math.PI, Math.PI);
-       swerveDrive.setTrajectory(tragTrajectory,m_timer,m_controller);
+       swerveDrive.setCommandTrajectory(tragTrajectory,m_timer);
      
 
     }
