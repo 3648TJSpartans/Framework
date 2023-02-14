@@ -73,7 +73,7 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
       turning = 0;
     }
 
-    swerveDriveSubsystem.drive(x, y, turning, false);
+    swerveDriveSubsystem.teleOpInput(x, y, turning, false);
     
   }
 
