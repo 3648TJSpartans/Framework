@@ -33,7 +33,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- Swerve Drive -->
 
                 <defaultCommand subsystemID="SwerveDrive" xSpeed="LEFT_JOYSTICK_X"
-                        ySpeed="LEFT_JOYSTICK_Y" turningspeed="RIGHT_JOYSTICK_X" command="SwerveDrive_Default" deadzone="0.08">
+                        ySpeed="LEFT_JOYSTICK_Y" turningSpeed="RIGHT_JOYSTICK_X" command="SwerveDrive_Default" deadzone="0.08">
                 </defaultCommand>
 
                 <!-- Arm Test -->

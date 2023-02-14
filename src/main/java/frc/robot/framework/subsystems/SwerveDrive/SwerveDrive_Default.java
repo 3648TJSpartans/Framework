@@ -57,17 +57,17 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
       return;
       ;
 
-    if (Math.abs(myController.getAxis("LEFT_JOYSTICK_X"))<deadzone){
+    if (Math.abs(myController.getAxis("LEFT_JOYSTICK_X"))>deadzone){
       x = myController.getAxis(xSpeed);
     }else{
       x = 0;
     }
-    if (Math.abs(myController.getAxis("LEFT_JOYSTICK_Y"))<deadzone){
+    if (Math.abs(myController.getAxis("LEFT_JOYSTICK_Y"))>deadzone){
       y = myController.getAxis(ySpeed);
     }else{
       y = 0;
     }
-    if (Math.abs(myController.getAxis("RIGHT_JOYSTICK_X"))<deadzone){
+    if (Math.abs(myController.getAxis("RIGHT_JOYSTICK_X"))>deadzone){
       turning = myController.getAxis(turningSpeed);
     }else{
       turning = 0;

@@ -53,7 +53,7 @@
                 <pid id="PID" kp="0.04" encoderPort="encoder" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0"
                     distance_per_pulse="0.05077956125529683" />
             </motor>
-            <motor id="turn" controller="sparkmax" port="9">
+            <motor id="turn" controller="sparkmax" port="1">
                 <encoder id="turnEncoder" port="data" inverted="true" distance_per_pulse="0.0008463260209216138"/>
                 <pid id="PID" kp="1" encoderPort="data" setPositionPIDWrappingEnabled="true"
                     setPositionPIDWrappingMinInput="0"

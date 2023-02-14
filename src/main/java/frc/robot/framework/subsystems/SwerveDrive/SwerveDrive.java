@@ -135,10 +135,15 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                         : new ChassisSpeeds(xSpeed, ySpeed, rot));
         SwerveDriveKinematics.desaturateWheelSpeeds(
                 swerveModuleStates, maxSpeedMetersPerSecond);
+        System.out.println(swerveModuleStates[0]);
         m_frontLeft.setDesiredState(swerveModuleStates[0]);
         m_frontRight.setDesiredState(swerveModuleStates[1]);
         m_backLeft.setDesiredState(swerveModuleStates[2]);
         m_backRight.setDesiredState(swerveModuleStates[3]);
+
+        if(Math.random() > 0.9){
+            System.out.println(swerveModuleStates[0]);
+        }
     }
 
     /**
