@@ -37,12 +37,11 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private Element myElement;
 
     private static double trackWidth;
+    private SwerveModuleState[] moduleStates;
     // Distance between right and left wheels
     private static double wheelBase;
-    // Distance between front and back wheels
-    private SwerveDriveKinematics driveKinematics;
-    private SwerveDriveOdometry odometer;
     private double MaxSpeedMetersPerSecond = 5;
+    private ChassisSpeeds chassisSpeeds;
 
     private static SwerveModule frontRight;
     private static SwerveModule frontLeft;
@@ -52,6 +51,14 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double xSpeed;
     private double ySpeed;
     private double turningSpeed;
+
+    private SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
+                new Translation2d(wheelBase / 2, -trackWidth / 2),
+                new Translation2d(wheelBase / 2, trackWidth / 2),
+                new Translation2d(-wheelBase / 2, -trackWidth / 2),
+                new Translation2d(-wheelBase / 2, trackWidth / 2));
+
+    private SwerveDriveOdometry odometer;
 
     private String[] headers = { "Time", "Subsystem", "controlMode","FRspeed", "FRrad", "FLspeed", "FLrad", "BRspeed", "BRrad", "BLspeed", "BLrad" };
     private Log log = new Log("Swerve_Drive", headers);
@@ -63,18 +70,20 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         NodeList moduleNodeList = subsystem.getElementsByTagName("module");
         initSwerveModules(moduleNodeList);
 
+        odometer = new SwerveDriveOdometry(
+            driveKinematics,
+            getRotation2d(),
+          new SwerveModulePosition[] {
+            frontRight.getState(),
+            frontLeft.getState(), 
+            backLeft.getState(),
+            backRight.getState()
+          });
+
         trackWidth = Units.inchesToMeters(Double.parseDouble(subsystem.getAttribute("width")));
         wheelBase = Units.inchesToMeters(Double.parseDouble(subsystem.getAttribute("wheel_base")));
 
-        driveKinematics = new SwerveDriveKinematics(
-                new Translation2d(wheelBase / 2, -trackWidth / 2),
-                new Translation2d(wheelBase / 2, trackWidth / 2),
-                new Translation2d(-wheelBase / 2, -trackWidth / 2),
-                new Translation2d(-wheelBase / 2, trackWidth / 2));
-
-
-        odometer = new SwerveDriveOdometry(driveKinematics,
-                new Rotation2d(0), null);
+        
 
     }
 
@@ -109,9 +118,10 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
-        
-        odometer.update(getRotation2d(),new SwerveModulePosition[]{ frontRight.getState(), frontLeft.getState(), backLeft.getState(),
-                backRight.getState()});
+        SwerveModulePosition temp = frontRight.getState();
+
+        odometer.update(getRotation2d(), new SwerveModulePosition[]{ frontRight.getState(), frontLeft.getState(), backLeft.getState(),
+            backRight.getState()});
 
         // 4. Construct desired chassis speeds
         ChassisSpeeds chassisSpeeds;
@@ -187,7 +197,8 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     }
 
     public double getHeading() {
-        return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "X") % 360;
+        // return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "X") % 360;
+        return 0;
     }
 
     public Rotation2d getRotation2d() {
