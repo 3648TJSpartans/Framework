@@ -26,7 +26,6 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
-import frc.robot.framework.subsystems.SwerveDrive.Constants.AutoConstants;
 import frc.robot.framework.subsystems.SwerveDrive.Constants.DriveConstants;
 import frc.robot.framework.util.ShuffleboardHandler;
 
@@ -78,11 +77,17 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                         m_backLeft.getPosition(),
                         m_backRight.getPosition()
                 });
-        if (element.hasAttribute("xController") && element.hasAttribute("yController")){
-            xController = Double.parseDouble(element.getAttribute("xController"));
+        if (element.hasAttribute("xController") && element.hasAttribute("yController") && element.hasAttribute("thetaController")){
+            try{
+            xController = Double.parseDouble(   element.getAttribute("xController"));
             yController = Double.parseDouble(element.getAttribute("yController"));
-        }else if(element.hasAttribute("xContoller") || element.hasAttribute("yController")){
-            System.out.println("");
+            thetaController = Double.parseDouble(element.getAttribute("thetaController"));
+            } catch (Exception e){
+                System.out.println("Invalid Format on Swerve Drive Subsystem on xController:"+ xController+"yController: "+yController+"thetaController: "+thetaController+" not supported varible type");
+            }
+        }else if((element.hasAttribute("xController") && element.hasAttribute("yController")) || element.hasAttribute("xController") || 
+        element.hasAttribute("yController") || (element.hasAttribute("xController") && element.hasAttribute("thetaController") || (element.hasAttribute("yController")&& element.hasAttribute("thetaController")))){
+            System.out.println("Invalid Fields on SwerveDrive Subsystem on xController: "+ xController+"yController: "+yController+"thetaController: "+thetaController+" not supported varible type");
         }
         m_controller = new HolonomicDriveController(
             new PIDController(xController, 0, 0),
@@ -132,35 +137,35 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     /**
      * Method to drive the robot using joystick info.
      *
-     * @param xSpeed        Speed of the robot in the x direction (forward).
-     * @param ySpeed        Speed of the robot in the y direction (sideways).
-     * @param rot           Angular rate of the robot.
-     * @param fieldRelative Whether the provided x and y speeds are relative to the
+     @param xSpeed        Speed of the robot in the x direction (forward).
+     @param ySpeed        Speed of the robot in the y direction (sideways).
+     @param rot           Angular rate of the robot.
+     @param fieldRelative Whether the provided x and y speeds are relative to the
      *                      field.
      */
-    public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-        // Adjust input based on max speed
-        xSpeed *= maxSpeedMetersPerSecond;
-        ySpeed *= maxSpeedMetersPerSecond;
-        rot *= maxAngularSpeed;
+    // public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+    //     // Adjust input based on max speed
+    //     xSpeed *= maxSpeedMetersPerSecond;
+    //     ySpeed *= maxSpeedMetersPerSecond;
+    //     rot *= maxAngularSpeed;
 
-        var swerveModuleStates = driveKinematics.toSwerveModuleStates(
-                fieldRelative
-                        ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-                                Rotation2d.fromDegrees(getGyroAngle()))
-                        : new ChassisSpeeds(xSpeed, ySpeed, rot));
-        SwerveDriveKinematics.desaturateWheelSpeeds(
-                swerveModuleStates, maxSpeedMetersPerSecond);
-        System.out.println(swerveModuleStates[0]);
-        m_frontLeft.setDesiredState(swerveModuleStates[0]);
-        m_frontRight.setDesiredState(swerveModuleStates[1]);
-        m_backLeft.setDesiredState(swerveModuleStates[2]);
-        m_backRight.setDesiredState(swerveModuleStates[3]);
+    //     var swerveModuleStates = driveKinematics.toSwerveModuleStates(
+    //             fieldRelative
+    //                     ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
+    //                             Rotation2d.fromDegrees(getGyroAngle()))
+    //                     : new ChassisSpeeds(xSpeed, ySpeed, rot));
+    //     SwerveDriveKinematics.desaturateWheelSpeeds(
+    //             swerveModuleStates, maxSpeedMetersPerSecond);
+    //     System.out.println(swerveModuleStates[0]);
+    //     m_frontLeft.setDesiredState(swerveModuleStates[0]);
+    //     m_frontRight.setDesiredState(swerveModuleStates[1]);
+    //     m_backLeft.setDesiredState(swerveModuleStates[2]);
+    //     m_backRight.setDesiredState(swerveModuleStates[3]);
 
-        if(Math.random() > 0.9){
-            System.out.println(swerveModuleStates[0]);
-        }
-    }
+    //     if(Math.random() > 0.9){
+    //         System.out.println(swerveModuleStates[0]);
+    //     }
+    //}
 
     /**
      * Sets the wheels into an X formation to prevent movement.
