@@ -65,21 +65,21 @@
 //             //yAbsolute
 
             //add parameters for rotation/speed..?
-        if (element.hasAttribute("xTranslation")) {
-           desired_xTranslation =Double.parseDouble( element.getAttribute("xTranslation"));
-        }
-        if (element.hasAttribute("yTranslation")) {
-            desired_yTranslation =Double.parseDouble( element.getAttribute("yTranslation"));
-        }
-        if (element.hasAttribute("heading")){
-            desired_degree = Double.parseDouble(element.getAttribute("heading"));
-        }
-        Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
-            new Pose2d(0, 0, new Rotation2d(0)),
-            List.of(new Translation2d(desired_xTranslation, desired_yTranslation)),
-            new Pose2d(desired_xTranslation, desired_yTranslation, new Rotation2d((desired_degree*Math.PI)/180)),
-            config);
-       swerveDrive.setCommandTrajectory(tragTrajectory,m_timer);
+    //     if (element.hasAttribute("xTranslation")) {
+    //        desired_xTranslation =Double.parseDouble( element.getAttribute("xTranslation"));
+    //     }
+    //     if (element.hasAttribute("yTranslation")) {
+    //         desired_yTranslation =Double.parseDouble( element.getAttribute("yTranslation"));
+    //     }
+    //     if (element.hasAttribute("heading")){
+    //         desired_degree = Double.parseDouble(element.getAttribute("heading"));
+    //     }
+    //     Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
+    //         new Pose2d(0, 0, new Rotation2d(0)),
+    //         List.of(new Translation2d(desired_xTranslation, desired_yTranslation)),
+    //         new Pose2d(desired_xTranslation, desired_yTranslation, new Rotation2d((desired_degree*Math.PI)/180)),
+    //         config);
+    //    swerveDrive.setCommandTrajectory(tragTrajectory,m_timer);
 
 //     }
 //     @Override

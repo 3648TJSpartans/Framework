@@ -15,14 +15,16 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
   private Element myElement;
   private SwerveDrive swerveDriveSubsystem;
   private ControllerBase myController;
-  private int xSpeed = -1;
-  private int ySpeed = -1;
-  private int turningSpeed = -1;
+  private int axis_forward=-1;
+  private int axis_sideway=-1;
+  private int axis_turn=-1;
 
-  private double deadzone;
-  private double x = 0;
-  private double y = 0;
-  private double turning = 0;
+  private double scale_sideway = 1;
+  private double scale_forward = 1;
+  private double scale_turn = 1;
+  private double deadzone=.08;
+
+  private double x,y,turning=0;
 
 
 
@@ -40,41 +42,50 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
     this.addRequirements(swerveDriveSubsystem);
 
     CommandScheduler.getInstance().setDefaultCommand(swerveDriveSubsystem, this);
-    if (myElement.getAttribute("xSpeed") != "")
-      xSpeed = myController.GetAxisMap().get(myElement.getAttribute("xSpeed"));
-    if (myElement.getAttribute("ySpeed") != "")
-      ySpeed = myController.GetAxisMap().get(myElement.getAttribute("ySpeed"));
-    if (myElement.getAttribute("turningSpeed") != "")
-      turningSpeed = myController.GetAxisMap().get(myElement.getAttribute("turningSpeed"));
-
-    if (element.hasAttribute("deadzone"))
-      deadzone = Double.parseDouble(element.getAttribute("deadzone"));
+    try{
+      if (myElement.getAttribute("axis_forward") != "")
+        axis_forward = myController.GetAxisMap().get(myElement.getAttribute("axis_forward"));
+      if (myElement.getAttribute("axis_sideway") != "")
+        axis_sideway = myController.GetAxisMap().get(myElement.getAttribute("axis_sideway"));
+      if (myElement.getAttribute("axis_turn") != "")
+        axis_turn = myController.GetAxisMap().get(myElement.getAttribute("axis_turn"));
+      if (element.hasAttribute("deadzone"))
+        deadzone = Double.parseDouble(element.getAttribute("deadzone"));
+    } catch (Exception e){
+      System.out.println("SwerveDrive_Default: Could not parse axis_forward,axis_sideways,axis_turn,deadzone");
+    }
+    try{
+      if (myElement.getAttribute("scale_forward") != "")
+        scale_forward = Double.parseDouble(myElement.getAttribute("scale_forward"));
+      if (myElement.getAttribute("scale_sideway") != "")
+        scale_sideway = Double.parseDouble(myElement.getAttribute("scale_sideway"));
+      if (myElement.getAttribute("scale_turn") != "")
+        scale_turn = Double.parseDouble(myElement.getAttribute("scale_turn"));
+    } catch (Exception e){
+      System.out.println("SwerveDrive_Default: Could not parse scale_forward,scale_sideways,scale_turn");
+    }
   }
 
   @Override
   public void execute() {
-    if (xSpeed == -1 || ySpeed == -1 || turningSpeed == -1)
-      return;
-      ;
 
-    if (Math.abs(myController.getAxis("LEFT_JOYSTICK_X"))>deadzone){
-      x = myController.getAxis(xSpeed);
+    if (Math.abs(myController.getAxis(axis_sideway))>deadzone){
+      x = myController.getAxis(axis_sideway)*scale_sideway;
     }else{
       x = 0;
     }
-    if (Math.abs(myController.getAxis("LEFT_JOYSTICK_Y"))>deadzone){
-      y = myController.getAxis(ySpeed);
+    if (Math.abs(myController.getAxis(axis_forward))>deadzone){
+      y = myController.getAxis(axis_forward)*scale_forward;
     }else{
       y = 0;
     }
-    if (Math.abs(myController.getAxis("RIGHT_JOYSTICK_X"))>deadzone){
-      turning = myController.getAxis(turningSpeed);
+    if (Math.abs(myController.getAxis(axis_turn))>deadzone){
+      turning = myController.getAxis(axis_turn)*scale_turn;
     }else{
       turning = 0;
     }
 
-    swerveDriveSubsystem.teleOpInput(x, y, turning, false);
-    
+    swerveDriveSubsystem.drive(x, y, turning, false);
   }
 
   @Override
