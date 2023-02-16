@@ -236,36 +236,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "X");
     }
 
-/**
-     * Method to drive the robot using joystick info.
-     *
-     * @param xSpeed        Speed of the robot in the x direction (forward).
-     * @param ySpeed        Speed of the robot in the y direction (sideways).
-     * @param rot           Angular rate of the robot.
-     * @param fieldRelative Whether the provided x and y speeds are relative to the
-     *                      field.
-     */
-    public void teleOpInput(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-        // Adjust input based on max speed
-        xSpeed *= maxSpeedMetersPerSecond;
-        ySpeed *= maxSpeedMetersPerSecond;
-        rot *= maxAngularSpeed;
-
-        var swerveModuleStates = driveKinematics.toSwerveModuleStates(
-                fieldRelative
-                        ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-                                Rotation2d.fromDegrees(getGyroAngle()))
-                        : new ChassisSpeeds(xSpeed, ySpeed, rot));
-        SwerveDriveKinematics.desaturateWheelSpeeds(
-                swerveModuleStates, maxSpeedMetersPerSecond);
-        m_frontLeft.setDesiredState(swerveModuleStates[0]);
-        m_frontRight.setDesiredState(swerveModuleStates[1]);
-        m_backLeft.setDesiredState(swerveModuleStates[2]);
-        m_backRight.setDesiredState(swerveModuleStates[3]);
-    }
-
-
-
     public void setCommandTrajectory(Trajectory tragTrajectory, Timer m_timer) {
 
         final SwerveDriveKinematics m_kinematics =  DriveConstants.kDriveKinematics;
@@ -273,7 +243,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         var desiredState = tragTrajectory.sample(m_timer.get());
         Rotation2d m_desiredRotation = desiredState.poseMeters.getRotation();
         var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState, m_desiredRotation);
-
+        
         m_controller.calculate(getPose(), desiredState, m_desiredRotation);
 
         var targetModuleStates = m_kinematics.toSwerveModuleStates(targetChassisSpeeds);
