@@ -1,78 +1,106 @@
+// Copyright (c) FIRST and other WPILib contributors.
+// Open Source Software; you can modify and/or share it under the terms of
+// the WPILib BSD license file in the root directory of this project.
+
 package frc.robot.framework.subsystems.SwerveDrive;
 
 import org.w3c.dom.Element;
 
+import com.revrobotics.AbsoluteEncoder;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
+
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.framework.controller.ControllerBase;
-import frc.robot.framework.robot.*;
+import frc.robot.framework.robot.SubsystemCollection;
+import frc.robot.framework.subsystems.SwerveDrive.Constants.ModuleConstants;
 import frc.robot.framework.util.CommandMode;
-import frc.robot.framework.algorithm.SparkMaxPID;
+
 
 public class SwerveModule {
-    private SubsystemCollection subsystemColection;
-    private String driveMotorID = "drive";
-    private String turnMotorID = "turn";
-    private String driveEncoderID= "driveEncoder";
-    private String turnEncoderID= "turnEncoder";
-    private String analogID = "analog_encoder";
 
-    // double minV;
-    // double maxV;
+  private double m_chassisAngularOffset = 0;
+  private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+  private Element element;
+  private SubsystemCollection subsystemColection;
 
-    Element myElement;
+  private String driveMotorID = "drive";
+  private String turnMotorID = "turn";
+  private String driveEncoderID= "driveEncoder";
+  private String turnEncoderID= "turnEncoder";
 
-    public SwerveModule(Element _myElement) {
-        myElement = _myElement;
-        // minV = Double.parseDouble(myElement.getAttribute("minV"));
-        // maxV = Double.parseDouble(myElement.getAttribute("maxV"));
-        subsystemColection = new SubsystemCollection(_myElement);
+  /**
+   * Constructs a MAXSwerveModule and configures the driving and turning motor,
+   * encoder, and PID controller. This configuration is specific to the REV
+   * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
+   * Encoder.
+   */
+  public SwerveModule(Element myElement) {
 
-    }
-
-    public double getDrivePosition() {
-        return subsystemColection.encoders.getPosition(driveEncoderID);
-    }
-
-    public double getTurningPosition() {
-        return subsystemColection.encoders.getPosition(turnEncoderID);
-    }
-
-    // private void updateBounds(double v) {
-    //     minV = Math.min(minV, v);
-    //     maxV = Math.max(maxV, v);
-    // }
-
-    public double getDriveVelocity() {
-        return subsystemColection.encoders.getVelocity(driveEncoderID);
-    }
-
-    public double getTurningVelocity() {
-        return subsystemColection.encoders.getVelocity(turnEncoderID);
-    }
-
-    public SwerveModulePosition getState() {
-        //IDK about this check later if theres an error
-        return new SwerveModulePosition(getDrivePosition(), new Rotation2d(getTurningPosition()));
-    }
-
-    public void setDesiredState(SwerveModuleState state) {
-        if (Math.abs(state.speedMetersPerSecond) < 0.001) {
-            stop();
-            return;
-        }
-        state = SwerveModuleState.optimize(state, getState().angle);
-        subsystemColection.motors.setOutput(driveMotorID, state.speedMetersPerSecond / 5, CommandMode.PERCENTAGE);
-        subsystemColection.motors.setOutput(turnMotorID, (state.angle.getDegrees() % 360) / 360, CommandMode.POSITION);
-    }
+    element = myElement;
+    subsystemColection = new SubsystemCollection(element);
+    
 
 
-    public void stop() {
-        subsystemColection.motors.setOutput(driveMotorID, 0, CommandMode.PERCENTAGE);
-        subsystemColection.motors.setOutput(turnMotorID, 0, CommandMode.PERCENTAGE);
-    }
+
+
+
+    m_chassisAngularOffset = Double.parseDouble(element.getAttribute("angularOffset"));
+    m_desiredState.angle = new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID));
+    subsystemColection.encoders.reset(turnEncoderID);
+  }
+
+  /**
+   * Returns the current state of the module.
+   *
+   * @return The current state of the module.
+   */
+  public SwerveModuleState getState() {
+    // Apply chassis angular offset to the encoder position to get the position
+    // relative to the chassis.
+    return new SwerveModuleState(subsystemColection.encoders.getVelocity(driveEncoderID),
+        new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID) - m_chassisAngularOffset));
+  }
+
+  /**
+   * Returns the current position of the module.
+   *
+   * @return The current position of the module.
+   */
+  public SwerveModulePosition getPosition() {
+    // Apply chassis angular offset to the encoder position to get the position
+    // relative to the chassis.
+    return new SwerveModulePosition(
+      subsystemColection.encoders.getPosition(driveEncoderID),
+        new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID) - m_chassisAngularOffset));
+  }
+
+  /**
+   * Sets the desired state for the module.
+   *
+   * @param desiredState Desired state with speed and angle.
+   */
+  public void setDesiredState(SwerveModuleState desiredState) {
+    // Apply chassis angular offset to the desired state.
+    SwerveModuleState correctedDesiredState = new SwerveModuleState();
+    correctedDesiredState.speedMetersPerSecond = desiredState.speedMetersPerSecond;
+    correctedDesiredState.angle = desiredState.angle.plus(Rotation2d.fromRadians(m_chassisAngularOffset));
+
+    // Optimize the reference state to avoid spinning further than 90 degrees.
+    SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
+        new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID)));
+
+    // Command driving and turning SPARKS MAX towards their respective setpoints.
+    subsystemColection.motors.setOutput(driveMotorID, optimizedDesiredState.speedMetersPerSecond, CommandMode.VELOCITY);
+    subsystemColection.motors.setOutput(turnMotorID, optimizedDesiredState.angle.getRadians(), CommandMode.POSITION);
+
+    m_desiredState = desiredState;
+  }
+
+  /** Zeroes all the SwerveModule encoders. */
+  public void resetEncoders() {
+    subsystemColection.encoders.reset(driveEncoderID);
+  }
 }

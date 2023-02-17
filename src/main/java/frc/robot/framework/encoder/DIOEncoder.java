@@ -3,7 +3,7 @@ package frc.robot.framework.encoder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
-public class DIOEncoder implements EncoderBase{
+public class DIOEncoder extends EncoderController implements EncoderBase{
 
     Encoder encoder;
 
@@ -33,6 +33,12 @@ public class DIOEncoder implements EncoderBase{
 
     public void resetEncoder(){
         encoder.reset();
+    }
+
+    @Override
+    public void setInverted(boolean inverted) {
+        super.setInverted(inverted);
+        
     }
     
 }

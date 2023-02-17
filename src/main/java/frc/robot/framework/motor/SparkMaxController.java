@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAnalogSensor;
@@ -75,7 +76,46 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     break;
                 case "pid":
                     SparkMaxPID pid = new SparkMaxPID(childElement, this);
-                    pidController.setFeedbackDevice(encoder);
+                    if (childElement.getAttribute("encoderPort").toLowerCase().equals("encoder")){
+                        pidController.setFeedbackDevice(encoder);
+                    }else if (childElement.getAttribute("encoderPort").toLowerCase().equals("data")){
+                        pidController.setFeedbackDevice(alternateEncoder);
+                    }else{
+                        throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - PID encoderPort: "+ childElement.getAttribute("encoderPort") +" not supported. Only 'encoder' or 'data' ports supported");
+                    }
+                    pidController.setPositionPIDWrappingEnabled(inverted);
+                    if (childElement.hasAttribute("setPositionPIDWrappingEnabled") && childElement.hasAttribute("setPositionPIDWrappingMinInput") && childElement.hasAttribute("setPositionPIDWrappingMaxInput")){
+                        try{
+                        boolean boolValue = Boolean.parseBoolean(childElement.getAttribute("setPositionPIDWrappingEnabled"));
+                        double min = Double.parseDouble(childElement.getAttribute("setPositionPIDWrappingMinInput")); 
+                        double max = Double.parseDouble(childElement.getAttribute("setPositionPIDWrappingMaxInput")); 
+                        pidController.setPositionPIDWrappingEnabled(boolValue);
+                        pidController.setPositionPIDWrappingMinInput(min);
+                        pidController.setPositionPIDWrappingMaxInput(max);
+                        }catch (Exception e){
+                            System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"+
+                            element.getAttribute("id")+" - setPositionPIDWrappingEnabled: " 
+                            +childElement.getAttribute("setPositionPIDWrappingEnabled")+
+                            " setPositionPIDWrappingMinInput:"+childElement.getAttribute("setPositionPIDWrappingMinInput")+" setPositionPIDWrappingMaxInput:"+childElement.getAttribute("setPositionPIDWrappingMaxInput")+" not supported varible type");
+                        }     
+                    }else if(childElement.hasAttribute("setPositionPIDWrappingEnabled") || childElement.hasAttribute("setPositionPIDWrappingMinInput") || childElement.hasAttribute("setPositionPIDWrappingMaxInput")){
+                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+
+                            element.getAttribute("id")+" - setPositionPIDWrappingEnabled: " 
+                            +childElement.getAttribute("setPositionPIDWrappingEnabled")+
+                            " setPositionPIDWrappingMinInput:"+childElement.getAttribute("setPositionPIDWrappingMinInput")+" setPositionPIDWrappingMaxInput:"+childElement.getAttribute("setPositionPIDWrappingMaxInput")+" not supported varible type");
+                    }
+
+                    if(childElement.hasAttribute("kMinOutput")&& childElement.hasAttribute("kMaxOutput")){
+                            try{
+                                double min = Double.parseDouble(childElement.getAttribute("kMinOutput"));
+                                double max = Double.parseDouble(childElement.getAttribute("kMaxOutput"));
+                                pidController.setOutputRange(min, max);
+                            }catch (Exception e){
+                                System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kMinOutput: "+childElement.getAttribute("kMinOutput")+"kMaxOutput"+childElement.getAttribute("kMaxOutput"));
+                            }
+                    }else if (childElement.hasAttribute("kMinOutput") || childElement.hasAttribute("kMaxOutput")){
+                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kMinOutput: "+childElement.getAttribute("kMinOutput")+"kMaxOutput"+childElement.getAttribute("kMaxOutput"));
+                    }
                     collection.pids.put(element.getAttribute("id"), pid);
                     break;
                 case "analog":
@@ -145,7 +185,7 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     @Override
     public void setDistancePerPulse(double factor) {
         encoder.setPositionConversionFactor(factor);
-        encoder.setVelocityConversionFactor(factor);
+        encoder.setVelocityConversionFactor(factor / 60);
     }
 
     @Override

@@ -22,6 +22,12 @@ public class EncoderWrapper implements EncoderBase {
         if (!element.getAttribute("distance_per_pulse").isEmpty()) {
             encoder.setDistancePerPulse(Double.parseDouble(element.getAttribute("distance_per_pulse")));
         }
+
+        boolean invertedMotor = false;
+            if (element.hasAttribute("inverted")) {
+                invertedMotor = (Boolean.parseBoolean(element.getAttribute("inverted")));
+            }
+            encoder.setInverted(invertedMotor);
     }
 
     public EncoderWrapper(Element element, EncoderBase encoderBase) {
@@ -63,5 +69,11 @@ public class EncoderWrapper implements EncoderBase {
     @Override
     public void setDistancePerPulse(double factor) {
         encoder.setDistancePerPulse(factor);
+    }
+
+    @Override
+    public void setInverted(boolean inverted) {
+        encoder.setInverted(inverted);
+        
     }
 }
