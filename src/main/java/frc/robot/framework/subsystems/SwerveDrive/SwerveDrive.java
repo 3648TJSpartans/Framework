@@ -95,19 +95,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
             new ProfiledPIDController(thetaController, 0, 0, kThetaControllerConstraints));
     }
 
-    @Override
-    public void periodic() {
-        // Update the odometry in the periodic block
-        m_odometry.update(
-                Rotation2d.fromDegrees(getGyroAngle()),
-                new SwerveModulePosition[] {
-                        m_frontLeft.getPosition(),
-                        m_frontRight.getPosition(),
-                        m_backLeft.getPosition(),
-                        m_backRight.getPosition()
-                });
-    }
-
     /**
      * Returns the currently-estimated pose of the robot.
      *
@@ -237,30 +224,41 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         }
     }
 
-    @Override
-    public void periodic() {
-        SwerveModulePosition temp = frontRight.getState();
+    public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation, boolean input_fieldRelative) {
+        // Adjust input based on max speed
+        input_xSpeed *= maxSpeedMetersPerSecond;
+        input_ySpeed *= maxSpeedMetersPerSecond;
+        input_rotation *= maxAngularSpeed;
 
-        odometer.update(getRotation2d(), new SwerveModulePosition[]{ frontRight.getState(), frontLeft.getState(), backLeft.getState(),
-            backRight.getState()});
-
-        // 4. Construct desired chassis speeds
-        ChassisSpeeds chassisSpeeds;
-        if (Boolean.parseBoolean(myElement.getAttribute("fieldOriented"))) {
-            // Relative to field
-            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, getRotation2d());
-        } else {
-            // Relative to robot
-            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
-        }
-
-        // 5. Convert chassis speeds to individual module states
-        SwerveModuleState[] moduleStates = driveKinematics.toSwerveModuleStates(chassisSpeeds);
-        
-    public double getGyroAngle() {
-        return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "X");
+        var swerveModuleStates = driveKinematics.toSwerveModuleStates(
+                input_fieldRelative
+                        ? ChassisSpeeds.fromFieldRelativeSpeeds(input_xSpeed, input_ySpeed, input_rotation,
+                                Rotation2d.fromDegrees(getGyroAngle()))
+                        : new ChassisSpeeds(input_xSpeed, input_ySpeed, input_rotation));
+        SwerveDriveKinematics.desaturateWheelSpeeds(
+                swerveModuleStates, maxSpeedMetersPerSecond);
+        System.out.println(swerveModuleStates[0]);
+        m_frontLeft.setDesiredState(swerveModuleStates[0]);
+        m_frontRight.setDesiredState(swerveModuleStates[1]);
+        m_backLeft.setDesiredState(swerveModuleStates[2]);
+        m_backRight.setDesiredState(swerveModuleStates[3]);
     }
 
+    @Override
+    public void periodic() {
+        m_odometry.update(
+                Rotation2d.fromDegrees(getGyroAngle()),
+                new SwerveModulePosition[] {
+                        m_frontLeft.getPosition(),
+                        m_frontRight.getPosition(),
+                        m_backLeft.getPosition(),
+                        m_backRight.getPosition()
+                });
+    }
+
+    public double getGyroAngle() {
+        return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
+    }
 
     public void setCommandTrajectory(Trajectory tragTrajectory, Timer m_timer) {
 

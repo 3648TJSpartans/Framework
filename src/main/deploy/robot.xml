@@ -3,25 +3,6 @@
 <robot>
 
 
-    <!-- new sparkmax xml layout test -->
-    
-    <subsystem type="Motor" id="Shooter">
-        <!-- motor element
-        motortype="brushed" or "brushless"
-        port=CAN id 
-        -->
-        <motor id="shooter1" controller="sparkmax" motortype="brushless" port="13">
-            <!-- encoder element 
-            port="encoder" or "data" - encoder port is the 6pin JST on the side. data is the 10 pin on the top
-            -->
-            <encoder id="shooterEncoder" port="encoder"/>
-
-            <encoder id="shooterEncoder" port="data"/>
-            <pid type="sparkmax" kp="0" ki="0" kd="0" kf="0" encoderID="shooterEncoder" />
-        </motor>
-    </subsystem> 
-
-
 
     <!-- 
     <subsystem type="TankDrive" id="TankDrive">
@@ -131,7 +112,7 @@
         <motor id="claw1" controller="sparkpwm" port="3" />
     </subsystem>
 
-    <subsystem type="Motor" id="armRight">
+    <!-- <subsystem type="Motor" id="armRight">
         <motor id="armRight1" controller="sparkmax" motortype="brushless" port="10">
         </motor>
     </subsystem>
@@ -144,7 +125,7 @@
     <subsystem type="Motor" id="armChain">
         <motor id="armChain1" controller="sparkmax" motortype="brushless" port="12">
         </motor>
-    </subsystem> -->
+    </subsystem>  -->
 
 
     <!-- <subsystem type="Motor" id="test">
