@@ -248,7 +248,7 @@ public class SparkMaxController extends MotorController implements MotorBase, En
 
     @Override
     public void setPosition(double position) {
-        // TODO Auto-generated method stub
+        encoder.setPosition(position);
         
     }
 }

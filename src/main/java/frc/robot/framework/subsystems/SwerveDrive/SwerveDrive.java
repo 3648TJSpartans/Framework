@@ -50,9 +50,9 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double maxAngularSpeed;
     private double maxSpeedMetersPerSecond;
     SwerveDriveOdometry m_odometry;
-    private double xController;
-    private double yController;
-    private double thetaController;
+    private double xController=1;
+    private double yController=1;
+    private double thetaController=1;
     private SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
             new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -86,14 +86,13 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 });
         if (element.hasAttribute("xController") && element.hasAttribute("yController") && element.hasAttribute("thetaController")){
             try{
-            xController = Double.parseDouble(   element.getAttribute("xController"));
+            xController = Double.parseDouble(element.getAttribute("xController"));
             yController = Double.parseDouble(element.getAttribute("yController"));
             thetaController = Double.parseDouble(element.getAttribute("thetaController"));
             } catch (Exception e){
                 System.out.println("Invalid Format on Swerve Drive Subsystem on xController:"+ xController+"yController: "+yController+"thetaController: "+thetaController+" not supported varible type");
             }
-        }else if((element.hasAttribute("xController") && element.hasAttribute("yController")) || element.hasAttribute("xController") || 
-        element.hasAttribute("yController") || (element.hasAttribute("xController") && element.hasAttribute("thetaController") || (element.hasAttribute("yController")&& element.hasAttribute("thetaController")))){
+        }else if(element.hasAttribute("xController") || element.hasAttribute("yController") || element.hasAttribute("thetaController")){
             System.out.println("Invalid Fields on SwerveDrive Subsystem on xController: "+ xController+"yController: "+yController+"thetaController: "+thetaController+" not supported varible type");
         }
         m_controller = new HolonomicDriveController(
@@ -151,10 +150,10 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         SwerveDriveKinematics.desaturateWheelSpeeds(
                 swerveModuleStates, maxSpeedMetersPerSecond);
         System.out.print(swerveModuleStates[1]);
-        //m_frontLeft.setDesiredState(swerveModuleStates[0]);
+        m_frontLeft.setDesiredState(swerveModuleStates[0]);
         m_frontRight.setDesiredState(swerveModuleStates[1]);
-        //m_backLeft.setDesiredState(swerveModuleStates[2]);
-        //m_backRight.setDesiredState(swerveModuleStates[3]);
+        m_backLeft.setDesiredState(swerveModuleStates[2]);
+        m_backRight.setDesiredState(swerveModuleStates[3]);
 
         if(Math.random() > 0.9){
             System.out.println(swerveModuleStates[0]);
@@ -245,11 +244,10 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                         : new ChassisSpeeds(input_xSpeed, input_ySpeed, input_rotation));
         SwerveDriveKinematics.desaturateWheelSpeeds(
                 swerveModuleStates, maxSpeedMetersPerSecond);
-        System.out.println(swerveModuleStates[0]);
-        //m_frontLeft.setDesiredState(swerveModuleStates[0]);
+        m_frontLeft.setDesiredState(swerveModuleStates[0]);
         m_frontRight.setDesiredState(swerveModuleStates[1]);
-        //m_backLeft.setDesiredState(swerveModuleStates[2]);
-        //m_backRight.setDesiredState(swerveModuleStates[3]);
+        m_backLeft.setDesiredState(swerveModuleStates[2]);
+        m_backRight.setDesiredState(swerveModuleStates[3]);
         String[] data = {String.valueOf(swerveModuleStates[0].speedMetersPerSecond),
             String.valueOf(swerveModuleStates[0].angle),
             String.valueOf(swerveModuleStates[1].speedMetersPerSecond),
@@ -291,15 +289,13 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     public void setCommandTrajectory(Trajectory tragTrajectory, Timer m_timer) {
 
-        final SwerveDriveKinematics m_kinematics =  DriveConstants.kDriveKinematics;
-        
         var desiredState = tragTrajectory.sample(m_timer.get());
         Rotation2d m_desiredRotation = desiredState.poseMeters.getRotation();
         var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState, m_desiredRotation);
         
         m_controller.calculate(getPose(), desiredState, m_desiredRotation);
 
-        var targetModuleStates = m_kinematics.toSwerveModuleStates(targetChassisSpeeds);
+        var targetModuleStates = driveKinematics.toSwerveModuleStates(targetChassisSpeeds);
         m_frontLeft.setDesiredState(targetModuleStates[0]);
         m_frontRight.setDesiredState(targetModuleStates[1]);
         m_backLeft.setDesiredState(targetModuleStates[2]);

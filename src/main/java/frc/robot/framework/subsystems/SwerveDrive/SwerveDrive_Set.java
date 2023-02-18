@@ -52,11 +52,6 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
 
     @Override
     public void execute() {
-        TrajectoryConfig config = new TrajectoryConfig(
-            AutoConstants.kMaxSpeedMetersPerSecond,
-            AutoConstants.kMaxAccelerationMetersPerSecondSquared)
-            // Add kinematics to ensure max speed is actually obeyed
-            .setKinematics(DriveConstants.kDriveKinematics);
 
 
 

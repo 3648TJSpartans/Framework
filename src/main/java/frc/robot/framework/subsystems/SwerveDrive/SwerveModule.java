@@ -87,6 +87,8 @@ public class SwerveModule {
     SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
         new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID)));
 
+    //System.out.println("desiredDegrees:"+desiredState.angle.getDegrees()+" encoderDegree:"+Math.toDegrees((subsystemColection.encoders.getPosition(turnEncoderID))));
+
     // Command driving and turning SPARKS MAX towards their respective setpoints.
     subsystemColection.motors.setOutput(driveMotorID, optimizedDesiredState.speedMetersPerSecond, CommandMode.VELOCITY);
     subsystemColection.motors.setOutput(turnMotorID, optimizedDesiredState.angle.getRadians(), CommandMode.POSITION);
