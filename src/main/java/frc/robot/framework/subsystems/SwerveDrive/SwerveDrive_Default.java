@@ -82,7 +82,7 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
     if (Math.abs(myController.getAxis(axis_turn))>deadzone){
       turning = myController.getAxis(axis_turn)*scale_turn;
     }else{
-      turning = 0;
+       turning = 0;
     }
 
     swerveDriveSubsystem.drive(x, y, turning, false);
