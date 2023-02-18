@@ -30,7 +30,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- <button button="A" subsystemID="TankDrive" command="TankDrive_Set" trigger="Pressed" setInputTurn="1" setInputForward="1"></button> -->
                 <!-- <defaultCommand subsystemID="Shooter" axisReference="RIGHT_TRIGGER" command="Motor_Default"></defaultCommand> -->
 
-                <defaultCommand subsystemID="SwerveDrive"
+                 <defaultCommand subsystemID="SwerveDrive"
                         axis_sideway="LEFT_JOYSTICK_X" scale_sideway="0.2"
                         axis_forward="LEFT_JOYSTICK_Y" scale_forward="0.2"
                         axis_turn="RIGHT_JOYSTICK_X" scale_turn="0.2"
@@ -38,7 +38,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                         deadzone="0.08"
                 />
 
-<!-- 
+<!--
                 <defaultCommand subsystemID="joint1" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
                 <defaultCommand subsystemID="joint2" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
                 <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default"></defaultCommand> -->
@@ -58,5 +58,9 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="Y" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setVelocity="200"></button> -->
                 <!-- <button button="B" command="       " trigger="Held" myParam="Held!B"></button> -->
                 <!-- <button button="A" command="Motor_setPower" trigger="Released" power="0"></button> -->
+        
+                <button button="LEFT_SHOULDER" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" incrementPosition="-10"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" incrementPosition="10"></button>
+        
         </controller>
 </robot>

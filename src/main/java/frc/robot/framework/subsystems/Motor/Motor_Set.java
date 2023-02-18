@@ -43,6 +43,10 @@ public class Motor_Set extends CommandBase implements RobotXML{
             motor.setReference(Double.parseDouble(myElement.getAttribute("setPosition")), CommandMode.POSITION);
             return;
         }
+        if (myElement.hasAttribute("incrementPosition")){
+            motor.setReference(motor.getReference()+Double.parseDouble(myElement.getAttribute("incrementPosition")), CommandMode.POSITION);
+            return;
+        }
     }
   
     @Override

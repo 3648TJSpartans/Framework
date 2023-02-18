@@ -3,7 +3,6 @@
 <robot>
 
 
-
     <!-- 
     <subsystem type="TankDrive" id="TankDrive">
 
@@ -82,4 +81,84 @@
         <gyro id="swerveGyro" type="ADIS16470" port="0"></gyro>
 
     </subsystem>
+
+    <subsystem type="Motor" id="joint1" maxPosition="21" minPosition="-21">
+        <motor id="joint1" controller="sparkpwm" port="13" >
+            <encoder id="jointEncoder" port="encoder" port_one="13" />
+            <pid id="PID" kp="0.01" encoderPort="encoder" />
+        </motor>
+
+    </subsystem>
+
+    <subsystem type="Motor" id="joint2" maxPosition="21" minPosition="-21">
+        <motor id="joint1" controller="sparkpwm" port="14">
+            <encoder id="jointEncoder" port="encoder" port_one="14" />
+            <pid id="PID" kp="0.01" encoderPort="encoder" />
+        </motor>
+    </subsystem>
+
+    <subsystem type="Motor" id="claw" maxPosition="20" minPosition="-5">
+        <motor id="claw1" controller="sparkpwm" port="15">
+            <encoder id="clawEncoder" port="encoder" port_one="15" />
+            <pid id="PID" kp="0.01" encoderPort="encoder" />
+        </motor>
+    </subsystem>
+
+    <subsystem type="Motor" id="arm" maxPosition="180" minPosition="0">
+        <motorgroup id="arm1">
+            <motor id="left1" side="left" controller="sparkmax" port="10">
+                <encoder id="leftEncoder" port="encoder" />
+                <pid id="PID" kp="0.01" encoderPort="encoder" distance_per_pulse="173.333333333" />
+            </motor>
+            <motor id="right1" side="right" controller="sparkmax" port="11">
+                <encoder id="rightEncoder" port="encoder" />
+                <pid id="PID" kp="0.01" encoderPort="encoder" distance_per_pulse="173.333333333" />
+            </motor>
+        </motorgroup>
+    </subsystem>
+
+    <subsystem type="Motor" id="armChain" maxPosition="13" minPosition="0">
+        <motor id="armChain1" controller="sparkmax" port="12">
+            <encoder id="armChainEncoder" port="encoder" />
+            <pid id="PID" kp="0.01" encoderPort="encoder" />
+        </motor>
+    </subsystem> -->
+
+    <!-- <subsystem type="Motor" id="test">
+        <motor id="shooter1" controller="sparkmax" motortype="brushless" port="6" />
+    </subsystem>
+ -->
+
+    <!-- 
+
+    <subsystem type="Motor" id="Turret">
+            <motor id="turret1" controller="sparkpwm" port="3">
+
+        </motor>
+
+    </subsystem>
+
+    <subsystem type="Motor" id="Shooter">
+        <motor id="shooter1" controller="sparkpwm" port="2" inverted="true" />
+    </subsystem>
+
+
+    <subsystem type="Motor" id="Hopper" commandMode="power"> 
+        <motor id="hopper1" controller="sparkmax" port="3"/>
+    </subsystem> -->
+
+
+    <!-- MIN MAX motor test-->
+
+    <subsystem type="Motor" id="Shooter">
+        <motor id="shooter1" controller="sparkmax" port="6">
+            <encoder id="shooterEncoder" port="encoder" port_one="6" />
+            <pid id="PID" kp="0.01" encoderPort="encoder" />
+        </motor>
+    </subsystem>
+
+    <!-- <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5"
+    maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
+        
+-->
 </robot>
