@@ -52,8 +52,8 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="RIGHT_SHOULDER" subsystemID="Turret" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="LEFT_SHOULDER" subsystemID="Turret" command="Motor_Set" trigger="Released" setPower="0"></button> -->
 
-                <!-- <button button="A" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" setPower="-.8"></button>
-                <button button="A" subsystemID="Shooter" command="Motor_Set" trigger="Released" setPower="0"></button> -->
+                <button button="A" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" setPosition="200"></button>
+                <button button="A" subsystemID="Shooter" command="Motor_Set" trigger="Released" setPosition="0"></button>
                 <!-- <button button="X" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setVelocity="100"></button>
                 <button button="Y" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setVelocity="200"></button> -->
                 <!-- <button button="B" command="       " trigger="Held" myParam="Held!B"></button> -->

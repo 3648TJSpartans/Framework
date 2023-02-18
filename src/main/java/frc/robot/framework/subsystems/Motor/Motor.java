@@ -12,11 +12,19 @@ import frc.robot.framework.util.ShuffleboardHandler;
 
 public class Motor extends SubsystemBase implements RobotXML {
     ShuffleboardHandler tab;
+    
     private SubsystemCollection subsystemColection;
     private double reference = .00;
     private CommandMode mode = CommandMode.PERCENTAGE;
+    private double maxVelocity = 0;
+    private double minVelocity = 0;
+    private double maxposition = 0;
+    private double minposition = 0;
+    private double maxPower = 0;
+    private Element element;
 
     public Motor(Element subsystem) {
+        element = subsystem;
         tab = new ShuffleboardHandler(subsystem.getAttribute("id"));
         ReadXML(subsystem);
     }
@@ -40,13 +48,33 @@ public class Motor extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
+        EncoderBase encoder = subsystemColection.encoders.getEncoder(subsystemColection.encoders.GetAllEncoderIDs().iterator().next());
+
         if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0 && Math.random() > .9) {
-            EncoderBase encoder = subsystemColection.encoders.getEncoder(subsystemColection.encoders.GetAllEncoderIDs().iterator().next());
             System.out.println("Position:" + encoder.getPosition() +
                     " Velocity:" + encoder.getVelocity());
         }
 
         for (String motorId : subsystemColection.motors.GetAllMotorIDs()) {
+
+            if(encoder.getPosition() > maxposition && element.hasAttribute("maxPosition")) {
+                subsystemColection.motors.setOutput(motorId, maxposition, CommandMode.POSITION);
+                System.out.println("Max position reached, setting to max position");
+            }else if(encoder.getPosition() < minposition && element.hasAttribute("minPosition")) {
+                subsystemColection.motors.setOutput(motorId, minposition, CommandMode.POSITION);
+                System.out.println("Min position reached, setting to min position");
+            }
+
+            if(mode == CommandMode.VELOCITY && maxVelocity != 0) {
+                reference = Math.min(reference, maxVelocity);
+            }
+            if(mode == CommandMode.VELOCITY && minVelocity != 0) {
+                reference = Math.max(reference, minVelocity);
+            }
+            if(mode == CommandMode.PERCENTAGE && maxPower != 0) {
+                reference = Math.min(reference, maxPower);
+            }
+
             subsystemColection.motors.setOutput(motorId, reference, mode);
         }
     }
@@ -79,6 +107,21 @@ public class Motor extends SubsystemBase implements RobotXML {
             }
         } else {
             mode = CommandMode.PERCENTAGE;
+        }
+        if (element.hasAttribute("maxVelocity")) {
+            maxVelocity = Double.parseDouble(element.getAttribute("maxVelocity"));
+        }
+        if (element.hasAttribute("minVelocity")) {
+            minVelocity = Double.parseDouble(element.getAttribute("minVelocity"));
+        }
+        if (element.hasAttribute("maxPosition")) {
+            maxposition = Double.parseDouble(element.getAttribute("maxPosition"));
+        }
+        if (element.hasAttribute("minPosition")) {
+            minposition = Double.parseDouble(element.getAttribute("minPosition"));
+        }
+        if (element.hasAttribute("maxPower")) {
+            maxPower = Double.parseDouble(element.getAttribute("maxPower"));
         }
     }
 
