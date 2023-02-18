@@ -151,7 +151,7 @@
     <!-- MIN MAX motor test-->
 
     <subsystem type="Motor" id="Shooter">
-        <motor id="shooter1" controller="sparkmax" port="6">
+        <motor id="shooter1" controller="sparkmax" port="16">
             <encoder id="shooterEncoder" port="encoder" port_one="6" />
             <pid id="PID" kp="0.01" encoderPort="encoder" />
         </motor>

@@ -29,7 +29,7 @@ public class Motor extends SubsystemBase implements RobotXML {
         element = subsystem;
         tab = new ShuffleboardHandler(subsystem.getAttribute("id"));
         ReadXML(subsystem);
-        if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0 && Math.random() > .9) {
+        if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0) {
             encoder = subsystemColection.encoders.getEncoder(subsystemColection.encoders.GetAllEncoderIDs().iterator().next());
         }
     }
