@@ -42,4 +42,11 @@ public class SparkMaxEncoder extends EncoderController implements EncoderBase{
         super.setInverted(inverted);
         
     }
+
+    @Override
+    public void setPosition(double position) {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

@@ -84,4 +84,10 @@ public class TalonSRXController extends MotorController implements MotorBase, En
         // TODO Auto-generated method stub
         
     }
+
+    @Override
+    public void setPosition(double position) {
+        // TODO Auto-generated method stub
+        
+    }
 }

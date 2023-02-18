@@ -7,4 +7,5 @@ public interface EncoderBase{
     public void setDistancePerPulse(double factor);
     public void resetEncoder();
     public void setInverted(boolean inverted);
+    public void setPosition(double position);
 }
