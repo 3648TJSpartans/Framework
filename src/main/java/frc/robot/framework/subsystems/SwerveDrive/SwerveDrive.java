@@ -4,6 +4,9 @@
 
 package frc.robot.framework.subsystems.SwerveDrive;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -27,6 +30,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.subsystems.SwerveDrive.Constants.DriveConstants;
+import frc.robot.framework.util.Log;
 import frc.robot.framework.util.ShuffleboardHandler;
 
 public class SwerveDrive extends SubsystemBase implements RobotXML {
@@ -54,6 +58,9 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
             new Translation2d(kWheelBase / 2, kTrackWidth / 2),
             new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
+
+    private String[] headers = { "Time", "Subsystem", "controlMode","FRspeed", "FRrad", "FLspeed", "FLrad", "BRspeed", "BRrad", "BLspeed", "BLrad" };
+    private Log log = new Log("Swerve_Drive", headers);
 
     /** Creates a new DriveSubsystem. */
     public SwerveDrive(Element _element) {
@@ -130,29 +137,32 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
      @param fieldRelative Whether the provided x and y speeds are relative to the
      *                      field.
      */
-    // public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
-    //     // Adjust input based on max speed
-    //     xSpeed *= maxSpeedMetersPerSecond;
-    //     ySpeed *= maxSpeedMetersPerSecond;
-    //     rot *= maxAngularSpeed;
+    public void drive(double xSpeed, double ySpeed, double rot, boolean fieldRelative) {
+        // Adjust input based on max speed
+        xSpeed *= maxSpeedMetersPerSecond;
+        ySpeed *= maxSpeedMetersPerSecond;
+        rot *= maxAngularSpeed;
 
-    //     var swerveModuleStates = driveKinematics.toSwerveModuleStates(
-    //             fieldRelative
-    //                     ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-    //                             Rotation2d.fromDegrees(getGyroAngle()))
-    //                     : new ChassisSpeeds(xSpeed, ySpeed, rot));
-    //     SwerveDriveKinematics.desaturateWheelSpeeds(
-    //             swerveModuleStates, maxSpeedMetersPerSecond);
-    //     System.out.println(swerveModuleStates[0]);
-    //     m_frontLeft.setDesiredState(swerveModuleStates[0]);
-    //     m_frontRight.setDesiredState(swerveModuleStates[1]);
-    //     m_backLeft.setDesiredState(swerveModuleStates[2]);
-    //     m_backRight.setDesiredState(swerveModuleStates[3]);
+        var swerveModuleStates = driveKinematics.toSwerveModuleStates(
+                fieldRelative
+                        ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
+                                Rotation2d.fromDegrees(getGyroAngle()))
+                        : new ChassisSpeeds(xSpeed, ySpeed, rot));
+        SwerveDriveKinematics.desaturateWheelSpeeds(
+                swerveModuleStates, maxSpeedMetersPerSecond);
+        System.out.println(swerveModuleStates[0]);
+        m_frontLeft.setDesiredState(swerveModuleStates[0]);
+        m_frontRight.setDesiredState(swerveModuleStates[1]);
+        m_backLeft.setDesiredState(swerveModuleStates[2]);
+        m_backRight.setDesiredState(swerveModuleStates[3]);
 
-    //     if(Math.random() > 0.9){
-    //         System.out.println(swerveModuleStates[0]);
-    //     }
-    //}
+        if(Math.random() > 0.9){
+            System.out.println(swerveModuleStates[0]);
+        }    
+        String[] data = {String.valueOf(swerveModuleStates[0].speedMetersPerSecond), String.valueOf(swerveModuleStates[0].angle), String.valueOf(swerveModuleStates[1].speedMetersPerSecond), String.valueOf(swerveModuleStates[1].angle), String.valueOf(swerveModuleStates[2].speedMetersPerSecond), String.valueOf(swerveModuleStates[2].angle), String.valueOf(swerveModuleStates[3].speedMetersPerSecond), String.valueOf(swerveModuleStates[3].angle)};
+
+        log.Write("Swerve_Drive", data);
+    }
 
     /**
      * Sets the wheels into an X formation to prevent movement.
