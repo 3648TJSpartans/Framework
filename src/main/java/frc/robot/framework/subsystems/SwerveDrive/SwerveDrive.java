@@ -247,9 +247,30 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         }
     }
 
+    @Override
+    public void periodic() {
+        SwerveModulePosition temp = frontRight.getState();
+
+        odometer.update(getRotation2d(), new SwerveModulePosition[]{ frontRight.getState(), frontLeft.getState(), backLeft.getState(),
+            backRight.getState()});
+
+        // 4. Construct desired chassis speeds
+        ChassisSpeeds chassisSpeeds;
+        if (Boolean.parseBoolean(myElement.getAttribute("fieldOriented"))) {
+            // Relative to field
+            chassisSpeeds = ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, turningSpeed, getRotation2d());
+        } else {
+            // Relative to robot
+            chassisSpeeds = new ChassisSpeeds(xSpeed, ySpeed, turningSpeed);
+        }
+
+        // 5. Convert chassis speeds to individual module states
+        SwerveModuleState[] moduleStates = driveKinematics.toSwerveModuleStates(chassisSpeeds);
+        
     public double getGyroAngle() {
         return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "X");
     }
+
 
     public void setCommandTrajectory(Trajectory tragTrajectory, Timer m_timer) {
 
