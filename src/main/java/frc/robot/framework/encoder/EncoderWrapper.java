@@ -11,7 +11,8 @@ public class EncoderWrapper implements EncoderBase {
 
     public EncoderWrapper(Element element) {
 
-        String encoderType = element.getAttribute("type");
+        String encoderType = element.getAttribute("vendor");
+        
         int portOne = Integer.parseInt(element.getAttribute("port_one"));
         int portTwo = 0;
         if (!element.getAttribute("port_two").isEmpty()) {

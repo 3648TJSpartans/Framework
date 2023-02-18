@@ -22,11 +22,16 @@ public class Motor extends SubsystemBase implements RobotXML {
     private double minposition = 0;
     private double maxPower = 0;
     private Element element;
+    private EncoderBase encoder;
+
 
     public Motor(Element subsystem) {
         element = subsystem;
         tab = new ShuffleboardHandler(subsystem.getAttribute("id"));
         ReadXML(subsystem);
+        if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0 && Math.random() > .9) {
+            encoder = subsystemColection.encoders.getEncoder(subsystemColection.encoders.GetAllEncoderIDs().iterator().next());
+        }
     }
 
     public CommandMode getMode() {
@@ -48,31 +53,29 @@ public class Motor extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
-        EncoderBase encoder = subsystemColection.encoders.getEncoder(subsystemColection.encoders.GetAllEncoderIDs().iterator().next());
-
-        if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0 && Math.random() > .9) {
-            System.out.println("Position:" + encoder.getPosition() +
-                    " Velocity:" + encoder.getVelocity());
+        if (encoder != null && Math.random() > .9) {
+            System.out.println("Position:" + encoder.getPosition() +" Velocity:" + encoder.getVelocity());
         }
 
         for (String motorId : subsystemColection.motors.GetAllMotorIDs()) {
+            if (subsystemColection.encoders.GetAllEncoderIDs().size()>0){
+                if(encoder.getPosition() > maxposition && element.hasAttribute("maxPosition")) {
+                    subsystemColection.motors.setOutput(motorId, maxposition, CommandMode.POSITION);
+                    System.out.println("Max position reached, setting to max position");
+                }else if(encoder.getPosition() < minposition && element.hasAttribute("minPosition")) {
+                    subsystemColection.motors.setOutput(motorId, minposition, CommandMode.POSITION);
+                    System.out.println("Min position reached, setting to min position");
+                }
 
-            if(encoder.getPosition() > maxposition && element.hasAttribute("maxPosition")) {
-                subsystemColection.motors.setOutput(motorId, maxposition, CommandMode.POSITION);
-                System.out.println("Max position reached, setting to max position");
-            }else if(encoder.getPosition() < minposition && element.hasAttribute("minPosition")) {
-                subsystemColection.motors.setOutput(motorId, minposition, CommandMode.POSITION);
-                System.out.println("Min position reached, setting to min position");
-            }
-
-            if(mode == CommandMode.VELOCITY && maxVelocity != 0) {
-                reference = Math.min(reference, maxVelocity);
-            }
-            if(mode == CommandMode.VELOCITY && minVelocity != 0) {
-                reference = Math.max(reference, minVelocity);
-            }
-            if(mode == CommandMode.PERCENTAGE && maxPower != 0) {
-                reference = Math.min(reference, maxPower);
+                if(mode == CommandMode.VELOCITY && maxVelocity != 0) {
+                    reference = Math.min(reference, maxVelocity);
+                }
+                if(mode == CommandMode.VELOCITY && minVelocity != 0) {
+                    reference = Math.max(reference, minVelocity);
+                }
+                if(mode == CommandMode.PERCENTAGE && maxPower != 0) {
+                    reference = Math.min(reference, maxPower);
+                }
             }
 
             subsystemColection.motors.setOutput(motorId, reference, mode);

@@ -60,7 +60,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
             new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
 
     private String[] headers = { "Time", "Subsystem", "controlMode","FRspeed", "FRrad", "FLspeed", "FLrad", "BRspeed", "BRrad", "BLspeed", "BLrad" };
-    private Log log = new Log("Swerve_Drive", headers);
+    private Log swerveLog = new Log("Swerve_Drive", headers);
 
     /** Creates a new DriveSubsystem. */
     public SwerveDrive(Element _element) {
@@ -150,18 +150,16 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                         : new ChassisSpeeds(xSpeed, ySpeed, rot));
         SwerveDriveKinematics.desaturateWheelSpeeds(
                 swerveModuleStates, maxSpeedMetersPerSecond);
-        System.out.println(swerveModuleStates[0]);
-        m_frontLeft.setDesiredState(swerveModuleStates[0]);
+        System.out.print(swerveModuleStates[1]);
+        //m_frontLeft.setDesiredState(swerveModuleStates[0]);
         m_frontRight.setDesiredState(swerveModuleStates[1]);
-        m_backLeft.setDesiredState(swerveModuleStates[2]);
-        m_backRight.setDesiredState(swerveModuleStates[3]);
+        //m_backLeft.setDesiredState(swerveModuleStates[2]);
+        //m_backRight.setDesiredState(swerveModuleStates[3]);
 
         if(Math.random() > 0.9){
             System.out.println(swerveModuleStates[0]);
         }    
-        String[] data = {String.valueOf(swerveModuleStates[0].speedMetersPerSecond), String.valueOf(swerveModuleStates[0].angle), String.valueOf(swerveModuleStates[1].speedMetersPerSecond), String.valueOf(swerveModuleStates[1].angle), String.valueOf(swerveModuleStates[2].speedMetersPerSecond), String.valueOf(swerveModuleStates[2].angle), String.valueOf(swerveModuleStates[3].speedMetersPerSecond), String.valueOf(swerveModuleStates[3].angle)};
 
-        log.Write("Swerve_Drive", data);
     }
 
     /**
@@ -248,10 +246,20 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         SwerveDriveKinematics.desaturateWheelSpeeds(
                 swerveModuleStates, maxSpeedMetersPerSecond);
         System.out.println(swerveModuleStates[0]);
-        m_frontLeft.setDesiredState(swerveModuleStates[0]);
+        //m_frontLeft.setDesiredState(swerveModuleStates[0]);
         m_frontRight.setDesiredState(swerveModuleStates[1]);
-        m_backLeft.setDesiredState(swerveModuleStates[2]);
-        m_backRight.setDesiredState(swerveModuleStates[3]);
+        //m_backLeft.setDesiredState(swerveModuleStates[2]);
+        //m_backRight.setDesiredState(swerveModuleStates[3]);
+        String[] data = {String.valueOf(swerveModuleStates[0].speedMetersPerSecond),
+            String.valueOf(swerveModuleStates[0].angle),
+            String.valueOf(swerveModuleStates[1].speedMetersPerSecond),
+            String.valueOf(swerveModuleStates[1].angle),
+            String.valueOf(swerveModuleStates[2].speedMetersPerSecond),
+            String.valueOf(swerveModuleStates[2].angle),
+            String.valueOf(swerveModuleStates[3].speedMetersPerSecond),
+            String.valueOf(swerveModuleStates[3].angle)};
+
+        swerveLog.Write("Swerve_Drive_Module_SET", data);
     }
 
     @Override
@@ -264,6 +272,17 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                         m_backLeft.getPosition(),
                         m_backRight.getPosition()
                 });
+
+        String[] data = {String.valueOf(m_frontLeft.getState(). speedMetersPerSecond),
+            String.valueOf(m_frontLeft.getState().angle),
+            String.valueOf(m_frontRight.getState().speedMetersPerSecond),
+            String.valueOf(m_frontRight.getState().angle),
+            String.valueOf(m_backLeft.getState().speedMetersPerSecond),
+            String.valueOf(m_backLeft.getState().angle),
+            String.valueOf(m_backRight.getState().speedMetersPerSecond),
+            String.valueOf(m_backRight.getState().angle)};
+
+        swerveLog.Write("Swerve_Drive_Module_ACTUAL", data);
     }
 
     public double getGyroAngle() {

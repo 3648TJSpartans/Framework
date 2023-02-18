@@ -5,19 +5,24 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAnalogSensor;
 import com.revrobotics.SparkMaxPIDController;
 import com.revrobotics.CANSparkMax.ControlType;
+import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.algorithm.PIDWrapper;
 import frc.robot.framework.algorithm.SparkMaxPID;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.encoder.EncoderWrapper;
-import frc.robot.framework.encoder.SparkMaxEncoder;
+import frc.robot.framework.encoder.SparkMaxEncoderAbsoluteEncoder;
+import frc.robot.framework.encoder.SparkMaxEncoderRelativeEncoder;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.sensor.analoginput.AnalogInBase;
 import frc.robot.framework.sensor.analoginput.AnaloginWrapper;
@@ -28,17 +33,32 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     private CANSparkMax controller;
     private SparkMaxPIDController pidController;
     private RelativeEncoder encoder;
-    private RelativeEncoder alternateEncoder;
+    private EncoderBase alternateEncoder;
+
+    //I hate this but I have to keep track of it. Only one should be used
+    private RelativeEncoder data_RelativeEncoder;
+    private AbsoluteEncoder data_AbsoluteEncoder;
 
     public SparkMaxController(Element element, SubsystemCollection collection) {
         MotorType motorType=MotorType.kBrushless;
         if (element.getAttribute("motortype").toLowerCase().equals("brushed")){
             motorType=MotorType.kBrushed;
         }
-        controller = new CANSparkMax(Integer.parseInt(element.getAttribute("port")) , motorType);
+        try{
+            controller = new CANSparkMax(Integer.parseInt(element.getAttribute("port")) , motorType);
+        } catch (NumberFormatException e){
+            throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Port number: '"+ element.getAttribute("port") +"'': Invalid value for 'port'");
+        }
         controller.restoreFactoryDefaults();
 
         pidController = controller.getPIDController();
+
+        if (element.getAttribute("idleMode").toLowerCase().equals("break")){
+            controller.setIdleMode(IdleMode.kBrake);
+        }
+        else{
+            controller.setIdleMode(IdleMode.kCoast);
+        }
         
 
         //Get encoders.
@@ -48,38 +68,72 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                 continue;
             }
             Element childElement = (Element) childNodeList.item(i);
-            
-            switch (childElement.getTagName().toLowerCase()) {
+            EncoderWrapper encoderWrapper;
+            switch (childElement.getTagName().toLowerCase()){
                 case "encoder":
                     String xml_port=childElement.getAttribute("port").toLowerCase();
+                    
                     //data encoder on top
                     if (xml_port.equals("data")){
                         
                         int countsPerRev=8192;
                         if (childElement.hasAttribute("countsPerRev")){
-                            countsPerRev=Integer.parseInt(childElement.getAttribute("countsPerRev"));
+                            try{
+                                countsPerRev=Integer.parseInt(childElement.getAttribute("countsPerRev"));
+
+                            } catch (NumberFormatException e){
+                                throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - countsPerRev: '"+ childElement.getAttribute("countsPerRev") +"'': Invalid value for 'countsPerRev'");
+                            }
                         }
-                        alternateEncoder=controller.getAlternateEncoder(countsPerRev);
-                        
-                        EncoderWrapper encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoder(alternateEncoder) ); 
-                        collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);
+                        if (childElement.hasAttribute("type")){
+                            if (childElement.getAttribute("type").toLowerCase().equals("relative")){
+                                data_RelativeEncoder=controller.getAlternateEncoder(countsPerRev);
+                                encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderRelativeEncoder(data_RelativeEncoder)); 
+                            }
+                            else { // absolute encoder
+                                data_AbsoluteEncoder = controller.getAbsoluteEncoder(Type.kDutyCycle);
+                                encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderAbsoluteEncoder(data_AbsoluteEncoder));
+                            }
+                        }
+                        else{
+                            throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder 'type' is not specified. Only 'data' or 'encoder' ports supported");
+                        }
                     }
                     //Normal encoder on side
                     else if (xml_port.equals("encoder")) {
                         encoder = controller.getEncoder();
-                        EncoderWrapper encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoder(encoder) ); 
-                        collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);
+                        encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderRelativeEncoder(encoder) ); 
                     }
                     else{
                         throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder port: "+ childElement.getAttribute("port") +" not supported. Only 'data' or 'encoder' ports supported");
                     }
+
+
+                    if (childElement.hasAttribute("setPosititon")){
+                        try{
+                            encoderWrapper.setPosition(Double.parseDouble(element.getAttribute("setPosition")));
+                        } catch (NumberFormatException e){
+                            throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder id: "+ childElement.getAttribute("id") +": Invalid value for 'setPosition'");
+                        }
+                    }
+
+                    collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);
+
                     break;
                 case "pid":
                     SparkMaxPID pid = new SparkMaxPID(childElement, this);
                     if (childElement.getAttribute("encoderPort").toLowerCase().equals("encoder")){
                         pidController.setFeedbackDevice(encoder);
                     }else if (childElement.getAttribute("encoderPort").toLowerCase().equals("data")){
-                        pidController.setFeedbackDevice(alternateEncoder);
+                        if (data_RelativeEncoder != null){
+                            pidController.setFeedbackDevice(data_RelativeEncoder);
+                        }
+                        else if (data_AbsoluteEncoder != null){
+                            pidController.setFeedbackDevice(data_AbsoluteEncoder);
+                        }
+                        else{
+                            throw new UnsupportedOperationException("SparkMaxController: Setting feedback device on Pid - Encoder is not initalized");
+                        }
                     }else{
                         throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - PID encoderPort: "+ childElement.getAttribute("encoderPort") +" not supported. Only 'encoder' or 'data' ports supported");
                     }
@@ -126,9 +180,8 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     break;
             }
         }
-
         
-
+        controller.burnFlash();
     }
 
     @Override

@@ -41,15 +41,10 @@ public class SwerveModule {
 
     element = myElement;
     subsystemColection = new SubsystemCollection(element);
-    
-
-
-
-
 
     m_chassisAngularOffset = Double.parseDouble(element.getAttribute("angularOffset"));
     m_desiredState.angle = new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID));
-    subsystemColection.encoders.reset(turnEncoderID);
+    subsystemColection.encoders.reset(driveEncoderID);
   }
 
   /**

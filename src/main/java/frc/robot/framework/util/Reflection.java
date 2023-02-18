@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.lang.reflect.Constructor;
 
 public class Reflection {
     private static HashMap<String,Class<?>> allCommands = new HashMap<>();
@@ -93,13 +94,22 @@ public class Reflection {
 
    public static <T> T CreateObjectFromXML(Class<T> myClass, Element element){
     Object[] params= new Object[]{element};
-      try {
-      var temp = (T)(myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element")).newInstance(params));
-      return temp;
+    Constructor<T> constructor;
+    try {
+        constructor=myClass.getDeclaredConstructor(Class.forName("org.w3c.dom.Element"));
     } catch (Exception e) {
-      System.out.println(myClass.getName() + ": constructor does not match parameters");
-      e.printStackTrace();
+      System.out.println(myClass.getName() + ": does not have a 'org.w3c.dom.Element' constructor");
+      throw new UnsupportedOperationException();
     } 
+    try {
+      var temp=(T)(constructor.newInstance(params));
+      return temp;
+    } catch (Exception e){
+      System.out.println(myClass.getName() + ": Error creating object. An error occured in the initalization of the object");
+      e.printStackTrace();
+      System.out.println();
+      System.out.println();
+    }
     return null;
   }
 
