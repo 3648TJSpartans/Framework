@@ -14,12 +14,11 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.framework.robot.*;
-import frc.robot.framework.subsystems.SwerveDrive.Constants.AutoConstants;
-import frc.robot.framework.subsystems.SwerveDrive.Constants.DriveConstants;
 public class SwerveDrive_Set extends CommandBase implements RobotXML{
     private static final TrajectoryConfig TrajectoryConfig = null;
     private SwerveDrive swerveDrive;
@@ -31,6 +30,16 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
     private double desired_yTranslation;
     private double desired_degree;
     private final Timer m_timer = new Timer();
+    private double kMaxSpeedMetersPerSecond;
+    private double kMaxAccelerationMetersPerSecondSquared;
+    public static final double kTrackWidth = Units.inchesToMeters(26.5);
+    public static final double kWheelBase = Units.inchesToMeters(26.5);
+   
+    public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
+        new Translation2d(kWheelBase / 2, kTrackWidth / 2),
+        new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
+        new Translation2d(-kWheelBase / 2, kTrackWidth / 2),
+        new Translation2d(-kWheelBase / 2, -kTrackWidth / 2));
     public SwerveDrive_Set(Element _element){
         element = _element;
         SubsystemBase temp = RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
@@ -41,7 +50,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
             return;
         }
         swerveDrive = (SwerveDrive) temp;
-
+       
     }
     public void initialize() {
         startTime = System.currentTimeMillis();
@@ -52,29 +61,37 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
 
     @Override
     public void execute() {
+        if(element.hasAttribute("setMaxSpeed") && element.hasAttribute("setMaxAcceleration")){
+            kMaxSpeedMetersPerSecond = Double.parseDouble(element.getAttribute("setMaxSpeed"));
+            kMaxAccelerationMetersPerSecondSquared = Double.parseDouble(element.getAttribute("setMaxAcceleration"));
+        }
 
-
+        TrajectoryConfig config = new TrajectoryConfig(
+        kMaxSpeedMetersPerSecond,
+        kMaxAccelerationMetersPerSecondSquared)
+        // Add kinematics to ensure max speed is actually obeyed
+        .setKinematics(kDriveKinematics);
 
             //add absoulte/field relative parameters
             //xAbsolute
             //yAbsolute
 
             //add parameters for rotation/speed..?
-    //     if (element.hasAttribute("xTranslation")) {
-    //        desired_xTranslation =Double.parseDouble( element.getAttribute("xTranslation"));
-    //     }
-    //     if (element.hasAttribute("yTranslation")) {
-    //         desired_yTranslation =Double.parseDouble( element.getAttribute("yTranslation"));
-    //     }
-    //     if (element.hasAttribute("heading")){
-    //         desired_degree = Double.parseDouble(element.getAttribute("heading"));
-    //     }
-    //     Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
-    //         new Pose2d(0, 0, new Rotation2d(0)),
-    //         List.of(new Translation2d(desired_xTranslation, desired_yTranslation)),
-    //         new Pose2d(desired_xTranslation, desired_yTranslation, new Rotation2d((desired_degree*Math.PI)/180)),
-    //         config);
-    //    swerveDrive.setCommandTrajectory(tragTrajectory,m_timer);
+        if (element.hasAttribute("xTranslation")) {
+           desired_xTranslation =Double.parseDouble( element.getAttribute("xTranslation"));
+        }
+        if (element.hasAttribute("yTranslation")) {
+            desired_yTranslation =Double.parseDouble( element.getAttribute("yTranslation"));
+        }
+        if (element.hasAttribute("heading")){
+            desired_degree = Double.parseDouble(element.getAttribute("heading"));
+        }
+        Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
+            new Pose2d(0, 0, new Rotation2d(0)),
+            List.of(new Translation2d(desired_xTranslation, desired_yTranslation)),
+            new Pose2d(desired_xTranslation, desired_yTranslation, new Rotation2d((desired_degree*Math.PI)/180)),
+            config);
+       swerveDrive.setCommandTrajectory(tragTrajectory,m_timer);
 
     }
     @Override
