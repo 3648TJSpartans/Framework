@@ -30,7 +30,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- <button button="A" subsystemID="TankDrive" command="TankDrive_Set" trigger="Pressed" setInputTurn="1" setInputForward="1"></button> -->
                 <!-- <defaultCommand subsystemID="Shooter" axisReference="RIGHT_TRIGGER" command="Motor_Default"></defaultCommand> -->
 
-                 <defaultCommand subsystemID="SwerveDrive"
+                <defaultCommand subsystemID="SwerveDrive"
                         axis_sideway="LEFT_JOYSTICK_X" scale_sideway="0.2"
                         axis_forward="LEFT_JOYSTICK_Y" scale_forward="0.2"
                         axis_turn="RIGHT_JOYSTICK_X" scale_turn="0.2"
@@ -38,12 +38,22 @@ Any number of addational parameters can be defined. It's up to the command to co
                         deadzone="0.08"
                 />
 
-<!--
-                <defaultCommand subsystemID="joint1" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
-                <defaultCommand subsystemID="joint2" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
-                <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default"></defaultCommand> -->
+                <button button="A" command="SwerveDrive_Relative" trigger="Pressed"></button>
+
 
                 <!-- <defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="0.1" scaleY="0.1"></defaultCommand> -->
+
+                <!-- <button button="LEFT_SHOULDER" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" setPosition="-10"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" setPosition="10"></button>
+         -->
+
+<!-- 
+                <defaultCommand subsystemID="rotation" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
+                <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
+
+                <button button="LEFT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" incrementPosition="-5"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" incrementPosition="5"></button>
+         -->
 
                 <!-- <button button="A" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" incrementPower=".1"></button>
                 <button button="B" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setPower=".05"></button>
@@ -52,15 +62,13 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="RIGHT_SHOULDER" subsystemID="Turret" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="LEFT_SHOULDER" subsystemID="Turret" command="Motor_Set" trigger="Released" setPower="0"></button> -->
 
-                <button button="A" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" setPosition="200"></button>
-                <button button="A" subsystemID="Shooter" command="Motor_Set" trigger="Released" setPosition="0"></button>
+                <!-- <button button="A" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" setPosition="200"></button>
+                <button button="A" subsystemID="Shooter" command="Motor_Set" trigger="Released" setPosition="0"></button>-->
                 <!-- <button button="X" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setVelocity="100"></button>
                 <button button="Y" subsystemID="IntakeSubsystem" command="Motor_Set" trigger="Pressed" setVelocity="200"></button> -->
                 <!-- <button button="B" command="       " trigger="Held" myParam="Held!B"></button> -->
                 <!-- <button button="A" command="Motor_setPower" trigger="Released" power="0"></button> -->
         
-                <button button="LEFT_SHOULDER" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" incrementPosition="-10"></button>
-                <button button="RIGHT_SHOULDER" subsystemID="Shooter" command="Motor_Set" trigger="Pressed" incrementPosition="10"></button>
-        
+
         </controller>
 </robot>
