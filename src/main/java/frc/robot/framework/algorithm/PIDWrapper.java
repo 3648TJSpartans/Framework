@@ -13,12 +13,14 @@ public class PIDWrapper implements PIDBase{
     public double measuredValue=0;
 
     public PIDWrapper(Element element, MotorBase motor, EncoderBase encoder){
-        
+        try{
         kP=Double.parseDouble(element.getAttribute("kp"));
         kI=Double.parseDouble(element.getAttribute("ki"));
         kD=Double.parseDouble(element.getAttribute("kd"));
         kF=Double.parseDouble(element.getAttribute("kf"));
-
+        }catch (Exception NumberFormatException){
+            throw new NumberFormatException("PIDWrapper Invalid Formats kP: "+kP+" kI: "+kI+" kD: "+kD+" kF: "+ kF);
+        }
         switch (element.getAttribute("type")){
             case "sparkmax":
                 if (!(motor instanceof SparkMaxController)){

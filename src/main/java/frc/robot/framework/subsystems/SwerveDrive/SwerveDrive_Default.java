@@ -52,7 +52,7 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
       if (element.hasAttribute("deadzone"))
         deadzone = Double.parseDouble(element.getAttribute("deadzone"));
     } catch (Exception e){
-      throw new NumberFormatException("SwerveDrive_Default: Could not parse axis_forward,axis_sideways,axis_turn,deadzone,fieldRelative");
+      throw new NumberFormatException("SwerveDrive_Default: Could not parse axis_forward: "+axis_forward+" axis_sideways: "+axis_forward+" axis_turn: "+ axis_turn+ " deadzone: ");
     }
     try{
       if (myElement.getAttribute("scale_forward") != "")
@@ -62,7 +62,7 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
       if (myElement.getAttribute("scale_turn") != "")
         scale_turn = Double.parseDouble(myElement.getAttribute("scale_turn"));
     } catch (Exception e){
-      throw new NumberFormatException("SwerveDrive_Default: Could not parse scale_forward,scale_sideways,scale_turn");
+      throw new NumberFormatException("SwerveDrive_Default: Could not parse scale_forward: "+scale_forward+" scale_sideway: "+scale_sideway+" scale_turn: "+scale_turn);
     }
   }
 

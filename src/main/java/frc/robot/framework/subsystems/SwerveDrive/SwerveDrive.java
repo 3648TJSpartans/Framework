@@ -107,15 +107,14 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 xController = Double.parseDouble(element.getAttribute("xController"));
                 yController = Double.parseDouble(element.getAttribute("yController"));
                 thetaController = Double.parseDouble(element.getAttribute("thetaController"));
-            } catch (Exception e) {
-                System.out.println(
+            } catch (Exception NumberFormatException) {
+                throw new NumberFormatException(
                         "Invalid Format on Swerve Drive Subsystem on xController:" + xController + "yController: "
                                 + yController + "thetaController: " + thetaController + " not supported varible type");
             }
         } else if (element.hasAttribute("xController") || element.hasAttribute("yController")
                 || element.hasAttribute("thetaController")) {
-            System.out
-                    .println("Invalid Fields on SwerveDrive Subsystem on xController: " + xController + "yController: "
+            throw new NumberFormatException("Invalid Fields on SwerveDrive Subsystem on xController: " + xController + "yController: "
                             + yController + "thetaController: " + thetaController + " not supported varible type");
         }
         m_controller = new HolonomicDriveController(

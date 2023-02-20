@@ -22,6 +22,7 @@ public class SparkMaxPID implements PIDBase{
     public SparkMaxPID(Element element, SparkMaxController motor) {
         double kP = 0, kI = 0, kD = 0, kF = 0;
 
+        try{
         if(!element.getAttribute("kp").isEmpty()){
             kP=Double.parseDouble(element.getAttribute("kp"));
         }
@@ -34,7 +35,9 @@ public class SparkMaxPID implements PIDBase{
         if(!element.getAttribute("kf").isEmpty()){
             kF=Double.parseDouble(element.getAttribute("kf"));
         }
-        
+    } catch (Exception NumberFormatException){
+        throw new NumberFormatException("SparkMaxPID Invalid Formats kP: "+kP+" kI: "+kI+" kD: "+kD+" kF: "+ kF);
+    }
         
         
         

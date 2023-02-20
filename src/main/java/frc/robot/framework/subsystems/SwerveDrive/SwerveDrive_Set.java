@@ -67,11 +67,11 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
             try{
             kMaxSpeedMetersPerSecond = Double.parseDouble(element.getAttribute("setMaxSpeed"));
             kMaxAccelerationMetersPerSecondSquared = Double.parseDouble(element.getAttribute("setMaxAcceleration"));
-            }catch (Exception e){
-                System.out.println("Invalid Format on SwerveDrive_Set Subsystem on setMaxSpeed: "+ kMaxSpeedMetersPerSecond+"setMaxAcceleration: "+kMaxAccelerationMetersPerSecondSquared+" not supported varible type");
+            }catch (Exception NumberFormatException){
+                throw new NumberFormatException("Invalid Format on SwerveDrive_Set Subsystem on setMaxSpeed: "+ kMaxSpeedMetersPerSecond+"setMaxAcceleration: "+kMaxAccelerationMetersPerSecondSquared+" not supported varible type");
             }
         }else if(element.hasAttribute("setMaxSpeed") || element.hasAttribute("setMaxAcceleration")){
-            System.out.println("Invalid Fields on SwerveDrive_Set Subsystem on setMaxSpeed: "+ kMaxSpeedMetersPerSecond+"setMaxAcceleration: "+kMaxAccelerationMetersPerSecondSquared);
+            throw new NumberFormatException("Invalid Fields on SwerveDrive_Set Subsystem on setMaxSpeed: "+ kMaxSpeedMetersPerSecond+"setMaxAcceleration: "+kMaxAccelerationMetersPerSecondSquared);
         }
 
         TrajectoryConfig config = new TrajectoryConfig(
@@ -91,13 +91,13 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
            desired_xTranslation =Double.parseDouble( element.getAttribute("xTranslation"));
            desired_yTranslation =Double.parseDouble( element.getAttribute("yTranslation"));
            desired_degree = Double.parseDouble(element.getAttribute("heading"));
-            } catch (Exception e){
-                System.out.println("Invalid Format on SwerveDrive_Set Subsystem on xTranslation: "+ desired_xTranslation+"yTranslation: "+desired_yTranslation+" heading: "+desired_degree+" not supported varible type");
+            } catch (Exception NumberFormatException){
+                throw new NumberFormatException("Invalid Format on SwerveDrive_Set Subsystem on xTranslation: "+ desired_xTranslation+"yTranslation: "+desired_yTranslation+" heading: "+desired_degree+" not supported varible type");
             }
         }
         if (element.hasAttribute("yTranslation") || element.hasAttribute("xTranslation") || (element.hasAttribute("xTranslation") && element.hasAttribute("yTranslation"))||
         (element.hasAttribute("xTranslation") && element.hasAttribute("heading")) || (element.hasAttribute("yTranslation") && element.hasAttribute("heading"))) {
-            System.out.println("Invalid Fields on SwerveDrive_Set Subsystem on xTranslation: "+ desired_xTranslation+"yTranslation: "+desired_yTranslation+" heading: "+desired_degree);
+            throw new NumberFormatException("Invalid Fields on SwerveDrive_Set Subsystem on xTranslation: "+ desired_xTranslation+"yTranslation: "+desired_yTranslation+" heading: "+desired_degree);
         }
         Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
