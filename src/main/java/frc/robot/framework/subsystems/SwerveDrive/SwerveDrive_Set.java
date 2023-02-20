@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import edu.wpi.first.wpilibj.Timer;
 import frc.robot.framework.robot.*;
+import frc.robot.framework.vision.Limelight;
 public class SwerveDrive_Set extends CommandBase implements RobotXML{
     private static final TrajectoryConfig TrajectoryConfig = null;
     private SwerveDrive swerveDrive;
@@ -32,6 +33,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
     private final Timer m_timer = new Timer();
     private double kMaxSpeedMetersPerSecond;
     private double kMaxAccelerationMetersPerSecondSquared;
+
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
     public static final double kWheelBase = Units.inchesToMeters(26.5);
    
@@ -83,6 +85,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
             //yAbsolute
 
             //add parameters for rotation/speed..?
+
         if (element.hasAttribute("xTranslation") && element.hasAttribute("yTranslation") && element.hasAttribute("heading")) {
             try{
            desired_xTranslation =Double.parseDouble( element.getAttribute("xTranslation"));
@@ -103,7 +106,6 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
             config);
             
        swerveDrive.setCommandTrajectory(tragTrajectory,m_timer);
-        
     }
     @Override
     public void end(boolean interrupted) {

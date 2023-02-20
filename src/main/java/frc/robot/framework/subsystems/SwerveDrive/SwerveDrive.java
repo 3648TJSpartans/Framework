@@ -4,6 +4,7 @@
 
 package frc.robot.framework.subsystems.SwerveDrive;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -23,6 +24,8 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.Timer;
@@ -50,12 +53,13 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double maxAngularSpeed;
     private double maxSpeedMetersPerSecond;
     SwerveDriveOdometry m_odometry;
-    private double xController = 1;
-    private double yController = 1;
-    private double thetaController = 1;
-
     public boolean fieldRelative = false;
 
+    private double xController=1;
+    private double yController=1;
+    private double thetaController=1;
+    Trajectory tragTrajectory;
+    double desiredx;
     private SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
             new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -315,6 +319,20 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         m_backLeft.setDesiredState(targetModuleStates[2]);
         m_backRight.setDesiredState(targetModuleStates[3]);
     }
+    public void setLimelightTrajectory(Trajectory tragTrajectory, Timer m_timer){
+        var desiredState = tragTrajectory.sample(m_timer.get());
+        Rotation2d m_desiredRotation = desiredState.poseMeters.getRotation();
+        var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState, m_desiredRotation);
+        
+        m_controller.calculate(getPose(), desiredState, m_desiredRotation);
+
+        var targetModuleStates = driveKinematics.toSwerveModuleStates(targetChassisSpeeds);
+        m_frontLeft.setDesiredState(targetModuleStates[0]);
+        m_frontRight.setDesiredState(targetModuleStates[1]);
+        m_backLeft.setDesiredState(targetModuleStates[2]);
+        m_backRight.setDesiredState(targetModuleStates[3]);
+        }
+    
 
     @Override
     public void ReadXML(Element node) {
@@ -327,5 +345,5 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         // TODO Auto-generated method stub
 
     }
-
 }
+

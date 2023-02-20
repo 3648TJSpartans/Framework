@@ -12,7 +12,7 @@ public class Limelight implements RobotXML {
 
     private static double cameraHeight, targetHeight, cameraAngle;
 
-    public void Limelight(Element element) {
+    public Limelight(Element element) {
         ReadXML(element);
     }
 
