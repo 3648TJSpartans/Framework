@@ -31,48 +31,48 @@
 <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5" maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" xController="1" yController="1" thetaController="1">
 
         <module id="front_right" angularOffset="0">
-            <motor id="drive" controller="sparkmax" port="2" idleMode="break">
+            <motor id="drive" controller="sparkmax" port="8" idleMode="break"> <!--Mod 1-->
                 <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
                 <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
             </motor>
-            <motor id="turn" controller="sparkmax" port="1" idleMode="break" inverted="true">
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586"/>
+            <motor id="turn" controller="sparkmax" port="7" idleMode="break" inverted="true">
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="5.4241993"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
         </module>
 
-        <module id="back_right" angularOffset="1.5707963267948966">
-            <motor id="drive" controller="sparkmax" port="4" idleMode="break">
-                <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
-                <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
-            </motor>
-            <motor id="turn" controller="sparkmax" port="3" idleMode="break" inverted="true">
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586"/>
-                <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
-                    setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
-            </motor>
-        </module>
-
-        <module id="front_left" angularOffset="-1.5707963267948966">
+        <module id="back_right" angularOffset="1.5707963267948966"> <!--Mod 8-->
             <motor id="drive" controller="sparkmax" port="6" idleMode="break">
                 <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
                 <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
             </motor>
             <motor id="turn" controller="sparkmax" port="5" idleMode="break" inverted="true">
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="3.2792308"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
         </module>
 
-        <module id="back_left" angularOffset="3.141592653589793">
-             <motor id="drive" controller="sparkmax" port="8" idleMode="break">
+        <module id="front_left" angularOffset="-1.5707963267948966"> <!--Mod 4-->
+            <motor id="drive" controller="sparkmax" port="4" idleMode="break">
                 <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
                 <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
             </motor>
-            <motor id="turn" controller="sparkmax" port="7" idleMode="break" inverted="true">
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586"/>
+            <motor id="turn" controller="sparkmax" port="3" idleMode="break" inverted="true">
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="2.3476084"/>
+                <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
+                    setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
+            </motor>
+        </module>
+
+        <module id="back_left" angularOffset="3.141592653589793"> <!--Mod 5-->
+             <motor id="drive" controller="sparkmax" port="2" idleMode="break">
+                <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
+                <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
+            </motor>
+            <motor id="turn" controller="sparkmax" port="1" idleMode="break" inverted="true">
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="3.5489998"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>

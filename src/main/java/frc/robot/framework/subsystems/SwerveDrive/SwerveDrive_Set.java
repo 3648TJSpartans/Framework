@@ -62,8 +62,14 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
     @Override
     public void execute() {
         if(element.hasAttribute("setMaxSpeed") && element.hasAttribute("setMaxAcceleration")){
+            try{
             kMaxSpeedMetersPerSecond = Double.parseDouble(element.getAttribute("setMaxSpeed"));
             kMaxAccelerationMetersPerSecondSquared = Double.parseDouble(element.getAttribute("setMaxAcceleration"));
+            }catch (Exception e){
+                System.out.println("Invalid Format on SwerveDrive_Set Subsystem on setMaxSpeed: "+ kMaxSpeedMetersPerSecond+"setMaxAcceleration: "+kMaxAccelerationMetersPerSecondSquared+" not supported varible type");
+            }
+        }else if(element.hasAttribute("setMaxSpeed") || element.hasAttribute("setMaxAcceleration")){
+            System.out.println("Invalid Fields on SwerveDrive_Set Subsystem on setMaxSpeed: "+ kMaxSpeedMetersPerSecond+"setMaxAcceleration: "+kMaxAccelerationMetersPerSecondSquared);
         }
 
         TrajectoryConfig config = new TrajectoryConfig(
