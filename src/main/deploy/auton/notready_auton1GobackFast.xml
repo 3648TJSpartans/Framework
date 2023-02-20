@@ -5,7 +5,7 @@
     <auton id="auton1" nextstep="start">
         <SequentialCommandGroup id="start" firststep="thing">
             <command type="SwerveDrive_Set" id="test1" subsystemID="SwerveDrive" nextstep="stop" 
-            xTranslation ="1" yTranslation = "0" heading="90"/>
+            xTranslation ="1" yTranslation = "0" heading="90"/ setMaxSpeed = "3" setMaxAcceleration = "3"/>
             <!-- <command type="TankDrive_Set" id="forward1" subsystemID="TankDrive" nextstep="stop"
                 setInputTurn="0.3" setInputForward="0.3" delayLength="3" />
 
