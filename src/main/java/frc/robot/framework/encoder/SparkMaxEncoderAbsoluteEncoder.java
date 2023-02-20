@@ -39,7 +39,7 @@ public class SparkMaxEncoderAbsoluteEncoder extends EncoderController implements
 
     @Override
     public void setInverted(boolean inverted) {
-        super.setInverted(inverted);   
+        encoder.setInverted(inverted);   
     }
 
     @Override

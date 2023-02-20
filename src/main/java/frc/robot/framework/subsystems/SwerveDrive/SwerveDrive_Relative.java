@@ -23,10 +23,10 @@ public class SwerveDrive_Relative extends CommandBase implements RobotXML {
   @Override
   public void execute() {
       try{
-        if(swerveDriveSubsystem.fieldRelative){
-          swerveDriveSubsystem.teleFieldRelative(false);
+        if(swerveDriveSubsystem.getTeleFieldRelative()){
+          swerveDriveSubsystem.setTeleFieldRelative(false);
         }else{
-          swerveDriveSubsystem.teleFieldRelative(true);
+          swerveDriveSubsystem.setTeleFieldRelative(true);
         }
       }catch(Exception e){
         throw new NumberFormatException("SwerveDrive_Relative: Error in execute");

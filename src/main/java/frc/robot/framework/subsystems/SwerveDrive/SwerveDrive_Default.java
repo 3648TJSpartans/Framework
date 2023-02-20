@@ -24,7 +24,7 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
   private double scale_turn = 1;
   private double deadzone=.08;
 
-  private double x,y,turning=0;
+  private double output_forward,output_sideway,output_turn=0;
 
 
 
@@ -68,24 +68,26 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
 
   @Override
   public void execute() {
-
+    //FRC coordinates are Y is down the field long ways. X is across the field short ways. Because of that and swerve uses wpi code, forward is actually sideways.
+    //Instead of confusing people writing xml, we will flip in teleOPInput
     if (Math.abs(myController.getAxis(axis_sideway))>deadzone){
-      x = myController.getAxis(axis_sideway)*scale_sideway;
+      output_sideway = myController.getAxis(axis_sideway)*scale_sideway;
     }else{
-      x = 0;
+      output_sideway = 0;
     }
     if (Math.abs(myController.getAxis(axis_forward))>deadzone){
-      y = myController.getAxis(axis_forward)*scale_forward;
+      output_forward = myController.getAxis(axis_forward)*scale_forward;
     }else{
-      y = 0;
+      output_forward = 0;
     }
     if (Math.abs(myController.getAxis(axis_turn))>deadzone){
-      turning = myController.getAxis(axis_turn)*scale_turn;
+      output_turn = myController.getAxis(axis_turn)*scale_turn;
     }else{
-       turning = 0;
+       output_turn = 0;
     }
 
-    swerveDriveSubsystem.teleOpInput(x, y, turning);
+    //Now send the original coordinates over in X/Y
+    swerveDriveSubsystem.teleOpInput(-output_sideway, -output_forward, -output_turn, false, false);
   }
 
   @Override

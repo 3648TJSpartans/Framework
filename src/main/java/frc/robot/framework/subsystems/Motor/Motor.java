@@ -53,18 +53,18 @@ public class Motor extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
-        if (encoder != null && Math.random() > .9) {
-            System.out.println("Position:" + encoder.getPosition() +" Velocity:" + encoder.getVelocity());
-        }
+        // if (encoder != null && Math.random() > .9) {
+        //     System.out.println("Position:" + encoder.getPosition() +" Velocity:" + encoder.getVelocity());
+        // }
 
         for (String motorId : subsystemColection.motors.GetAllMotorIDs()) {
             if (subsystemColection.encoders.GetAllEncoderIDs().size()>0){
                 if(encoder.getPosition() > maxposition && element.hasAttribute("maxPosition")) {
                     subsystemColection.motors.setOutput(motorId, maxposition, CommandMode.POSITION);
-                    System.out.println("Max position reached, setting to max position");
+                    //System.out.println("Max position reached, setting to max position");
                 }else if(encoder.getPosition() < minposition && element.hasAttribute("minPosition")) {
                     subsystemColection.motors.setOutput(motorId, minposition, CommandMode.POSITION);
-                    System.out.println("Min position reached, setting to min position");
+                    //System.out.println("Min position reached, setting to min position");
                 }
 
                 if(mode == CommandMode.VELOCITY && maxVelocity != 0) {
