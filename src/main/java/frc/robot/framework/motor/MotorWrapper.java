@@ -22,7 +22,11 @@ public class MotorWrapper implements MotorBase {
             motor = createMotorBase(element, collection);
             boolean invertedMotor = false;
             if (motorElement.hasAttribute("inverted")) {
+                try{
                 invertedMotor = (Boolean.parseBoolean(motorElement.getAttribute("inverted")));
+                } catch (Exception NumberFormatException){
+                    throw new NumberFormatException("Motor Wrapper Invalid Formats invertedMotor: "+invertedMotor);
+                }
             }
             motor.setInverted(invertedMotor);
         } else {

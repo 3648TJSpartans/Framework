@@ -20,20 +20,22 @@ public class EncoderWrapper implements EncoderBase {
         }
 
         encoder = getEncoderType(encoderType, portOne, portTwo);
-        if (!element.getAttribute("distance_per_pulse").isEmpty()) {
-            encoder.setDistancePerPulse(Double.parseDouble(element.getAttribute("distance_per_pulse")));
-        }
 
+        //Only applies to relative encoders
         if ( element.hasAttribute("setPosition") ) {
             encoder.setPosition(Double.parseDouble(element.getAttribute("setPosition")));
         }
+        parseXMLHelper(element);
+    }
 
-        boolean invertedEncoder = false;
-
-        if (element.hasAttribute("inverted")) {
-            invertedEncoder = (Boolean.parseBoolean(element.getAttribute("inverted")));
+    private void parseXMLHelper(Element element){
+        if (element.hasAttribute("inverted") && Boolean.parseBoolean(element.getAttribute("inverted"))) {
+            encoder.setInverted(true);
         }
-        encoder.setInverted(invertedEncoder);
+        
+        if (!element.getAttribute("distance_per_pulse").isEmpty()) {
+            encoder.setDistancePerPulse(Double.parseDouble(element.getAttribute("distance_per_pulse")));
+        }
     }
 
     public EncoderWrapper(Element element, EncoderBase encoderBase) {
@@ -41,6 +43,7 @@ public class EncoderWrapper implements EncoderBase {
         if (!element.getAttribute("distance_per_pulse").isEmpty()) {
             encoder.setDistancePerPulse(Double.parseDouble(element.getAttribute("distance_per_pulse")));
         }
+        parseXMLHelper(element);
     }
 
     private EncoderBase getEncoderType(String encoderType, int portOne, int portTwo) {

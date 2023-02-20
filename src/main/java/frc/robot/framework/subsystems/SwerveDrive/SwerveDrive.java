@@ -4,6 +4,7 @@
 
 package frc.robot.framework.subsystems.SwerveDrive;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -14,6 +15,7 @@ import org.w3c.dom.NodeList;
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
+import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.geometry.Translation2d;
@@ -23,8 +25,11 @@ import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import edu.wpi.first.math.trajectory.Trajectory;
+import edu.wpi.first.math.trajectory.TrajectoryConfig;
+import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
@@ -46,21 +51,29 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private Element element;
     private SubsystemCollection subsystemColection;
     private ShuffleboardHandler tab;
+
     private HolonomicDriveController m_controller;
     private double maxAngularSpeed;
     private double maxSpeedMetersPerSecond;
     SwerveDriveOdometry m_odometry;
-    private double xController = 1;
-    private double yController = 1;
-    private double thetaController = 1;
 
-    public boolean fieldRelative = false;
+    private double xController=1;
+    private double yController=1;
+    private double thetaController=1;
+    private final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
+            new Translation2d(kWheelBase / 2, kTrackWidth / 2), // FRONT LEFT
+            new Translation2d(kWheelBase / 2, -kTrackWidth / 2), // FRONT RIGHT
+            new Translation2d(-kWheelBase / 2, kTrackWidth / 2), // BACK LEFT
+            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2)); // BACK RIGHT
 
-    private SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
-            new Translation2d(kWheelBase / 2, -kTrackWidth / 2),
-            new Translation2d(kWheelBase / 2, kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, -kTrackWidth / 2),
-            new Translation2d(-kWheelBase / 2, kTrackWidth / 2));
+    private double m_currentRotation = 0.0;
+    private double m_currentTranslationDir = 0.0;
+    private double m_currentTranslationMag = 0.0;
+    public boolean teleFieldRelative;
+    
+    private SlewRateLimiter m_magLimiter = new SlewRateLimiter(1.8);
+    private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(2.0);
+    private double m_prevTime = WPIUtilJNI.now() * 1e-6;
 
     private String[] headers = { "Time", "Subsystem", "controlMode", "FRspeed", "FRrad", "FLspeed", "FLrad", "BRspeed",
             "BRrad", "BLspeed", "BLrad" };
@@ -94,15 +107,14 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 xController = Double.parseDouble(element.getAttribute("xController"));
                 yController = Double.parseDouble(element.getAttribute("yController"));
                 thetaController = Double.parseDouble(element.getAttribute("thetaController"));
-            } catch (Exception e) {
-                System.out.println(
+            } catch (Exception NumberFormatException) {
+                throw new NumberFormatException(
                         "Invalid Format on Swerve Drive Subsystem on xController:" + xController + "yController: "
                                 + yController + "thetaController: " + thetaController + " not supported varible type");
             }
         } else if (element.hasAttribute("xController") || element.hasAttribute("yController")
                 || element.hasAttribute("thetaController")) {
-            System.out
-                    .println("Invalid Fields on SwerveDrive Subsystem on xController: " + xController + "yController: "
+            throw new NumberFormatException("Invalid Fields on SwerveDrive Subsystem on xController: " + xController + "yController: "
                             + yController + "thetaController: " + thetaController + " not supported varible type");
         }
         m_controller = new HolonomicDriveController(
@@ -153,13 +165,10 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         rot *= maxAngularSpeed;
 
         var swerveModuleStates = driveKinematics.toSwerveModuleStates(
-                fieldRelative
-                        ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-                                Rotation2d.fromDegrees(getGyroAngle()))
-                        : new ChassisSpeeds(xSpeed, ySpeed, rot));
-        SwerveDriveKinematics.desaturateWheelSpeeds(
-                swerveModuleStates, maxSpeedMetersPerSecond);
-        System.out.print(swerveModuleStates[1]);
+            fieldRelative ?
+                ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot, Rotation2d.fromDegrees(getGyroAngle())):
+                new ChassisSpeeds(xSpeed, ySpeed, rot));
+        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, maxSpeedMetersPerSecond);
         m_frontLeft.setDesiredState(swerveModuleStates[0]);
         m_frontRight.setDesiredState(swerveModuleStates[1]);
         m_backLeft.setDesiredState(swerveModuleStates[2]);
@@ -241,23 +250,80 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         }
     }
 
-    public void teleFieldRelative(boolean fieldRelative) {
-        this.fieldRelative = fieldRelative;
+    public void setTeleFieldRelative(boolean fieldRelative) {
+        this.teleFieldRelative = fieldRelative;
     }
 
-    public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation) {
+    public boolean getTeleFieldRelative(){
+        return teleFieldRelative;
+    }
+
+    public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation, boolean input_fieldRelative, boolean rateLimit) {
+
+        double xSpeedCommanded;
+        double ySpeedCommanded;
+
+        if (rateLimit) {
+        // Convert XY to polar for rate limiting
+        double inputTranslationDir = Math.atan2(input_ySpeed, input_xSpeed);
+        double inputTranslationMag = Math.sqrt(Math.pow(input_xSpeed, 2) + Math.pow(input_ySpeed, 2));
+
+        // Calculate the direction slew rate based on an estimate of the lateral acceleration
+        double directionSlewRate;
+        if (m_currentTranslationMag != 0.0) {
+            directionSlewRate = Math.abs(2.0 / m_currentTranslationMag);
+        } else {
+            directionSlewRate = 500.0; //some high number that means the slew rate is effectively instantaneous
+        }
+        
+
+        double currentTime = WPIUtilJNI.now() * 1e-6;
+        double elapsedTime = currentTime - m_prevTime;
+        double angleDif = SwerveUtils.AngleDifference(inputTranslationDir, m_currentTranslationDir);
+        if (angleDif < 0.45*Math.PI) {
+            m_currentTranslationDir = SwerveUtils.StepTowardsCircular(m_currentTranslationDir, inputTranslationDir, directionSlewRate * elapsedTime);
+            m_currentTranslationMag = m_magLimiter.calculate(inputTranslationMag);
+        }
+        else if (angleDif > 0.85*Math.PI) {
+            if (m_currentTranslationMag > 1e-4) { //some small number to avoid floating-point errors with equality checking
+            // keep currentTranslationDir unchanged
+            m_currentTranslationMag = m_magLimiter.calculate(0.0);
+            }
+            else {
+            m_currentTranslationDir = SwerveUtils.WrapAngle(m_currentTranslationDir + Math.PI);
+            m_currentTranslationMag = m_magLimiter.calculate(inputTranslationMag);
+            }
+        }
+        else {
+            m_currentTranslationDir = SwerveUtils.StepTowardsCircular(m_currentTranslationDir, inputTranslationDir, directionSlewRate * elapsedTime);
+            m_currentTranslationMag = m_magLimiter.calculate(0.0);
+        }
+        m_prevTime = currentTime;
+        
+        xSpeedCommanded = m_currentTranslationMag * Math.cos(m_currentTranslationDir);
+        ySpeedCommanded = m_currentTranslationMag * Math.sin(m_currentTranslationDir);
+        m_currentRotation = m_rotLimiter.calculate(input_rotation);
+
+
+        }
+        else {
+            xSpeedCommanded = input_xSpeed;
+            ySpeedCommanded = input_ySpeed;
+            m_currentRotation = input_rotation;
+        }
+
         // Adjust input based on max speed
-        input_xSpeed *= maxSpeedMetersPerSecond;
-        input_ySpeed *= maxSpeedMetersPerSecond;
-        input_rotation *= maxAngularSpeed;
+        double xSpeedDelivered =xSpeedCommanded * maxSpeedMetersPerSecond;
+        double ySpeedDelivered = ySpeedCommanded * maxSpeedMetersPerSecond;
+        double rotDelivered = m_currentRotation * maxAngularSpeed;
 
         var swerveModuleStates = driveKinematics.toSwerveModuleStates(
-            fieldRelative
-                        ? ChassisSpeeds.fromFieldRelativeSpeeds(input_xSpeed, input_ySpeed, input_rotation,
-                                Rotation2d.fromDegrees(getGyroAngle()))
-                        : new ChassisSpeeds(input_xSpeed, input_ySpeed, input_rotation));
+            input_fieldRelative ?
+            ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered, Rotation2d.fromDegrees(getGyroAngle())):
+            new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
         SwerveDriveKinematics.desaturateWheelSpeeds(
-                swerveModuleStates, maxSpeedMetersPerSecond);
+            swerveModuleStates, maxSpeedMetersPerSecond);
+
         m_frontLeft.setDesiredState(swerveModuleStates[0]);
         m_frontRight.setDesiredState(swerveModuleStates[1]);
         m_backLeft.setDesiredState(swerveModuleStates[2]);
@@ -315,6 +381,20 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         m_backLeft.setDesiredState(targetModuleStates[2]);
         m_backRight.setDesiredState(targetModuleStates[3]);
     }
+    public void setLimelightTrajectory(Trajectory tragTrajectory, Timer m_timer){
+        var desiredState = tragTrajectory.sample(m_timer.get());
+        Rotation2d m_desiredRotation = desiredState.poseMeters.getRotation();
+        var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState, m_desiredRotation);
+        
+        m_controller.calculate(getPose(), desiredState, m_desiredRotation);
+
+        var targetModuleStates = driveKinematics.toSwerveModuleStates(targetChassisSpeeds);
+        m_frontLeft.setDesiredState(targetModuleStates[0]);
+        m_frontRight.setDesiredState(targetModuleStates[1]);
+        m_backLeft.setDesiredState(targetModuleStates[2]);
+        m_backRight.setDesiredState(targetModuleStates[3]);
+        }
+    
 
     @Override
     public void ReadXML(Element node) {
@@ -327,5 +407,5 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         // TODO Auto-generated method stub
 
     }
-
 }
+

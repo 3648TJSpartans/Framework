@@ -12,7 +12,7 @@ public class Limelight implements RobotXML {
 
     private static double cameraHeight, targetHeight, cameraAngle;
 
-    public void Limelight(Element element) {
+    public Limelight(Element element) {
         ReadXML(element);
     }
 
@@ -164,7 +164,8 @@ public class Limelight implements RobotXML {
             cameraHeight = Double.parseDouble(node.getAttributes().getNamedItem("cameraheight").getNodeValue());
             cameraAngle = Double.parseDouble(node.getAttributes().getNamedItem("cameraangle").getNodeValue());
         } catch (Exception e) {
-            System.out.println("Error reading Limelight XML");
+            throw new NumberFormatException("Error reading Limelight XML. Invalid Feilds on targetheight: "+ targetHeight+" cameraHeight: "+cameraHeight
+            +" cameraAngle: "+cameraAngle);
         }
     }
 
