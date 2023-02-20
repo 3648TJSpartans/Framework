@@ -18,6 +18,7 @@ public class TankDrive_Default extends CommandBase implements RobotXML {
   private int axisNumberForward = -1;
   private int axisNumberLeft = -1;
   private int axisNumberRight = -1;
+  private double deadzone = 0.0;
 
   // <defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y"
   // axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="2"
@@ -37,25 +38,33 @@ public class TankDrive_Default extends CommandBase implements RobotXML {
     this.addRequirements(tankDrivSubsystem);
 
     CommandScheduler.getInstance().setDefaultCommand(tankDrivSubsystem, this);
-    if (myElement.getAttribute("axisForward") != "")
-      axisNumberForward = myController.GetAxisMap().get(myElement.getAttribute("axisForward"));
-    if (myElement.getAttribute("axisTurn") != "")
-      axisNumberTurn = myController.GetAxisMap().get(myElement.getAttribute("axisTurn"));
-    if (myElement.getAttribute("axisLeft") != "")
-      axisNumberLeft = myController.GetAxisMap().get(myElement.getAttribute("axisLeft"));
-    if (myElement.getAttribute("axisRight") != "")
-      axisNumberRight = myController.GetAxisMap().get(myElement.getAttribute("axisRight"));
+
+    try {
+      if (myElement.getAttribute("axisForward") != "")
+        axisNumberForward = myController.GetAxisMap().get(myElement.getAttribute("axisForward"));
+      if (myElement.getAttribute("axisTurn") != "")
+        axisNumberTurn = myController.GetAxisMap().get(myElement.getAttribute("axisTurn"));
+      if (myElement.getAttribute("axisLeft") != "")
+        axisNumberLeft = myController.GetAxisMap().get(myElement.getAttribute("axisLeft"));
+      if (myElement.getAttribute("axisRight") != "")
+        axisNumberRight = myController.GetAxisMap().get(myElement.getAttribute("axisRight"));
+      if (element.hasAttribute("deadzone"))
+        deadzone = Double.parseDouble(element.getAttribute("deadzone"));
+    } catch (Exception e) {
+      throw new NumberFormatException("TankDrive_Default: Could not parse axisForward,axisTurn,axisLeft,axisRight,deadzone");
+    }
+
   }
 
   @Override
   public void execute() {
-    if (axisNumberTurn != -1)
+    if (axisNumberTurn != -1 && Math.abs(myController.getAxis(axisNumberTurn)) > deadzone)
       tankDrivSubsystem.setInputTurn(myController.getAxis(axisNumberTurn));
-    if (axisNumberForward != -1)
+    if (axisNumberForward != -1 && Math.abs(myController.getAxis(axisNumberTurn)) > deadzone)
       tankDrivSubsystem.setInputForward(myController.getAxis(axisNumberForward));
-    if (axisNumberLeft != -1)
+    if (axisNumberLeft != -1 && Math.abs(myController.getAxis(axisNumberTurn)) > deadzone)
       tankDrivSubsystem.setInputLeft(myController.getAxis(axisNumberLeft));
-    if (axisNumberRight != -1)
+    if (axisNumberRight != -1 && Math.abs(myController.getAxis(axisNumberTurn)) > deadzone)
       tankDrivSubsystem.setInputRight(myController.getAxis(axisNumberRight));
   }
 
