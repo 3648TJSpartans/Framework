@@ -18,7 +18,7 @@ public class Motor_Default extends CommandBase implements RobotXML {
 
   private int axisNumberPower1 = -1;
   private int axisNumberPower2 = -1;
-  private boolean axis1BeingUsed = false;
+  private boolean axis1BeingUsed = true;
   private boolean axis2BeingUsed = false;
   private boolean inverted1 = false;
   private boolean inverted2 = false;
@@ -40,8 +40,14 @@ public class Motor_Default extends CommandBase implements RobotXML {
 
     if (element.hasAttribute("deadzone"))
       deadzone = Double.parseDouble(element.getAttribute("deadzone"));
-    if (element.hasAttribute("axisReference1"))
-      axisNumberPower1 = myController.GetAxisMap().get(element.getAttribute("axisReference1"));
+    if (element.hasAttribute("axisReference1") || element.hasAttribute("axisReference")) {
+      if (element.hasAttribute("axisReference1"))
+        axisNumberPower1 = myController.GetAxisMap().get(element.getAttribute("axisReference1"));
+      else {
+        axisNumberPower1 = myController.GetAxisMap().get(element.getAttribute("axisReference"));
+      }
+
+    }
     if (element.hasAttribute("axisReference2"))
       axisNumberPower2 = myController.GetAxisMap().get(element.getAttribute("axisReference2"));
     if (element.hasAttribute("inverted1"))
@@ -53,14 +59,13 @@ public class Motor_Default extends CommandBase implements RobotXML {
 
   @Override
   public void execute() {
-    
 
     if (!axis2BeingUsed) {
       if (axisNumberPower1 != -1) {
         double input1 = myController.getAxis(axisNumberPower1);
-        if (Math.abs(input1) < deadzone) {
+        if (Math.abs(input1) > deadzone) {
           if (axis1BeingUsed) // Sets it one time. Doesn't keep overriding buttons
-            motorSubsystem.setReference(0, CommandMode.PERCENTAGE);
+            motorSubsystem.setReference(input1, CommandMode.PERCENTAGE);
           axis2BeingUsed = false;
         } else {
           if (inverted1)
@@ -74,9 +79,9 @@ public class Motor_Default extends CommandBase implements RobotXML {
 
     if (axisNumberPower2 != -1) {
       double input2 = myController.getAxis(axisNumberPower2);
-      if (Math.abs(input2) < deadzone) {
+      if (Math.abs(input2) > deadzone) {
         if (axis2BeingUsed) // Sets it one time. Doesn't keep overriding buttons
-          motorSubsystem.setReference(0, CommandMode.PERCENTAGE);
+          motorSubsystem.setReference(input2, CommandMode.PERCENTAGE);
         axis2BeingUsed = false;
       } else {
         if (inverted2)
