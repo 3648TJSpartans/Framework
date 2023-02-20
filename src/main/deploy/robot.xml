@@ -3,14 +3,13 @@
 <robot>
 
 
-    <!-- 
-    <subsystem type="TankDrive" id="TankDrive">
+    <!-- <subsystem type="TankDrive" id="TankDrive">
 
         <motorgroup id="left">
-            <motor id="left1" side="left" controller="sparkmax" port="2" />
+            <motor id="left1" side="left" controller="sparkmax" port="9" />
         </motorgroup>
         <motorgroup id="right">
-            <motor id="right1" side="right" controller="sparkmax" port="8" />
+            <motor id="right1" side="right" controller="sparkmax" port="14" />
         </motorgroup>
     </subsystem> -->
 
@@ -28,39 +27,29 @@
         </motor>
     </subsystem> -->
 
-<subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5" maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" xController="1" yController="1" thetaController="1">
-
-        <module id="front_right" angularOffset="0">
-            <motor id="drive" controller="sparkmax" port="8" idleMode="break"> <!--Mod 1-->
-                <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
-                <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
-            </motor>
-            <motor id="turn" controller="sparkmax" port="7" idleMode="break" inverted="true">
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="5.4241993"/>
-                <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
-                    setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
-            </motor>
-        </module>
-
-        <module id="back_right" angularOffset="1.5707963267948966"> <!--Mod 8-->
-            <motor id="drive" controller="sparkmax" port="6" idleMode="break">
-                <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
-                <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
-            </motor>
-            <motor id="turn" controller="sparkmax" port="5" idleMode="break" inverted="true">
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="3.2792308"/>
-                <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
-                    setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
-            </motor>
-        </module>
+   <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5" maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" xController="1" yController="1" thetaController="1">
 
         <module id="front_left" angularOffset="-1.5707963267948966"> <!--Mod 4-->
             <motor id="drive" controller="sparkmax" port="4" idleMode="break">
                 <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
                 <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
             </motor>
-            <motor id="turn" controller="sparkmax" port="3" idleMode="break" inverted="true">
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="2.3476084"/>
+            <motor id="turn" controller="sparkmax" port="3" idleMode="break">
+                <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="-0.793984254"/>
+                <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
+                    setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
+            </motor>
+        </module>
+        
+        <module id="front_right" angularOffset="0">
+            <motor id="drive" controller="sparkmax" port="8" idleMode="break"> <!--Mod 1-->
+                <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
+                <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
+            </motor>
+            <motor id="turn" controller="sparkmax" port="7" idleMode="break">
+                <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="-0.8589860"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
@@ -71,8 +60,22 @@
                 <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
                 <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
             </motor>
-            <motor id="turn" controller="sparkmax" port="1" idleMode="break" inverted="true">
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="3.5489998"/>
+            <motor id="turn" controller="sparkmax" port="1" idleMode="break">
+                <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="0.4074071"/>
+                <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
+                    setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
+            </motor>
+        </module>
+        
+        <module id="back_right" angularOffset="1.5707963267948966"> <!--Mod 8-->
+            <motor id="drive" controller="sparkmax" port="6" idleMode="break">
+                <encoder id="driveEncoder" type="relative" port="encoder" distance_per_pulse="0.04715244973706135" />
+                <pid id="PID" encoderPort="encoder" kp="0.04" ki="0" kd="0" kf="0.2081708518741928" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="0.04715244973706135" />
+            </motor>
+            <motor id="turn" controller="sparkmax" port="5" idleMode="break">
+                <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="3.2792308"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
@@ -82,47 +85,44 @@
 
     </subsystem>
 
-    <subsystem type="Motor" id="joint1" maxPosition="21" minPosition="-21">
-        <motor id="joint1" controller="sparkpwm" port="13" >
-            <encoder id="jointEncoder" port="encoder" port_one="13" />
+    <subsystem type="Motor" id="rotation">
+        <motor id="joint1" controller="sparkpwm" port="10" >
+            <encoder id="jointEncoder" port="encoder" />
             <pid id="PID" kp="0.01" encoderPort="encoder" />
         </motor>
 
     </subsystem>
 
-    <subsystem type="Motor" id="joint2" maxPosition="21" minPosition="-21">
-        <motor id="joint1" controller="sparkpwm" port="14">
-            <encoder id="jointEncoder" port="encoder" port_one="14" />
+    <subsystem type="Motor" id="wrist" >
+        <motor id="joint1" controller="sparkpwm" port="1">
             <pid id="PID" kp="0.01" encoderPort="encoder" />
         </motor>
     </subsystem>
 
-    <subsystem type="Motor" id="claw" maxPosition="20" minPosition="-5">
-        <motor id="claw1" controller="sparkpwm" port="15">
-            <encoder id="clawEncoder" port="encoder" port_one="15" />
-            <pid id="PID" kp="0.01" encoderPort="encoder" />
-        </motor>
+    <subsystem type="Motor" id="claw">
+        <motor id="claw1" controller="sparkpwm" port="0"/>
     </subsystem>
 
-    <subsystem type="Motor" id="arm" maxPosition="180" minPosition="0">
+    <subsystem type="Motor" id="arm">
         <motorgroup id="arm1">
-            <motor id="left1" side="left" controller="sparkmax" port="10">
+            <motor id="left1" side="left" controller="sparkmax" port="9">
                 <encoder id="leftEncoder" port="encoder" />
-                <pid id="PID" kp="0.01" encoderPort="encoder" distance_per_pulse="173.333333333" />
+                <pid id="PID" kp="0.01" encoderPort="encoder"  />
+                <!--distance_per_pulse="173.333333333"  -->
             </motor>
-            <motor id="right1" side="right" controller="sparkmax" port="11">
+            <motor id="right1" side="right" controller="sparkmax" port="11" inverted="true">
                 <encoder id="rightEncoder" port="encoder" />
-                <pid id="PID" kp="0.01" encoderPort="encoder" distance_per_pulse="173.333333333" />
+                <pid id="PID" kp="0.01" encoderPort="encoder" />
             </motor>
         </motorgroup>
     </subsystem>
 
-    <subsystem type="Motor" id="armChain" maxPosition="13" minPosition="0">
+    <subsystem type="Motor" id="armChain">
         <motor id="armChain1" controller="sparkmax" port="12">
             <encoder id="armChainEncoder" port="encoder" />
             <pid id="PID" kp="0.01" encoderPort="encoder" />
         </motor>
-    </subsystem> -->
+    </subsystem>
 
     <!-- <subsystem type="Motor" id="test">
         <motor id="shooter1" controller="sparkmax" motortype="brushless" port="6" />
@@ -150,15 +150,35 @@
 
     <!-- MIN MAX motor test-->
 
-    <subsystem type="Motor" id="Shooter">
+    <!-- <subsystem type="Motor" id="Shooter">
         <motor id="shooter1" controller="sparkmax" port="16">
             <encoder id="shooterEncoder" port="encoder" port_one="6" />
             <pid id="PID" kp="0.01" encoderPort="encoder" />
         </motor>
-    </subsystem>
+    </subsystem> -->
 
     <!-- <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5"
     maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
         
 -->
+
+
+    <!-- test arm subsystem  only use if other stuff fails-->
+    <!-- <subsystem type="Motor" id="rotation">
+        <motor id="joint1" controller="sparkmax" port="10">
+            <encoder id="jointEncoder" port="encoder" port_one="10" />
+            <pid id="PID" kp="0.01" encoderPort="encoder" />
+        </motor>
+    </subsystem>
+
+    <subsystem type="Motor" id="wrist" >
+        <motor id="joint1" controller="sparkpwm" port="0">
+            <pid id="PID" kp="0.01" encoderPort="encoder" />
+        </motor>
+    </subsystem>
+
+    <subsystem type="Motor" id="claw">
+        <motor id="claw1" controller="sparkpwm" port="1"/>
+    </subsystem> -->
+
 </robot>

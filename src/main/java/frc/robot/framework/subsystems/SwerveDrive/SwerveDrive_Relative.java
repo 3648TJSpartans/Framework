@@ -8,7 +8,6 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.controller.ControllerBase;
 import frc.robot.framework.robot.*;
 
-
 public class SwerveDrive_Relative extends CommandBase implements RobotXML {
 
   private Element myElement;
@@ -20,17 +19,18 @@ public class SwerveDrive_Relative extends CommandBase implements RobotXML {
 
   }
 
+  // dosent work
   @Override
   public void execute() {
-      try{
-        if(swerveDriveSubsystem.fieldRelative){
-          swerveDriveSubsystem.teleFieldRelative(false);
-        }else{
-          swerveDriveSubsystem.teleFieldRelative(true);
-        }
-      }catch(Exception e){
-        throw new NumberFormatException("SwerveDrive_Relative: Error in execute");
+    try {
+      if (swerveDriveSubsystem.fieldRelative) {
+        swerveDriveSubsystem.teleFieldRelative(false);
+      } else {
+        swerveDriveSubsystem.teleFieldRelative(true);
       }
+    } catch (Exception e) {
+      throw new NumberFormatException("SwerveDrive_Relative: Error in execute");
+    }
   }
 
   @Override
