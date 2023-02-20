@@ -60,12 +60,20 @@ public class TankDrive_Default extends CommandBase implements RobotXML {
   public void execute() {
     if (axisNumberTurn != -1 && Math.abs(myController.getAxis(axisNumberTurn)) > deadzone)
       tankDrivSubsystem.setInputTurn(myController.getAxis(axisNumberTurn));
-    if (axisNumberForward != -1 && Math.abs(myController.getAxis(axisNumberTurn)) > deadzone)
+    else
+      tankDrivSubsystem.setInputTurn(0.0);
+    if (axisNumberForward != -1 && Math.abs(myController.getAxis(axisNumberForward)) > deadzone)
       tankDrivSubsystem.setInputForward(myController.getAxis(axisNumberForward));
-    if (axisNumberLeft != -1 && Math.abs(myController.getAxis(axisNumberTurn)) > deadzone)
+    else
+      tankDrivSubsystem.setInputForward(0.0);
+    if (axisNumberLeft != -1 && Math.abs(myController.getAxis(axisNumberLeft)) > deadzone)
       tankDrivSubsystem.setInputLeft(myController.getAxis(axisNumberLeft));
-    if (axisNumberRight != -1 && Math.abs(myController.getAxis(axisNumberTurn)) > deadzone)
+    else
+      tankDrivSubsystem.setInputLeft(0.0);
+    if (axisNumberRight != -1 && Math.abs(myController.getAxis(axisNumberRight)) > deadzone)
       tankDrivSubsystem.setInputRight(myController.getAxis(axisNumberRight));
+    else
+      tankDrivSubsystem.setInputRight(0.0);
   }
 
   @Override
