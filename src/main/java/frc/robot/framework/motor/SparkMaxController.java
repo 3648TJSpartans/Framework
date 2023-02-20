@@ -85,14 +85,35 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                                 throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - countsPerRev: '"+ childElement.getAttribute("countsPerRev") +"'': Invalid value for 'countsPerRev'");
                             }
                         }
+                        
                         if (childElement.hasAttribute("type")){
                             if (childElement.getAttribute("type").toLowerCase().equals("relative")){
                                 data_RelativeEncoder=controller.getAlternateEncoder(countsPerRev);
                                 encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderRelativeEncoder(data_RelativeEncoder)); 
+                                if (childElement.hasAttribute("setPosititon")){
+                                    try{
+                                        encoderWrapper.setPosition(Double.parseDouble(element.getAttribute("setPosition")));
+                                    } catch (NumberFormatException e){
+                                        throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder id: "+ childElement.getAttribute("id") +": Invalid value for 'setPosition'");
+                                    }
+                                }
                             }
-                            else { // absolute encoder
+                            else if (childElement.getAttribute("type").toLowerCase().equals("absolute")){ 
                                 data_AbsoluteEncoder = controller.getAbsoluteEncoder(Type.kDutyCycle);
                                 encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderAbsoluteEncoder(data_AbsoluteEncoder));
+
+                                double zeroOffset=0;
+                                if (childElement.hasAttribute("setZeroOffset")){
+                                    try{
+                                        zeroOffset=Double.parseDouble(childElement.getAttribute("setZeroOffset"));
+                                    } catch (NumberFormatException e){
+                                        throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder id: "+ childElement.getAttribute("id") +": Invalid value for 'setZeroOffset'");
+                                    }
+                                }
+                                encoderWrapper.setPosition(zeroOffset);
+                            }
+                            else {
+                                throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder 'type' is not specified. Only 'data' or 'encoder' ports supported");
                             }
                         }
                         else{
@@ -106,15 +127,6 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     }
                     else{
                         throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder port: "+ childElement.getAttribute("port") +" not supported. Only 'data' or 'encoder' ports supported");
-                    }
-
-
-                    if (childElement.hasAttribute("setPosititon")){
-                        try{
-                            encoderWrapper.setPosition(Double.parseDouble(element.getAttribute("setPosition")));
-                        } catch (NumberFormatException e){
-                            throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder id: "+ childElement.getAttribute("id") +": Invalid value for 'setPosition'");
-                        }
                     }
 
                     collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);

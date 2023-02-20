@@ -45,6 +45,10 @@ public class SparkMaxEncoderAbsoluteEncoder extends EncoderController implements
     @Override
     public void setPosition(double position) {
         encoder.setZeroOffset(position);       
-    }  
+    }
+    
+    public void setZeroOffset(double offset){
+        encoder.setZeroOffset(offset);
+    }
 
 }
