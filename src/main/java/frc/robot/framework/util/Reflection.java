@@ -105,10 +105,15 @@ public class Reflection {
       var temp=(T)(constructor.newInstance(params));
       return temp;
     } catch (Exception e){
+      System.out.println();
+      System.out.println();
       System.out.println(myClass.getName() + ": Error creating object. An error occured in the initalization of the object");
-      e.printStackTrace();
+      e.getCause().printStackTrace();
       System.out.println();
       System.out.println();
+      // for (var errorLine : e.getStackTrace()) {
+      //   System.out.println(errorLine.toString());
+      // }
     }
     return null;
   }
