@@ -24,6 +24,7 @@ public class SwerveAprilCenter extends CommandBase implements RobotXML {
     private double distanceError;
     private double currentY;
     private double desiredx;
+    private double center_offset;
     private double limlight_speed;
     private SwerveDrive swerveDrive;
     private final Timer m_timer = new Timer();
@@ -44,13 +45,22 @@ public class SwerveAprilCenter extends CommandBase implements RobotXML {
     public void execute() {
         currentX = Limelight.getLimelightX();
         currentY = Limelight.getLimelightY();
-        if (myElement.hasAttribute("distanceError") && myElement.hasAttribute("limelight_speed")){
+        if (myElement.hasAttribute("distanceError") && myElement.hasAttribute("limelight_speed") && 
+        myElement.hasAttribute("center_offset")){
+            try{
         distanceError = Double.parseDouble(myElement.getAttribute("distanceError"));
         limlight_speed = Double.parseDouble(myElement.getAttribute("limelight_speed"));
-    }else if (myElement.hasAttribute("distanceError") || myElement.hasAttribute("limelight_speed")){
-        System.out.println(
-                        "Invalid Format on Swerve Drive Subsystem on distanceError:" + distanceError + "limlight_speed: "
-                                + limlight_speed);
+        center_offset = Double.parseDouble(myElement.getAttribute("center_offset"));
+            }catch(Exception NumberFormatException){
+                throw new NumberFormatException(
+                    "Invalid Format on Swerve Drive Subsystem on distanceError:" + distanceError + "limlight_speed: "
+                            + limlight_speed+ "center_offset: "+center_offset);
+            }
+    }else if (myElement.hasAttribute("distanceError") || myElement.hasAttribute("limelight_speed") || myElement.hasAttribute("center_offset")||
+    (myElement.hasAttribute("distanceError") && myElement.hasAttribute("limelight_speed")) || (myElement.hasAttribute("distanceError") && (myElement.hasAttribute("center_offset"))||
+    myElement.hasAttribute("limelight_speed") && myElement.hasAttribute("center_offset"))){
+        throw new NumberFormatException("Invalid Format on Swerve Drive Subsystem on distanceError:" + distanceError + "limlight_speed: "
+                                + limlight_speed+ "center_offset: "+center_offset);
     }
         TrajectoryConfig config = new TrajectoryConfig(3,3);
         if (currentX > distanceError){
@@ -64,8 +74,8 @@ public class SwerveAprilCenter extends CommandBase implements RobotXML {
         }
         Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
                 new Pose2d(0, 0, new Rotation2d(0)),
-                List.of(new Translation2d(0, 0)),
-                new Pose2d(desiredx, 0, new Rotation2d(0)),
+                List.of(new Translation2d(center_offset+desiredx, 0)),
+                new Pose2d(center_offset+desiredx, 0, new Rotation2d(0)),
                 config);
         swerveDrive.setLimelightTrajectory(tragTrajectory, m_timer);
     }
