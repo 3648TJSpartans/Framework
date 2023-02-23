@@ -82,8 +82,8 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="15"></button>
                 
 
-                <!-- <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
-                <defaultCommand subsystemID="amr" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand> -->
+                <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
+                <defaultCommand subsystemID="amr" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
 
         </controller> -->
 </robot>
