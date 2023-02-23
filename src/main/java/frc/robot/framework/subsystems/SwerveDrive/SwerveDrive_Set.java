@@ -56,7 +56,11 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
     }
     public void initialize() {
         startTime = System.currentTimeMillis();
+        try{
         command_timeout = Double.parseDouble((element.getAttribute("timeout")));
+        } catch (Exception NumberFormatException){
+            throw new NumberFormatException("Invalid Format on timeout: "+command_timeout);
+        }
         m_timer.reset();
         m_timer.start();    
     }
