@@ -72,13 +72,18 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
                 <defaultCommand subsystemID="rotation" axisReference1="RIGHT_TRIGGER" axisReference2="RIGHT_TRIGGER" inverted2="true" command="Motor_Default"></defaultCommand>
 
-                <button button="LEFT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="-200"></button>
-                <button button="RIGHT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="200"></button>
-                <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="0.2"></button>
+                <button button="LEFT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="-1000"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="1000"></button>
+                <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="0.1"></button>
                 <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Released" setPower="0"></button>
-                <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="-0.2"></button>
+                <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="-0.1"></button>
                 <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Released" setPower="0"></button>
-                <button button="x" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="-1000"></button>
-                <button button="b" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="1000"></button>
+                <button button="X" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="-15"></button>
+                <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="15"></button>
+                
+
+                <!-- <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand>
+                <defaultCommand subsystemID="amr" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand> -->
+
         </controller> -->
 </robot>
