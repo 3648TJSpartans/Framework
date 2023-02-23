@@ -38,7 +38,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                         deadzone="0.05"
                 />
 
-                <button button="RESTART" subsystemID="SwerveDrive" command="SetRelative" trigger="Pressed"></button>
+                <button button="RESTART" subsystemID="SwerveDrive" command="SwerveDrive_SetRelative" trigger="Pressed"></button>
 
                 <!-- <button button="A" command="Util_Limelight" trigger="Pressed"></button> -->
                 <!-- <defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="0.1" scaleY="0.05" deadzone="0.1"></defaultCommand> -->

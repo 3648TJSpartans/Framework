@@ -95,8 +95,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
                 throw new NumberFormatException("Invalid Format on SwerveDrive_Set Subsystem on xTranslation: "+ desired_xTranslation+"yTranslation: "+desired_yTranslation+" heading: "+desired_degree+" not supported varible type");
             }
         }
-        if (element.hasAttribute("yTranslation") || element.hasAttribute("xTranslation") || (element.hasAttribute("xTranslation") && element.hasAttribute("yTranslation"))||
-        (element.hasAttribute("xTranslation") && element.hasAttribute("heading")) || (element.hasAttribute("yTranslation") && element.hasAttribute("heading"))) {
+        else{
             throw new NumberFormatException("Invalid Fields on SwerveDrive_Set Subsystem on xTranslation: "+ desired_xTranslation+"yTranslation: "+desired_yTranslation+" heading: "+desired_degree);
         }
         Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(

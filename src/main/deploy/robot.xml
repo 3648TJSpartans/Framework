@@ -84,9 +84,9 @@
         <gyro id="swerveGyro" type="ADIS16470" port="0"></gyro>
 
     </subsystem>
+<!--distance_per_pulse="173.333333333"  -->
 
-
-    <subsystem type="Motor" id="rotation">
+    <!-- <subsystem type="Motor" id="rotation">
         <motor id="joint1" controller="sparkpwm" port="12" >
             <encoder id="jointEncoder" port="encoder" />
             <pid id="PID" kp="0.01" encoderPort="encoder" />
@@ -109,7 +109,7 @@
             <motor id="left1" side="left" controller="sparkmax" port="9">
                 <encoder id="leftEncoder" port="encoder" />
                 <pid id="PID" kp="0.01" encoderPort="encoder"  />
-                <!--distance_per_pulse="173.333333333"  -->
+                
             </motor>
             <motor id="right1" side="right" controller="sparkmax" port="10" inverted="true">
                 <encoder id="rightEncoder" port="encoder" />
@@ -123,7 +123,7 @@
             <encoder id="armChainEncoder" port="encoder" />
             <pid id="PID" kp="0.01" encoderPort="encoder" />
         </motor>
-    </subsystem>
+    </subsystem> -->
 
     <!-- <subsystem type="Motor" id="test">
         <motor id="shooter1" controller="sparkmax" motortype="brushless" port="6" />
