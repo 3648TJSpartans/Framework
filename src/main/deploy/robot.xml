@@ -84,9 +84,9 @@
         <gyro id="swerveGyro" type="ADIS16470" port="0"></gyro>
 
     </subsystem>
-<!--distance_per_pulse="173.333333333"  -->
+<!-- distance_per_pulse="173.333333333"   -->
 
-    <!-- <subsystem type="Motor" id="rotation">
+    <subsystem type="Motor" id="rotation">
         <motor id="joint1" controller="sparkpwm" port="12" >
             <encoder id="jointEncoder" port="encoder" />
             <pid id="PID" kp="0.1" encoderPort="encoder" />

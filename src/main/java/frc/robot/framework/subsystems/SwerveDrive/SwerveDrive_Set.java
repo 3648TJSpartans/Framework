@@ -105,7 +105,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
         Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
             new Pose2d(0, 0, new Rotation2d(0)),
             List.of(new Translation2d(desired_xTranslation, desired_yTranslation)),
-            new Pose2d(desired_xTranslation, desired_yTranslation, new Rotation2d(Math.toRadians(desired_degree))),
+            new Pose2d(0, 0, new Rotation2d(Math.toRadians(desired_degree))),
             config);
             
        swerveDrive.setCommandTrajectory(tragTrajectory,m_timer);
