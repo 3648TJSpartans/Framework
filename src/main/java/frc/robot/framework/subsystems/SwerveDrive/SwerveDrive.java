@@ -352,7 +352,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
-
         m_odometry.update(
                 Rotation2d.fromDegrees(getGyroAngle()),
                 new SwerveModulePosition[] {

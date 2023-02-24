@@ -25,7 +25,7 @@ public class TestCommand2 extends CommandBase implements RobotXML{
     public void execute() {
       var diff = System.currentTimeMillis()-start;
       System.out.println("testCommand Time taken:"+diff);
-      aaa();
+  
       start=System.currentTimeMillis();
     }
   
