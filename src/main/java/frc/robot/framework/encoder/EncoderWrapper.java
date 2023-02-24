@@ -4,6 +4,7 @@ import org.w3c.dom.*;
 
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 public class EncoderWrapper implements EncoderBase {
@@ -88,7 +89,14 @@ public class EncoderWrapper implements EncoderBase {
 
     @Override
     public void setPosition(double position) {
-        // TODO Auto-generated method stub
-        
+        encoder.setPosition(position);
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        //builder.setSmartDashboardType("Motor Controller");
+        // builder.setActuator(true);
+        // builder.setSafeState(this::disable);
+        encoder.initSendable(builder);
     }
 }

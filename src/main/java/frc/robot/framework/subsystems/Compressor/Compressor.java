@@ -6,14 +6,14 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import edu.wpi.first.wpilibj.PowerDistribution.ModuleType;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 public class Compressor extends SubsystemBase implements RobotXML{
-    ShuffleboardHandler tab;
+    // ShuffleboardBase tab;
     edu.wpi.first.wpilibj.Compressor compressor;
 
     public Compressor(Element subsystem){
-        tab= new ShuffleboardHandler(subsystem.getAttribute("id"));
         ReadXML(subsystem);
     }
     @Override

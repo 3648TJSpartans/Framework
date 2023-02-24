@@ -5,7 +5,8 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 
 
@@ -13,11 +14,11 @@ public class DigitalInputs{
     private Map<String, DigitalInBase> digitalinputs = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
 
     public DigitalInputs(String subsystemName){
         this.subsystemName = subsystemName;
-        tab = new ShuffleboardHandler(subsystemName.toString());
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
     }
 
     public void put(String id, DigitalInBase digital){
@@ -41,6 +42,6 @@ public class DigitalInputs{
     //limit switches or DIOs
     public Boolean getDIO(String id) {
         DigitalInBase requestedDio = getDio(id);
-        return tab.getEnabled(id, subsystemName) ? requestedDio.getDigitalIn() : false;
+        return tab.getEnabled(id) ? requestedDio.getDigitalIn() : false;
     }
 }

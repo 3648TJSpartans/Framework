@@ -16,6 +16,8 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
 import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.algorithm.PIDWrapper;
 import frc.robot.framework.algorithm.SparkMaxPID;
@@ -28,6 +30,7 @@ import frc.robot.framework.sensor.analoginput.AnalogInBase;
 import frc.robot.framework.sensor.analoginput.AnaloginWrapper;
 import frc.robot.framework.sensor.analoginput.SparkMaxAnalogIn;
 import frc.robot.framework.util.CommandMode;
+import frc.robot.framework.util.ShuffleboardFramework;
 
 public class SparkMaxController extends MotorController implements MotorBase, EncoderBase {
     private CANSparkMax controller;
@@ -124,6 +127,8 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     }
 
                     collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);
+                    //ShuffleboardFramework.getSubsystem(collection.subsystemName).addSendableToTab((childElement.getAttribute("id")+Math.random()).substring(0,18), encoderWrapper);
+                    ShuffleboardFramework.getSubsystem(collection.subsystemName).addSendableToTab(childElement.getAttribute("id"), encoderWrapper);
 
                     break;
                 case "pid":
@@ -256,5 +261,14 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     public void setPosition(double position) {
         encoder.setPosition(position);
         
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        //builder.setSmartDashboardType("Motor Controller");
+        // builder.setActuator(true);
+        // builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Position", this::getPosition, this::setPosition);
+        builder.addDoubleProperty("Velocity", this::getVelocity, null);
     }
 }

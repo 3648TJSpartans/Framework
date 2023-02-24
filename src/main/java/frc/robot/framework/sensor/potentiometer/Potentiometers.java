@@ -6,7 +6,8 @@ import java.util.Set;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 
 
@@ -14,11 +15,11 @@ public class Potentiometers{
     private Map<String, PotentiometerBase> potentiometers = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
 
     public Potentiometers(String subsystemName){
         this.subsystemName = subsystemName;
-        tab = new ShuffleboardHandler(subsystemName.toString());
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
     }
     
     public void put(String id, PotentiometerBase pot){
@@ -44,6 +45,6 @@ public class Potentiometers{
 
     public Double getPOT(String id) {
         PotentiometerBase requestedPOT = getPotentiometer(id);
-        return tab.getEnabled(id, subsystemName) ? requestedPOT.getPotentiometer() : 0.0;
+        return tab.getEnabled(id) ? requestedPOT.getPotentiometer() : 0.0;
     }
 }

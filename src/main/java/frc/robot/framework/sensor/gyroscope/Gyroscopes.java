@@ -6,17 +6,18 @@ import java.util.Set;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 public class Gyroscopes {
     private Map<String, GyroBase> gyroscopes = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
 
     public Gyroscopes(String subsystemName) {
         this.subsystemName = subsystemName;
-        tab = new ShuffleboardHandler(subsystemName.toString());
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
     }
 
     public void put(String id, GyroBase gyro) {
@@ -42,27 +43,27 @@ public class Gyroscopes {
 
     public double getGYROAccel(String id, String axis) {
         GyroBase requestedGYRO = getGyroscope(id);
-        return tab.getEnabled(id, subsystemName) ? requestedGYRO.getGyroAccel(axis) : 0.0;
+        return tab.getEnabled(id) ? requestedGYRO.getGyroAccel(axis) : 0.0;
     }
 
     public double getGYROAngle(String id, String axis) {
         GyroBase requestedGYRO = getGyroscope(id);
-        return tab.getEnabled(id, subsystemName) ? requestedGYRO.getGyroAngle(axis) : 0.0;
+        return tab.getEnabled(id) ? requestedGYRO.getGyroAngle(axis) : 0.0;
     }
 
     public double getGYRORate(String id) {
         GyroBase requestedGYRO = getGyroscope(id);
-        return tab.getEnabled(id, subsystemName) ? requestedGYRO.getGyroRate() : 0.0;
+        return tab.getEnabled(id) ? requestedGYRO.getGyroRate() : 0.0;
     }
 
     public double getGYRORate(String id, String axis) {
         GyroBase requestedGYRO = getGyroscope(id);
-        return tab.getEnabled(id, subsystemName) ? requestedGYRO.getGyroRate(axis) : 0.0;
+        return tab.getEnabled(id) ? requestedGYRO.getGyroRate(axis) : 0.0;
     }
 
     public double getGYROMagneticField(String id, String axis) {
         GyroBase requestedGYRO = getGyroscope(id);
-        return tab.getEnabled(id, subsystemName) ? requestedGYRO.getMagneticField(axis) : 0.0;
+        return tab.getEnabled(id) ? requestedGYRO.getMagneticField(axis) : 0.0;
     }
 
 }

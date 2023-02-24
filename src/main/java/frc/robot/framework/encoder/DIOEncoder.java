@@ -1,11 +1,13 @@
 package frc.robot.framework.encoder;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
 public class DIOEncoder extends EncoderController implements EncoderBase{
 
     Encoder encoder;
+    private double offset=0;
 
     public DIOEncoder(int portOne, int portTwo, boolean inverted, EncodingType type){
         encoder = new Encoder(portOne, portTwo, inverted, type);
@@ -24,7 +26,7 @@ public class DIOEncoder extends EncoderController implements EncoderBase{
 
     @Override
     public double getPosition() {
-        return encoder.getDistance();
+        return encoder.getDistance()+offset;
     }
 
     public void setDistancePerPulse(double factor){
@@ -43,8 +45,15 @@ public class DIOEncoder extends EncoderController implements EncoderBase{
 
     @Override
     public void setPosition(double position) {
-        // TODO Auto-generated method stub
-        
+        offset=position;
     }
-    
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        //builder.setSmartDashboardType("Motor Controller");
+        // builder.setActuator(true);
+        // builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Position", this::getPosition, this::setPosition);
+        //builder.addDoubleProperty("Velocity", this::getVelocity, null);
+    }
 }

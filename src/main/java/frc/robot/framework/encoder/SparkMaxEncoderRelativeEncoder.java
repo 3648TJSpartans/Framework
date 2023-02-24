@@ -2,6 +2,8 @@ package frc.robot.framework.encoder;
 
 import com.revrobotics.RelativeEncoder;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
+
 
 public class SparkMaxEncoderRelativeEncoder extends EncoderController implements EncoderBase{
 
@@ -45,5 +47,14 @@ public class SparkMaxEncoderRelativeEncoder extends EncoderController implements
     @Override
     public void setPosition(double position) {
         encoder.setPosition(position);       
-    }  
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        //builder.setSmartDashboardType("Encoder");
+        // builder.setActuator(true);
+        // builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Position", this::getPosition, this::setPosition);
+        builder.addDoubleProperty("Velocity", this::getVelocity, null);
+    }
 }

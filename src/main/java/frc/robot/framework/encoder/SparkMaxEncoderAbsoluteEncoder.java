@@ -2,6 +2,8 @@ package frc.robot.framework.encoder;
 
 import com.revrobotics.AbsoluteEncoder;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
+
 
 public class SparkMaxEncoderAbsoluteEncoder extends EncoderController implements EncoderBase{
 
@@ -51,4 +53,12 @@ public class SparkMaxEncoderAbsoluteEncoder extends EncoderController implements
         encoder.setZeroOffset(offset);
     }
 
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        //builder.setSmartDashboardType("Encoder");
+        // builder.setActuator(true);
+        // builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Position", this::getPosition, this::setZeroOffset);
+        builder.addDoubleProperty("Velocity", this::getVelocity, null);
+    }
 }

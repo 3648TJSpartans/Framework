@@ -2,6 +2,9 @@ package frc.robot.framework.robot;
 
 import com.revrobotics.AnalogInput;
 
+import edu.wpi.first.util.sendable.Sendable;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -28,6 +31,8 @@ import frc.robot.framework.servo.ServoWrapper;
 import frc.robot.framework.servo.Servos;
 import frc.robot.framework.solenoid.SolenoidWrapper;
 import frc.robot.framework.solenoid.Solenoids;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 /**
  * [Out] is a class containing static methods for controlling all outputs from
@@ -48,9 +53,15 @@ public class SubsystemCollection implements RobotXML {
     public Ultrasonics ultrasonics;
     public Pids pids;
     private Element systemElement;
+    private ShuffleboardBase tab;
 
     public SubsystemCollection(Element element) {
-        this.subsystemName = element.getAttribute("id");
+        subsystemName = element.getAttribute("id");
+        ReadXML(element);
+    }
+
+    public SubsystemCollection(Element element, String subsystemName) {
+        this.subsystemName = subsystemName;
         ReadXML(element);
     }
 
@@ -70,8 +81,8 @@ public class SubsystemCollection implements RobotXML {
         ultrasonics = new Ultrasonics(subsystemName);
         analogInputs = new AnalogInputs(subsystemName);
         pids = new Pids(subsystemName);
-        // ShuffleboardHandler tab =
-        // ShuffleboardCollections.get(systemElement.getTagName());
+        tab =ShuffleboardFramework.getSubsystem(subsystemName);
+
         NodeList children = system.getChildNodes();
         for (int i = 0; i < children.getLength(); i++) {
             Node currentChild = children.item(i);
@@ -85,7 +96,10 @@ public class SubsystemCollection implements RobotXML {
                 } else if (childElement.getTagName().toLowerCase().equals("servo")) {
                     servos.put(id, new ServoWrapper(childElement));
                 } else if (childElement.getTagName().toLowerCase().equals("encoder")) {
-                    encoders.put(id, new EncoderWrapper(childElement));
+                    var encoderTemp = new EncoderWrapper(childElement);
+                    encoders.put(id, encoderTemp);
+                    tab.addSendableToTab(id, encoderTemp);
+
                 } else if (childElement.getTagName().toLowerCase().equals("solenoid")) {
                     solenoids.put(id, new SolenoidWrapper(childElement));
                 } else if (childElement.getTagName().toLowerCase().equals("acl")
@@ -104,7 +118,10 @@ public class SubsystemCollection implements RobotXML {
                     potentiometers.put(id, new PotentiometerWrapper(childElement));
                 } else if (childElement.getTagName().toLowerCase().equals("ut") || childElement.getTagName().equals("ultrasonic")) {
                     ultrasonics.put(id, new UltrasonicWrapper(childElement));
-                } else {
+                } else if (childElement.getTagName().toLowerCase().equals("module")){
+                    //skip
+                } 
+                else {
                     System.out.println("Unknown XML element: " + childElement.getTagName().toLowerCase() + " on subsystem: "
                             + system.getTagName());
                 }
@@ -119,43 +136,3 @@ public class SubsystemCollection implements RobotXML {
     }
 
 }
-
-/* */
-
-/**
- * [Init] initializes [Out], registering all the outputs from the XML robot
- * configuration file with [Out].
- * 
- * @param xmlPath path to the configuration file relative to /deploy
- * 
- * 
- *                public static void Init(String... strings) {
- *                XMLMerger merger = new XMLMerger();
- *                String XMLPath = merger.merger("subsystem", strings);
- *                parser = new XMLParser(XMLPath);
- *                Element root = parser.getRootElement();
- *                //NodeList subsystemList = root.getChildNodes();
- *                ShuffleboardHandler tab = new ShuffleboardHandler(root);
- *                NodeList systemList = root.getElementsByTagName("subsystem");
- *                for (int i = 0; i < systemList.getLength(); i++) {
- *                Node currentSystem = systemList.item(i);
- *                if (currentSystem.getNodeType() == Node.ELEMENT_NODE) {
- *                Element systemElement = (Element) currentSystem;
- *                NodeList subsystemList = systemElement.getChildNodes();
- *                for (int j = 0; j < subsystemList.getLength(); j++) {
- *                Node currentSubsystem = subsystemList.item(j);
- *                if (currentSubsystem.getNodeType() == Node.ELEMENT_NODE) {
- *                Element subsystemElement = (Element) currentSubsystem;
- *                subsystemCollections.put(subsystemElement.getTagName(), new
- *                SubsystemCollection(subsystemElement));
- *                }
- *                else {System.out.println("Isn't this always true? "+
- *                currentSubsystem);}
- *                }
- *                }
- *                else {System.out.println("Isn't this always true? "+
- *                currentSystem);}
- *                }
- * 
- *                }
- */

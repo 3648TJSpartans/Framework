@@ -36,7 +36,8 @@ import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.subsystems.SwerveDrive.Constants.DriveConstants;
 import frc.robot.framework.util.Log;
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 public class SwerveDrive extends SubsystemBase implements RobotXML {
     // Create SwerveModules
@@ -50,12 +51,13 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     private Element element;
     private SubsystemCollection subsystemColection;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
+    private String subsystemName;
 
     private HolonomicDriveController m_controller;
     private double maxAngularSpeed;
     private double maxSpeedMetersPerSecond;
-    SwerveDriveOdometry m_odometry;
+    private SwerveDriveOdometry m_odometry;
 
     private double xController = 1;
     private double yController = 1;
@@ -84,8 +86,10 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     /** Creates a new DriveSubsystem. */
     public SwerveDrive(Element _element) {
         element = _element;
+        subsystemName = element.getAttribute("id");
+
         ReadXML(element);
-        tab = new ShuffleboardHandler(element.getAttribute("id"));
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
         NodeList moduleNodeList = element.getElementsByTagName("module");
         initSwerveModules(moduleNodeList);
 
@@ -229,7 +233,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         return Rotation2d.fromDegrees(getGyroAngle()).getDegrees();
     }
 
-    private static void initSwerveModules(NodeList _moduleNodeList) {
+    private void initSwerveModules(NodeList _moduleNodeList) {
         for (int i = 0; i < _moduleNodeList.getLength(); i++) {
             Node currentChild = _moduleNodeList.item(i);
             if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
@@ -266,9 +270,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         return teleFieldRelative;
     }
 
-    public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation,
-            boolean input_fieldRelative, boolean rateLimit) {
-
+    public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation, boolean input_fieldRelative, boolean rateLimit) {
         double xSpeedCommanded;
         double ySpeedCommanded;
 

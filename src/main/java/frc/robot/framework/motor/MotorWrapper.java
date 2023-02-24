@@ -4,13 +4,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import frc.robot.framework.algorithm.PIDWrapper;
-import frc.robot.framework.encoder.EncoderBase;
-import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.CommandMode;
 
-public class MotorWrapper implements MotorBase {
+public class MotorWrapper implements MotorBase, edu.wpi.first.wpilibj.motorcontrol.MotorController {
 
     private MotorBase motor;
 
@@ -98,5 +95,32 @@ public class MotorWrapper implements MotorBase {
 
     public MotorBase getMotor() {
         return motor;
+    }
+
+    @Override
+    public void set(double speed) {
+        motor.setReference(speed, CommandMode.PERCENTAGE);
+        
+    }
+
+    @Override
+    public double get() {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
+    @Override
+    public boolean getInverted() {
+        return motor.getInverted();
+    }
+
+    @Override
+    public void disable() {
+        motor.setReference(0, CommandMode.PERCENTAGE);
+    }
+
+    @Override
+    public void stopMotor() {
+        motor.setReference(0, CommandMode.PERCENTAGE);
     }
 }

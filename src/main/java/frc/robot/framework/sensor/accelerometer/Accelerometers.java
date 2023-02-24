@@ -7,7 +7,8 @@ import java.util.Set;
 import org.w3c.dom.Element;
 
 
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 
 
@@ -15,11 +16,11 @@ public class Accelerometers{
     private Map<String, ACLBase> accelerometers = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
 
     public Accelerometers(String subsystemName){
         this.subsystemName = subsystemName;
-        tab = new ShuffleboardHandler(subsystemName.toString());
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
     }
 
     public Set<String> GetAllAccelerometerIDs(){
@@ -46,23 +47,23 @@ public class Accelerometers{
     //acclerometers
     public Double getACL(String id) {
         ACLBase requestedACL = getAccelerometer(id);
-        return tab.getEnabled(id, subsystemName) ? requestedACL.getAcceleration() : 0.0;
+        return tab.getEnabled(id) ? requestedACL.getAcceleration() : 0.0;
     }
     public Double getACLAxis(String id, String axis) {
         ACLBase requestedACL = getAccelerometer(id);
-        return tab.getEnabled(id, subsystemName) ? requestedACL.getAccelerometerAxis(axis) : 0.0;
+        return tab.getEnabled(id) ? requestedACL.getAccelerometerAxis(axis) : 0.0;
     }
     public void setACLRange(String id, String range){
         ACLBase requestedACL = getAccelerometer(id);
-        if(tab.getEnabled(id, subsystemName)) requestedACL.setAccelerometerRange(range) ;
+        if(tab.getEnabled(id)) requestedACL.setAccelerometerRange(range) ;
     }
     public void setAClSensitivity(String id, double sensitivity) {
         ACLBase requestedACL = getAccelerometer(id);
-        if(tab.getEnabled(id, subsystemName)) requestedACL.setAccelerometerSensitivity(sensitivity);
+        if(tab.getEnabled(id)) requestedACL.setAccelerometerSensitivity(sensitivity);
     }
     public void setACLZero(String id, Double zero) {
         ACLBase requestedACL = getAccelerometer(id);
-        if(tab.getEnabled(id, subsystemName)) requestedACL.setAccelerometerZero(zero);
+        if(tab.getEnabled(id)) requestedACL.setAccelerometerZero(zero);
         requestedACL.setAccelerometerZero(zero);
     }
 }

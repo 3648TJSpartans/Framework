@@ -6,17 +6,18 @@ import java.util.Set;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 
 public class Servos {
     private Map<String, ServoBase> servos = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
     public Servos(String subsystemName){
         this.subsystemName = subsystemName;
-        tab = new ShuffleboardHandler(subsystemName.toString());
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
     }
 
     public void put(String id, ServoBase servo){
@@ -53,13 +54,13 @@ public class Servos {
     public void setServo(String id, double position) {
         ServoBase requestedMotor = getMotor(id);
         
-        if(tab.getEnabled(id, subsystemName))  requestedMotor.set(position);
+        if(tab.getEnabled(id))  requestedMotor.set(position);
     }
  
     public void setServoAngle(String id, int angle) {
         ServoBase requestedMotor = getMotor(id);
         
-        if(tab.getEnabled(id, subsystemName))  requestedMotor.setAngle(angle);
+        if(tab.getEnabled(id))  requestedMotor.setAngle(angle);
     }
 
 }

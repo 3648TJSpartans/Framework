@@ -10,17 +10,18 @@ import com.fasterxml.jackson.databind.JsonMappingException.Reference;
 
 import edu.wpi.first.wpilibj.shuffleboard.SimpleWidget;
 import frc.robot.framework.util.CommandMode;
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 public class Motors {
     private Map<String, MotorBase> motors = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
 
     public Motors(String subsystemName) {
         this.subsystemName = subsystemName;
-        tab = new ShuffleboardHandler(subsystemName.toString());
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
     }
 
     /**
@@ -67,7 +68,7 @@ public class Motors {
      */
     public void setOutput(String id, double reference, CommandMode mode) {
         MotorBase requestedMotor = getMotor(id);
-        if (tab.getEnabled(id, subsystemName))
+        if (tab.getEnabled(id))
             requestedMotor.setReference(reference, mode);
     }
 }

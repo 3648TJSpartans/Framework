@@ -5,12 +5,13 @@ import org.w3c.dom.Element;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.Log;
 
 public class Servo extends SubsystemBase implements RobotXML{
-    ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
     private SubsystemCollection subsystemColection;
     private double input_forward=0;
     private double input_turn=0;
@@ -23,7 +24,7 @@ public class Servo extends SubsystemBase implements RobotXML{
     private Log log = new Log("TankDrive", headers);
 
     public Servo(Element subsystem){
-        tab= new ShuffleboardHandler(subsystem.getAttribute("id"));
+        tab= ShuffleboardFramework.getSubsystem(subsystem.getAttribute("id"));
         ReadXML(subsystem);
     }
     

@@ -12,7 +12,7 @@ import org.w3c.dom.NodeList;
 
 import frc.robot.framework.controller.*;
 import frc.robot.framework.util.Reflection;
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
 import frc.robot.framework.util.XMLUtil;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -35,7 +35,7 @@ public class RobotInit {
     private static Map<String, ControllerWrapper> controllers = new HashMap<>();
     private static Map<String, CommandBase> autons = new HashMap<>();
     private static Map<String, SubsystemBase> subsystems = new HashMap<>();
-    private static ShuffleboardHandler shuffleboard;
+    private static ShuffleboardFramework shuffleboard;
 
     // private static Map<String, AutonWrapper> autons = new HashMap<>();
     /**
@@ -75,7 +75,7 @@ public class RobotInit {
             System.out.println("Could not find any controller!");
         }
 
-        shuffleboard = new ShuffleboardHandler(root);
+        shuffleboard = new ShuffleboardFramework(root);
 
         NodeList subsystemNodeList = root.getElementsByTagName("subsystem");
         initSubsystems(subsystemNodeList);

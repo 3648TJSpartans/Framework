@@ -4,12 +4,15 @@ import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 public class Chassis extends SubsystemBase implements RobotXML{
     //private Out output = new Out(subsystemName.CHASSIS);
-    ShuffleboardHandler tab = new ShuffleboardHandler("CHASSIS");
-    public Chassis(){
+    private ShuffleboardBase tab;
+
+    public Chassis(Element element){
+        tab =ShuffleboardFramework.getSubsystem(element.getAttribute("id"));
         System.out.println("Chassis init");
     }
     

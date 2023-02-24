@@ -1,6 +1,8 @@
 package frc.robot.framework.encoder;
 
-public interface EncoderBase{
+import edu.wpi.first.util.sendable.Sendable;
+
+public interface EncoderBase extends Sendable{
     public int getTicks();
     public double getVelocity();
     public double getPosition();

@@ -6,18 +6,19 @@ import java.util.Set;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 
 public class Solenoids {
     private Map<String, SolenoidBase> solenoids = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
     
     public Solenoids(String subsystemName){
         this.subsystemName = subsystemName;
-        tab = new ShuffleboardHandler(subsystemName.toString());
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
     }
     
     public void put(String id, SolenoidBase solenoid){
@@ -41,7 +42,7 @@ public class Solenoids {
             return;
         }
         //might need testing
-        if(tab.getEnabled(id, subsystemName)){
+        if(tab.getEnabled(id)){
             requestedSolenoid.set(extended);
         }
         

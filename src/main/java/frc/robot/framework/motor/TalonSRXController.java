@@ -4,6 +4,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.TalonSRXControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
@@ -89,5 +90,14 @@ public class TalonSRXController extends MotorController implements MotorBase, En
     public void setPosition(double position) {
         // TODO Auto-generated method stub
         
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        //builder.setSmartDashboardType("Motor Controller");
+        // builder.setActuator(true);
+        // builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Position", this::getPosition, null);
+        builder.addDoubleProperty("Velocity", this::getVelocity, null);
     }
 }

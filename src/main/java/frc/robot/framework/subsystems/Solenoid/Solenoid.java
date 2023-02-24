@@ -6,16 +6,17 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotInit;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 public class Solenoid extends SubsystemBase implements RobotXML {
-    ShuffleboardHandler tab;
-    Element myElement;
+    private ShuffleboardBase tab;
+    private Element myElement;
     private SubsystemCollection subsystemColection;
-    boolean extended;
+    private boolean extended;
 
-    public Solenoid(Element element) {
-        tab = new ShuffleboardHandler(element.getAttribute("id"));
+    public Solenoid(Element element, String subsystem) {
+        tab = ShuffleboardFramework.getSubsystem(subsystem);
         ReadXML(element);
         myElement = element;
 

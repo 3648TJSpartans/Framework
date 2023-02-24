@@ -5,7 +5,8 @@ import java.util.Map;
 
 import org.w3c.dom.Element;
 
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 
 
@@ -13,11 +14,11 @@ public class AnalogInputs{
     private Map<String, AnalogInBase> analoginputs = new HashMap<>();
     private String subsystemName;
     public Element sensorElement;
-    private ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
 
     public AnalogInputs(String subsystemName){
         this.subsystemName = subsystemName;
-        tab = new ShuffleboardHandler(subsystemName.toString());
+        tab = ShuffleboardFramework.getSubsystem(subsystemName);
     }
 
     public void put(String id, AnalogInBase digital){
@@ -39,22 +40,22 @@ public class AnalogInputs{
 
     public int getValue(String id) {
         AnalogInBase requestedAnalog = getAnalog(id);
-        return tab.getEnabled(id, subsystemName) ? requestedAnalog.getValue() : 0;
+        return tab.getEnabled(id) ? requestedAnalog.getValue() : 0;
     }
 
     public int getAverageValue(String id) {
         AnalogInBase requestedAnalog = getAnalog(id);
-        return tab.getEnabled(id, subsystemName) ? requestedAnalog.getAverageValue() : 0;
+        return tab.getEnabled(id) ? requestedAnalog.getAverageValue() : 0;
     }
 
     public double getVoltage(String id) {
         AnalogInBase requestedAnalog = getAnalog(id);
-        return tab.getEnabled(id, subsystemName) ? requestedAnalog.getVoltage() : 0;
+        return tab.getEnabled(id) ? requestedAnalog.getVoltage() : 0;
     }
 
     public double getAverageVoltage(String id) {
         AnalogInBase requestedAnalog = getAnalog(id);
-        return tab.getEnabled(id, subsystemName) ? requestedAnalog.getAverageVoltage() : 0;
+        return tab.getEnabled(id) ? requestedAnalog.getAverageVoltage() : 0;
     }
 
     

@@ -6,23 +6,21 @@ package frc.robot.framework.subsystems.SwerveDrive;
 
 import org.w3c.dom.Element;
 
-import com.revrobotics.AbsoluteEncoder;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
-import com.revrobotics.SparkMaxPIDController;
-
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.subsystems.SwerveDrive.Constants.ModuleConstants;
 import frc.robot.framework.util.CommandMode;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 
 public class SwerveModule {
 
   private double m_chassisAngularOffset = 0;
   private SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+  private ShuffleboardBase tab;
   private Element element;
   private SubsystemCollection subsystemColection;
 
@@ -38,9 +36,9 @@ public class SwerveModule {
    * Encoder.
    */
   public SwerveModule(Element myElement) {
-
     element = myElement;
-    subsystemColection = new SubsystemCollection(element);
+    tab = ShuffleboardFramework.addSubsystem("swerve_"+element.getAttribute("id"));
+    subsystemColection = new SubsystemCollection(element, "swerve_"+element.getAttribute("id"));
 
     m_chassisAngularOffset = Double.parseDouble(element.getAttribute("angularOffset"));
     m_desiredState.angle = new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID));

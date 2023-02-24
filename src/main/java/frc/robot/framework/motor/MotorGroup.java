@@ -29,4 +29,10 @@ public class MotorGroup extends MotorController implements MotorBase {
     {
         super.setInverted(inverted);
     }
+
+    @Override
+    public boolean getInverted()
+    {
+        return super.getInverted();
+    }
 }

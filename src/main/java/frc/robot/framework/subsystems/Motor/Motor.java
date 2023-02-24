@@ -8,10 +8,11 @@ import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.CommandMode;
-import frc.robot.framework.util.ShuffleboardHandler;
+import frc.robot.framework.util.ShuffleboardFramework;
+import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 public class Motor extends SubsystemBase implements RobotXML {
-    ShuffleboardHandler tab;
+    private ShuffleboardBase tab;
     
     private SubsystemCollection subsystemColection;
     private double reference = .00;
@@ -27,7 +28,7 @@ public class Motor extends SubsystemBase implements RobotXML {
 
     public Motor(Element subsystem) {
         element = subsystem;
-        tab = new ShuffleboardHandler(subsystem.getAttribute("id"));
+        tab = ShuffleboardFramework.getSubsystem(subsystem.getAttribute("id"));
         ReadXML(subsystem);
         if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0) {
             encoder = subsystemColection.encoders.getEncoder(subsystemColection.encoders.GetAllEncoderIDs().iterator().next());
