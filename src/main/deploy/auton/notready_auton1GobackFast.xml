@@ -3,11 +3,11 @@
 
 <robot>
     <auton id="auton1" nextstep="start">
-        <SequentialCommandGroup id="start" firststep="thing">
-            <!-- <command type="SwerveDrive_Set" id="test1" subsystemID="SwerveDrive" nextstep="stop" 
-            xTranslation ="1" yTranslation = "0" heading="90" setMaxSpeed = "3" setMaxAcceleration = "3"/>
+        <SequentialCommandGroup id="start" firststep="test1">
+            <command type="SwerveDrive_Set" id="test1" subsystemID="SwerveDrive" nextstep="stop" 
+            xTranslation ="1" yTranslation = "0" heading="90" setMaxSpeed = "3" setMaxAcceleration = "3" timeout="5"/>
             <command type="SwerveDrive_Set" id="stop" subsystemID="SwerveDrive" 
-            xTranslation ="0" yTranslation = "0" heading="0" setMaxSpeed = "3" setMaxAcceleration = "3" /> -->
+            xTranslation ="50" yTranslation = "50" heading="10" setMaxSpeed = "3" setMaxAcceleration = "3" nextstep="thing" timeout="5"/>
             <!-- <command type="TankDrive_Set" id="forward1" subsystemID="TankDrive" nextstep="stop"
                 setInputTurn="0.3" setInputForward="0.3" delayLength="3" />
 
