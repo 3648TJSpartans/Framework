@@ -105,7 +105,7 @@ public class MotorWrapper implements MotorBase, edu.wpi.first.wpilibj.motorcontr
 
     @Override
     public double get() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 

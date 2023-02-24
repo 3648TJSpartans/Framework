@@ -68,7 +68,6 @@ public class Log {
             outputfile.write("\r\n");
 
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
     }
@@ -85,7 +84,7 @@ public class Log {
             double time = (Instant.now().toEpochMilli() - startTime) /1000.0;
             outputfile.write(time + "," + subsystem + "," + mode + "," +String.join(",", data) + "\r\n");
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
 
     }
@@ -94,23 +93,13 @@ public class Log {
         try {
             outputfile.write(String.join(",", headers));
         } catch (Exception e) {
-            // TODO: handle exception
+            e.printStackTrace();
         }
     }
 
     protected void finalize() throws IOException {
         outputfile.close();
-        //TODO: implement deletion of older logs
     }
     // File name locate in ./log/date-subsytsem
-    // Delete logs more than 20
-    // Functions for init create file
-    // Flush everything in the file
-    // When logging is disposed close file
-    // creat methods for logging of a sring
-    // Pass to subsystem every subsystem will get own logging
-    // Support headers csv format
-    // Method for
-    // Time, mode, values
     // Everytime substem run call logging
 }

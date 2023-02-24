@@ -12,6 +12,8 @@ public class Robot extends TimedRobot{
   @Override
   public void robotInit() {
     RobotInit.Init();
+    //Shuffleboard.getTab("SwerveDrive").add("ewrewr", new TestCommand2(null));
+
   }
   
   
@@ -23,10 +25,7 @@ public class Robot extends TimedRobot{
 
   @Override
   public void autonomousInit() {
-    autonomousCommand = RobotInit.GetAuton("auton1");
-    //TODO: either pull this from shuffleboard or let robotinit do it
-
-    // schedule the autonomous command (example)
+    autonomousCommand = RobotInit.GetAuton();
     if (autonomousCommand != null) {
       autonomousCommand.schedule();
     }
@@ -34,9 +33,6 @@ public class Robot extends TimedRobot{
 
   @Override
   public void autonomousPeriodic() {
-    //apparently this isn't needed? https://github.com/wpilibsuite/allwpilib/blob/main/wpilibjExamples/src/main/java/edu/wpi/first/wpilibj/examples/hatchbottraditional/Robot.java
-    //
-    // CommandScheduler.getInstance().run();
   }
 
   @Override
@@ -71,6 +67,5 @@ public class Robot extends TimedRobot{
   
   @Override
   public void simulationPeriodic(){
-    
   }
 }

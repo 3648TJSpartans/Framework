@@ -30,13 +30,18 @@ public class Servo_Default extends CommandBase implements RobotXML {
           "Servo_default could not find Servo subsystem(subsystemID):" + element.getAttribute("subSystemID"));
       return;
     }
+    
     servoSubsystem = (Servo) temp;
     this.addRequirements(servoSubsystem);
-
     CommandScheduler.getInstance().setDefaultCommand(servoSubsystem, this);
+
     if (myElement.getAttribute("button") != "")
       button = myController.getButton(myElement.getAttribute("button"));
   }
+
+  @Override
+    public void initialize(){
+    }
 
   @Override
   public void execute() {

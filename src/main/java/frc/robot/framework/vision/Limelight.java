@@ -1,6 +1,5 @@
 package frc.robot.framework.vision;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.framework.robot.RobotXML;
 
 import org.w3c.dom.Element;
@@ -171,7 +170,7 @@ public class Limelight implements RobotXML {
 
     @Override
     public void ReloadConfig() {
-        // TODO Auto-generated method stub
+        
 
     }
 }

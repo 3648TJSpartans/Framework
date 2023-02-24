@@ -22,9 +22,13 @@ public class Motor_Set extends CommandBase implements RobotXML{
             return;
         }
         motor = (Motor)temp;
+        this.addRequirements(motor);
     }
     
-    
+    @Override
+    public void initialize(){
+    }
+
     @Override
     public void execute() {
         if (myElement.hasAttribute("incrementPower") && motor.getMode()==CommandMode.PERCENTAGE){
@@ -51,7 +55,7 @@ public class Motor_Set extends CommandBase implements RobotXML{
   
     @Override
     public boolean isFinished() {
-      return true;
+        return true;
     }
 
     @Override

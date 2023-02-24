@@ -4,10 +4,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import com.revrobotics.AbsoluteEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.MotorFeedbackSensor;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxAnalogSensor;
 import com.revrobotics.SparkMaxPIDController;
@@ -17,9 +15,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
-import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
-import frc.robot.framework.algorithm.PIDBase;
-import frc.robot.framework.algorithm.PIDWrapper;
 import frc.robot.framework.algorithm.SparkMaxPID;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.encoder.EncoderWrapper;
@@ -27,7 +22,6 @@ import frc.robot.framework.encoder.SparkMaxEncoderAbsoluteEncoder;
 import frc.robot.framework.encoder.SparkMaxEncoderRelativeEncoder;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.sensor.analoginput.AnalogInBase;
-import frc.robot.framework.sensor.analoginput.AnaloginWrapper;
 import frc.robot.framework.sensor.analoginput.SparkMaxAnalogIn;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardFramework;
@@ -36,7 +30,6 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     private CANSparkMax controller;
     private SparkMaxPIDController pidController;
     private RelativeEncoder encoder;
-    private EncoderBase alternateEncoder;
 
     //I hate this but I have to keep track of it. Only one should be used
     private RelativeEncoder data_RelativeEncoder;

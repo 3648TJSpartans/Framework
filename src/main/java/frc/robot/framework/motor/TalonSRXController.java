@@ -58,37 +58,37 @@ public class TalonSRXController extends MotorController implements MotorBase, En
 
     @Override
     public int getTicks() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
     @Override
     public double getVelocity() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
     @Override
     public double getPosition() {
-        // TODO Auto-generated method stub
+        
         return 0;
     }
 
     @Override
     public void setDistancePerPulse(double factor) {
-        // TODO Auto-generated method stub
+        
         
     }
 
     @Override
     public void resetEncoder() {
-        // TODO Auto-generated method stub
+        
         
     }
 
     @Override
     public void setPosition(double position) {
-        // TODO Auto-generated method stub
+        
         
     }
 

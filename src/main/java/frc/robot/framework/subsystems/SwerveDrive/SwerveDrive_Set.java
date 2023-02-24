@@ -22,7 +22,7 @@ import frc.robot.framework.robot.*;
 import frc.robot.framework.vision.Limelight;
 public class SwerveDrive_Set extends CommandBase implements RobotXML{
     private static final TrajectoryConfig TrajectoryConfig = null;
-    private SwerveDrive swerveDrive;
+    private SwerveDrive swerveDriveSubSystem;
 
     private double startTime;
     private double command_timeout = 0;
@@ -51,7 +51,8 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
                     "SwerveDrive_SetPower could not find Swerve subsystem with id:" + element.getAttribute("subSystemID"));
             return;
         }
-        swerveDrive = (SwerveDrive) temp;
+        swerveDriveSubSystem = (SwerveDrive) temp;
+        this.addRequirements(swerveDriveSubSystem);
        
     }
     public void initialize() {
@@ -93,7 +94,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
         try{
             desired_xTranslation =element.hasAttribute("xTranslation") ? Double.parseDouble( element.getAttribute("xTranslation")): 0;
             desired_yTranslation =element.hasAttribute("yTranslation") ? Double.parseDouble( element.getAttribute("yTranslation")): 0;
-            desired_degree = element.hasAttribute("heading") ? Double.parseDouble(element.getAttribute("heading")): swerveDrive.getHeading(); // preserve current heading if not specified
+            desired_degree = element.hasAttribute("heading") ? Double.parseDouble(element.getAttribute("heading")): swerveDriveSubSystem.getHeading(); // preserve current heading if not specified
         } catch (Exception NumberFormatException){
             throw new NumberFormatException("Invalid Format on SwerveDrive_Set Subsystem on xTranslation: "+ desired_xTranslation+"yTranslation: "+desired_yTranslation+" heading: "+desired_degree+" not supported varible type");
         }
@@ -104,7 +105,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
             new Pose2d(0, 0, new Rotation2d(Math.toRadians(desired_degree))),
             config);
             
-       swerveDrive.setCommandTrajectory(tragTrajectory,m_timer);
+       swerveDriveSubSystem.setCommandTrajectory(tragTrajectory,m_timer);
     }
     @Override
     public void end(boolean interrupted) {
@@ -122,12 +123,12 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML{
 
     @Override
     public void ReadXML(Element node) {
-        // TODO Auto-generated method stub
+        
         
     }
     @Override
     public void ReloadConfig() {
-        // TODO Auto-generated method stub
+        
         
     }
 }

@@ -34,9 +34,9 @@ public class TankDrive_Default extends CommandBase implements RobotXML {
           "TankDrive_Default could not find TankDrive subsystem(subsystemID):" + element.getAttribute("subSystemID"));
       return;
     }
+    
     tankDrivSubsystem = (TankDrive) temp;
     this.addRequirements(tankDrivSubsystem);
-
     CommandScheduler.getInstance().setDefaultCommand(tankDrivSubsystem, this);
 
     try {
@@ -55,6 +55,10 @@ public class TankDrive_Default extends CommandBase implements RobotXML {
     }
 
   }
+
+  @Override
+    public void initialize(){
+    }
 
   @Override
   public void execute() {

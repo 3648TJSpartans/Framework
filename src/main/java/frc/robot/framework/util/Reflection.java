@@ -59,6 +59,7 @@ public class Reflection {
   
 
    private static LinkedList<String> getAllClassesReal(String dirPath){
+    
     try{
       LinkedList<String> classNames = new LinkedList<String>();
       ZipInputStream zip = new ZipInputStream(new FileInputStream(dirPath));
@@ -69,9 +70,11 @@ public class Reflection {
               classNames.add(className.substring(0, className.length() - ".class".length()).replace(File.separator.charAt(0),'.')) ;
           }
       }
+      zip.close();
       return classNames;
     }
     catch(Exception e){
+      
       System.out.println(e);
     }
     return null;

@@ -24,8 +24,13 @@ public class SwerveDrive_SetRelative extends CommandBase implements RobotXML {
       return;
     }
     swerveDriveSubsystem = (SwerveDrive) temp;
+    this.addRequirements(swerveDriveSubsystem);
 
   }
+
+  @Override
+    public void initialize(){
+    }
 
   // dosent work
   @Override
