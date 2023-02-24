@@ -2,17 +2,7 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
-      "/LiveWindow/Motor": "Subsystem",
-      "/LiveWindow/Solenoid": "Subsystem",
-      "/LiveWindow/SwerveDrive": "Subsystem",
-      "/LiveWindow/TankDrive": "Subsystem",
       "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
-      "/LiveWindow/Ungrouped/Spark[0]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Spark[1]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Spark[2]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Spark[3]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Spark[4]": "Motor Controller",
-      "/LiveWindow/Ungrouped/Spark[5]": "Motor Controller"
     }
   }
 }
