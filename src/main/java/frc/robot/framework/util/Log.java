@@ -15,11 +15,29 @@ public class Log {
     private long startTime;
     private FileWriter outputfile;
     private String[] headers;
+    private static final String path=Filesystem.getOperatingDirectory() + "/Logs/";
 
     public Log(String subsystem, String[] headers) {
         this.subsystem = subsystem;
         this.headers = headers;
+        cleanUp(7,".csv");
         setupLog();
+    }
+
+    public void cleanUp(long nday, String extension) {
+        File fold = new File(path);
+        if (fold.exists()) {
+            File[] listAllFiles = fold.listFiles();
+            long Deletion = System.currentTimeMillis() -(nday * 24 * 60 * 60 * 1000);
+            for (File listFile: listAllFiles) {
+                if (listFile.getName().endsWith(extension) &&
+                    listFile.lastModified() < Deletion) {
+                    if (!listFile.delete()) {
+                        System.out.println("Logging: Can't cleanup directory "+path+listFile.getName());
+                    }
+                }
+            }
+        }
     }
 
     public void RestartNewLog() {
