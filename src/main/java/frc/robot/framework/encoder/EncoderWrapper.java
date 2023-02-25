@@ -56,7 +56,7 @@ public class EncoderWrapper implements EncoderBase {
 
         }
         else{
-            System.out.println("Unknown encoder type: " + encoderType);
+            System.out.println("Unknown vendor encoder type: " + encoderType);
             return null;
         }
     }
