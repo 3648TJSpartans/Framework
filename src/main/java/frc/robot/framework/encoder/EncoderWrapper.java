@@ -73,6 +73,10 @@ public class EncoderWrapper implements EncoderBase {
         return encoder.getPosition();
     }
 
+    public double getAbsolutePosition() {
+        return encoder.getAbsolutePosition();
+    }
+
     public void resetEncoder() {
         encoder.resetEncoder();
     }
@@ -98,6 +102,8 @@ public class EncoderWrapper implements EncoderBase {
         //builder.setSmartDashboardType("Motor Controller");
         // builder.setActuator(true);
         // builder.setSafeState(this::disable);
-        encoder.initSendable(builder);
+        builder.addDoubleProperty("Pos", this::getPosition, this::setPosition);
+        builder.addDoubleProperty("AbsPos", this::getAbsolutePosition, null);
+        builder.addDoubleProperty("Vel", this::getVelocity, null);
     }
 }

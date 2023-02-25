@@ -240,6 +240,11 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     }
 
     @Override
+    public double getAbsolutePosition() {
+        return encoder.getPosition();
+    }
+
+    @Override
     public void setDistancePerPulse(double factor) {
         encoder.setPositionConversionFactor(factor);
         encoder.setVelocityConversionFactor(factor / 60);

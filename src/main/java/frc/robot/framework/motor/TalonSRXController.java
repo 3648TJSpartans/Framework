@@ -92,6 +92,10 @@ public class TalonSRXController extends MotorController implements MotorBase, En
         
     }
 
+    public double getAbsolutePosition() {
+        return 0;
+    }
+
     @Override
     public void initSendable(SendableBuilder builder) {
         //builder.setSmartDashboardType("Motor Controller");

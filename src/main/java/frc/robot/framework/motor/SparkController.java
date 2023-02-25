@@ -15,8 +15,12 @@ public class SparkController extends MotorController implements MotorBase {
     @Override
     public void setReference(double reference, CommandMode mode) {
         if (inverted)
-        reference*=-1;
-        controller.setVoltage(reference*RobotController.getBatteryVoltage());
+            reference*=-1;
+        if (mode == CommandMode.PERCENTAGE)
+            controller.setVoltage(reference*RobotController.getBatteryVoltage());
+        else{
+            throw new UnsupportedOperationException("SparmPWM does not support position/velocity yet!");
+        }
     }
 
     @Override

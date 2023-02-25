@@ -29,6 +29,11 @@ public class SparkMaxEncoderRelativeEncoder extends EncoderController implements
     }
 
     @Override
+    public double getAbsolutePosition() {
+        return encoder.getPosition();
+    }
+
+    @Override
     public void setDistancePerPulse(double factor) {
         encoder.setPositionConversionFactor(factor);
         encoder.setVelocityConversionFactor(factor / 60);
@@ -54,7 +59,8 @@ public class SparkMaxEncoderRelativeEncoder extends EncoderController implements
         //builder.setSmartDashboardType("Encoder");
         // builder.setActuator(true);
         // builder.setSafeState(this::disable);
-        builder.addDoubleProperty("Position", this::getPosition, this::setPosition);
-        builder.addDoubleProperty("Velocity", this::getVelocity, null);
+        builder.addDoubleProperty("Pos", this::getPosition, this::setPosition);
+        builder.addDoubleProperty("AbsPos", this::getAbsolutePosition, null);
+        builder.addDoubleProperty("Vel", this::getVelocity, null);
     }
 }

@@ -32,6 +32,10 @@ public class DIOEncoder extends EncoderController implements EncoderBase{
     public void setDistancePerPulse(double factor){
         encoder.setDistancePerPulse(factor);
     }
+    
+    public double getAbsolutePosition(){
+        return encoder.getDistance();
+    }
 
     public void resetEncoder(){
         encoder.reset();
@@ -53,7 +57,8 @@ public class DIOEncoder extends EncoderController implements EncoderBase{
         //builder.setSmartDashboardType("Motor Controller");
         // builder.setActuator(true);
         // builder.setSafeState(this::disable);
-        builder.addDoubleProperty("Position", this::getPosition, this::setPosition);
-        //builder.addDoubleProperty("Velocity", this::getVelocity, null);
+        builder.addDoubleProperty("Pos", this::getPosition, this::setPosition);
+        builder.addDoubleProperty("AbsPos", this::getAbsolutePosition, null);
+        builder.addDoubleProperty("Vel", this::getVelocity, null);
     }
 }

@@ -19,6 +19,11 @@ public class SparkMaxEncoderAbsoluteEncoder extends EncoderController implements
     }
 
     @Override
+    public double getAbsolutePosition() {
+        return encoder.getPosition()-encoder.getZeroOffset();
+    }
+
+    @Override
     public double getVelocity() {
         return encoder.getVelocity();
     }
@@ -58,7 +63,8 @@ public class SparkMaxEncoderAbsoluteEncoder extends EncoderController implements
         //builder.setSmartDashboardType("Encoder");
         // builder.setActuator(true);
         // builder.setSafeState(this::disable);
-        builder.addDoubleProperty("Position", this::getPosition, this::setZeroOffset);
-        builder.addDoubleProperty("Velocity", this::getVelocity, null);
+        builder.addDoubleProperty("Pos", this::getPosition, this::setPosition);
+        builder.addDoubleProperty("AbsPos", this::getAbsolutePosition, null);
+        builder.addDoubleProperty("Vel", this::getVelocity, null);
     }
 }

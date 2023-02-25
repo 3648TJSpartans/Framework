@@ -26,7 +26,12 @@ public class DutyCycleEncoder extends EncoderController implements EncoderBase{
 
     @Override
     public double getPosition() {
-        return encoder.getAbsolutePosition();
+        return invertMath(encoder.getAbsolutePosition()+offset);
+    }
+
+    @Override
+    public double getAbsolutePosition() {
+        return invertMath(encoder.getAbsolutePosition());
     }
 
     public void setDistancePerPulse(double factor){
@@ -45,13 +50,13 @@ public class DutyCycleEncoder extends EncoderController implements EncoderBase{
 
     @Override
     public void setPosition(double position) {
-        //TODO: fix this
         offset=position;
     }
 
     @Override
     public void initSendable(SendableBuilder builder) {
-        builder.addDoubleProperty("Position", this::getPosition, this::setPosition);
-        builder.addDoubleProperty("Velocity", this::getVelocity, null);
+        builder.addDoubleProperty("Pos", this::getPosition, this::setPosition);
+        builder.addDoubleProperty("AbsPos", this::getAbsolutePosition, null);
+        builder.addDoubleProperty("Vel", this::getVelocity, null);
     }
 }
