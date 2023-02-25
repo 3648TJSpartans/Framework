@@ -2,8 +2,6 @@ package frc.robot.framework.encoder;
 
 import org.w3c.dom.*;
 
-import com.revrobotics.RelativeEncoder;
-
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
@@ -22,7 +20,6 @@ public class EncoderWrapper implements EncoderBase {
 
         encoder = getEncoderType(encoderType, portOne, portTwo);
 
-        //Only applies to relative encoders
         if ( element.hasAttribute("setPosition") ) {
             encoder.setPosition(Double.parseDouble(element.getAttribute("setPosition")));
         }
@@ -54,7 +51,11 @@ public class EncoderWrapper implements EncoderBase {
             System.out.println(
                     "CAN Encoder found, initalize by passing EncoderBase into the consturctor: " + encoderType);
             return null;
-        } else {
+        } else if (encoderType.toLowerCase().equals("dutycycle")){
+            return new DutyCycleEncoder(portOne);
+
+        }
+        else{
             System.out.println("Unknown encoder type: " + encoderType);
             return null;
         }
