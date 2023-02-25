@@ -1,8 +1,7 @@
 {
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo",
-      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
+      "/FMSInfo": "FMSInfo"
     }
   }
 }
