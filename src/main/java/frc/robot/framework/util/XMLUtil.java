@@ -88,7 +88,6 @@ public class XMLUtil {
             tf.transform(new DOMSource(xml), new StreamResult(out));
             System.out.println(out.toString());
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 

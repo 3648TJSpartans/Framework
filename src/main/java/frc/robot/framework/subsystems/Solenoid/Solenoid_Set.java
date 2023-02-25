@@ -25,6 +25,11 @@ public class Solenoid_Set extends CommandBase implements RobotXML {
             return;
         }
         solenoid = (Solenoid) temp;
+        this.addRequirements(solenoid);
+    }
+
+    @Override
+    public void initialize(){
     }
 
     @Override

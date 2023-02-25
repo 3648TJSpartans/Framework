@@ -33,8 +33,8 @@ public class Motor_Default extends CommandBase implements RobotXML {
           .println("Motor_Default could not find Motor subsystem with id:" + myElement.getAttribute("subsystemID"));
       return;
     }
+    
     motorSubsystem = (Motor) temp;
-
     this.addRequirements(motorSubsystem);
     CommandScheduler.getInstance().setDefaultCommand(motorSubsystem, this);
 
@@ -56,6 +56,10 @@ public class Motor_Default extends CommandBase implements RobotXML {
       inverted2 = Boolean.parseBoolean(element.getAttribute("inverted2"));
 
   }
+
+  @Override
+    public void initialize(){
+    }
 
   @Override
   public void execute() {

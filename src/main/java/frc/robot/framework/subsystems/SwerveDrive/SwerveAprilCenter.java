@@ -28,12 +28,15 @@ public class SwerveAprilCenter extends CommandBase implements RobotXML {
     private double limlight_speed;
     private SwerveDrive swerveDrive;
     private final Timer m_timer = new Timer();
+
     public SwerveAprilCenter(Element element){
         myElement = element;
         SubsystemBase temp = RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
         addRequirements(temp);
         swerveDrive = (SwerveDrive) temp;
     }
+
+    @Override
     public void initialize() {
         startTime = System.currentTimeMillis();
         delayLength = Double.parseDouble((myElement.getAttribute("delayLength")));
@@ -102,7 +105,7 @@ public class SwerveAprilCenter extends CommandBase implements RobotXML {
     }
     @Override
     public void ReadXML(Element node) {
-        // TODO Auto-generated method stub
+        
         
     }
 }

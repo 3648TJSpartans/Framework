@@ -13,6 +13,10 @@ public class TestCommand extends CommandBase implements RobotXML{
     public TestCommand(Element element){
       ReadXML(element);
     }
+
+    @Override
+    public void initialize(){
+    }
     
     @Override
     public void execute() {
@@ -31,7 +35,7 @@ public class TestCommand extends CommandBase implements RobotXML{
     
     @Override
     public void ReloadConfig() {
-      // TODO Auto-generated method stub
+      
       
     }
 }

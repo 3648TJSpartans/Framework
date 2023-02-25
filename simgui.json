@@ -1,7 +1,29 @@
 {
   "NTProvider": {
     "types": {
-      "/FMSInfo": "FMSInfo"
+      "/FMSInfo": "FMSInfo",
+      "/Shuffleboard/Robot/AutonCommand": "String Chooser",
+      "/Shuffleboard/Robot/SwerveDrive": "Subsystem",
+      "/Shuffleboard/Robot/claw": "Subsystem",
+      "/Shuffleboard/Robot/rotation": "Subsystem",
+      "/Shuffleboard/Robot/test": "Subsystem",
+      "/Shuffleboard/Robot/wrist": "Subsystem"
+    }
+  },
+  "NetworkTables": {
+    "transitory": {
+      "LiveWindow": {
+        "open": true
+      },
+      "Shuffleboard": {
+        "Robot": {
+          "AutonCommand": {
+            "open": true
+          },
+          "open": true
+        },
+        "open": true
+      }
     }
   }
 }

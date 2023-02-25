@@ -14,7 +14,10 @@ import frc.robot.framework.controller.*;
 import frc.robot.framework.util.Reflection;
 import frc.robot.framework.util.ShuffleboardFramework;
 import frc.robot.framework.util.XMLUtil;
+import edu.wpi.first.util.sendable.Sendable;
 import edu.wpi.first.wpilibj.Filesystem;
+import edu.wpi.first.wpilibj.shuffleboard.BuiltInWidgets;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
@@ -33,39 +36,11 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 public class RobotInit {
     private static Map<String, ControllerWrapper> controllers = new HashMap<>();
-    private static Map<String, CommandBase> autons = new HashMap<>();
     private static Map<String, SubsystemBase> subsystems = new HashMap<>();
     private static ShuffleboardFramework shuffleboard;
-
-    // private static Map<String, AutonWrapper> autons = new HashMap<>();
-    /**
-     * [Init] initializes [In] using an XML file detailing the control scheme.
-     * 
-     * @param thing path to the controls file (relative to the deploy
-     *              directory).
-     * 
-     * @note the current control file setup requires operator and driver controls to
-     *       be specified in the same file. This is not ideal for mixing / matching
-     *       driver + operator pairs. Could add an additional path to specify
-     *       operator vs driver controls.
-     * 
-     * @note sensor input is not currently implemented. I was conflicted on how to
-     *       implement this, so i'll detail the options as I see them and let you
-     *       pick:
-     *       1) Make a separate file that only includes sensors, and parse that with
-     *       [In]. This is the simplest option, but loses the benefits associated
-     *       with using XML in the first place (allowing text based representation
-     *       of the robot structure).
-     *       2) Parse the full configuration file. I think this is the better
-     *       option, but comes with additional problems. First, it clutters
-     *       the configuration file (do we care?). Second, how do we deal with
-     *       encapsulation? Do we associate sensors to certain subsystems (allows
-     *       for name overlaps + how controls and outputs are currently done) or do
-     *       we make all sensors global scope (easier for auto)?
-     */
+    private static SendableChooser<CommandBase> autonChooser = new SendableChooser<>();
 
     public static void Init() {
-        // TODO find all xml files in deploy recurisvely and merge them into big xml.
         File[] allConfigFiles = XMLUtil.listOfFiles(Filesystem.getDeployDirectory()).toArray(File[]::new);
 
         // Document doc = XMLUtil.Parse(XMLUtil.merger("controller",allConfigFiles));
@@ -75,6 +50,7 @@ public class RobotInit {
             System.out.println("Could not find any controller!");
         }
 
+        //this has to be first
         shuffleboard = new ShuffleboardFramework(root);
 
         NodeList subsystemNodeList = root.getElementsByTagName("subsystem");
@@ -91,6 +67,7 @@ public class RobotInit {
         ArrayList<String> autonNames = new ArrayList<>();
 
         // for each auton
+        boolean onFirstAuton=true;
         for (int i = 0; i < autonList.getLength(); i++) {
             Node autonNode = autonList.item(i);
             if (autonNode.getNodeType() != Node.ELEMENT_NODE) {
@@ -129,19 +106,20 @@ public class RobotInit {
             if (tempAutonCommand == null){
                 System.out.println("RobotInit:initAutons - could not parse auton '"+autonName+"'");
             }
+            else if (onFirstAuton){
+                autonChooser.setDefaultOption(autonName, tempAutonCommand);
+                onFirstAuton=false;
+            }
             else{
-                autons.put(autonName, tempAutonCommand);
+                autonChooser.addOption(autonName, tempAutonCommand);
             }         
         }
 
-        // TODO put auton selector on shuffleboard
-        // shuffleboard.Handlers.put("Robot", new ShuffleboardBase("Robot"));
-        // var tab = Shuffleboard.getTab("Robot");
-        // SimpleWidget sysWidget = tab.add("Auton", "").withWidget(WidgetType)
-        // SmartDashboard.putStringArray("Auton", autonNames.toArray(String[]::new));
+        ShuffleboardFramework.addSendableToMainWindow("AutonCommand", autonChooser, BuiltInWidgets.kComboBoxChooser);
+
     }
 
-    public static CommandBase buildCommandNodeListHelper(Element element) {
+    private static CommandBase buildCommandNodeListHelper(Element element) {
         HashMap<String, CommandBase> commandMap = new HashMap<>();
         HashMap<String, Element> elementMap = new HashMap<>();
 
@@ -168,7 +146,7 @@ public class RobotInit {
 
     // This turns an element and a processed list of subcommands into a command.
     // Does not traverse anything
-    public static CommandBase buildCommandNodeHelper(Element element, HashMap<String, CommandBase> commandMap,
+    private static CommandBase buildCommandNodeHelper(Element element, HashMap<String, CommandBase> commandMap,
             HashMap<String, Element> elementMap) {
         CommandBase[] commandArray = commandMap.values().toArray(new CommandBase[commandMap.size()]);
 
@@ -226,10 +204,6 @@ public class RobotInit {
                 return null;
         }
         return myCommand;
-        // } catch (Exception e) {
-        // e.printStackTrace();
-        // return null;
-        // }
     }
 
     private static void initSubsystems(NodeList subsystemNodeList) {
@@ -242,9 +216,9 @@ public class RobotInit {
                 if (childElement.getTagName().equals("subsystem")) {
                     String subsystemType = currentChild.getAttributes().getNamedItem("type").getNodeValue();
                     if (subsystemClasses.containsKey(subsystemType)) {
-                        subsystems.put(childElement.getAttribute("id"),
-                                ((SubsystemBase) frc.robot.framework.util.Reflection
-                                        .CreateObjectFromXML(subsystemClasses.get(subsystemType), childElement)));
+                        SubsystemBase temp = (SubsystemBase) frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType), childElement);
+                        subsystems.put(childElement.getAttribute("id"),temp);
+                        ShuffleboardFramework.addSendableToMainWindow(childElement.getAttribute("id"), (Sendable) temp);
                     } else {
                         System.out.println(
                                 "RobotInit:initSubsystems - could not find java subsystem for " + subsystemType);
@@ -325,8 +299,8 @@ public class RobotInit {
         return subsystems.get(subsystemID);
     }
 
-    public static CommandBase GetAuton(String autonID) {
-        return autons.get(autonID);
+    public static CommandBase GetAuton() {
+        return autonChooser.getSelected();
     }
 
 }

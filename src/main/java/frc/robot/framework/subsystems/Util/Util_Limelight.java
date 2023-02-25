@@ -19,6 +19,10 @@ public class Util_Limelight extends CommandBase implements RobotXML {
   }
 
   @Override
+    public void initialize(){
+  }
+  
+  @Override
   public void execute() {
 
     System.out.println(Limelight.getLimelightX());

@@ -17,6 +17,7 @@ public class Util_Delay extends CommandBase implements RobotXML {
 
   }
 
+  @Override
   public void initialize() {
     startTime = System.currentTimeMillis();
     delayLength = Double.parseDouble((myElement.getAttribute("delayLength")));
@@ -39,13 +40,13 @@ public class Util_Delay extends CommandBase implements RobotXML {
 
   @Override
   public void ReadXML(Element node) {
-    // TODO Auto-generated method stub
+    
 
   }
 
   @Override
   public void ReloadConfig() {
-    // TODO Auto-generated method stub
+    
 
   }
 }

@@ -21,13 +21,13 @@ public class USBCamera implements RobotXML{
 
     @Override
     public void ReadXML(Element node) {
-        // TODO Auto-generated method stub
+        
         
     }
 
     @Override
     public void ReloadConfig() {
-        // TODO Auto-generated method stub
+        
         
     }
 

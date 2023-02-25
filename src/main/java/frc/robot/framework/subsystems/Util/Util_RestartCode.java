@@ -3,8 +3,6 @@ package frc.robot.framework.subsystems.Util;
 import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.controller.ControllerBase;
 import frc.robot.framework.robot.*;
 
@@ -15,6 +13,10 @@ public class Util_RestartCode extends CommandBase implements RobotXML {
 
   public Util_RestartCode(Element element) {
     myElement = element;
+  }
+
+  @Override
+    public void initialize(){
   }
 
   @Override

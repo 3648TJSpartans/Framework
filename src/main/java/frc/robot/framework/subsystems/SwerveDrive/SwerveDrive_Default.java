@@ -38,10 +38,11 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
           "SwerveDrive_Default could not find swerve subsystem(subsystemID):" + element.getAttribute("subSystemID"));
       return;
     }
+
     swerveDriveSubsystem = (SwerveDrive) temp;
     this.addRequirements(swerveDriveSubsystem);
-
     CommandScheduler.getInstance().setDefaultCommand(swerveDriveSubsystem, this);
+    
     try{
       if (myElement.getAttribute("axis_forward") != "")
         axis_forward = myController.GetAxisMap().get(myElement.getAttribute("axis_forward"));
@@ -65,6 +66,10 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
       throw new NumberFormatException("SwerveDrive_Default: Could not parse scale_forward: "+scale_forward+" scale_sideway: "+scale_sideway+" scale_turn: "+scale_turn);
     }
   }
+  
+  @Override
+    public void initialize(){
+    }
 
   @Override
   public void execute() {

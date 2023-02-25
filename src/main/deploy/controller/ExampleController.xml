@@ -89,6 +89,6 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="0.2"></button>
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-0.2"></button>
-        <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
         </controller> 
 </robot>

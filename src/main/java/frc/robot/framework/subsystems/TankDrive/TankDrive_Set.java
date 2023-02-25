@@ -26,8 +26,10 @@ public class TankDrive_Set extends CommandBase implements RobotXML {
             return;
         }
         tankDrive = (TankDrive) temp;
+        this.addRequirements(tankDrive);
     }
 
+    @Override
     public void initialize() {
         startTime = System.currentTimeMillis();
         delayLength = Double.parseDouble((myElement.getAttribute("delayLength")));
