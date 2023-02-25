@@ -36,7 +36,7 @@
             </motor>
             <motor id="turn" controller="sparkmax" port="3" idleMode="break">
                 <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="1.5446307"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="-1.489"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
@@ -49,7 +49,7 @@
             </motor>
             <motor id="turn" controller="sparkmax" port="7" idleMode="break">
                 <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="2.9797761"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="-2.955"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
@@ -62,7 +62,7 @@
             </motor>
             <motor id="turn" controller="sparkmax" port="1" idleMode="break">
                 <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="0.4074071"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="-0.116"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
@@ -75,7 +75,7 @@
             </motor>
             <motor id="turn" controller="sparkmax" port="5" idleMode="break">
                 <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="3.2792308"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="0.460"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
