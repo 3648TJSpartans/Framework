@@ -4,8 +4,8 @@
 <robot>
     <auton id="auton1" nextstep="start">
         <SequentialCommandGroup id="start" firststep="test1">
-            <command type="SwerveDrive_Set" id="test1" subsystemID="SwerveDrive" nextstep="thing" 
-            xTranslation ="1" yTranslation = "0" heading="45" setMaxSpeed = "1" setMaxAcceleration = "3" timeout="5"/>
+            <!-- <command type="SwerveDrive_Set" id="test1" subsystemID="SwerveDrive" nextstep="thing" 
+            xTranslation ="1" yTranslation = "0" heading="45" setMaxSpeed = "1" setMaxAcceleration = "3" timeout="5"/> -->
             <!-- <command type="SwerveDrive_Set" id="stop" subsystemID="SwerveDrive" 
             xTranslation ="50" yTranslation = "50" heading="10" setMaxSpeed = "3" setMaxAcceleration = "3" nextstep="thing" timeout="5"/> -->
         <!-- <SequentialCommandGroup id="start" firststep="thing"> -->

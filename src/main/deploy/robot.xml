@@ -36,7 +36,7 @@
             </motor>
             <motor id="turn" controller="sparkmax" port="3" idleMode="break">
                 <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="-0.793984254"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="1.5446307"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
@@ -49,7 +49,7 @@
             </motor>
             <motor id="turn" controller="sparkmax" port="7" idleMode="break">
                 <encoder id="neoTurnEncoder" type="relative" port="encoder"/>
-                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="-0.8589860"/>
+                <encoder id="turnEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="2.9797761"/>
                 <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
                     setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
             </motor>
@@ -108,8 +108,8 @@
     </subsystem>
 
     <subsystem type="Motor" id="claw">
-        <motor id="claw1" controller="sparkpwm" port="1"/>
-         <encoder id="wrist_encoder" vendor="dutycycle" port_one="1"/>
+        <motor id="claw1" controller="sparkpwm" port="1" inverted="false"/>
+         <encoder id="claw_encoder" vendor="dutycycle" port_one="1"/>
     </subsystem>
 
     <subsystem type="Motor" id="arm">
