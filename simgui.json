@@ -4,6 +4,8 @@
       "/FMSInfo": "FMSInfo",
       "/Shuffleboard/Robot/AutonCommand": "String Chooser",
       "/Shuffleboard/Robot/SwerveDrive": "Subsystem",
+      "/Shuffleboard/Robot/arm": "Subsystem",
+      "/Shuffleboard/Robot/armChain": "Subsystem",
       "/Shuffleboard/Robot/claw": "Subsystem",
       "/Shuffleboard/Robot/rotation": "Subsystem",
       "/Shuffleboard/Robot/test": "Subsystem",
