@@ -87,12 +87,34 @@ public class TalonSRXController extends MotorController implements EncoderBase{
         return 0;
     }
 
+    
+
+    @Override
+    public void set(double speed){
+        controller.set(TalonSRXControlMode.PercentOutput, speed);
+    }
+
+    @Override
+    public double get() {
+        return controller.getMotorOutputPercent();
+    }
+
+    @Override
+    public void disable() {
+        controller.set(TalonSRXControlMode.Disabled, 0);
+    }
+
+    @Override
+    public void stopMotor() {
+        controller.set(TalonSRXControlMode.PercentOutput, 0);
+    }
+
+
     @Override
     public void initSendable(SendableBuilder builder) {
-        //builder.setSmartDashboardType("Motor Controller");
-        // builder.setActuator(true);
-        // builder.setSafeState(this::disable);
-        builder.addDoubleProperty("Position", this::getPosition, null);
-        builder.addDoubleProperty("Velocity", this::getVelocity, null);
+        builder.setSmartDashboardType("Motor Controller");
+        builder.setActuator(true);
+        builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Value", this::get, this::set);
     }
 }

@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.motorcontrol.Spark;
 import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.algorithm.PIDWrapper;
@@ -57,5 +58,34 @@ public class SparkController extends MotorController {
            return pid;
         else
             throw new UnsupportedOperationException("SparkController: pid is null. Can't getPID");
+    }
+
+    @Override
+    public void set(double speed){
+        controller.set(speed);
+    }
+
+    @Override
+    public double get() {
+        return controller.get();
+    }
+
+    @Override
+    public void disable() {
+        controller.disable();
+    }
+
+    @Override
+    public void stopMotor() {
+        controller.stopMotor();
+    }
+
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("Motor Controller");
+        builder.setActuator(true);
+        builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Value", this::get, this::set);
     }
 }

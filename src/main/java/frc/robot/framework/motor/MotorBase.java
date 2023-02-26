@@ -1,10 +1,11 @@
 package frc.robot.framework.motor;
 
+import edu.wpi.first.util.sendable.Sendable;
 import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
-public interface MotorBase{
+public interface MotorBase extends Sendable, edu.wpi.first.wpilibj.motorcontrol.MotorController{
     public void setReference(double reference, CommandMode mode);
     public void setInverted(boolean invert);
     public boolean getInverted();

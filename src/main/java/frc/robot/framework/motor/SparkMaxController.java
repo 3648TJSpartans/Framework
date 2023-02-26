@@ -267,12 +267,34 @@ public class SparkMaxController extends MotorController implements EncoderBase {
             throw new UnsupportedOperationException("SparkMaxController: pid is null. Can't getPID");
     }
 
+    
+
+    @Override
+    public void set(double speed){
+        controller.set(speed);
+    }
+
+    @Override
+    public double get() {
+        return controller.get();
+    }
+
+    @Override
+    public void disable() {
+        controller.disable();
+    }
+
+    @Override
+    public void stopMotor() {
+        controller.stopMotor();
+    }
+
+
     @Override
     public void initSendable(SendableBuilder builder) {
-        //builder.setSmartDashboardType("Motor Controller");
-        // builder.setActuator(true);
-        // builder.setSafeState(this::disable);
-        builder.addDoubleProperty("Position", this::getPosition, this::setPosition);
-        builder.addDoubleProperty("Velocity", this::getVelocity, null);
+        builder.setSmartDashboardType("Motor Controller");
+        builder.setActuator(true);
+        builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Value", this::get, this::set);
     }
 }

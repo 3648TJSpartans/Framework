@@ -1,5 +1,6 @@
 package frc.robot.framework.motor;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
@@ -74,5 +75,30 @@ public class MotorController implements MotorBase{
     @Override
     public void setInverted(boolean invert) {
         inverted=invert;
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        throw new UnsupportedOperationException("Can't call initSendable on MotorController.java. Please use a subclass");
+    }
+
+    @Override
+    public void set(double speed){
+        throw new UnsupportedOperationException("Can't call set on MotorController.java. Please use a subclass");
+    }
+
+    @Override
+    public double get() {
+        throw new UnsupportedOperationException("Can't call get on MotorController.java. Please use a subclass");
+    }
+
+    @Override
+    public void disable() {
+        throw new UnsupportedOperationException("Can't call disable on MotorController.java. Please use a subclass");
+    }
+
+    @Override
+    public void stopMotor() {
+        throw new UnsupportedOperationException("Can't call stopMotor on MotorController.java. Please use a subclass");
     }
 }

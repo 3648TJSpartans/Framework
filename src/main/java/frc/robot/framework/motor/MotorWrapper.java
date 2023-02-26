@@ -4,6 +4,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.algorithm.PIDWrapper;
 import frc.robot.framework.encoder.EncoderBase;
@@ -106,30 +107,8 @@ public class MotorWrapper extends MotorController implements edu.wpi.first.wpili
     }
 
     @Override
-    public void set(double speed) {
-        motor.setReference(speed, CommandMode.PERCENTAGE);
-        
-    }
-
-    @Override
-    public double get() {
-        
-        return 0;
-    }
-
-    @Override
     public boolean getInverted() {
         return motor.getInverted();
-    }
-
-    @Override
-    public void disable() {
-        motor.setReference(0, CommandMode.PERCENTAGE);
-    }
-
-    @Override
-    public void stopMotor() {
-        motor.setReference(0, CommandMode.PERCENTAGE);
     }
 
     @Override
@@ -165,5 +144,36 @@ public class MotorWrapper extends MotorController implements edu.wpi.first.wpili
     @Override
     public PIDBase getPID(){
         return motor.getPID();
+    }
+
+    
+
+    @Override
+    public void set(double speed){
+         motor.set(speed);
+    }
+
+    @Override
+    public double get() {
+        return motor.get();
+    }
+
+    @Override
+    public void disable() {
+        motor.disable();
+    }
+
+    @Override
+    public void stopMotor() {
+        motor.stopMotor();
+    }
+
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        builder.setSmartDashboardType("Motor Controller");
+        builder.setActuator(true);
+        builder.setSafeState(this::disable);
+        builder.addDoubleProperty("Value", this::get, this::set);
     }
 }
