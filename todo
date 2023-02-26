@@ -1,4 +1,4 @@
-Move most of spark to it's own folder. Instead of "motor" make it "sparkmax". This will make normal motors simple. Sparkmax is more than just a single controller.
+unknown: Move most of spark to it's own folder. Instead of "motor" make it "sparkmax". This will make normal motors simple. Sparkmax is more than just a single controller
 
 Create controller util class. button debounce, deadband, linear/non-linear mapping of input to output. In Controller config
 

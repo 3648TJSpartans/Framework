@@ -30,7 +30,7 @@ public class Motors {
      * @param id the id of the motor or motor group (ie "SHOOTER_WHEEL" or
      *           "LEFT_SIDE")
      */
-    private MotorBase getMotor(String id) {
+    public MotorBase getMotor(String id) {
         MotorBase requestedMotor = motors.get(id);
         if (requestedMotor == null) {
             motorError(id, subsystemName);
@@ -71,4 +71,6 @@ public class Motors {
         if (tab.getEnabled(id))
             requestedMotor.setReference(reference, mode);
     }
+
+
 }

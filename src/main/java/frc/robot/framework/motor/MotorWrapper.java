@@ -4,10 +4,15 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import frc.robot.framework.algorithm.PIDBase;
+import frc.robot.framework.algorithm.PIDWrapper;
+import frc.robot.framework.encoder.EncoderBase;
+import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.util.CommandMode;
+import frc.robot.framework.util.ShuffleboardFramework;
 
-public class MotorWrapper implements MotorBase, edu.wpi.first.wpilibj.motorcontrol.MotorController {
+public class MotorWrapper extends MotorController implements edu.wpi.first.wpilibj.motorcontrol.MotorController {
 
     private MotorBase motor;
 
@@ -15,6 +20,8 @@ public class MotorWrapper implements MotorBase, edu.wpi.first.wpilibj.motorcontr
 
     public MotorWrapper(Element element, boolean groupFlag, SubsystemCollection collection) {
         motorElement = element;
+        
+        //Parse MOTOR
         if (!groupFlag) { // single motor, not motorgroup
             motor = createMotorBase(element, collection);
             boolean invertedMotor = false;
@@ -36,17 +43,19 @@ public class MotorWrapper implements MotorBase, edu.wpi.first.wpilibj.motorcontr
             // each motor in motor group
             for (int o = 0; o < groupMotorNodes.getLength(); o++) {
                 Node currentMotor = groupMotorNodes.item(o);
-                if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
-                    motorGroupElement = (Element) currentMotor;
-                    int port = Integer.parseInt(motorGroupElement.getAttribute("port"));
-                    MotorBase motorInMotorGroup = createMotorBase(motorGroupElement, collection);
-                    boolean invertedMotor = false;
-                    if (motorGroupElement.hasAttribute("inverted")) {
-                        invertedMotor = (Boolean.parseBoolean(motorGroupElement.getAttribute("inverted")));
-                        motorInMotorGroup.setInverted(invertedMotor);
-                    }
-                    group.addMotor(motorInMotorGroup);
+                if (currentMotor.getNodeType() != Node.ELEMENT_NODE) {
+                    continue;
                 }
+
+                motorGroupElement = (Element) currentMotor;
+                int port = Integer.parseInt(motorGroupElement.getAttribute("port"));
+                MotorBase motorInMotorGroup = createMotorBase(motorGroupElement, collection);
+                boolean invertedMotor = false;
+                if (motorGroupElement.hasAttribute("inverted")) {
+                    invertedMotor = (Boolean.parseBoolean(motorGroupElement.getAttribute("inverted")));
+                    motorInMotorGroup.setInverted(invertedMotor);
+                }
+                group.addMotor(motorInMotorGroup);
             }
             motor = group;
 
@@ -61,12 +70,11 @@ public class MotorWrapper implements MotorBase, edu.wpi.first.wpilibj.motorcontr
 
     //we need collection because some motors might have nested element like sparkmax
     private MotorBase createMotorBase(Element element, SubsystemCollection collection) {
-        int port = Integer.parseInt(element.getAttribute("port"));
         String controllerType=element.getAttribute("controller");
         MotorBase motorBase;
         switch (controllerType.toLowerCase()) {
             case "sparkpwm":
-                motorBase = new SparkController(port);
+                motorBase = new SparkController(element, collection);
                 break;
             case "talonsrx":
                 throw new UnsupportedOperationException("TalonSRX not implemented in MotorWrapper");
@@ -74,7 +82,7 @@ public class MotorWrapper implements MotorBase, edu.wpi.first.wpilibj.motorcontr
                 motorBase = new SparkMaxController(element, collection);
                 break;
             default:
-                System.out.println("For motor:" + port +
+                System.out.println("MotorWrapper port:" + element.getAttribute("port")+
                         " motor controller type: " + controllerType + " not found.");
                 return null;
         }
@@ -122,5 +130,40 @@ public class MotorWrapper implements MotorBase, edu.wpi.first.wpilibj.motorcontr
     @Override
     public void stopMotor() {
         motor.setReference(0, CommandMode.PERCENTAGE);
+    }
+
+    @Override
+    public double getPosition(){
+        return motor.getPosition();
+    }
+
+    @Override
+    public void setPID(double kP, double kI, double kD, double kF) {
+        motor.setPID(kP, kI, kD, kF);
+    }
+
+    @Override
+    public EncoderBase getEncoder() {
+        return motor.getEncoder();
+    }
+
+    @Override
+    public boolean hasEncoder() {
+        return motor.hasEncoder();
+    }
+
+    @Override
+    public boolean hasPID() {
+        return motor.hasPID();
+    }
+
+    @Override
+    public double getVelocity() {
+        return motor.getVelocity();
+    }
+
+    @Override
+    public PIDBase getPID(){
+        return motor.getPID();
     }
 }

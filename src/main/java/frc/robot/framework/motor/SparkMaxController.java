@@ -22,11 +22,12 @@ import frc.robot.framework.encoder.SparkMaxEncoderRelativeEncoder;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.sensor.analoginput.AnalogInBase;
 import frc.robot.framework.sensor.analoginput.SparkMaxAnalogIn;
+import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.algorithm.SparkMaxPID;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardFramework;
 
-public class SparkMaxController extends MotorController implements MotorBase, EncoderBase {
+public class SparkMaxController extends MotorController implements EncoderBase {
     private CANSparkMax controller;
     private SparkMaxPIDController pidController;
     private RelativeEncoder encoder;
@@ -118,7 +119,8 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     else{
                         throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder port: "+ childElement.getAttribute("port") +" not supported. Only 'data' or 'encoder' ports supported");
                     }
-
+                    
+                    super.encoder=encoderWrapper;
                     collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);
                     //ShuffleboardFramework.getSubsystem(collection.subsystemName).addSendableToTab((childElement.getAttribute("id")+Math.random()).substring(0,18), encoderWrapper);
                     ShuffleboardFramework.getSubsystem(collection.subsystemName).addSendableToTab(childElement.getAttribute("id"), encoderWrapper);
@@ -174,6 +176,7 @@ public class SparkMaxController extends MotorController implements MotorBase, En
                     }else if (childElement.hasAttribute("kMinOutput") || childElement.hasAttribute("kMaxOutput")){
                         System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kMinOutput: "+childElement.getAttribute("kMinOutput")+"kMaxOutput"+childElement.getAttribute("kMaxOutput"));
                     }
+                    super.pid=pid;
                     collection.pids.put(element.getAttribute("id"), pid);
                     break;
                 case "analog":
@@ -186,11 +189,6 @@ public class SparkMaxController extends MotorController implements MotorBase, En
         }
         
         controller.burnFlash();
-    }
-
-    @Override
-    public void setInverted(boolean inverted) {
-        super.setInverted(inverted);
     }
 
     public void setReference(double reference, CommandMode mode) {
@@ -259,6 +257,14 @@ public class SparkMaxController extends MotorController implements MotorBase, En
     public void setPosition(double position) {
         encoder.setPosition(position);
         
+    }
+
+    @Override
+    public PIDBase getPID(){
+        if (pid !=null)
+           return pid;
+        else
+            throw new UnsupportedOperationException("SparkMaxController: pid is null. Can't getPID");
     }
 
     @Override

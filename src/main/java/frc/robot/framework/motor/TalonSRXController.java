@@ -8,7 +8,7 @@ import edu.wpi.first.util.sendable.SendableBuilder;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
-public class TalonSRXController extends MotorController implements MotorBase, EncoderBase{
+public class TalonSRXController extends MotorController implements EncoderBase{
     private TalonSRX controller;
 
     public TalonSRXController(int port) {
@@ -31,12 +31,6 @@ public class TalonSRXController extends MotorController implements MotorBase, En
                 controller.set(TalonSRXControlMode.Velocity,reference);
                 break;
         }
-    }
-
-    @Override
-    public void setInverted(boolean inverted)
-    {
-        super.setInverted(inverted);
     }
 
     public void setReference(CommandMode mode, double reference) {
@@ -76,20 +70,17 @@ public class TalonSRXController extends MotorController implements MotorBase, En
 
     @Override
     public void setDistancePerPulse(double factor) {
-        
-        
+                
     }
 
     @Override
     public void resetEncoder() {
-        
-        
+                
     }
 
     @Override
     public void setPosition(double position) {
-        
-        
+                
     }
 
     public double getAbsolutePosition() {

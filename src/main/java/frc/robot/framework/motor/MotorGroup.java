@@ -2,10 +2,11 @@ package frc.robot.framework.motor;
 
 import java.util.ArrayList;
 
+import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.util.CommandMode;
 
-public class MotorGroup extends MotorController implements MotorBase {
+public class MotorGroup extends MotorController{
     private ArrayList<MotorBase> motors = new ArrayList<>();
 
     public MotorGroup() {
@@ -22,17 +23,5 @@ public class MotorGroup extends MotorController implements MotorBase {
         for (int i = 0; i < motors.size(); i++) {
                 motors.get(i).setReference(reference, mode);
         }
-    }
-
-    @Override
-    public void setInverted(boolean inverted)
-    {
-        super.setInverted(inverted);
-    }
-
-    @Override
-    public boolean getInverted()
-    {
-        return super.getInverted();
     }
 }
