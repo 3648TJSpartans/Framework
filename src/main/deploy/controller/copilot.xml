@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<robot>
+<!-- 
+actions=
+"Pressed"=tempButton.whenPressed(base); if not running, starts 1 time when pressed
+"Held"=tempButton.whileHeld(base); if not running, constantly runs or starts it while held.
+"WhenHeld"=tempButton.whenHeld(base); if not running, starts it 1 time and continues it execution until finished or not held. Does not restart
+"Released"=tempButton.whenReleased(base); if not running, starts it 1 time when released
+"Toggle"=tempButton.toggleWhenPressed(base); Generally not recommended. If stopped, starts. If started, stops. 
+https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
+Any number of addational parameters can be defined. It's up to the command to consume these.
+ -->
+        <controller type="LOGITECH" port="1" id="COPILOT">
+                <defaultCommand subsystemID="wrist" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".1"></defaultCommand> 
+               <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".1"></defaultCommand>  
+
+                 <button button="LEFT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="-15"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="15"></button> 
+                
+                
+
+                <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="0.2"></button>
+                <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="-0.2"></button>
+                <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="X" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="-20"></button>
+                <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="20"></button>
+                
+                <!-- <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".35" ></button>
+               <button button="B" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".065"></button>
+               <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".33"></button>
+               <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button>  -->
+                <!-- <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="0.1"></button>
+                <button button="A" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-0.1"></button>
+                <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button> -->
+                 <!-- <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPosition=".56"></button>
+                <button button="RIGHT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPosition="3.567"></button> -->
+                <!-- <button button="RIGHT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPosition=".36"></button>
+                <button button="LEFT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPosition=".89"></button>  
+                 <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default" deadzone=".2"></defaultCommand>
+                <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2"></defaultCommand> 
+                <defaultCommand subsystemID="wrist" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default" deadzone=".2"></defaultCommand>
+                <defaultCommand subsystemID="rotation" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2"></defaultCommand> -->
+
+                <!--High-->
+                        <!-- <button button="Y" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition="-88" ></button>
+                        <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPosition="-18"></button> -->
+                <!--Medium-->
+                        <!-- <button button="A" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition=""></button>
+                        <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPosition=""></button> -->
+                <!--Low-->
+                        <!-- <button button="X" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition=""></button>
+                        <button button="X" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPosition=""></button> -->
+                 <!--Stowed-->
+                        <!-- <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition="66"></button>
+                        <button button="B" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPosition="88"></button> -->
+
+
+
+
+                <!-- <button button="A" command="Util_Limelight" trigger="Pressed"></button> -->
+        </controller> 
+</robot>
