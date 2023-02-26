@@ -236,27 +236,28 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private void initSwerveModules(NodeList _moduleNodeList) {
         for (int i = 0; i < _moduleNodeList.getLength(); i++) {
             Node currentChild = _moduleNodeList.item(i);
-            if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
-                Element childElement = (Element) currentChild;
-                if (childElement.getTagName().equals("module")) {
-                    switch (childElement.getAttribute("id").toLowerCase()) {
-                        case "front_right":
-                            m_frontRight = new SwerveModule(childElement);
-                            break;
+            if (currentChild.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            Element childElement = (Element) currentChild;
+            if (childElement.getTagName().equals("module")) {
+                switch (childElement.getAttribute("id").toLowerCase()) {
+                    case "front_right":
+                        m_frontRight = new SwerveModule(childElement);
+                        break;
 
-                        case "front_left":
-                            m_frontLeft = new SwerveModule(childElement);
-                            break;
+                    case "front_left":
+                        m_frontLeft = new SwerveModule(childElement);
+                        break;
 
-                        case "back_left":
-                            m_backLeft = new SwerveModule(childElement);
-                            break;
+                    case "back_left":
+                        m_backLeft = new SwerveModule(childElement);
+                        break;
 
-                        case "back_right":
-                            m_backRight = new SwerveModule(childElement);
-                            break;
+                    case "back_right":
+                        m_backRight = new SwerveModule(childElement);
+                        break;
 
-                    }
                 }
             }
         }

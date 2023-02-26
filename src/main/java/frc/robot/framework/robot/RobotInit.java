@@ -211,18 +211,19 @@ public class RobotInit {
         HashMap<String, Class<?>> subsystemClasses = Reflection.GetAllSubSystems();
         for (int i = 0; i < subsystemNodeList.getLength(); i++) {
             Node currentChild = subsystemNodeList.item(i);
-            if (currentChild.getNodeType() == Node.ELEMENT_NODE) {
-                Element childElement = (Element) currentChild;
-                if (childElement.getTagName().equals("subsystem")) {
-                    String subsystemType = currentChild.getAttributes().getNamedItem("type").getNodeValue();
-                    if (subsystemClasses.containsKey(subsystemType)) {
-                        SubsystemBase temp = (SubsystemBase) frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType), childElement);
-                        subsystems.put(childElement.getAttribute("id"),temp);
-                        ShuffleboardFramework.addSendableToMainWindow(childElement.getAttribute("id"), (Sendable) temp);
-                    } else {
-                        System.out.println(
-                                "RobotInit:initSubsystems - could not find java subsystem for " + subsystemType);
-                    }
+            if (currentChild.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            Element childElement = (Element) currentChild;
+            if (childElement.getTagName().equals("subsystem")) {
+                String subsystemType = currentChild.getAttributes().getNamedItem("type").getNodeValue();
+                if (subsystemClasses.containsKey(subsystemType)) {
+                    SubsystemBase temp = (SubsystemBase) frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType), childElement);
+                    subsystems.put(childElement.getAttribute("id"),temp);
+                    ShuffleboardFramework.addSendableToMainWindow(childElement.getAttribute("id"), (Sendable) temp);
+                } else {
+                    System.out.println(
+                            "RobotInit:initSubsystems - could not find java subsystem for " + subsystemType);
                 }
             }
         }
@@ -231,24 +232,25 @@ public class RobotInit {
     private static void initControllers(NodeList controllerList) {
         for (int i = 0; i < controllerList.getLength(); i++) {
             Node controllerNode = controllerList.item(i);
-            if (controllerNode.getNodeType() == Node.ELEMENT_NODE) {
-                Element controllerElement = (Element) controllerNode;
-                if (controllerElement.getAttribute("type").equals("LOGITECH")) {
-                    Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
-                    String id = controllerElement.getAttribute("id");
-                    controllers.put(id, new ControllerWrapper(new LogitechGamepad(port), controllerElement));
-                } else if (controllerElement.getAttribute("type").equals("XBOX")) {
-                    Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
-                    String id = controllerElement.getAttribute("id");
-                    controllers.put(id, new ControllerWrapper(new XboxGamepad(port), controllerElement));
-                } else if (controllerElement.getAttribute("type").equals("PS")) {
-                    Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
-                    String id = controllerElement.getAttribute("id");
-                    controllers.put(id, new ControllerWrapper(new PSGamepad(port), controllerElement));
-                } else {
-                    System.out.println("Unknown controller type: " + controllerElement.getAttribute("type"));
-                    continue;
-                }
+            if (controllerNode.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            Element controllerElement = (Element) controllerNode;
+            if (controllerElement.getAttribute("type").equals("LOGITECH")) {
+                Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
+                String id = controllerElement.getAttribute("id");
+                controllers.put(id, new ControllerWrapper(new LogitechGamepad(port), controllerElement));
+            } else if (controllerElement.getAttribute("type").equals("XBOX")) {
+                Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
+                String id = controllerElement.getAttribute("id");
+                controllers.put(id, new ControllerWrapper(new XboxGamepad(port), controllerElement));
+            } else if (controllerElement.getAttribute("type").equals("PS")) {
+                Integer port = Integer.parseInt(controllerElement.getAttribute("port"));
+                String id = controllerElement.getAttribute("id");
+                controllers.put(id, new ControllerWrapper(new PSGamepad(port), controllerElement));
+            } else {
+                System.out.println("Unknown controller type: " + controllerElement.getAttribute("type"));
+                continue;
             }
         }
     }

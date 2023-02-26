@@ -72,6 +72,8 @@ public class Motor_Default extends CommandBase implements RobotXML {
 			return; //Got a valid value for axis one. no need to parse 2nd axis
 		}
 
+		if (axisNumberPower2==-1)
+			return;
 		double input2 = myController.getAxis(axisNumberPower2);
 		if (Math.abs(input2) > deadzone) {
 			if (inverted2)

@@ -41,7 +41,7 @@ public class SoftwarePID implements PIDBase{
 
         double f = desiredValue * kF;
         lastOutput= p + i + d + f;
-        lastOutput = Math.max(1.0,Math.min(-1.0,lastOutput));
+        lastOutput = Math.min(1.0,Math.max(-1.0,lastOutput));
         return lastOutput;
     }
 

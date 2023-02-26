@@ -22,14 +22,13 @@ public class ShuffleboardFramework {
         NodeList systemList = root.getElementsByTagName("subsystem");
         for (int i = 0; i < systemList.getLength(); i++) {
             Node currentSystem = systemList.item(i);
-            if (currentSystem.getNodeType() == Node.ELEMENT_NODE) {
-                Element systemElement = (Element) currentSystem;
-                if (systemElement.getNodeType() == Node.ELEMENT_NODE) {
-                    Element subsystemElement = (Element) systemElement;
-                    if (!subsystemElement.getAttribute("id").isEmpty()) {
-                        subsystems.put(subsystemElement.getAttribute("id"), new ShuffleboardBase(subsystemElement));
-                    }
-                }
+            if (currentSystem.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            
+            Element subsystemElement = (Element) currentSystem;
+            if (!subsystemElement.getAttribute("id").isEmpty()) {
+                subsystems.put(subsystemElement.getAttribute("id"), new ShuffleboardBase(subsystemElement));
             }
         }
     }

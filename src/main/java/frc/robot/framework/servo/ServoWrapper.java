@@ -32,19 +32,20 @@ public class ServoWrapper implements ServoBase {
         ServoGroup group = new ServoGroup();
         for (int o = 0; o < groupMotorNodes.getLength(); o++) {
             Node currentMotor = groupMotorNodes.item(o);
-            if (currentMotor.getNodeType() == Node.ELEMENT_NODE) {
-                Element motorElement = (Element) currentMotor;
-                int port = Integer.parseInt(motorElement.getAttribute("port"));
-                ServoBase controllerType = getMotorType(motorElement.getAttribute("controller"), port);
+            if (currentMotor.getNodeType() != Node.ELEMENT_NODE) {
+                continue;
+            }
+            Element motorElement = (Element) currentMotor;
+            int port = Integer.parseInt(motorElement.getAttribute("port"));
+            ServoBase controllerType = getMotorType(motorElement.getAttribute("controller"), port);
 
-                if (controllerType != null) {
-                    group.addMotor(new ServoWrapper(motorElement));
-                } else {
-                    System.out.println("For motor:" + motorElement.getAttribute("port") + " in group: " + groupID
-                            + " motor controller type: " + controllerType
-                            + " was not found!");
-                    continue;
-                }
+            if (controllerType != null) {
+                group.addMotor(new ServoWrapper(motorElement));
+            } else {
+                System.out.println("For motor:" + motorElement.getAttribute("port") + " in group: " + groupID
+                        + " motor controller type: " + controllerType
+                        + " was not found!");
+                continue;
             }
         }
         motor = group;

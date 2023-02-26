@@ -2,6 +2,8 @@ package frc.robot.framework.encoder;
 
 import org.w3c.dom.*;
 
+import com.fasterxml.jackson.databind.exc.InvalidFormatException;
+
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 
@@ -11,14 +13,18 @@ public class EncoderWrapper implements EncoderBase {
     public EncoderWrapper(Element element) {
 
         String encoderType = element.getAttribute("vendor");
-        
-        int portOne = Integer.parseInt(element.getAttribute("port_one"));
-        int portTwo = 0;
-        if (!element.getAttribute("port_two").isEmpty()) {
-            portTwo = Integer.parseInt(element.getAttribute("port_two"));
-        }
+        try{
+            int portOne = Integer.parseInt(element.getAttribute("port_one"));
+            int portTwo = 0;
+            if (!element.getAttribute("port_two").isEmpty()) {
+                portTwo = Integer.parseInt(element.getAttribute("port_two"));
+            }
+            encoder = getEncoderType(encoderType, portOne, portTwo);
 
-        encoder = getEncoderType(encoderType, portOne, portTwo);
+        } catch (Exception e){throw new  NumberFormatException(
+            "Invalid Format on EncoderWrapper vendor:" + encoderType + " portOne: "+element.getAttribute("port_one")+
+            " portTwo: "+element.getAttribute("port_two"));
+        }
 
         if ( element.hasAttribute("setPosition") ) {
             encoder.setPosition(Double.parseDouble(element.getAttribute("setPosition")));
