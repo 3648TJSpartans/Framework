@@ -26,10 +26,10 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="X" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="-20"></button>
                 <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="20"></button>
                 
-                <!-- <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".35" ></button>
+                <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".35" ></button>
                <button button="B" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".065"></button>
                <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".33"></button>
-               <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button>  -->
+               <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button> 
                 <!-- <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="0.1"></button>
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-0.1"></button>

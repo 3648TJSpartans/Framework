@@ -22,9 +22,18 @@
           "AutonCommand": {
             "open": true
           },
+          "arm": {
+            "open": true
+          },
           "open": true
         },
-        "open": true
+        "open": true,
+        "swerve_back_left": {
+          "driveEncoder": {
+            "open": true
+          },
+          "open": true
+        }
       }
     }
   }

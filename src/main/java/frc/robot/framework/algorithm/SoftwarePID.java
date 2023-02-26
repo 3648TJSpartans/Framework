@@ -11,21 +11,11 @@ public class SoftwarePID implements PIDBase{
     private double lastOutput=0;
     public double measuredValue=0;
     private double previousErrors[] = new double[5]; 
-    private CommandMode mode = CommandMode.PERCENTAGE;
-    private MotorBase motor;
-    private EncoderBase encoder;
 
-    public SoftwarePID(double kP, double kI, double kD, double kF, MotorBase motor, EncoderBase encoder){
+    public SoftwarePID(double kP, double kI, double kD, double kF){
         setPID(kP, kI, kD, kF);
-        this.motor=motor;
-        this.encoder = encoder;
     }
     
-    public SoftwarePID(MotorBase motor, EncoderBase encoder){
-        this.motor=motor;
-        this.encoder=encoder;
-    }
-
     @Override
     public void setPID(double kP, double kI, double kD, double kF){
         this.kP = kP;
@@ -56,30 +46,25 @@ public class SoftwarePID implements PIDBase{
     }
 
     @Override
-    public void setReference(double reference, CommandMode mode) {
-        double currentValue;
-        double output;
+    public double getPowerOutput(double measuredValue, double desiredValue, CommandMode mode) {
+        double output=0;
         switch (mode){
             case POSITION:
-                currentValue=encoder.getPosition();
-                output=calculateOutput(currentValue, reference);
+                output=calculateOutput(measuredValue, desiredValue);
                 break;
             case VELOCITY:
-                currentValue=encoder.getVelocity();
-                output=calculateOutput(currentValue, reference);
+                output=calculateOutput(measuredValue, desiredValue);
                 break;
             case PERCENTAGE:
-                output=reference;
+                output=desiredValue;
                 break;          
-            default:
-                System.out.println("Invalid command mode :"+mode.toString()+" in SoftwarePID");
-                return;
         }
-        motor.setReference(output, CommandMode.PERCENTAGE);
+        return output;
     }
 
     @Override
     public double getLastOutput(){
         return lastOutput;
     }
+
 }

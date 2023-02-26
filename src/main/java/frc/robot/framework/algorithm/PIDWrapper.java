@@ -12,32 +12,16 @@ public class PIDWrapper implements PIDBase{
     private double kP, kI, kD, kF = 0;
     public double measuredValue=0;
 
-    public PIDWrapper(Element element, MotorBase motor, EncoderBase encoder){
+    public PIDWrapper(Element element){
         try{
-        kP=Double.parseDouble(element.getAttribute("kp"));
-        kI=Double.parseDouble(element.getAttribute("ki"));
-        kD=Double.parseDouble(element.getAttribute("kd"));
-        kF=Double.parseDouble(element.getAttribute("kf"));
+        kP=element.hasAttribute("kp") ? Double.parseDouble(element.getAttribute("kp")) : 0;
+        kI=element.hasAttribute("ki") ? Double.parseDouble(element.getAttribute("ki")) : 0;
+        kD=element.hasAttribute("kd") ? Double.parseDouble(element.getAttribute("kd")) : 0;
+        kF=element.hasAttribute("kf") ? Double.parseDouble(element.getAttribute("kf")) : 0;
         }catch (Exception NumberFormatException){
             throw new NumberFormatException("PIDWrapper Invalid Formats kP: "+kP+" kI: "+kI+" kD: "+kD+" kF: "+ kF);
         }
-        switch (element.getAttribute("type")){
-            case "sparkmax":
-                if (!(motor instanceof SparkMaxController)){
-                    System.out.println("PIDWrapper: Sparkmax PID requires SparkMax encoder and SparkMax Motor");
-                    return;
-                }
-                pidController = new SparkMaxPID(kP, kI, kD, kF, ((SparkMaxController)motor));
-                break;
-            case "talonsrx":
-                pidController = new SoftwarePID(kP,kI,kD,kF, motor, encoder);
-                break;
-            case "sparkpwm":
-                pidController = new SoftwarePID(kP,kI,kD,kF, motor, encoder);
-                break;
-            default:
-                return;
-        }
+        pidController = new SoftwarePID(kP,kI,kD,kF);
         pidController.setPID(kP,kI,kD,kF);
     }
 
@@ -55,7 +39,7 @@ public class PIDWrapper implements PIDBase{
     }
 
     @Override
-    public void setReference(double value, CommandMode mode) {
-        pidController.setReference(value, mode);        
+    public double getPowerOutput(double input, double reference, CommandMode mode){
+        return pidController.getPowerOutput(input, reference, mode);        
     }
 }

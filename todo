@@ -1,17 +1,15 @@
-integrate shuffleboard into the framework for easy of testing and for in game changes. somewhat done already. Needs testing. Needs to dynamically pick value as well
+Move most of spark to it's own folder. Instead of "motor" make it "sparkmax". This will make normal motors simple. Sparkmax is more than just a single controller.
 
 Create controller util class. button debounce, deadband, linear/non-linear mapping of input to output. In Controller config
-create logging class. Time/mode/+otherstuff.
 
-failsafe for sensors solienoid and motors might need testing
--Need to add more properties or expand defaultValue architecture
+Move logging to Datalog - https://docs.wpilib.org/en/stable/docs/software/telemetry/datalog.html
 
 make a compressor object
 
-RobotInit->controllers/auton/robotxml -- builds out commands for input/auton and starts subsystems
+
+The flow is:
 Subsystem->subsystemcollection->motors/solenids/etc.
 
 
 Pelle:
-log auto delete
 gyro and encoders tankdrivesubsystem

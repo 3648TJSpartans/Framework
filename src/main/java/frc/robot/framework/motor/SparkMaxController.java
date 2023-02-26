@@ -15,7 +15,6 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.SparkMaxAbsoluteEncoder.Type;
 
 import edu.wpi.first.util.sendable.SendableBuilder;
-import frc.robot.framework.algorithm.SparkMaxPID;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.encoder.SparkMaxEncoderAbsoluteEncoder;
@@ -23,6 +22,7 @@ import frc.robot.framework.encoder.SparkMaxEncoderRelativeEncoder;
 import frc.robot.framework.robot.SubsystemCollection;
 import frc.robot.framework.sensor.analoginput.AnalogInBase;
 import frc.robot.framework.sensor.analoginput.SparkMaxAnalogIn;
+import frc.robot.framework.algorithm.SparkMaxPID;
 import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardFramework;
 

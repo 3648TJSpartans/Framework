@@ -112,7 +112,7 @@ public class SubsystemCollection implements RobotXML {
                 } else if (childElement.getTagName().toLowerCase().equals("gyro") || childElement.getTagName().equals("gyroscopes")) {
                     gyroscopes.put(id, new GyroWrapper(childElement));
                 } else if (childElement.getTagName().toLowerCase().equals("pid")){
-                    pids.put(id, new PIDWrapper(childElement, null, null));
+                    pids.put(id, new PIDWrapper(childElement));
                 } else if (childElement.getTagName().toLowerCase().equals("pot")
                         || childElement.getTagName().equals("potientiometers")) {
                     potentiometers.put(id, new PotentiometerWrapper(childElement));

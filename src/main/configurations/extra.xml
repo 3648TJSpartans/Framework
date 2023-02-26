@@ -1,4 +1,4 @@
-
+<!-- 
     <subsystem type="Motor" id="joint1">
         <motor id="joint1" controller="sparkpwm" port="0"/>
 
@@ -10,58 +10,20 @@
 
     <subsystem type="Motor" id="claw">
         <motor id="claw1" controller="sparkpwm" port="3" />
-    </subsystem>
+    </subsystem> -->
 
-    <!-- <subsystem type="Motor" id="armRight">
-        <motor id="armRight1" controller="sparkmax" motortype="brushless" port="11">
-        </motor>
-    </subsystem>
+    
+    <!-- <subsystem type="TankDrive" id="TankDrive">
 
-    <subsystem type="Motor" id="armLeft">
-        <motor id="armLeft1" controller="sparkmax" motortype="brushless" port="11">
-        </motor>
-    </subsystem>
-
-    <subsystem type="Motor" id="armChain">
-        <motor id="armChain1" controller="sparkmax" motortype="brushless" port="12">
-        </motor>
-    </subsystem>  -->
-
-
-    <!-- <subsystem type="Motor" id="test">
-        <motor id="shooter1" controller="sparkmax" motortype="brushless" port="6" />
-    </subsystem>
- -->
-
-    <!-- 
-
-    <subsystem type="Motor" id="Turret">
-            <motor id="turret1" controller="sparkpwm" port="3">
-
-        </motor>
-
-    </subsystem>
-
-    <subsystem type="Motor" id="Shooter">
-        <motor id="shooter1" controller="sparkpwm" port="2" inverted="true" />
-    </subsystem>
-
-
-    <subsystem type="Motor" id="Hopper" commandMode="power"> 
-        <motor id="hopper1" controller="sparkmax" port="3"/>
+        <motorgroup id="left">
+            <motor id="left1" side="left" controller="sparkmax" port="9" />
+        </motorgroup>
+        <motorgroup id="right">
+            <motor id="right1" side="right" controller="sparkmax" port="14" />
+        </motorgroup>
     </subsystem> -->
 
 
-    <!-- MIN MAX motor test-->
-<!-- 
-    <subsystem type="Motor" id="Shooter" maxPosition="180" minPosition="-100">
-        <motor id="shooter1" controller="sparkmax" port="6">
-            <encoder id="shooterEncoder" port="encoder" port_one="6" />
-            <pid id="PID" kp="0.01" encoderPort="encoder" />
-        </motor>
+    <!-- <subsystem type="Solenoid" id="Solenoid_Subsyststem" >
+        <solenoid id="solenoid1" vendor="CTREPCM" port="7" type="single" inverted="true"/>
     </subsystem> -->
-
-    <!-- <subsystem type="SwerveDrive" id="SwerveDrive" width="21" wheel_base="25.5"
-    maxSpeedMetersPerSecond="4.8" maxAngularSpeed=" 6.283185307179586" fieldOriented="true">
-        
--->

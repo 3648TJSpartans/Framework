@@ -38,7 +38,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                         deadzone="0.05"
                 />
 
-                <button button="RESTART" subsystemID="SwerveDrive" command="SetRelative" trigger="Pressed"></button>
+                <button button="RESTART" subsystemID="SwerveDrive" command="SwerveDrive_SetRelative" trigger="Pressed"></button>
         
 
         </controller>

@@ -13,7 +13,7 @@ public class SparkMaxPID implements PIDBase{
     private SparkMaxPIDController pid;
     private SparkMaxController motor;
 
-    public SparkMaxPID(double kP, double kI, double kD, double kF, SparkMaxController motor) {
+    public SparkMaxPID(double kP, double kI, double kD, double kF, SparkMaxController motor)  {
         this.pid=motor.getPidController();
         this.motor=motor;
         setPID(kP, kI, kD, kF);
@@ -38,16 +38,11 @@ public class SparkMaxPID implements PIDBase{
     } catch (Exception NumberFormatException){
         throw new NumberFormatException("SparkMaxPID Invalid Formats kP: "+kP+" kI: "+kI+" kD: "+kD+" kF: "+ kF);
     }
-        
-        
-        
-
         this.pid=motor.getPidController();
         this.motor=motor;
         setPID(kP, kI, kD, kF);
     }
 
-    @Override
     public void setPID(double kP, double kI, double kD, double kF) {
         pid.setP(kP);
         pid.setI(kI);
@@ -55,7 +50,6 @@ public class SparkMaxPID implements PIDBase{
         pid.setFF(kF);
     }
 
-    @Override
     public void setReference(double value, CommandMode mode) {
         ControlType ctrlType;
         switch (mode){
@@ -75,8 +69,12 @@ public class SparkMaxPID implements PIDBase{
     }
 
     @Override
-    public double getLastOutput(){
+    public double getPowerOutput(double input, double reference, CommandMode mode) {
         return motor.getCanSparkMax().getAppliedOutput();
     }
-    
+
+    @Override
+    public double getLastOutput(){
+        return motor.getCanSparkMax().getAppliedOutput();
+    }  
 }

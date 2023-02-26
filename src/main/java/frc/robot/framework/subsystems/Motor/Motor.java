@@ -3,6 +3,7 @@ package frc.robot.framework.subsystems.Motor;
 import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.framework.algorithm.PIDBase;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.robot.RobotXML;
@@ -24,6 +25,7 @@ public class Motor extends SubsystemBase implements RobotXML {
     private double maxPower = 0;
     private Element element;
     private EncoderBase encoder;
+    private PIDBase pid;
 
 
     public Motor(Element subsystem) {
@@ -32,6 +34,9 @@ public class Motor extends SubsystemBase implements RobotXML {
         ReadXML(subsystem);
         if (subsystemColection.encoders.GetAllEncoderIDs().size() > 0) {
             encoder = subsystemColection.encoders.getEncoder(subsystemColection.encoders.GetAllEncoderIDs().iterator().next());
+        }
+        if (subsystemColection.pids.GetAllPIDsIDs().size() > 0) {
+            pid = subsystemColection.pids.getPID(subsystemColection.pids.GetAllPIDsIDs().iterator().next());
         }
     }
 
@@ -54,20 +59,22 @@ public class Motor extends SubsystemBase implements RobotXML {
 
     @Override
     public void periodic() {
-        // if (encoder != null && Math.random() > .9) {
-        //     System.out.println("Position:" + encoder.getPosition() +" Velocity:" + encoder.getVelocity());
-        // }
-
+        //This gets the first motor. This is a generic subsystem so we don't control more than one motor. If you need more than one, use a motor group
         for (String motorId : subsystemColection.motors.GetAllMotorIDs()) {
             if (subsystemColection.encoders.GetAllEncoderIDs().size()>0){
+
+                //Makes sure we haven't gone past max/min positions. If we have, go back to that position.
                 if(encoder.getPosition() > maxposition && element.hasAttribute("maxPosition")) {
-                    subsystemColection.motors.setOutput(motorId, maxposition, CommandMode.POSITION);
+                    subsystemColection.motors.setOutput(motorId, maxposition*.98, CommandMode.POSITION);
+                    return;
                     //System.out.println("Max position reached, setting to max position");
                 }else if(encoder.getPosition() < minposition && element.hasAttribute("minPosition")) {
-                    subsystemColection.motors.setOutput(motorId, minposition, CommandMode.POSITION);
+                    subsystemColection.motors.setOutput(motorId, minposition*1.02, CommandMode.POSITION);
+                    return;
                     //System.out.println("Min position reached, setting to min position");
                 }
 
+                //Clamp the values.
                 if(mode == CommandMode.VELOCITY && maxVelocity != 0) {
                     reference = Math.min(reference, maxVelocity);
                 }
@@ -79,6 +86,18 @@ public class Motor extends SubsystemBase implements RobotXML {
                 }
             }
 
+            switch (mode) {
+                case PERCENTAGE:
+                    break;
+                case POSITION:
+                    if (pid==null || encoder==null)
+                        reference=pid.getPowerOutput(encoder.getPosition(), reference, mode);
+                    break;
+                case VELOCITY:
+                    if (pid==null || encoder==null)
+                        reference=pid.getPowerOutput(encoder.getVelocity(), reference, mode);
+                    break;
+            }
             subsystemColection.motors.setOutput(motorId, reference, mode);
         }
     }
