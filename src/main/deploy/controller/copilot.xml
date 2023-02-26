@@ -11,8 +11,8 @@ https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to
 Any number of addational parameters can be defined. It's up to the command to consume these.
  -->
         <controller type="LOGITECH" port="1" id="COPILOT">
-                <defaultCommand subsystemID="wrist" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".1"></defaultCommand> 
-               <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".1"></defaultCommand>  
+                <defaultCommand subsystemID="wrist" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2"></defaultCommand> 
+                <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2"></defaultCommand>  
 
                  <button button="LEFT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="-15"></button>
                 <button button="RIGHT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="15"></button> 
@@ -27,9 +27,9 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="20"></button>
                 
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".35" ></button>
-               <button button="B" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".065"></button>
-               <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".33"></button>
-               <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button> 
+                <button button="B" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".065"></button>
+                <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".33"></button>
+                <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button> 
                 <!-- <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="0.1"></button>
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-0.1"></button>
