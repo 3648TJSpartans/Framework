@@ -126,7 +126,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
                     + " not supported varible type");
         }
 
-        testPath = PathPlanner.loadPath("straightPath", new PathConstraints(3, 3));
+        testPath = PathPlanner.loadPath("straightPath", new PathConstraints(1, 1));
 
         // Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
         // new Pose2d(2, 1, new Rotation2d(0)),
