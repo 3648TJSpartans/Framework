@@ -45,6 +45,8 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
     private double kMaxSpeedMetersPerSecond;
     private double kMaxAccelerationMetersPerSecondSquared;
     private Trajectory trajectory = new Trajectory();
+    private PathPlannerTrajectory testPath = new PathPlannerTrajectory();
+    private String autonPATH = "";
 
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
     public static final double kWheelBase = Units.inchesToMeters(26.5);
@@ -71,6 +73,28 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
     }
 
     public void initialize() {
+
+        try {
+            kMaxSpeedMetersPerSecond = Double.parseDouble(element.getAttribute("setMaxSpeed"));
+            kMaxAccelerationMetersPerSecondSquared = Double.parseDouble(element.getAttribute("setMaxAcceleration"));
+        } catch (Exception NumberFormatException) {
+            throw new NumberFormatException("Invalid Format on SwerveDrive_Set Subsystem on setMaxSpeed: "
+                    + kMaxSpeedMetersPerSecond + "setMaxAcceleration: " + kMaxAccelerationMetersPerSecondSquared
+                    + " not supported varible type");
+        }
+
+        try {
+            autonPATH = element.getAttribute("autonPath");
+        } catch (Exception NumberFormatException) {
+            throw new NumberFormatException("autonPath was not set.  Parsed path:" + autonPATH);
+        }
+
+        TrajectoryConfig config = new TrajectoryConfig(
+                kMaxSpeedMetersPerSecond,
+                kMaxAccelerationMetersPerSecondSquared)
+                // Add kinematics to ensure max speed is actually obeyed
+                .setKinematics(kDriveKinematics);
+
         startTime = System.currentTimeMillis();
         try {
             command_timeout = Double.parseDouble((element.getAttribute("timeout")));
@@ -81,29 +105,8 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
         m_timer.start();
     }
 
-    PathPlannerTrajectory testPath = new PathPlannerTrajectory();
-
     @Override
     public void execute() {
-        if (element.hasAttribute("setMaxSpeed") && element.hasAttribute("setMaxAcceleration")) {
-            try {
-                kMaxSpeedMetersPerSecond = Double.parseDouble(element.getAttribute("setMaxSpeed"));
-                kMaxAccelerationMetersPerSecondSquared = Double.parseDouble(element.getAttribute("setMaxAcceleration"));
-            } catch (Exception NumberFormatException) {
-                throw new NumberFormatException("Invalid Format on SwerveDrive_Set Subsystem on setMaxSpeed: "
-                        + kMaxSpeedMetersPerSecond + "setMaxAcceleration: " + kMaxAccelerationMetersPerSecondSquared
-                        + " not supported varible type");
-            }
-        } else if (element.hasAttribute("setMaxSpeed") || element.hasAttribute("setMaxAcceleration")) {
-            throw new NumberFormatException("Invalid Fields on SwerveDrive_Set Subsystem on setMaxSpeed: "
-                    + kMaxSpeedMetersPerSecond + "setMaxAcceleration: " + kMaxAccelerationMetersPerSecondSquared);
-        }
-
-        TrajectoryConfig config = new TrajectoryConfig(
-                kMaxSpeedMetersPerSecond,
-                kMaxAccelerationMetersPerSecondSquared)
-                // Add kinematics to ensure max speed is actually obeyed
-                .setKinematics(kDriveKinematics);
 
         // add absoulte/field relative parameters
         // xAbsolute
@@ -111,22 +114,8 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
 
         // add parameters for rotation/speed..?
 
-        try {
-            desired_xTranslation = element.hasAttribute("xTranslation")
-                    ? Double.parseDouble(element.getAttribute("xTranslation"))
-                    : 0;
-            desired_yTranslation = element.hasAttribute("yTranslation")
-                    ? Double.parseDouble(element.getAttribute("yTranslation"))
-                    : 0;
-            desired_degree = element.hasAttribute("heading") ? Double.parseDouble(element.getAttribute("heading"))
-                    : swerveDriveSubSystem.getHeading(); // preserve current heading if not specified
-        } catch (Exception NumberFormatException) {
-            throw new NumberFormatException("Invalid Format on SwerveDrive_Set Subsystem on xTranslation: "
-                    + desired_xTranslation + "yTranslation: " + desired_yTranslation + " heading: " + desired_degree
-                    + " not supported varible type");
-        }
-
-        testPath = PathPlanner.loadPath("straightPath", new PathConstraints(1, 1));
+        testPath = PathPlanner.loadPath(autonPATH,
+                new PathConstraints(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared));
 
         // Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
         // new Pose2d(2, 1, new Rotation2d(0)),
