@@ -9,7 +9,20 @@
       "/Shuffleboard/Robot/claw": "Subsystem",
       "/Shuffleboard/Robot/rotation": "Subsystem",
       "/Shuffleboard/Robot/test": "Subsystem",
-      "/Shuffleboard/Robot/wrist": "Subsystem"
+      "/Shuffleboard/Robot/wrist": "Subsystem",
+      "/Shuffleboard/arm/arm1": "Motor Controller",
+      "/Shuffleboard/armChain/armChain1": "Motor Controller",
+      "/Shuffleboard/claw/claw1": "Motor Controller",
+      "/Shuffleboard/rotation/rotation1": "Motor Controller",
+      "/Shuffleboard/swerve_back_left/drive": "Motor Controller",
+      "/Shuffleboard/swerve_back_left/turn": "Motor Controller",
+      "/Shuffleboard/swerve_back_right/drive": "Motor Controller",
+      "/Shuffleboard/swerve_back_right/turn": "Motor Controller",
+      "/Shuffleboard/swerve_front_left/drive": "Motor Controller",
+      "/Shuffleboard/swerve_front_left/turn": "Motor Controller",
+      "/Shuffleboard/swerve_front_right/drive": "Motor Controller",
+      "/Shuffleboard/swerve_front_right/turn": "Motor Controller",
+      "/Shuffleboard/wrist/wrist1": "Motor Controller"
     }
   },
   "NetworkTables": {
