@@ -70,7 +70,7 @@
 
 
     
-
+<!-- 
     <subsystem type="Motor" id="rotation">
         <motor id="rotation1" controller="sparkmax" port="12" idleMode="break">
             <encoder id="jointEncoder" port="encoder" />
@@ -78,7 +78,7 @@
             <pid id="PID" kp="0.1" encoderPort="encoder" />
         </motor>
 
-    </subsystem>
+    </subsystem> -->
 
     <subsystem type="Motor" id="wrist" >
         <motor id="wrist1" controller="sparkpwm" port="0" >
@@ -88,7 +88,7 @@
     </subsystem>
 
     <subsystem type="Motor" id="claw">
-        <motor id="claw1" controller="sparkpwm" port="1" inverted="false">
+        <motor id="claw1" controller="sparkpwm" port="10" inverted="false">
             <encoder id="claw_encoder" vendor="dutycycle" port_one="1"/>
             <pid id="PID" kp="1.0"/>
         </motor>
