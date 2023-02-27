@@ -29,8 +29,8 @@ public class SwerveDrive_SetRelative extends CommandBase implements RobotXML {
   }
 
   @Override
-    public void initialize(){
-    }
+  public void initialize() {
+  }
 
   // dosent work
   @Override
@@ -50,7 +50,7 @@ public class SwerveDrive_SetRelative extends CommandBase implements RobotXML {
 
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 
   @Override
