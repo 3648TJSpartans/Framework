@@ -103,6 +103,9 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
         }
         m_timer.reset();
         m_timer.start();
+
+        testPath = PathPlanner.loadPath("RoseTest",
+                new PathConstraints(.5, .5));
     }
 
     @Override
@@ -113,9 +116,6 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
         // yAbsolute
 
         // add parameters for rotation/speed..?
-
-        testPath = PathPlanner.loadPath(autonPATH,
-                new PathConstraints(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared));
 
         // Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
         // new Pose2d(2, 1, new Rotation2d(0)),

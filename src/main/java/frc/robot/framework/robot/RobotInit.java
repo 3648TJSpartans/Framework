@@ -10,6 +10,9 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.pathplanner.lib.PathPlanner;
+import com.pathplanner.lib.server.PathPlannerServer;
+
 import frc.robot.framework.controller.*;
 import frc.robot.framework.util.Reflection;
 import frc.robot.framework.util.ShuffleboardFramework;
@@ -50,7 +53,7 @@ public class RobotInit {
             System.out.println("Could not find any controller!");
         }
 
-        //this has to be first
+        // this has to be first
         shuffleboard = new ShuffleboardFramework(root);
 
         NodeList subsystemNodeList = root.getElementsByTagName("subsystem");
@@ -61,13 +64,15 @@ public class RobotInit {
 
         NodeList autNodeList = root.getElementsByTagName("auton");
         initAutons(autNodeList);
+
+        PathPlannerServer.startServer(5811);
     }
 
     private static void initAutons(NodeList autonList) {
         ArrayList<String> autonNames = new ArrayList<>();
 
         // for each auton
-        boolean onFirstAuton=true;
+        boolean onFirstAuton = true;
         for (int i = 0; i < autonList.getLength(); i++) {
             Node autonNode = autonList.item(i);
             if (autonNode.getNodeType() != Node.ELEMENT_NODE) {
@@ -83,8 +88,8 @@ public class RobotInit {
             Node autonSubNode = null;
             Element autonSubElement = null;
 
-            //find linked item
-            for (int j=0; j<autonSubNodeList.getLength(); j++){
+            // find linked item
+            for (int j = 0; j < autonSubNodeList.getLength(); j++) {
                 autonSubNode = autonSubNodeList.item(j);
                 if (autonSubNode.getNodeType() != Node.ELEMENT_NODE) {
                     continue;
@@ -102,17 +107,15 @@ public class RobotInit {
                 continue;
             }
 
-            CommandBase tempAutonCommand=buildCommandNodeListHelper(autonSubElement);
-            if (tempAutonCommand == null){
-                System.out.println("RobotInit:initAutons - could not parse auton '"+autonName+"'");
-            }
-            else if (onFirstAuton){
+            CommandBase tempAutonCommand = buildCommandNodeListHelper(autonSubElement);
+            if (tempAutonCommand == null) {
+                System.out.println("RobotInit:initAutons - could not parse auton '" + autonName + "'");
+            } else if (onFirstAuton) {
                 autonChooser.setDefaultOption(autonName, tempAutonCommand);
-                onFirstAuton=false;
-            }
-            else{
+                onFirstAuton = false;
+            } else {
                 autonChooser.addOption(autonName, tempAutonCommand);
-            }         
+            }
         }
 
         ShuffleboardFramework.addSendableToMainWindow("AutonCommand", autonChooser, BuiltInWidgets.kComboBoxChooser);
@@ -218,8 +221,9 @@ public class RobotInit {
             if (childElement.getTagName().equals("subsystem")) {
                 String subsystemType = currentChild.getAttributes().getNamedItem("type").getNodeValue();
                 if (subsystemClasses.containsKey(subsystemType)) {
-                    SubsystemBase temp = (SubsystemBase) frc.robot.framework.util.Reflection.CreateObjectFromXML(subsystemClasses.get(subsystemType), childElement);
-                    subsystems.put(childElement.getAttribute("id"),temp);
+                    SubsystemBase temp = (SubsystemBase) frc.robot.framework.util.Reflection
+                            .CreateObjectFromXML(subsystemClasses.get(subsystemType), childElement);
+                    subsystems.put(childElement.getAttribute("id"), temp);
                     ShuffleboardFramework.addSendableToMainWindow(childElement.getAttribute("id"), (Sendable) temp);
                 } else {
                     System.out.println(

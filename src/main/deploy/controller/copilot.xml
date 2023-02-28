@@ -19,20 +19,20 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="RIGHT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="15"></button> 
                 
                 
-
+<!-- 
                 <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="0.2"></button>
                 <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="-0.2"></button>
                 <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="X" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="-20"></button>
-                <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="20"></button>
+                <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" incrementPosition="20"></button> -->
 
                 <!-- new controls-->
-                <!-- <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".35" ></button>
+                <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".35" ></button>
                 <button button="B" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".065"></button>
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".33"></button>
-                <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button>  -->
-              <!-- <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPosition=".56"></button>
+                <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button>  
+               <!-- <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPosition=".56"></button>
                 <button button="RIGHT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPosition="3.567"></button>
                 <button button="RIGHT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPosition=".36"></button>
                 <button button="LEFT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPosition=".89"></button>  
