@@ -393,13 +393,23 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState,
                 m_desiredRotation);
 
-        m_controller.calculate(getPose(), desiredState, m_desiredRotation);
-
         var targetModuleStates = driveKinematics.toSwerveModuleStates(targetChassisSpeeds);
         m_frontLeft.setDesiredState(targetModuleStates[0]);
         m_frontRight.setDesiredState(targetModuleStates[1]);
         m_backLeft.setDesiredState(targetModuleStates[2]);
         m_backRight.setDesiredState(targetModuleStates[3]);
+
+        // new PPSwerveControllerCommand(
+        //     tragTrajectory, 
+        //     this::getPose, // Pose supplier
+        //     driveKinematics, // SwerveDriveKinematics
+        //     new PIDController(0, 0, 0), // X controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+        //     new PIDController(0, 0, 0), // Y controller (usually the same values as X controller)
+        //     new PIDController(0, 0, 0), // Rotation controller. Tune these values for your robot. Leaving them 0 will only use feedforwards.
+        //     this::setModuleStates, // Module states consumer
+        //     true, // Should the path be automatically mirrored depending on alliance color. Optional, defaults to true
+        //     this // Requires this drive subsystem
+        // )
 
         // new PPSwerveControllerCommand(tragTrajectory,
         // this::getPose,
