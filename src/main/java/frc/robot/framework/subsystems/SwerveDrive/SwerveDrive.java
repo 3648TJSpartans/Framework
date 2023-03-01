@@ -12,6 +12,10 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
+import com.pathplanner.lib.PathPlannerTrajectory;
+import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
+import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -31,6 +35,8 @@ import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.WPIUtilJNI;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
+import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.RobotXML;
 import frc.robot.framework.robot.SubsystemCollection;
@@ -271,7 +277,8 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         return teleFieldRelative;
     }
 
-    public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation, boolean input_fieldRelative, boolean rateLimit) {
+    public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation,
+            boolean input_fieldRelative, boolean rateLimit) {
         double xSpeedCommanded;
         double ySpeedCommanded;
 
@@ -378,11 +385,13 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
     }
 
-    public void setCommandTrajectory(Trajectory tragTrajectory, Timer m_timer) {
+    public void setCommandTrajectory(PathPlannerTrajectory tragTrajectory, Timer m_timer) {
 
-        var desiredState = tragTrajectory.sample(m_timer.get());
+        // var desiredState = tragTrajectory.sample(m_timer.get());
+        PathPlannerState desiredState = (PathPlannerState) tragTrajectory.sample(m_timer.get());
         Rotation2d m_desiredRotation = desiredState.poseMeters.getRotation();
-        var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState, m_desiredRotation);
+        var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState,
+                m_desiredRotation);
 
         m_controller.calculate(getPose(), desiredState, m_desiredRotation);
 
@@ -391,6 +400,14 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         m_frontRight.setDesiredState(targetModuleStates[1]);
         m_backLeft.setDesiredState(targetModuleStates[2]);
         m_backRight.setDesiredState(targetModuleStates[3]);
+
+        // new PPSwerveControllerCommand(tragTrajectory,
+        // this::getPose,
+        // driveKinematics,
+        // new PIDController(1, 0, 0),
+        // new PIDController(1, 0, 0),
+        // new PIDController(1, 0, 0),
+        // this::setModuleStates);
     }
 
     public void setLimelightTrajectory(Trajectory tragTrajectory, Timer m_timer) {
@@ -415,7 +432,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     @Override
     public void ReloadConfig() {
-        
 
     }
 }

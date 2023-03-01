@@ -44,8 +44,7 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
     private final Timer m_timer = new Timer();
     private double kMaxSpeedMetersPerSecond;
     private double kMaxAccelerationMetersPerSecondSquared;
-    private Trajectory trajectory = new Trajectory();
-    private PathPlannerTrajectory testPath = new PathPlannerTrajectory();
+    private PathPlannerTrajectory path = new PathPlannerTrajectory();
     private String autonPATH = "";
 
     public static final double kTrackWidth = Units.inchesToMeters(26.5);
@@ -89,11 +88,11 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
             throw new NumberFormatException("autonPath was not set.  Parsed path:" + autonPATH);
         }
 
-        TrajectoryConfig config = new TrajectoryConfig(
-                kMaxSpeedMetersPerSecond,
-                kMaxAccelerationMetersPerSecondSquared)
-                // Add kinematics to ensure max speed is actually obeyed
-                .setKinematics(kDriveKinematics);
+        // TrajectoryConfig config = new TrajectoryConfig(
+        // kMaxSpeedMetersPerSecond,
+        // kMaxAccelerationMetersPerSecondSquared)
+        // // Add kinematics to ensure max speed is actually obeyed
+        // .setKinematics(kDriveKinematics);
 
         startTime = System.currentTimeMillis();
         try {
@@ -104,26 +103,13 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
         m_timer.reset();
         m_timer.start();
 
-        testPath = PathPlanner.loadPath("RoseTest",
+        path = PathPlanner.loadPath("Path2TheSequel",
                 new PathConstraints(.5, .5));
     }
 
     @Override
     public void execute() {
-
-        // add absoulte/field relative parameters
-        // xAbsolute
-        // yAbsolute
-
-        // add parameters for rotation/speed..?
-
-        // Trajectory tragTrajectory = TrajectoryGenerator.generateTrajectory(
-        // new Pose2d(2, 1, new Rotation2d(0)),
-        // List.of(new Translation2d(desired_xTranslation, desired_yTranslation)),
-        // new Pose2d(2, 1, new Rotation2d(Math.toRadians(desired_degree))),
-        // config);
-
-        swerveDriveSubSystem.setCommandTrajectory(testPath, m_timer);
+        swerveDriveSubSystem.setCommandTrajectory(path, m_timer);
     }
 
     @Override
