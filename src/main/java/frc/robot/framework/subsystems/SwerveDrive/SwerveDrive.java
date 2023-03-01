@@ -52,8 +52,8 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private static SwerveModule m_backLeft;
     private static SwerveModule m_backRight;
 
-    private static final double kTrackWidth = Units.inchesToMeters(26.5);
-    private static final double kWheelBase = Units.inchesToMeters(26.5);
+    private static final double kTrackWidth = Units.inchesToMeters(27);
+    private static final double kWheelBase = Units.inchesToMeters(27);
 
     private Element element;
     private SubsystemCollection subsystemColection;

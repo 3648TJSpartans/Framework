@@ -1,13 +1,9 @@
 package frc.robot.commands;
 
-import java.util.HashMap;
 import java.util.Map;
-
 import org.w3c.dom.Element;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Robot;
 import frc.robot.framework.robot.*;
 import frc.robot.framework.subsystems.Motor.Motor;
 import frc.robot.framework.util.CommandMode;
@@ -56,13 +52,14 @@ public class scorePos extends CommandBase implements RobotXML {
   @Override
   public void execute() {
 
-    System.out.println("testCommand: " + text);
+    System.out.println("scorePosCommand: " + text);
     if (myElement.hasAttribute("command")) {
       command = myElement.getAttribute("command");
     }
     System.out.println(values.get("score_low_arm"));
     switch (command) {
       case "stowed":
+        System.out.println(command);
         wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
         arm_chain.setReference(values.get("stowed_arm"), CommandMode.POSITION);
         arm.setReference(values.get("wrist_up"), CommandMode.POSITION);
@@ -74,8 +71,8 @@ public class scorePos extends CommandBase implements RobotXML {
             CommandMode.POSITION);
         break;
       case "score_low":
-        arm_chain.setReference(values.get("score_low_arm"), CommandMode.POSITION);
         arm.setReference(values.get("score_low_armChain"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("score_low_arm"), CommandMode.POSITION);
         break;
       case "store_med":
         arm.setReference(values.get("score_medium_arm"), CommandMode.POSITION);
@@ -98,8 +95,8 @@ public class scorePos extends CommandBase implements RobotXML {
             CommandMode.POSITION);
         break;
       case "unstow":
-        arm.setReference(55, CommandMode.POSITION);
-        arm_chain.setReference(33, CommandMode.POSITION);
+        arm.setReference(values.get("unstowed_arm"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("unstowed_armChain"), CommandMode.POSITION);
         break;
       default:
         break;
