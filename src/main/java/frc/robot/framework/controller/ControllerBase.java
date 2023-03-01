@@ -9,6 +9,8 @@ public interface ControllerBase{
 
     public double getAxis(String axisID);
     public double getAxis(int axisID);
+
+    public int getPOV();
     
     public Map<String, Integer> GetButtonMap();
     public Map<String, Integer> GetAxisMap();

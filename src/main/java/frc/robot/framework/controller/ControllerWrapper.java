@@ -10,13 +10,15 @@ import org.w3c.dom.NodeList;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.POVButton;
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.framework.util.Reflection;
 
 public class ControllerWrapper{
 
     private ControllerBase controller;
     //private XMLParser parser = new XMLParser();
-    public Map<String, JoystickButton> buttons = new HashMap<>();
+    public Map<String, Trigger> buttons = new HashMap<>();
     public Map<String, CommandBase> axis = new HashMap<>();
     private Element subsystemElement;
 
@@ -32,7 +34,14 @@ public class ControllerWrapper{
             Element buttonElement = (Element)currentButton;
             
             try{
-                JoystickButton tempButton = new JoystickButton((GenericHID) controller,controller.GetButtonMap().get(buttonElement.getAttribute("button")));
+                String buttonInput=buttonElement.getAttribute("button");
+                Trigger tempTrigger;
+                if (tryParseInt(buttonInput)==null){ //String - A B X Y etc.
+                    tempTrigger = new JoystickButton((GenericHID) controller,controller.GetButtonMap().get(buttonElement.getAttribute("button")));
+                }
+                else { //Number - POV. 0-360
+                    tempTrigger = new POVButton((GenericHID) controller, Integer.parseInt(buttonElement.getAttribute("button")));
+                }
                 String command =buttonElement.getAttribute("command");
                 Class<?> clazz= Reflection.GetAllCommands().get(command);
                 if (clazz==null){
@@ -46,26 +55,26 @@ public class ControllerWrapper{
                 }
                 switch (buttonElement.getAttribute("trigger").toLowerCase()) {
                     case "pressed":
-                        tempButton.whenPressed(base);
+                        tempTrigger.onTrue(base);
                         break;
                     case "released":
-                        tempButton.whenReleased(base);
+                        tempTrigger.onFalse(base);
                         break;
                     case "held":
-                        tempButton.whileHeld(base);
+                        tempTrigger.whileTrue(base);
                         break;
                     case "whenheld":
-                        tempButton.whenPressed(base);
+                        tempTrigger.whileTrue(base.repeatedly());
                         break;
                     case "toggle":
-                        tempButton.toggleWhenPressed(base);
+                        tempTrigger.toggleOnTrue(base);
                         break;
                     default:
                         System.out.println("Could not find action:"+buttonElement.getAttribute("trigger"));
                         break;
                 }
                 base.schedule();
-                buttons.put(buttonElement.getAttribute("button"),tempButton);
+                buttons.put(buttonElement.getAttribute("button"),tempTrigger);
             }catch (Exception e){
                 System.out.println(e);
             }
@@ -117,5 +126,13 @@ public class ControllerWrapper{
     public double getAxis(String axisName){
         return controller.getAxis(axisName);
     }
+
+    private static Integer tryParseInt(String someText) {
+        try {
+           return Integer.parseInt(someText);
+        } catch (NumberFormatException ex) {
+           return null;
+        }
+     }
     
 }
