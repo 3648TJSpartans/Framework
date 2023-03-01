@@ -122,8 +122,10 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
         System.out.println("Time Complete: " + (System.currentTimeMillis() - startTime) + " " + (command_timeout * 1000)
                 + (System.currentTimeMillis() - startTime > command_timeout * 1000));
         if (System.currentTimeMillis() - startTime > command_timeout * 1000) {
+            swerveDriveSubSystem.resetOdometry(path.getInitialPose());
             return true;
         }
+
         return false;
     }
 
