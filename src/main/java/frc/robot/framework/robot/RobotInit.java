@@ -165,12 +165,12 @@ public class RobotInit {
                 int index = 0;
                 while (currentElement != null) {
                     CommandBase commandToAdd = commandMap.get(nextElementId);
-                    if (commandMap.size() == index ){
-                        try {
-                            sortedArray[index] = commandToAdd;
-                        } catch (Exception e) {
-                            throw new UnsupportedOperationException("Auton - SequentialCommandGroup - id:"+element.getAttribute("id")+" - Expecting "+commandMap.size()+" elements, found at least "+(commandMap.size()+1));
-                        }
+                    try {
+                        sortedArray[index] = commandToAdd;
+                    } catch (Exception e) {
+                        throw new UnsupportedOperationException(
+                                "Auton - SequentialCommandGroup - id:" + element.getAttribute("id") + " - Expecting "
+                                        + commandMap.size() + " elements, found at least " + (commandMap.size() + 1));
                     }
                     nextElementId = elementMap.get(nextElementId).getAttribute("nextstep");
                     currentElement = elementMap.get(nextElementId);
