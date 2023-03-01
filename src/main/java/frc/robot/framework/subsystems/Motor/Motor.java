@@ -15,14 +15,14 @@ import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
 public class Motor extends SubsystemBase implements RobotXML {
     private ShuffleboardBase tab;
-    
+
     private SubsystemCollection subsystemColection;
     private double reference = .00;
     private CommandMode mode = CommandMode.PERCENTAGE;
-    private double maxVelocity,minVelocity,maxposition,minposition,maxPower, minPower = 0;
+    private double maxVelocity, minVelocity, maxposition, minposition, maxPower, minPower = 0;
     private Element element;
     private MotorBase motor;
-    private boolean hasEncoder,hasPID=false;
+    private boolean hasEncoder, hasPID = false;
 
     public Motor(Element subsystem) {
         element = subsystem;
@@ -54,42 +54,49 @@ public class Motor extends SubsystemBase implements RobotXML {
         return reference;
     }
 
+    public MotorBase getMotor() {
+        return motor;
+    }
+
     @Override
     public void periodic() {
-        //This gets the first motor. This is a generic subsystem so we don't control more than one motor. If you need more than one, use a motor group
-        if (hasEncoder){
-            //Makes sure we haven't gone past max/min positions. If we have, go to middle position of those two.
-            if((motor.getPosition() > maxposition && element.hasAttribute("maxPosition")) || (motor.getPosition() < minposition && element.hasAttribute("minPosition"))) {
-                motor.setReference((maxposition+minposition)/2, CommandMode.POSITION);
+        // This gets the first motor. This is a generic subsystem so we don't control
+        // more than one motor. If you need more than one, use a motor group
+        if (hasEncoder) {
+            // Makes sure we haven't gone past max/min positions. If we have, go to middle
+            // position of those two.
+            if ((motor.getPosition() > maxposition && element.hasAttribute("maxPosition"))
+                    || (motor.getPosition() < minposition && element.hasAttribute("minPosition"))) {
+                motor.setReference((maxposition + minposition) / 2, CommandMode.POSITION);
                 return;
             }
 
-            //Clamp the values for velocity.
+            // Clamp the values for velocity.
             reference = reference > maxVelocity ? maxVelocity : reference < minVelocity ? minVelocity : reference;
         }
-        //Clamp the values for power.
-        if(mode == CommandMode.PERCENTAGE) {
+        // Clamp the values for power.
+        if (mode == CommandMode.PERCENTAGE) {
             reference = reference > maxPower ? maxPower : reference < minPower ? minPower : reference;
         }
 
-        double output=0;
+        double output = 0;
         switch (mode) {
             case PERCENTAGE:
-                output=reference;
+                output = reference;
                 break;
             case POSITION:
                 if (hasEncoder && hasPID)
-                    output=motor.getPID().getPowerOutput(motor.getPosition(), reference, mode);
-                else{
+                    output = motor.getPID().getPowerOutput(motor.getPosition(), reference, mode);
+                else {
 
                 }
                 break;
             case VELOCITY:
                 if (hasEncoder && hasPID)
-                    output=motor.getPID().getPowerOutput(motor.getPosition(), reference, mode);
+                    output = motor.getPID().getPowerOutput(motor.getPosition(), reference, mode);
                 break;
         }
-        
+
         motor.setReference(output, mode);
     }
 
@@ -124,27 +131,38 @@ public class Motor extends SubsystemBase implements RobotXML {
         }
         if (element.hasAttribute("maxVelocity")) {
             maxVelocity = Double.parseDouble(element.getAttribute("maxVelocity"));
-        } else {maxVelocity=Double.MAX_VALUE;}
+        } else {
+            maxVelocity = Double.MAX_VALUE;
+        }
         if (element.hasAttribute("minVelocity")) {
             minVelocity = Double.parseDouble(element.getAttribute("minVelocity"));
-        } else {minVelocity=Double.MIN_VALUE;}
+        } else {
+            minVelocity = Double.MIN_VALUE;
+        }
         if (element.hasAttribute("maxPosition")) {
             maxposition = Double.parseDouble(element.getAttribute("maxPosition"));
-        } else {maxposition=Double.MAX_VALUE;}
+        } else {
+            maxposition = Double.MAX_VALUE;
+        }
         if (element.hasAttribute("minPosition")) {
             minposition = Double.parseDouble(element.getAttribute("minPosition"));
-        } else {minposition=Double.MIN_VALUE;}
+        } else {
+            minposition = Double.MIN_VALUE;
+        }
         if (element.hasAttribute("maxPower")) {
             maxPower = Double.parseDouble(element.getAttribute("maxPower"));
-        } else {maxPower=1.0;}
+        } else {
+            maxPower = 1.0;
+        }
         if (element.hasAttribute("minPower")) {
             minPower = Double.parseDouble(element.getAttribute("minPower"));
-        } else {minPower=-1.0;}
+        } else {
+            minPower = -1.0;
+        }
     }
 
     @Override
     public void ReloadConfig() {
-        
 
     }
 }
