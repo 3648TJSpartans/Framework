@@ -9,18 +9,18 @@ public class readTextFile {
     public static void main(String[] args) {
 
         // read text file to HashMap
-        Map<String, String> mapFromFile = HashMapFromTextFile();
+        Map<String, Double> mapFromFile = HashMapFromTextFile();
 
         // iterate over HashMap entries
-        for (Map.Entry<String, String> entry : mapFromFile.entrySet()) {
+        for (Map.Entry<String, Double> entry : mapFromFile.entrySet()) {
             System.out.println(entry.getKey() + "="
                     + entry.getValue());
         }
     }
 
-    public static Map<String, String> HashMapFromTextFile() {
+    public static Map<String, Double> HashMapFromTextFile() {
 
-        Map<String, String> map = new HashMap<String, String>();
+        Map<String, Double> map = new HashMap<String, Double>();
         BufferedReader br = null;
 
         try {
@@ -41,7 +41,7 @@ public class readTextFile {
 
                 // first part is name, second is number
                 String name = parts[0].trim();
-                String value = (parts[1].trim());
+                Double value = Double.parseDouble(parts[1].trim());
 
                 // put name, number in HashMap if they are
                 // not empty

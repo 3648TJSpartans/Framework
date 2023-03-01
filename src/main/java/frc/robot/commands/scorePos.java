@@ -21,7 +21,7 @@ public class scorePos extends CommandBase implements RobotXML {
   private Motor arm;
   private Motor arm_chain;
   private Motor wrist;
-  private Map<String, String> values;
+  private Map<String, Double> values;
 
   public scorePos(Element element) {
     myElement = element;
@@ -33,8 +33,8 @@ public class scorePos extends CommandBase implements RobotXML {
     SubsystemBase temp_wrist = RobotInit.GetSubsystem(element.getAttribute("wristSubsystemID"));
     addRequirements(temp_wrist);
     if (temp_arm == null || !(temp_arm instanceof Motor)
-        || (temp_arm_chain == null || !(temp_arm_chain instanceof Motor) || temp_wrist == null
-            || !(temp_wrist instanceof Motor))) {
+        || temp_arm_chain == null || !(temp_arm_chain instanceof Motor) || temp_wrist == null
+        || !(temp_wrist instanceof Motor)) {
       System.out.println(
           "Arm Chain or Arm could not find Motor subsystem with id:" + element.getAttribute("armSubsystemID")
               + element.getAttribute("armChainSubsystemID"));
@@ -44,13 +44,13 @@ public class scorePos extends CommandBase implements RobotXML {
     this.addRequirements(arm);
     arm_chain = (Motor) temp_arm_chain;
     this.addRequirements(arm_chain);
-    wrist = (Motor) wrist;
+    wrist = (Motor) temp_wrist;
     this.addRequirements(wrist);
+
   }
 
   @Override
   public void initialize() {
-
   }
 
   @Override
@@ -63,44 +63,44 @@ public class scorePos extends CommandBase implements RobotXML {
     System.out.println(values.get("score_low_arm"));
     switch (command) {
       case "stowed":
-        // wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
-        // arm_chain.setReference(values.get("stowed_arm"), CommandMode.POSITION);
-        // arm.setReference(values.get("wrist_up"), CommandMode.POSITION);
+        wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("stowed_arm"), CommandMode.POSITION);
+        arm.setReference(values.get("wrist_up"), CommandMode.POSITION);
 
         break;
       case "score_high":
-        // arm.setReference(values.get("score_high_arm"), CommandMode.POSITION);
-        // arm_chain.setReference(values.get("score_high_armChain"),
-        // CommandMode.POSITION);
+        arm.setReference(values.get("score_high_arm"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("score_high_armChain"),
+            CommandMode.POSITION);
         break;
       case "score_low":
-        // arm_chain.setReference(values.get("score_low_arm"), CommandMode.POSITION);
-        // arm.setReference(values.get("score_low_armChain"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("score_low_arm"), CommandMode.POSITION);
+        arm.setReference(values.get("score_low_armChain"), CommandMode.POSITION);
         break;
       case "store_med":
-        // arm.setReference(values.get("score_medium_arm"), CommandMode.POSITION);
-        // arm_chain.setReference(values.get("score_medium_armChain"),
-        // CommandMode.POSITION);
+        arm.setReference(values.get("score_medium_arm"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("score_medium_armChain"),
+            CommandMode.POSITION);
         break;
       case "transport":
-        // arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
-        // arm_chain.setReference(values.get("transport_armChain"),
-        // CommandMode.POSITION);
+        arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("transport_armChain"),
+            CommandMode.POSITION);
         break;
       case "pickup_double":
-        // arm.setReference(values.get("pickup_double_arm"), CommandMode.POSITION);
-        // arm_chain.setReference(values.get("pickup_double_armChain"),
-        // CommandMode.POSITION);
+        arm.setReference(values.get("pickup_double_arm"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("pickup_double_armChain"),
+            CommandMode.POSITION);
         break;
       case "pickup_single":
-        // arm.setReference(values.get("pickup_single_arm"), CommandMode.POSITION);
-        // arm_chain.setReference(values.get("pickup_single_armChain"),
-        // CommandMode.POSITION);
+        arm.setReference(values.get("pickup_single_arm"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("pickup_single_armChain"),
+            CommandMode.POSITION);
         break;
-      // case "unstow":
-      // arm.setReference(55, CommandMode.POSITION);
-      // arm_chain.setReference(33, CommandMode.POSITION);
-      // break;
+      case "unstow":
+        arm.setReference(55, CommandMode.POSITION);
+        arm_chain.setReference(33, CommandMode.POSITION);
+        break;
       default:
         break;
 
