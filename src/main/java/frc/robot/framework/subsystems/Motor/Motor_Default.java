@@ -15,12 +15,14 @@ public class Motor_Default extends CommandBase implements RobotXML {
 	private Motor motorSubsystem;
 	private ControllerBase myController;
 	private double deadzone = .05;
+	private double scale = 1;
 
 	private int axisNumberPower1 = -1;
 	private int axisNumberPower2 = -1;
 	
 	private boolean inverted1 = false;
 	private boolean inverted2 = false;
+	private boolean wasUsingAxis = false;
 
 	public Motor_Default(Element element, ControllerBase controller) {
 		myElement = element;
@@ -39,6 +41,9 @@ public class Motor_Default extends CommandBase implements RobotXML {
 
 		if (element.hasAttribute("deadzone"))
 			deadzone = Double.parseDouble(element.getAttribute("deadzone"));
+
+		if (element.hasAttribute("scale"))
+			scale = Double.parseDouble(element.getAttribute("scale"));
 
 		if (element.hasAttribute("axisReference1") || element.hasAttribute("axisReference")) {
 			axisNumberPower1 = element.hasAttribute("axisReference1") ? 
@@ -65,22 +70,30 @@ public class Motor_Default extends CommandBase implements RobotXML {
 	public void execute() {
 		double input1 = myController.getAxis(axisNumberPower1);
 		if (Math.abs(input1) > deadzone) {
+			wasUsingAxis=true;
 			if (inverted1)
-				motorSubsystem.setReference(-input1);
+				motorSubsystem.setReference(-input1*scale);
 			else
-				motorSubsystem.setReference(input1, CommandMode.PERCENTAGE);
+				motorSubsystem.setReference(input1*scale, CommandMode.PERCENTAGE);
 			return; //Got a valid value for axis one. no need to parse 2nd axis
 		}
 
-		if (axisNumberPower2==-1)
+		if (axisNumberPower2==-1){
+			motorSubsystem.setReference(0,CommandMode.PERCENTAGE);
 			return;
+		}
 		double input2 = myController.getAxis(axisNumberPower2);
 		if (Math.abs(input2) > deadzone) {
+			wasUsingAxis=true;
 			if (inverted2)
-				motorSubsystem.setReference(-input2);
+				motorSubsystem.setReference(-input2*scale);
 			else
-				motorSubsystem.setReference(input2, CommandMode.PERCENTAGE);
+				motorSubsystem.setReference(input2*scale, CommandMode.PERCENTAGE);
 			return; //Got a valid value for axis one. no need to parse 2nd axis
+		}
+		if (wasUsingAxis){
+			wasUsingAxis=false;
+			motorSubsystem.setReference(0,CommandMode.PERCENTAGE);
 		}
 
 	}

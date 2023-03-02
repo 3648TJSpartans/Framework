@@ -49,7 +49,6 @@ public class MotorWrapper extends MotorController implements edu.wpi.first.wpili
                 }
 
                 motorGroupElement = (Element) currentMotor;
-                int port = Integer.parseInt(motorGroupElement.getAttribute("port"));
                 MotorBase motorInMotorGroup = createMotorBase(motorGroupElement, collection);
                 boolean invertedMotor = false;
                 if (motorGroupElement.hasAttribute("inverted")) {

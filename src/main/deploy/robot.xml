@@ -88,9 +88,9 @@
     </subsystem>
 
     <subsystem type="Motor" id="claw">
-        <motor id="claw1" controller="sparkpwm" port="1" inverted="false">
+        <motor id="claw1" controller="sparkpwm" port="1" inverted="true">
             <encoder id="claw_encoder" vendor="dutycycle" port_one="1"/>
-            <pid id="PID" kp="1.0"/>
+            <pid id="PID" kp="5.0"/>
         </motor>
     </subsystem>
 

@@ -132,22 +132,22 @@ public class Motor extends SubsystemBase implements RobotXML {
         if (element.hasAttribute("maxVelocity")) {
             maxVelocity = Double.parseDouble(element.getAttribute("maxVelocity"));
         } else {
-            maxVelocity = Double.MAX_VALUE;
+            maxVelocity = Double.POSITIVE_INFINITY;
         }
         if (element.hasAttribute("minVelocity")) {
             minVelocity = Double.parseDouble(element.getAttribute("minVelocity"));
         } else {
-            minVelocity = Double.MIN_VALUE;
+            minVelocity = Double.NEGATIVE_INFINITY;
         }
         if (element.hasAttribute("maxPosition")) {
             maxposition = Double.parseDouble(element.getAttribute("maxPosition"));
         } else {
-            maxposition = Double.MAX_VALUE;
+            maxposition = Double.POSITIVE_INFINITY;
         }
         if (element.hasAttribute("minPosition")) {
             minposition = Double.parseDouble(element.getAttribute("minPosition"));
         } else {
-            minposition = Double.MIN_VALUE;
+            minposition = Double.NEGATIVE_INFINITY;
         }
         if (element.hasAttribute("maxPower")) {
             maxPower = Double.parseDouble(element.getAttribute("maxPower"));
