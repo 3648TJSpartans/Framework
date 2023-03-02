@@ -37,21 +37,6 @@ Any number of addational parameters can be defined. It's up to the command to co
                         command="SwerveDrive_Default"
                         deadzone="0.05"
                 />
-                 <!--High-->
-                        <!-- <button button="Y" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition="-88" ></button>
-                        <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPosition="-18"></button> -->
-                <!--Medium-->
-                        <!-- <button button="A" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition=""></button>
-                        <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPosition=""></button> -->
-                <!--Low-->
-                        <!-- <button button="X" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition=""></button>
-                        <button button="X" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPosition=""></button> -->
-                 <!--Stowed-->
-                     
-                         <button button="B" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPosition=".36"></button>
-                        <button button="B" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPosition="88"></button>
-                        <button button="B" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition="66"></button> 
-                                <button button="RESTART" subsystemID="SwerveDrive" command="SwerveDrive_SetRelative" trigger="Pressed"></button>
         
 
         </controller>
