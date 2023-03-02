@@ -33,10 +33,10 @@ public class scorePos extends CommandBase implements RobotXML {
         || temp_rotation == null || !(temp_rotation instanceof Motor)) {
       System.out.println(
           "Arm Chain, Arm, Wrist, or Rotation could not find Motor subsystem with id:"
-              + element.getAttribute("armChainSubsystemID") + ","+
-              element.getAttribute("armSubsystemID")+","+
-              element.getAttribute("wristSubsystemID")+","+
-              element.getAttribute("rotationSubsystemID") );
+              + element.getAttribute("armChainSubsystemID") + "," +
+              element.getAttribute("armSubsystemID") + "," +
+              element.getAttribute("wristSubsystemID") + "," +
+              element.getAttribute("rotationSubsystemID"));
       return;
     }
     arm = (Motor) temp_arm;
@@ -65,12 +65,14 @@ public class scorePos extends CommandBase implements RobotXML {
       case "stowed":
         wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
         arm_chain.setReference(values.get("stowed_armChain"), CommandMode.POSITION);
+        rotation.setReference(0, CommandMode.POSITION);
         arm.setReference(values.get("stowed_arm"), CommandMode.POSITION);
 
         break;
       case "score_high":
         arm.setReference(values.get("score_high_arm"), CommandMode.POSITION);
         arm_chain.setReference(values.get("score_high_armChain"), CommandMode.POSITION);
+        rotation.setReference(0, CommandMode.POSITION);
         break;
       case "score_low":
         arm.setReference(values.get("score_low_armChain"), CommandMode.POSITION);
@@ -80,11 +82,14 @@ public class scorePos extends CommandBase implements RobotXML {
         arm.setReference(values.get("score_medium_arm"), CommandMode.POSITION);
         arm_chain.setReference(values.get("score_medium_armChain"),
             CommandMode.POSITION);
+        rotation.setReference(0, CommandMode.POSITION);
         break;
       case "transport":
+        rotation.setReference(0, CommandMode.POSITION);
         arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
         arm_chain.setReference(values.get("transport_armChain"),
             CommandMode.POSITION);
+
         break;
       case "pickup_double":
         arm.setReference(values.get("pickup_double_arm"), CommandMode.POSITION);
