@@ -12,14 +12,14 @@ Any number of addational parameters can be defined. It's up to the command to co
  -->
         <controller type="LOGITECH" port="1" id="COPILOT">
                 <!--old controls-->
-                <defaultCommand subsystemID="wrist" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2"></defaultCommand> 
+                <!-- <defaultCommand subsystemID="wrist" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2"></defaultCommand> 
                 <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2"></defaultCommand>  
 
-                 <button button="LEFT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="-15"></button>
+                <button button="LEFT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="-15"></button>
                 <button button="RIGHT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="15"></button> 
                 
                 
-<!-- 
+
                 <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="0.2"></button>
                 <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="Y" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="-0.2"></button>
@@ -31,21 +31,21 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".35" ></button>
                 <button button="B" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".065"></button>
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".33"></button>
-                <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button>  
-               <!-- <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPosition=".56"></button>
+                <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".22"></button>   
+               <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPosition=".56"></button>
                 <button button="RIGHT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPosition="3.567"></button>
                 <button button="RIGHT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPosition=".36"></button>
                 <button button="LEFT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPosition=".89"></button>  
                  <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default" deadzone=".2"></defaultCommand>
                 <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2"></defaultCommand> 
                 <defaultCommand subsystemID="wrist" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default" deadzone=".2"></defaultCommand>
-                <defaultCommand subsystemID="rotation" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2"></defaultCommand> -->
+                <defaultCommand subsystemID="rotation" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2"></defaultCommand>
 
                
 
 
 
 
-                <!-- <button button="A" command="Util_Limelight" trigger="Pressed"></button> -->
+                 <button button="A" command="Util_Limelight" trigger="Pressed"></button> 
         </controller> 
 </robot>
