@@ -15,6 +15,8 @@ import org.w3c.dom.NodeList;
 import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.PathPlannerTrajectory.PathPlannerState;
 import com.pathplanner.lib.commands.PPSwerveControllerCommand;
+import com.pathplanner.lib.controllers.PPHolonomicDriveController;
+import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.math.controller.HolonomicDriveController;
 import edu.wpi.first.math.controller.PIDController;
@@ -60,7 +62,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private ShuffleboardBase tab;
     private String subsystemName;
 
-    private HolonomicDriveController m_controller;
+    private PPHolonomicDriveController m_controller;
     private double maxAngularSpeed;
     private double maxSpeedMetersPerSecond;
     private SwerveDriveOdometry m_odometry;
@@ -130,10 +132,14 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                     "Invalid Fields on SwerveDrive Subsystem on xController: " + xController + "yController: "
                             + yController + "thetaController: " + thetaController + " not supported varible type");
         }
-        m_controller = new HolonomicDriveController(
-                new PIDController(xController, 0, 0),
-                new PIDController(yController, 0, 0),
-                new ProfiledPIDController(thetaController, 0, 0, kThetaControllerConstraints));
+        m_controller = new PPHolonomicDriveController(new PIDController(1, 0, 0), new PIDController(1, 0, 0),
+                new PIDController(1, 0, 0));
+        // m_controller = new PPHolonomicDriveController(
+        // new PIDController(xController, 0, 0),
+        // new PIDController(yController, 0, 0),
+        // new ProfiledPIDController(thetaController, 0, 0,
+        // kThetaControllerConstraints));
+
     }
 
     /**
@@ -370,70 +376,78 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 });
 
         String[] data = {
-        String.valueOf(m_frontLeft.getState().speedMetersPerSecond),
-        String.valueOf(m_frontLeft.getState().angle),
-        String.valueOf(m_frontRight.getState().speedMetersPerSecond),
-        String.valueOf(m_frontRight.getState().angle),
-        String.valueOf(m_backLeft.getState().speedMetersPerSecond),
-        String.valueOf(m_backLeft.getState().angle),
-        String.valueOf(m_backRight.getState().speedMetersPerSecond),
-        String.valueOf(m_backRight.getState().angle) };
+                String.valueOf(m_frontLeft.getState().speedMetersPerSecond),
+                String.valueOf(m_frontLeft.getState().angle),
+                String.valueOf(m_frontRight.getState().speedMetersPerSecond),
+                String.valueOf(m_frontRight.getState().angle),
+                String.valueOf(m_backLeft.getState().speedMetersPerSecond),
+                String.valueOf(m_backLeft.getState().angle),
+                String.valueOf(m_backRight.getState().speedMetersPerSecond),
+                String.valueOf(m_backRight.getState().angle) };
 
-        swerveLog.Write("Swerve_Drive_Module_ACTUAL", data);
+        // swerveLog.Write("Swerve_Drive_Module_ACTUAL", data);
     }
 
     public double getGyroAngle() {
         return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
     }
 
-    public void setCommandTrajectory(PathPlannerTrajectory tragTrajectory, Timer m_timer) {
+    public void setCommandTrajectory(PathPlannerTrajectory trajectory, Timer m_timer) {
 
-        // var desiredState = tragTrajectory.sample(m_timer.get());
-        PathPlannerState desiredState = (PathPlannerState) tragTrajectory.sample(m_timer.get());
-        Rotation2d m_desiredRotation = desiredState.poseMeters.getRotation();
-        var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState,
-                m_desiredRotation);
 
-        m_controller.calculate(getPose(), desiredState, m_desiredRotation);
+        double currentTime = m_timer.get();
+        PathPlannerState desiredState = (PathPlannerState) trajectory.sample(currentTime);
+
+        Pose2d currentPose = this.getPose();
+        // PathPlannerServer.sendPathFollowingData(
+        // new Pose2d(desiredState.poseMeters.getTranslation(),
+        // desiredState.holonomicRotation),
+        // currentPose);
+
+        var targetChassisSpeeds = m_controller.calculate(currentPose, desiredState);
+
+        m_controller.calculate(getPose(), desiredState);
 
         var targetModuleStates = driveKinematics.toSwerveModuleStates(targetChassisSpeeds);
+
         m_frontLeft.setDesiredState(targetModuleStates[0]);
         m_frontRight.setDesiredState(targetModuleStates[1]);
         m_backLeft.setDesiredState(targetModuleStates[2]);
         m_backRight.setDesiredState(targetModuleStates[3]);
 
-        String[] data = { String.valueOf(targetModuleStates[0].speedMetersPerSecond),
+         String[] data = { 
+               String.valueOf(desiredState.poseMeters),
+               String.valueOf(targetChassisSpeeds),
+               String.valueOf(targetModuleStates[0]),
+               String.valueOf(m_frontLeft.getState()),
+                String.valueOf(targetModuleStates[0].speedMetersPerSecond),
                 String.valueOf(targetModuleStates[0].angle),
                 String.valueOf(targetModuleStates[1].speedMetersPerSecond),
                 String.valueOf(targetModuleStates[1].angle),
                 String.valueOf(targetModuleStates[2].speedMetersPerSecond),
                 String.valueOf(targetModuleStates[2].angle),
                 String.valueOf(targetModuleStates[3].speedMetersPerSecond),
-                String.valueOf(targetModuleStates[3].angle) };
+                String.valueOf(targetModuleStates[3].angle) 
+            };
 
         swerveLog.Write("Swerve_Drive_Module_Auton", data);
 
-        // new PPSwerveControllerCommand(tragTrajectory,
-        // this::getPose,
-        // driveKinematics,
-        // new PIDController(1, 0, 0),
-        // new PIDController(1, 0, 0),
-        // new PIDController(1, 0, 0),
-        // this::setModuleStates);
     }
 
     public void setLimelightTrajectory(Trajectory tragTrajectory, Timer m_timer) {
-        var desiredState = tragTrajectory.sample(m_timer.get());
-        Rotation2d m_desiredRotation = desiredState.poseMeters.getRotation();
-        var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState, m_desiredRotation);
+        // var desiredState = tragTrajectory.sample(m_timer.get());
+        // Rotation2d m_desiredRotation = desiredState.poseMeters.getRotation();
+        // var targetChassisSpeeds = m_controller.calculate(getPose(), desiredState,
+        // m_desiredRotation);
 
-        m_controller.calculate(getPose(), desiredState, m_desiredRotation);
+        // m_controller.calculate(getPose(), desiredState, m_desiredRotation);
 
-        var targetModuleStates = driveKinematics.toSwerveModuleStates(targetChassisSpeeds);
-        m_frontLeft.setDesiredState(targetModuleStates[0]);
-        m_frontRight.setDesiredState(targetModuleStates[1]);
-        m_backLeft.setDesiredState(targetModuleStates[2]);
-        m_backRight.setDesiredState(targetModuleStates[3]);
+        // var targetModuleStates =
+        // driveKinematics.toSwerveModuleStates(targetChassisSpeeds);
+        // m_frontLeft.setDesiredState(targetModuleStates[0]);
+        // m_frontRight.setDesiredState(targetModuleStates[1]);
+        // m_backLeft.setDesiredState(targetModuleStates[2]);
+        // m_backRight.setDesiredState(targetModuleStates[3]);
     }
 
     @Override
