@@ -17,6 +17,10 @@ public class MotorGroup extends MotorController{
         motors.add(newMotor);
     }
 
+    public ArrayList<MotorBase> getAllMotors() {
+        return motors;
+    }
+
     @Override
     public void setReference(double reference, CommandMode mode) {
         if (inverted)

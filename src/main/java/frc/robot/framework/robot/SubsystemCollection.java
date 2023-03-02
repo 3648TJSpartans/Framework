@@ -13,7 +13,9 @@ import frc.robot.framework.algorithm.PIDWrapper;
 import frc.robot.framework.algorithm.Pids;
 import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.encoder.Encoders;
+import frc.robot.framework.motor.MotorBase;
 import frc.robot.framework.motor.MotorWrapper;
+import frc.robot.framework.motor.MotorGroup;
 import frc.robot.framework.motor.Motors;
 import frc.robot.framework.sensor.accelerometer.ACLWrapper;
 import frc.robot.framework.sensor.accelerometer.Accelerometers;
@@ -99,6 +101,9 @@ public class SubsystemCollection implements RobotXML {
                 var motorTemp = new MotorWrapper(childElement, true, this);
                 motors.put(id, motorTemp);
                 tab.addSendableToTab(id, motorTemp, BuiltInWidgets.kMotorController);
+                for (MotorBase eachMotor : ((MotorGroup)motorTemp.getMotor()).getAllMotors()) {
+                    tab.addSendableToTab(eachMotor.toString(), eachMotor, BuiltInWidgets.kMotorController);
+                }
             } else if (childElement.getTagName().toLowerCase().equals("servo")) {
                 servos.put(id, new ServoWrapper(childElement));
             } else if (childElement.getTagName().toLowerCase().equals("encoder")) {
