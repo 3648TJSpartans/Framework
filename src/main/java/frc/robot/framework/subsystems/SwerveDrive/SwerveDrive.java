@@ -168,15 +168,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 pose);
     }
 
-    /**
-     * Method to drive the robot using joystick info.
-     *
-     * @param xSpeed        Speed of the robot in the x direction (forward).
-     * @param ySpeed        Speed of the robot in the y direction (sideways).
-     * @param rot           Angular rate of the robot.
-     * @param fieldRelative Whether the provided x and y speeds are relative to the
-     *                      field.
-     */
 
     /**
      * Sets the wheels into an X formation to prevent movement.
@@ -249,6 +240,13 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         }
     }
 
+    /**
+     * Sets field Relativity
+     * 
+     * @param fieldRelative
+     * 
+     */
+
     public void setTeleFieldRelative(boolean fieldRelative) {
         teleFieldRelative = fieldRelative;
     }
@@ -256,6 +254,14 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     public boolean getTeleFieldRelative() {
         return teleFieldRelative;
     }
+
+     /**
+     * Method to drive the robot using joystick info.
+     *
+     * @param xSpeed        Speed of the robot in the x direction (forward).
+     * @param ySpeed        Speed of the robot in the y direction (sideways).
+     * @param rot           Angular rate of the robot.
+     */
 
     public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation,
             boolean rateLimit) {
@@ -373,10 +379,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         PathPlannerState desiredState = (PathPlannerState) trajectory.sample(currentTime);
 
         Pose2d currentPose = this.getPose();
-        // PathPlannerServer.sendPathFollowingData(
-        // new Pose2d(desiredState.poseMeters.getTranslation(),
-        // desiredState.holonomicRotation),
-        // currentPose);
 
         var targetChassisSpeeds = m_controller.calculate(currentPose, desiredState);
 
