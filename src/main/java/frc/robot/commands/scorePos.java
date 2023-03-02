@@ -56,19 +56,16 @@ public class scorePos extends CommandBase implements RobotXML {
     if (myElement.hasAttribute("command")) {
       command = myElement.getAttribute("command");
     }
-    System.out.println(values.get("score_low_arm"));
     switch (command) {
       case "stowed":
-        System.out.println(command);
         wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
-        arm_chain.setReference(values.get("stowed_arm"), CommandMode.POSITION);
-        arm.setReference(values.get("wrist_up"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("stowed_armChain"), CommandMode.POSITION);
+        arm.setReference(values.get("stowed_arm"), CommandMode.POSITION);
 
         break;
       case "score_high":
         arm.setReference(values.get("score_high_arm"), CommandMode.POSITION);
-        arm_chain.setReference(values.get("score_high_armChain"),
-            CommandMode.POSITION);
+        arm_chain.setReference(values.get("score_high_armChain"), CommandMode.POSITION);
         break;
       case "score_low":
         arm.setReference(values.get("score_low_armChain"), CommandMode.POSITION);
@@ -102,6 +99,7 @@ public class scorePos extends CommandBase implements RobotXML {
         break;
 
     }
+    System.out.println(arm.getMotor().getPosition());
   }
 
   @Override

@@ -47,8 +47,8 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
     private PathPlannerTrajectory path = new PathPlannerTrajectory();
     private String autonPATH = "";
 
-    public static final double kTrackWidth = Units.inchesToMeters(26.5);
-    public static final double kWheelBase = Units.inchesToMeters(26.5);
+    public static final double kTrackWidth = Units.inchesToMeters(27);
+    public static final double kWheelBase = Units.inchesToMeters(27);
 
     public static final SwerveDriveKinematics kDriveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, kTrackWidth / 2),
@@ -103,8 +103,8 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
         m_timer.reset();
         m_timer.start();
 
-        path = PathPlanner.loadPath("Path2TheSequel",
-                new PathConstraints(.5, .5));
+        path = PathPlanner.loadPath(autonPATH,
+                new PathConstraints(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared));
     }
 
     @Override
@@ -125,7 +125,6 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
             swerveDriveSubSystem.resetOdometry(path.getInitialPose());
             return true;
         }
-
         return false;
     }
 
