@@ -11,6 +11,8 @@
       "/Shuffleboard/Robot/test": "Subsystem",
       "/Shuffleboard/Robot/wrist": "Subsystem",
       "/Shuffleboard/arm/arm1": "Motor Controller",
+      "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@116259b6": "Motor Controller",
+      "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@482725d": "Motor Controller",
       "/Shuffleboard/armChain/armChain1": "Motor Controller",
       "/Shuffleboard/claw/claw1": "Motor Controller",
       "/Shuffleboard/rotation/rotation1": "Motor Controller",
