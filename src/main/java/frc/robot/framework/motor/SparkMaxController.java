@@ -93,10 +93,10 @@ public class SparkMaxController extends MotorController implements EncoderBase {
                                 data_AbsoluteEncoder = controller.getAbsoluteEncoder(Type.kDutyCycle);
                                 encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderAbsoluteEncoder(data_AbsoluteEncoder));
 
-                                double zeroOffset=0;
                                 if (childElement.hasAttribute("setZeroOffset")){
                                     try{
-                                        zeroOffset=Double.parseDouble(childElement.getAttribute("setZeroOffset"));
+                                        double zeroOffset=Double.parseDouble(childElement.getAttribute("setZeroOffset"));
+                                        encoderWrapper.setPosition(zeroOffset);
                                     } catch (NumberFormatException e){
                                         throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder id: "+ childElement.getAttribute("id") +": Invalid value for 'setZeroOffset'");
                                     }
