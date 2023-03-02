@@ -75,6 +75,8 @@ public class Motor_Default extends CommandBase implements RobotXML {
 				motorSubsystem.setReference(-input1*scale);
 			else
 				motorSubsystem.setReference(input1*scale, CommandMode.PERCENTAGE);
+			System.out.println("Motor Default is writing out");
+
 			return; //Got a valid value for axis one. no need to parse 2nd axis
 		}
 
@@ -86,6 +88,8 @@ public class Motor_Default extends CommandBase implements RobotXML {
 		double input2 = myController.getAxis(axisNumberPower2);
 		if (Math.abs(input2) > deadzone) {
 			wasUsingAxis=true;
+			System.out.println("Motor Default is writing out");
+
 			if (inverted2)
 				motorSubsystem.setReference(-input2*scale);
 			else
@@ -95,8 +99,8 @@ public class Motor_Default extends CommandBase implements RobotXML {
 		if (wasUsingAxis){
 			wasUsingAxis=false;
 			motorSubsystem.setReference(0,CommandMode.PERCENTAGE);
+			return;
 		}
-
 	}
 
 	@Override

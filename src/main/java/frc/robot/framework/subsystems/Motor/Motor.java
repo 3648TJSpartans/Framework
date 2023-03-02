@@ -68,6 +68,7 @@ public class Motor extends SubsystemBase implements RobotXML {
             if ((motor.getPosition() > maxposition && element.hasAttribute("maxPosition"))
                     || (motor.getPosition() < minposition && element.hasAttribute("minPosition"))) {
                 motor.setReference((maxposition + minposition) / 2, CommandMode.POSITION);
+                System.out.println("Exceeding positional limits. Resetting");
                 return;
             }
 
@@ -88,12 +89,15 @@ public class Motor extends SubsystemBase implements RobotXML {
                 if (hasEncoder && hasPID)
                     output = motor.getPID().getPowerOutput(motor.getPosition(), reference, mode);
                 else {
-
+                    throw new UnsupportedOperationException("Motor subsystem:"+element.getAttribute("id")+" Position requested but no pid/encoder");
                 }
                 break;
             case VELOCITY:
                 if (hasEncoder && hasPID)
                     output = motor.getPID().getPowerOutput(motor.getPosition(), reference, mode);
+                else {
+                    throw new UnsupportedOperationException("Motor subsystem:"+element.getAttribute("id")+" Position requested but no pid/encoder");
+                }
                 break;
         }
 
