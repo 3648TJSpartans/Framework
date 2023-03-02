@@ -6,7 +6,7 @@
         <SequentialCommandGroup id="start" firststep="test1">
             <command type="SwerveDrive_Set" id="test1" subsystemID="SwerveDrive" nextstep="thing" 
             xTranslation ="0" yTranslation = "0" heading="0" setMaxSpeed = "1" setMaxAcceleration = "1" timeout="27.5" autonPath="Sams"/> 
-            <!-- <command id="test1" nextstep="thing" type="scorePos" command="stowed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"/> -->
+            <command id="test1" nextstep="thing" type="scorePos" command="stowed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"/>
             <!-- <command type="SwerveDrive_Set" id="stop" subsystemID="SwerveDrive" 
             xTranslation ="50" yTranslation = "50" heading="10" setMaxSpeed = "3" setMaxAcceleration = "3" nextstep="thing" timeout="5"/>
         <SequentialCommandGroup id="start" firststep="thing"> -->

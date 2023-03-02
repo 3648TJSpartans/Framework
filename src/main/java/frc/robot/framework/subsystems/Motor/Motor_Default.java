@@ -79,6 +79,7 @@ public class Motor_Default extends CommandBase implements RobotXML {
 		}
 
 		if (axisNumberPower2==-1){
+			wasUsingAxis=false;
 			motorSubsystem.setReference(0,CommandMode.PERCENTAGE);
 			return;
 		}
