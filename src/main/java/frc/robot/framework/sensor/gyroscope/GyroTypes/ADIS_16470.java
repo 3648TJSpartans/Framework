@@ -29,7 +29,8 @@ public class ADIS_16470 implements GyroBase{
         return 0;
     }
     public double getGyroAngle(String axis) {
-        return 0;
+            return m_gyro.getAngle();
+
     }
     public double getGyroRate(String axis) {
         return 0;
