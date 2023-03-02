@@ -369,14 +369,15 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                         m_backRight.getPosition()
                 });
 
-        String[] data = { String.valueOf(m_frontLeft.getState().speedMetersPerSecond),
-                String.valueOf(m_frontLeft.getState().angle),
-                String.valueOf(m_frontRight.getState().speedMetersPerSecond),
-                String.valueOf(m_frontRight.getState().angle),
-                String.valueOf(m_backLeft.getState().speedMetersPerSecond),
-                String.valueOf(m_backLeft.getState().angle),
-                String.valueOf(m_backRight.getState().speedMetersPerSecond),
-                String.valueOf(m_backRight.getState().angle) };
+        String[] data = {
+        String.valueOf(m_frontLeft.getState().speedMetersPerSecond),
+        String.valueOf(m_frontLeft.getState().angle),
+        String.valueOf(m_frontRight.getState().speedMetersPerSecond),
+        String.valueOf(m_frontRight.getState().angle),
+        String.valueOf(m_backLeft.getState().speedMetersPerSecond),
+        String.valueOf(m_backLeft.getState().angle),
+        String.valueOf(m_backRight.getState().speedMetersPerSecond),
+        String.valueOf(m_backRight.getState().angle) };
 
         swerveLog.Write("Swerve_Drive_Module_ACTUAL", data);
     }
@@ -400,6 +401,17 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         m_frontRight.setDesiredState(targetModuleStates[1]);
         m_backLeft.setDesiredState(targetModuleStates[2]);
         m_backRight.setDesiredState(targetModuleStates[3]);
+
+        String[] data = { String.valueOf(targetModuleStates[0].speedMetersPerSecond),
+                String.valueOf(targetModuleStates[0].angle),
+                String.valueOf(targetModuleStates[1].speedMetersPerSecond),
+                String.valueOf(targetModuleStates[1].angle),
+                String.valueOf(targetModuleStates[2].speedMetersPerSecond),
+                String.valueOf(targetModuleStates[2].angle),
+                String.valueOf(targetModuleStates[3].speedMetersPerSecond),
+                String.valueOf(targetModuleStates[3].angle) };
+
+        swerveLog.Write("Swerve_Drive_Module_Auton", data);
 
         // new PPSwerveControllerCommand(tragTrajectory,
         // this::getPose,
