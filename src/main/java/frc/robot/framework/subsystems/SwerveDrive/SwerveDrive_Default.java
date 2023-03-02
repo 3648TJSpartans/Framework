@@ -92,7 +92,7 @@ public class SwerveDrive_Default extends CommandBase implements RobotXML {
     }
 
     //Now send the original coordinates over in X/Y
-    swerveDriveSubsystem.teleOpInput(-output_sideway, -output_forward, -output_turn, false, false);
+    swerveDriveSubsystem.teleOpInput(-output_sideway, -output_forward, -output_turn, false);
   }
 
   @Override
