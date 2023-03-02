@@ -101,7 +101,6 @@ public class SparkMaxController extends MotorController implements EncoderBase {
                                         throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder id: "+ childElement.getAttribute("id") +": Invalid value for 'setZeroOffset'");
                                     }
                                 }
-                                encoderWrapper.setPosition(zeroOffset);
                             }
                             else {
                                 throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder 'type' is not specified. Only 'data' or 'encoder' ports supported");
