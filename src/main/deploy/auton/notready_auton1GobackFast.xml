@@ -5,7 +5,7 @@
     <auton id="auton1" nextstep="start">
         <SequentialCommandGroup id="start" firststep="test1">
             <command type="SwerveDrive_Set" id="test1" subsystemID="SwerveDrive" nextstep="thing" 
-            heading="0" setMaxSpeed = ".5" setMaxAcceleration = ".5" timeout="7" autonPath="LTest"/> 
+            heading="0" setMaxSpeed = ".5" setMaxAcceleration = ".5" timeout="7" autonPath="pellep"/> 
             <!-- <command id="test1" nextstep="thing" type="scorePos" command="stowed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"/> -->
             <!-- <command type="SwerveDrive_Set" id="stop" subsystemID="SwerveDrive" 
             xTranslation ="50" yTranslation = "50" heading="10" setMaxSpeed = "3" setMaxAcceleration = "3" nextstep="thing" timeout="5"/>
