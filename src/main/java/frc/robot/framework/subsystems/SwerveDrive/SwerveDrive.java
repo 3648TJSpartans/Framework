@@ -177,32 +177,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
      * @param fieldRelative Whether the provided x and y speeds are relative to the
      *                      field.
      */
-    public void teleFieldRelative(boolean fieldRelative) {
-        this.fieldRelative = fieldRelative;
-    }
-
-    public void drive(double xSpeed, double ySpeed, double rot) {
-        // Adjust input based on max speed
-        xSpeed *= maxSpeedMetersPerSecond;
-        ySpeed *= maxSpeedMetersPerSecond;
-        rot *= maxAngularSpeed;
-
-        var swerveModuleStates = driveKinematics.toSwerveModuleStates(
-                fieldRelative
-                        ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeed, ySpeed, rot,
-                                Rotation2d.fromDegrees(getGyroAngle()))
-                        : new ChassisSpeeds(xSpeed, ySpeed, rot));
-        SwerveDriveKinematics.desaturateWheelSpeeds(swerveModuleStates, maxSpeedMetersPerSecond);
-        m_frontLeft.setDesiredState(swerveModuleStates[0]);
-        m_frontRight.setDesiredState(swerveModuleStates[1]);
-        m_backLeft.setDesiredState(swerveModuleStates[2]);
-        m_backRight.setDesiredState(swerveModuleStates[3]);
-
-        if (Math.random() > 0.9) {
-            System.out.println(swerveModuleStates[0]);
-        }
-
-    }
 
     /**
      * Sets the wheels into an X formation to prevent movement.
@@ -276,7 +250,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     }
 
     public void setTeleFieldRelative(boolean fieldRelative) {
-        this.teleFieldRelative = fieldRelative;
+        teleFieldRelative = fieldRelative;
     }
 
     public boolean getTeleFieldRelative() {
@@ -284,7 +258,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     }
 
     public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation,
-            boolean input_fieldRelative, boolean rateLimit) {
+            boolean rateLimit) {
         double xSpeedCommanded;
         double ySpeedCommanded;
 
@@ -341,7 +315,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         double rotDelivered = m_currentRotation * maxAngularSpeed;
 
         var swerveModuleStates = driveKinematics.toSwerveModuleStates(
-                input_fieldRelative
+            teleFieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
                                 Rotation2d.fromDegrees(getGyroAngle()))
                         : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));

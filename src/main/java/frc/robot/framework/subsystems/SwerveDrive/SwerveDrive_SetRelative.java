@@ -36,12 +36,12 @@ public class SwerveDrive_SetRelative extends CommandBase implements RobotXML {
   @Override
   public void execute() {
     try {
-      if (swerveDriveSubsystem.fieldRelative) {
-        swerveDriveSubsystem.teleFieldRelative(false);
+      if (swerveDriveSubsystem.getTeleFieldRelative()) {
+        swerveDriveSubsystem.setTeleFieldRelative(false);
         System.out.println("Field Relative: false");
       } else {
-        swerveDriveSubsystem.teleFieldRelative(true);
-        System.out.println("Field Relative: ture");
+        swerveDriveSubsystem.setTeleFieldRelative(true);
+        System.out.println("Field Relative: true");
       }
     } catch (Exception e) {
       throw new NumberFormatException("SwerveDrive_Relative: Error in execute");
