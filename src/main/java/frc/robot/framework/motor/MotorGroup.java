@@ -63,7 +63,11 @@ public class MotorGroup extends MotorController{
 
     @Override
     public void set(double speed){
-        motors.get(0).set(speed);
+        if (inverted)
+            speed*=-1.0;
+        for (int i = 0; i < motors.size(); i++) {
+            motors.get(i).setReference(speed, CommandMode.PERCENTAGE);
+    }
     }
 
     @Override
@@ -73,16 +77,22 @@ public class MotorGroup extends MotorController{
 
     @Override
     public void disable() {
-        motors.get(0).disable();
+        for (int i = 0; i < motors.size(); i++) {
+            motors.get(i).disable();
+        }
     }
 
     @Override
     public void stopMotor() {
-        motors.get(0).stopMotor();
+        for (int i = 0; i < motors.size(); i++) {
+            motors.get(i).stopMotor();
+        }
     }
 
     @Override
     public void initSendable(SendableBuilder builder) {
-        motors.get(0).initSendable(builder);
+        for (int i = 0; i < motors.size(); i++) {
+            motors.get(i).initSendable(builder);
+        }
     }
 }
