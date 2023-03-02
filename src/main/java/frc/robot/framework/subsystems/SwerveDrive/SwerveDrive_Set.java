@@ -103,8 +103,8 @@ public class SwerveDrive_Set extends CommandBase implements RobotXML {
         m_timer.reset();
         m_timer.start();
 
-        path = PathPlanner.loadPath("Path2TheSequel",
-                new PathConstraints(.5, .5));
+        path = PathPlanner.loadPath( autonPATH,
+                new PathConstraints(kMaxSpeedMetersPerSecond, kMaxAccelerationMetersPerSecondSquared));
     }
 
     @Override
