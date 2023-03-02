@@ -17,23 +17,26 @@ public class scorePos extends CommandBase implements RobotXML {
   private Motor arm;
   private Motor arm_chain;
   private Motor wrist;
+  private Motor rotation;
   private Map<String, Double> values;
 
   public scorePos(Element element) {
     myElement = element;
     values = readTextFile.HashMapFromTextFile();
     SubsystemBase temp_arm = RobotInit.GetSubsystem(element.getAttribute("armSubsystemID"));
-    addRequirements(temp_arm);
     SubsystemBase temp_arm_chain = RobotInit.GetSubsystem(element.getAttribute("armChainSubsystemID"));
-    addRequirements(temp_arm_chain);
     SubsystemBase temp_wrist = RobotInit.GetSubsystem(element.getAttribute("wristSubsystemID"));
-    addRequirements(temp_wrist);
+    SubsystemBase temp_rotation = RobotInit.GetSubsystem(element.getAttribute("wristSubsystemID"));
     if (temp_arm == null || !(temp_arm instanceof Motor)
-        || temp_arm_chain == null || !(temp_arm_chain instanceof Motor) || temp_wrist == null
-        || !(temp_wrist instanceof Motor)) {
+        || temp_arm_chain == null || !(temp_arm_chain instanceof Motor)
+        || temp_wrist == null || !(temp_wrist instanceof Motor)
+        || temp_rotation == null || !(temp_rotation instanceof Motor)) {
       System.out.println(
-          "Arm Chain or Arm could not find Motor subsystem with id:" + element.getAttribute("armSubsystemID")
-              + element.getAttribute("armChainSubsystemID"));
+          "Arm Chain, Arm, Wrist, or Rotation could not find Motor subsystem with id:"
+              + element.getAttribute("armChainSubsystemID") + ","+
+              element.getAttribute("armSubsystemID")+","+
+              element.getAttribute("wristSubsystemID")+","+
+              element.getAttribute("rotationSubsystemID") );
       return;
     }
     arm = (Motor) temp_arm;
@@ -42,6 +45,8 @@ public class scorePos extends CommandBase implements RobotXML {
     this.addRequirements(arm_chain);
     wrist = (Motor) temp_wrist;
     this.addRequirements(wrist);
+    rotation = (Motor) temp_rotation;
+    this.addRequirements(rotation);
 
   }
 

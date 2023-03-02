@@ -6,18 +6,6 @@ import java.util.*;
 public class readTextFile {
     final static String filePath = "src/main/java/frc/robot/commands/values.txt";
 
-    public static void main(String[] args) {
-
-        // read text file to HashMap
-        Map<String, Double> mapFromFile = HashMapFromTextFile();
-
-        // iterate over HashMap entries
-        for (Map.Entry<String, Double> entry : mapFromFile.entrySet()) {
-            System.out.println(entry.getKey() + "="
-                    + entry.getValue());
-        }
-    }
-
     public static Map<String, Double> HashMapFromTextFile() {
 
         Map<String, Double> map = new HashMap<String, Double>();
