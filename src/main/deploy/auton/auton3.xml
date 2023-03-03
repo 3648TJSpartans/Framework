@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!-- maybe... I'm still thinking if it's worth writing this or writing commandgroup that reads parameters -->
+
+<robot>
+    <auton id="auton3" nextstep="start">
+        <SequentialCommandGroup id="start" firststep="drive">
+            <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="gyroAdj" 
+            setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="Path2"/> 
+            
+
+        </SequentialCommandGroup>
+    </auton>
+</robot>    

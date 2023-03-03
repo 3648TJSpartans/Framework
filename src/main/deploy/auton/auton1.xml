@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<!-- maybe... I'm still thinking if it's worth writing this or writing commandgroup that reads parameters -->
+
+<robot>
+    <auton id="auton1" nextstep="stop">
+        <SequentialCommandGroup id="stop" firststep="drive">
+        </SequentialCommandGroup>
+    </auton>
+</robot>    
