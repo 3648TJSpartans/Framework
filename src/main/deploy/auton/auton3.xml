@@ -6,7 +6,7 @@
         <SequentialCommandGroup id="start" firststep="drive">
             <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="gyroAdj" 
             setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="Path2"/> 
-            <command type="SwerveDrive_Balance" subsystemID="SwerveDrive" timeout="10" id="gyroAdj"/>
+            <!-- <command type="SwerveDrive_Balance" subsystemID="SwerveDrive" timeout="10" id="gyroAdj"/> -->
             
 
         </SequentialCommandGroup>
