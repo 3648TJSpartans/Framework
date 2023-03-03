@@ -18,8 +18,7 @@ public class Motor_Set extends CommandBase implements RobotXML{
             
         SubsystemBase temp=RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
         if (temp==null || !(temp instanceof Motor)){
-            System.out.println("Motor_SetPower could not find Motor subsystem with id:"+ element.getAttribute("subSystemID"));
-            return;
+            throw new UnsupportedOperationException("Motor_SetPower could not find Motor subsystem with id:"+ element.getAttribute("subsystemID"));
         }
         motor = (Motor)temp;
         this.addRequirements(motor);

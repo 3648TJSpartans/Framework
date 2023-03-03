@@ -8,7 +8,7 @@ import frc.robot.framework.motor.SparkMaxController;
 import frc.robot.framework.util.CommandMode;
 
 public class PIDWrapper implements PIDBase{
-    private PIDBase pidController;
+    public PIDBase pidController;
     private double kP, kI, kD, kF = 0;
     public double measuredValue=0;
 

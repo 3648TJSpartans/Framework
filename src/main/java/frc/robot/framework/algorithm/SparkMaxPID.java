@@ -70,7 +70,7 @@ public class SparkMaxPID implements PIDBase{
 
     @Override
     public double getPowerOutput(double input, double reference, CommandMode mode) {
-        return motor.getCanSparkMax().getAppliedOutput();
+        return reference;
     }
 
     @Override

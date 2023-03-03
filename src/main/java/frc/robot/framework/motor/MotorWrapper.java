@@ -34,28 +34,42 @@ public class MotorWrapper extends MotorController implements edu.wpi.first.wpili
                 }
             }
             motor.setInverted(invertedMotor);
-        } else {
-
-            // MotorGroup
-            NodeList groupMotorNodes = element.getElementsByTagName("motor");
+        } else { // MOTOR
             MotorGroup group = new MotorGroup();
-            Element motorGroupElement = null;
-
-            // each motor in motor group
-            for (int o = 0; o < groupMotorNodes.getLength(); o++) {
-                Node currentMotor = groupMotorNodes.item(o);
-                if (currentMotor.getNodeType() != Node.ELEMENT_NODE) {
+            NodeList children = element.getChildNodes();
+            for (int i = 0; i < children.getLength(); i++) {
+                Node currentChild = children.item(i);
+                if (currentChild.getNodeType() != Node.ELEMENT_NODE) {
                     continue;
                 }
+                Element childElement = (Element) currentChild;
+                String id = childElement.getAttribute("id");
+    
+                if (childElement.getTagName().toLowerCase().equals("encoder")) {
+                    encoder = new EncoderWrapper(childElement);
+                    group.setEncoder(encoder);
+                    collection.encoders.put(id, encoder);
+                    ShuffleboardFramework.subsystems.get(collection.subsystemName).addSendableToTab(id, encoder);
 
-                motorGroupElement = (Element) currentMotor;
-                MotorBase motorInMotorGroup = createMotorBase(motorGroupElement, collection);
-                boolean invertedMotor = false;
-                if (motorGroupElement.hasAttribute("inverted")) {
-                    invertedMotor = (Boolean.parseBoolean(motorGroupElement.getAttribute("inverted")));
-                    motorInMotorGroup.setInverted(invertedMotor);
                 }
-                group.addMotor(motorInMotorGroup);
+                
+                if (childElement.getTagName().toLowerCase().equals("pid")){
+                    pid=new PIDWrapper(childElement);
+                    group.setPIDBase(pid);
+                    collection.pids.put(id, pid);
+                }
+
+                if (childElement.getTagName().toLowerCase().equals("motor")){
+                     // each motor in motor group
+
+                    MotorBase motorInMotorGroup = createMotorBase(childElement, collection);
+                    boolean invertedMotor = false;
+                    if (childElement.hasAttribute("inverted")) {
+                        invertedMotor = (Boolean.parseBoolean(childElement.getAttribute("inverted")));
+                        motorInMotorGroup.setInverted(invertedMotor);
+                    }
+                    group.addMotor(motorInMotorGroup);
+                }
             }
             motor = group;
 
