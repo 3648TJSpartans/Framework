@@ -32,7 +32,6 @@ public class SwerveDrive_SetRelative extends CommandBase implements RobotXML {
   public void initialize() {
   }
 
-  // dosent work
   @Override
   public void execute() {
     try {
