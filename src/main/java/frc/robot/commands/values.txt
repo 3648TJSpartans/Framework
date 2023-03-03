@@ -1,4 +1,4 @@
-score_high_arm=0
+score_high_arm=.41
 score_high_armChain=0
 score_low_arm=0
 score_low_armChain=0
@@ -12,7 +12,7 @@ stowed_arm=.83
 stowed_armChain=44.2
 unstowed_arm=0
 unstowed_armChain=0
-transport_arm=0
+transport_arm=.60
 transport_armChain=0
 claw_open=0
 claw_closed=0
