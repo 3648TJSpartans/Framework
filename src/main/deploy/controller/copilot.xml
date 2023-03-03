@@ -11,14 +11,15 @@ https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to
 Any number of addational parameters can be defined. It's up to the command to consume these.
  -->
         <controller type="LOGITECH" port="1" id="COPILOT">
-                <!--old controls-->
-                <!-- <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" scale=".3"></defaultCommand> 
-                <defaultCommand subsystemID="armChain" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2" scale=".3"></defaultCommand>  
-
-                <button button="LEFT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="-15"></button>
-                <button button="RIGHT_SHOULDER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" incrementPosition="15"></button>  -->
-                
-                
+                <!--bad controls-->        
+                 <!-- <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPower="-.2"></button>
+                <button button="RIGHT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPower=".2"></button>
+                <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="RIGHT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Released" setPower="0"></button> -->
+                <!-- <button button="RIGHT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPower=".2"></button>
+                <button button="LEFT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPower="-.2"></button>  
+                 <button button="RIGHT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Released" setPower=".2"></button>
+                <button button="LEFT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Released" setPower="-.2"></button>   -->
 
                 <!-- <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Pressed" setPower="0.2"></button>
                 <button button="A" subsystemID="armChain" command="Motor_Set" trigger="Released" setPower="0"></button>
@@ -37,18 +38,9 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-0.9"></button>
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
-                <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPower="-.2"></button>
-                <button button="RIGHT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Pressed" setPower=".2"></button>
-                <button button="LEFT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Released" setPower="0"></button>
-                <button button="RIGHT_TRIGGER" subsystemID="rotation" command="Motor_Set" trigger="Released" setPower="0"></button>
-                <!-- <button button="RIGHT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPower=".2"></button>
-                <button button="LEFT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Pressed" setPower="-.2"></button>  
-                 <button button="RIGHT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Released" setPower=".2"></button>
-                <button button="LEFT_SHOULDER" subsystemID="wrist" command="Motor_Set" trigger="Released" setPower="-.2"></button>   -->
                  <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand>
                 <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand> 
                 <defaultCommand subsystemID="wrist" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default" deadzone=".2"></defaultCommand>
-                <defaultCommand subsystemID="rotation" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2"></defaultCommand>
 
                 <!-- <button button="90" type="scorePos" command="store_med" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" rotationSubsystemID="rotaion"></button> 
                 <button button="180" type="scorePos" command="score_high" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" rotationSubsystemID="rotaion"></button>
