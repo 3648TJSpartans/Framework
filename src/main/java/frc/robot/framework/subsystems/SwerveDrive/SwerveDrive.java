@@ -81,7 +81,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double m_currentRotation = 0.0;
     private double m_currentTranslationDir = 0.0;
     private double m_currentTranslationMag = 0.0;
-    public boolean teleFieldRelative;
+    public boolean teleFieldRelative = false;
 
     private SlewRateLimiter m_magLimiter = new SlewRateLimiter(1.8);
     private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(2.0);
@@ -167,7 +167,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 },
                 pose);
     }
-
 
     /**
      * Sets the wheels into an X formation to prevent movement.
@@ -255,12 +254,12 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         return teleFieldRelative;
     }
 
-     /**
+    /**
      * Method to drive the robot using joystick info.
      *
-     * @param xSpeed        Speed of the robot in the x direction (forward).
-     * @param ySpeed        Speed of the robot in the y direction (sideways).
-     * @param rot           Angular rate of the robot.
+     * @param xSpeed Speed of the robot in the x direction (forward).
+     * @param ySpeed Speed of the robot in the y direction (sideways).
+     * @param rot    Angular rate of the robot.
      */
 
     public void teleOpInput(double input_xSpeed, double input_ySpeed, double input_rotation,
@@ -321,7 +320,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         double rotDelivered = m_currentRotation * maxAngularSpeed;
 
         var swerveModuleStates = driveKinematics.toSwerveModuleStates(
-            teleFieldRelative
+                teleFieldRelative
                         ? ChassisSpeeds.fromFieldRelativeSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered,
                                 Rotation2d.fromDegrees(getGyroAngle()))
                         : new ChassisSpeeds(xSpeedDelivered, ySpeedDelivered, rotDelivered));
@@ -374,7 +373,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     public void setCommandTrajectory(PathPlannerTrajectory trajectory, Timer m_timer) {
 
-
         double currentTime = m_timer.get();
         PathPlannerState desiredState = (PathPlannerState) trajectory.sample(currentTime);
 
@@ -391,11 +389,11 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         m_backLeft.setDesiredState(targetModuleStates[2]);
         m_backRight.setDesiredState(targetModuleStates[3]);
 
-         String[] data = { 
-               String.valueOf(desiredState.poseMeters),
-               String.valueOf(targetChassisSpeeds),
-               String.valueOf(targetModuleStates[0]),
-               String.valueOf(m_frontLeft.getState()),
+        String[] data = {
+                String.valueOf(desiredState.poseMeters),
+                String.valueOf(targetChassisSpeeds),
+                String.valueOf(targetModuleStates[0]),
+                String.valueOf(m_frontLeft.getState()),
                 String.valueOf(targetModuleStates[0].speedMetersPerSecond),
                 String.valueOf(targetModuleStates[0].angle),
                 String.valueOf(targetModuleStates[1].speedMetersPerSecond),
@@ -403,8 +401,8 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
                 String.valueOf(targetModuleStates[2].speedMetersPerSecond),
                 String.valueOf(targetModuleStates[2].angle),
                 String.valueOf(targetModuleStates[3].speedMetersPerSecond),
-                String.valueOf(targetModuleStates[3].angle) 
-            };
+                String.valueOf(targetModuleStates[3].angle)
+        };
 
         swerveLog.Write("Swerve_Drive_Module_Auton", data);
 

@@ -83,27 +83,29 @@
 
     <subsystem type="Motor" id="wrist" >
         <motor id="wrist1" controller="sparkpwm" port="0" >
-            <encoder id="wrist_encoder" vendor="dutycycle" port_one="0"/>
+            <encoder id="wrist_encoder" vendor="dutycycle" port_one="1"/>
             <pid id="PID" kp="1.0"/>
         </motor>
     </subsystem>
 
     <subsystem type="Motor" id="claw">
         <motor id="claw1" controller="sparkpwm" port="1" inverted="true">
-            <encoder id="claw_encoder" vendor="dutycycle" port_one="1"/>
+            <encoder id="claw_encoder" vendor="dutycycle" port_one="0"/>
             <pid id="PID" kp="5.0"/>
         </motor>
     </subsystem>
 
     <subsystem type="Motor" id="arm">
         <motorgroup id="arm1">
+            <encoder id="armHex" vendor="dutycycle" port_one="2"/>
+            <pid id="PID" kp="2.0"/>
             <motor id="left1" side="left" controller="sparkmax" port="9" idleMode="break">
-                <encoder id="leftEncoder" port="encoder" />
-                <pid id="PID" kp="0.01" encoderPort="encoder"  />
+                <!-- <encoder id="leftEncoder" port="encoder"  /> -->
+                <!-- <pid id="PID" kp="0.005" encoderPort="encoder"  /> -->
             </motor>
             <motor id="right1" side="right" controller="sparkmax" port="10" inverted="true" idleMode="break">
-                <encoder id="rightEncoder" port="encoder" />
-                <pid id="PID" kp="0.01" encoderPort="encoder" />
+                <!-- <encoder id="rightEncoder" port="encoder" /> -->
+                <!-- <pid id="PID" kp="0.005" encoderPort="encoder" /> -->
             </motor>
         </motorgroup>
     </subsystem>

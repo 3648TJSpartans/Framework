@@ -22,14 +22,14 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <defaultCommand subsystemID="BRD" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand>
                 <defaultCommand subsystemID="BRS" axisReference="LEFT_JOYSTICK_X" command="Motor_Default"></defaultCommand> -->
 
-                <button button="BACK" command="Util_RestartCode" trigger="Pressed"></button>
+                <!-- <button button="BACK" command="Util_RestartCode" trigger="Pressed"></button> -->
 
                 <!-- <button button="A" subsystemID="Solenoid_Subsyststem" command="Solenoid_Set" trigger="pressed" extended="false"></button>
                 <button button="A" subsystemID="Solenoid_Subsyststem" command="Solenoid_Set" trigger="released" extended="true"></button> -->
                 
                 <!-- <button button="A" subsystemID="TankDrive" command="TankDrive_Set" trigger="Pressed" setInputTurn="1" setInputForward="1"></button> -->
                 <!-- <defaultCommand subsystemID="Shooter" axisReference="RIGHT_TRIGGER" command="Motor_Default"></defaultCommand> -->
-
+                <button button="RESTART" subsystemID="SwerveDrive" command="SwerveDrive_SetRelative" trigger="Pressed"></button>
                  <defaultCommand subsystemID="SwerveDrive"
                         axis_sideway="LEFT_JOYSTICK_Y" scale_sideway="1"
                         axis_forward="LEFT_JOYSTICK_X" scale_forward="1"
