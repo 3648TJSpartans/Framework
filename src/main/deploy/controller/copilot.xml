@@ -22,7 +22,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="1"></button>
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
-                <button button="Y" subsystemID="claw" commanld="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
 
                 <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand>
                 <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand> 

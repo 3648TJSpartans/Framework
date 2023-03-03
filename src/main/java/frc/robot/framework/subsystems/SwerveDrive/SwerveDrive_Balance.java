@@ -1,5 +1,7 @@
 package frc.robot.framework.subsystems.SwerveDrive;
 
+import java.util.ArrayList;
+
 import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj.ADIS16470_IMU;
@@ -19,10 +21,11 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
     private Element myElement;
     private SubsystemCollection subsystemColection;
     private SwerveDrive swerveDriveSubsystem;
-    private SoftwarePID pid = new SoftwarePID(0.03, 0, 0, 0);
+    private SoftwarePID pid = new SoftwarePID(0.015, 0, 0, 0);
     private double startTime;
     private final Timer m_timer = new Timer();
     private double command_timeout = 0;
+    private double[] gyroPos = new double[10];
 
     public SwerveDrive_Balance(Element element) {
         myElement = element;
@@ -63,7 +66,13 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
 
         double motorSpeed = pid.getPowerOutput(gyro, 0, CommandMode.VELOCITY);
 
-        swerveDriveSubsystem.teleOpInput(motorSpeed, 0, 0, false);
+
+
+        if (Math.abs(motorSpeed) < 0.1) {
+            motorSpeed = 0;
+        }
+
+        swerveDriveSubsystem.teleOpInput(((motorSpeed / 2)*-1), 0, 0, false);
 
     }
 
