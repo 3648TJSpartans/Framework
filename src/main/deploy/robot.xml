@@ -96,9 +96,11 @@
     </subsystem>
 
     <subsystem type="Motor" id="arm">
+        <encoder id="arm_encoder" vendor="dutycycle" port_one="2"/>
         <motorgroup id="arm1">
             <motor id="left1" side="left" controller="sparkmax" port="9" idleMode="break">
                 <encoder id="leftEncoder" port="encoder" />
+        
                 <pid id="PID" kp="0.01" encoderPort="encoder"  />
             </motor>
             <motor id="right1" side="right" controller="sparkmax" port="10" inverted="true" idleMode="break">
