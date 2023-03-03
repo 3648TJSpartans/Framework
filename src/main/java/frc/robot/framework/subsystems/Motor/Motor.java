@@ -4,6 +4,8 @@ import org.w3c.dom.Element;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.algorithm.PIDBase;
+import frc.robot.framework.algorithm.PIDWrapper;
+import frc.robot.framework.algorithm.SoftwarePID;
 import frc.robot.framework.encoder.EncoderBase;
 import frc.robot.framework.encoder.EncoderWrapper;
 import frc.robot.framework.motor.MotorBase;
@@ -23,10 +25,12 @@ public class Motor extends SubsystemBase implements RobotXML {
     private Element element;
     private MotorBase motor;
     private boolean hasEncoder, hasPID = false;
+    private String systemName="";
 
     public Motor(Element subsystem) {
         element = subsystem;
         tab = ShuffleboardFramework.getSubsystem(subsystem.getAttribute("id"));
+        systemName = subsystem.getAttribute("id");
         ReadXML(subsystem);
 
         for (String motorId : subsystemColection.motors.GetAllMotorIDs()) {
@@ -68,7 +72,7 @@ public class Motor extends SubsystemBase implements RobotXML {
             if ((motor.getPosition() > maxposition && element.hasAttribute("maxPosition"))
                     || (motor.getPosition() < minposition && element.hasAttribute("minPosition"))) {
                 motor.setReference((maxposition + minposition) / 2, CommandMode.POSITION);
-                System.out.println("Exceeding positional limits. Resetting");
+                System.out.println(systemName+" exceeding positional limits. Resetting");
                 return;
             }
 
@@ -89,19 +93,22 @@ public class Motor extends SubsystemBase implements RobotXML {
                 if (hasEncoder && hasPID)
                     output = motor.getPID().getPowerOutput(motor.getPosition(), reference, mode);
                 else {
-                    throw new UnsupportedOperationException("Motor subsystem:"+element.getAttribute("id")+" Position requested but no pid/encoder");
+                    throw new UnsupportedOperationException(systemName+ "motor subsystem:"+element.getAttribute("id")+" Position requested but no pid/encoder");
                 }
                 break;
             case VELOCITY:
                 if (hasEncoder && hasPID)
                     output = motor.getPID().getPowerOutput(motor.getPosition(), reference, mode);
                 else {
-                    throw new UnsupportedOperationException("Motor subsystem:"+element.getAttribute("id")+" Position requested but no pid/encoder");
+                    throw new UnsupportedOperationException(systemName+ " motor subsystem:"+element.getAttribute("id")+" Position requested but no pid/encoder");
                 }
                 break;
         }
-
-        motor.setReference(output, mode);
+        if (mode != CommandMode.PERCENTAGE && (motor.getPID() instanceof PIDWrapper) && ((PIDWrapper)motor.getPID()).pidController instanceof SoftwarePID)
+            motor.setReference(output, CommandMode.PERCENTAGE);
+        else
+            motor.setReference(output, mode);
+        // System.out.println(output+","+mode);
     }
 
     @Override
@@ -123,9 +130,7 @@ public class Motor extends SubsystemBase implements RobotXML {
                 case "position":
                     mode = CommandMode.POSITION;
                 default:
-                    System.out.println(
-                            "Motor subsystem does not support commandMode:" + element.getAttribute("commandMode"));
-                    break;
+                    throw new UnsupportedOperationException(systemName +"motor subsystem does not support commandMode:" + element.getAttribute("commandMode"));  
             }
             if (element.hasAttribute("reference")) {
                 reference = Double.parseDouble(element.getAttribute("reference"));
