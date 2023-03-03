@@ -96,16 +96,16 @@
     </subsystem>
 
     <subsystem type="Motor" id="arm">
-        <encoder id="arm_encoder" vendor="dutycycle" port_one="2"/>
         <motorgroup id="arm1">
+            <encoder id="armHex" vendor="dutycycle" port_one="2"/>
+            <pid id="PID" kp="2.0"/>
             <motor id="left1" side="left" controller="sparkmax" port="9" idleMode="break">
-                <encoder id="leftEncoder" port="encoder" />
-        
-                <pid id="PID" kp="0.01" encoderPort="encoder"  />
+                <!-- <encoder id="leftEncoder" port="encoder"  /> -->
+                <!-- <pid id="PID" kp="0.005" encoderPort="encoder"  /> -->
             </motor>
             <motor id="right1" side="right" controller="sparkmax" port="10" inverted="true" idleMode="break">
-                <encoder id="rightEncoder" port="encoder" />
-                <pid id="PID" kp="0.01" encoderPort="encoder" />
+                <!-- <encoder id="rightEncoder" port="encoder" /> -->
+                <!-- <pid id="PID" kp="0.005" encoderPort="encoder" /> -->
             </motor>
         </motorgroup>
     </subsystem>
