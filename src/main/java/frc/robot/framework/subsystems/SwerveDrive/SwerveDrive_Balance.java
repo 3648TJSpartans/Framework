@@ -21,7 +21,7 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
     private Element myElement;
     private SubsystemCollection subsystemColection;
     private SwerveDrive swerveDriveSubsystem;
-    private SoftwarePID pid = new SoftwarePID(0.015, 0, 0, 0);
+    private SoftwarePID pid = new SoftwarePID(0.01, 0, 0, 0);
     private double startTime;
     private final Timer m_timer = new Timer();
     private double command_timeout = 0;
@@ -66,13 +66,11 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
 
         double motorSpeed = pid.getPowerOutput(gyro, 0, CommandMode.VELOCITY);
 
-
-
-        if (Math.abs(motorSpeed) < 0.1) {
+        if (Math.abs(motorSpeed) < 0.03) {
             motorSpeed = 0;
         }
 
-        swerveDriveSubsystem.teleOpInput(((motorSpeed / 2)*-1), 0, 0, false);
+        swerveDriveSubsystem.teleOpInput(((motorSpeed / 2) * -1), 0, 0, false);
 
     }
 
@@ -81,7 +79,7 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
         System.out.println("Time Complete: " + (System.currentTimeMillis() - startTime) + " " + (command_timeout * 1000)
                 + (System.currentTimeMillis() - startTime > command_timeout * 1000));
         if (System.currentTimeMillis() - startTime > command_timeout * 1000) {
-            ADIS_16470.m_gyro.setYawAxis(IMUAxis.kY);
+            ADIS_16470.m_gyro.setYawAxis(IMUAxis.kZ);
             return true;
         }
         return false;

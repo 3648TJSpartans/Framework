@@ -1,0 +1,14 @@
+score_high_arm=0.41
+score_high_armChain=-80
+pickup_double_arm=.41
+pickup_double_armChain=-7
+stowed_arm=.83
+stowed_armChain=44.2
+transport_arm=.60
+transport_armChain=0.0
+claw_open=0
+claw_closed=0
+claw_cone=.33
+claw_cube=0.0
+wrist_down=.19
+wrist_up=.74

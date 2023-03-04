@@ -13,6 +13,8 @@
       "/Shuffleboard/arm/arm1": "Motor Controller",
       "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@116259b6": "Motor Controller",
       "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@1821d244": "Motor Controller",
+      "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@4104e5f1": "Motor Controller",
+      "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@4228bbeb": "Motor Controller",
       "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@482725d": "Motor Controller",
       "/Shuffleboard/armChain/armChain1": "Motor Controller",
       "/Shuffleboard/claw/claw1": "Motor Controller",
