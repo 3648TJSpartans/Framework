@@ -3,8 +3,10 @@ package frc.robot.framework.util;
 import java.io.*;
 import java.util.*;
 
+import edu.wpi.first.wpilibj.Filesystem;
+
 public class readTextFile {
-    final static String filePath = "src/main/java/frc/robot/commands/values.txt";
+    final static String filePath = Filesystem.getDeployDirectory() + "/values.txt";
 
     public static Map<String, Double> HashMapFromTextFile() {
 

@@ -83,14 +83,14 @@
 
     <subsystem type="Motor" id="wrist" >
         <motor id="wrist1" controller="sparkpwm" port="0" >
-            <encoder id="wrist_encoder" vendor="dutycycle" port_one="1"/>
-            <pid id="PID" kp="1.0"/>
+            <encoder id="wrist_encoder" vendor="dutycycle" port_one="0"/>
+            <pid id="PID" kp="3.0"/>
         </motor>
     </subsystem>
 
     <subsystem type="Motor" id="claw">
         <motor id="claw1" controller="sparkpwm" port="1" inverted="true">
-            <encoder id="claw_encoder" vendor="dutycycle" port_one="0"/>
+            <encoder id="claw_encoder" vendor="dutycycle" port_one="1"/>
             <pid id="PID" kp="5.0"/>
         </motor>
     </subsystem>
@@ -98,7 +98,7 @@
     <subsystem type="Motor" id="arm">
         <motorgroup id="arm1">
             <encoder id="armHex" vendor="dutycycle" port_one="2"/>
-            <pid id="PID" kp="2.0"/>
+            <pid id="PID" kp="-20.0"/>
             <motor id="left1" side="left" controller="sparkmax" port="9" idleMode="break">
                 <!-- <encoder id="leftEncoder" port="encoder"  /> -->
                 <!-- <pid id="PID" kp="0.005" encoderPort="encoder"  /> -->
@@ -113,7 +113,7 @@
     <subsystem type="Motor" id="armChain">
         <motor id="armChain1" controller="sparkmax" port="11" idleMode="break">
             <encoder id="armChainEncoder" port="encoder" />
-            <pid id="PID" kp="0.01" encoderPort="encoder" />
+            <pid id="PID" kp="0.09" encoderPort="encoder" />
         </motor>
     </subsystem>
 </robot>
