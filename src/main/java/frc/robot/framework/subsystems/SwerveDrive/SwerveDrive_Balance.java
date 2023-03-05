@@ -1,17 +1,11 @@
 package frc.robot.framework.subsystems.SwerveDrive;
 
-import java.util.ArrayList;
-
 import org.w3c.dom.Element;
 
-import edu.wpi.first.wpilibj.ADIS16470_IMU;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.ADIS16470_IMU.IMUAxis;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.algorithm.SoftwarePID;
-import frc.robot.framework.controller.ControllerBase;
 import frc.robot.framework.robot.*;
 import frc.robot.framework.sensor.gyroscope.GyroTypes.ADIS_16470;
 import frc.robot.framework.util.CommandMode;
@@ -19,18 +13,20 @@ import frc.robot.framework.util.CommandMode;
 public class SwerveDrive_Balance extends CommandBase implements RobotXML {
 
     private Element myElement;
-    private SubsystemCollection subsystemColection;
     private SwerveDrive swerveDriveSubsystem;
-    private SoftwarePID pid = new SoftwarePID(0.01, 0, 0, 0);
+    private SoftwarePID pid;
     private double startTime;
     private final Timer m_timer = new Timer();
     private double command_timeout = 0;
-    private double[] gyroPos = new double[10];
+    private double deadzone = 0.015;
+    private boolean inverted = false;
+    private double kP = 0;
+    private double kI = 0;
+    private double kD = 0;
+    private double kF = 0;
 
     public SwerveDrive_Balance(Element element) {
         myElement = element;
-
-        ADIS_16470.m_gyro.setYawAxis(IMUAxis.kX);
 
         SubsystemBase temp = RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
         if (temp == null || !(temp instanceof SwerveDrive)) {
@@ -40,7 +36,6 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
         }
         swerveDriveSubsystem = (SwerveDrive) temp;
         this.addRequirements(swerveDriveSubsystem);
-        subsystemColection = new SubsystemCollection(element);
 
     }
 
@@ -53,6 +48,39 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
         } catch (Exception NumberFormatException) {
             throw new NumberFormatException("Invalid Format on timeout: " + command_timeout);
         }
+
+        try {
+            kP = Double.parseDouble((myElement.getAttribute("kP")));
+        } catch (Exception numberFormatException) {
+            throw new NumberFormatException("Invalid Format on kP: " + kP);
+        }
+
+        try {
+            deadzone = Double.parseDouble((myElement.getAttribute("deadzone")));
+        } catch (Exception NumberFormatException) {
+            throw new NumberFormatException("Invalid Format on deadzone: " + deadzone);
+        }
+
+        try {
+            inverted = Boolean.parseBoolean(((myElement.getAttribute("inverted"))));
+        } catch (Exception NumberFormatException) {
+            throw new NumberFormatException("Invalid Format on inverted: " + inverted);
+        }
+
+        if (!myElement.getAttribute("kI").isEmpty()) {
+            kI = Double.parseDouble((myElement.getAttribute("kI")));
+        }
+
+        if (!myElement.getAttribute("kD").isEmpty()) {
+            kD = Double.parseDouble((myElement.getAttribute("kD")));
+        }
+
+        if (!myElement.getAttribute("kF").isEmpty()) {
+            kF = Double.parseDouble((myElement.getAttribute("kF")));
+        }
+
+        pid = new SoftwarePID(kP, kI, kD, kF);
+
         m_timer.reset();
         m_timer.start();
 
@@ -65,11 +93,15 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
 
         double motorSpeed = pid.getPowerOutput(gyro, 0, CommandMode.VELOCITY);
 
-        if (Math.abs(motorSpeed) < 0.03) {
+        if (Math.abs(motorSpeed) < deadzone) {
             motorSpeed = 0;
         }
 
-        swerveDriveSubsystem.teleOpInput(((motorSpeed)*-1), 0, 0, false);
+        if (inverted) {
+            motorSpeed *= -1;
+        }
+
+        swerveDriveSubsystem.teleOpInput(motorSpeed, 0, 0, false);
 
     }
 
@@ -78,7 +110,6 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
         System.out.println("Time Complete: " + (System.currentTimeMillis() - startTime) + " " + (command_timeout * 1000)
                 + (System.currentTimeMillis() - startTime > command_timeout * 1000));
         if (System.currentTimeMillis() - startTime > command_timeout * 1000) {
-            ADIS_16470.m_gyro.setYawAxis(IMUAxis.kZ);
             return true;
         }
         return false;
