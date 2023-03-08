@@ -2,6 +2,7 @@ package frc.robot.framework.sensor.gyroscope;
 
 import org.w3c.dom.Element;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import frc.robot.framework.sensor.gyroscope.GyroTypes.ADIS_16448;
 import frc.robot.framework.sensor.gyroscope.GyroTypes.ADIS_16470;
 import frc.robot.framework.sensor.gyroscope.GyroTypes.ADXRS_450;
@@ -16,7 +17,9 @@ public class GyroWrapper implements GyroBase {
     public GyroWrapper(Element element) {
         m_gyroElement = element;
         String id = m_gyroElement.getAttribute("id");
-        int port = Integer.parseInt(m_gyroElement.getAttribute("port"));
+        int port =0;
+        if (m_gyroElement.hasAttribute("port)"))
+            port = Integer.parseInt(m_gyroElement.getAttribute("port"));
         m_gyro = getGyroType(m_gyroElement.getAttribute("type"), port);
 
         if (m_gyro == null) {
@@ -81,6 +84,13 @@ public class GyroWrapper implements GyroBase {
     @Override
     public double getGyroAngle() {
         return m_gyro.getGyroAngle();
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        // builder.setSmartDashboardType("Motor Controller");
+        // builder.setActuator(false);
+        m_gyro.initSendable(builder);
     }
 
 }

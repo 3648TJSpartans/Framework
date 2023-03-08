@@ -65,7 +65,7 @@
             </motor>
         </module>
 
-        <gyro id="swerveGyro" type="ADIS16470" port="0"></gyro>
+        <gyro id="swerveGyro" type="ADIS16448"></gyro>
 
     </subsystem>
 

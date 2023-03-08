@@ -1,5 +1,6 @@
 package frc.robot.framework.sensor.gyroscope.GyroTypes;
 
+import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.ADIS16448_IMU.CalibrationTime;
@@ -58,5 +59,28 @@ public class ADIS_16448 implements GyroBase{
     }
     public double getGyroAngle(){
         return m_gyro.getAngle();
+    }
+
+    public double getGyroAngleX(){
+        return getGyroAngle("x");
+    }
+
+    public double getGyroAngleY(){
+        return getGyroAngle("y");
+    }
+
+    public double getGyroAngleZ(){
+        return getGyroAngle("z");
+    }
+
+    @Override
+    public void initSendable(SendableBuilder builder) {
+        // builder.setSmartDashboardType("Motor Controller");
+        // builder.setActuator(false);
+        builder.addDoubleProperty("X", this::getGyroAngleX, null);
+        builder.addDoubleProperty("Y", this::getGyroAngleY, null);
+        builder.addDoubleProperty("Z", this::getGyroAngleZ, null);
+        // builder.addDoubleProperty("Y", this::get, this::set);
+        // builder.addDoubleProperty("X", this::get, this::set);
     }
 }

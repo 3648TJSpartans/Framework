@@ -368,7 +368,8 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     }
 
     public double getGyroAngle() {
-        return subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
+        // System.out.println("SwerveGyro"+subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z"));
+        return -1*subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
     }
 
     public void setCommandTrajectory(PathPlannerTrajectory trajectory, Timer m_timer) {

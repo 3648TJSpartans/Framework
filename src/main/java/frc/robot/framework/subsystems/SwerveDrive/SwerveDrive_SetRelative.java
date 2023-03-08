@@ -19,9 +19,7 @@ public class SwerveDrive_SetRelative extends CommandBase implements RobotXML {
 
     SubsystemBase temp = RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
     if (temp == null || !(temp instanceof SwerveDrive)) {
-      System.out.println(
-          "SetRelative could not find swerve subsystem(subsystemID):" + element.getAttribute("subSystemID"));
-      return;
+      throw new UnsupportedOperationException("SetRelative could not find swerve subsystem(subsystemID):" + element.getAttribute("subSystemID"));
     }
     swerveDriveSubsystem = (SwerveDrive) temp;
     this.addRequirements(swerveDriveSubsystem);
