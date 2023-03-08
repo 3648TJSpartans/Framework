@@ -1,6 +1,6 @@
 score_high_arm=0.41
-score_high_armChain=-80
-pickup_double_arm=.41
+score_high_armChain=-99
+pickup_double_arm=.4175
 pickup_double_armChain=-7
 stowed_arm=.83
 stowed_armChain=44.2
