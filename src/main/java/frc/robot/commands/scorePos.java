@@ -2,6 +2,8 @@ package frc.robot.commands;
 
 import java.util.Map;
 import org.w3c.dom.Element;
+
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.*;
@@ -17,6 +19,8 @@ public class scorePos extends CommandBase implements RobotXML {
   private Motor arm;
   private Motor arm_chain;
   private Motor wrist;
+  private final Timer m_timer = new Timer();
+
   // private Motor rotation;
   private Map<String, Double> values;
 
@@ -48,6 +52,8 @@ public class scorePos extends CommandBase implements RobotXML {
 
   @Override
   public void initialize() {
+    m_timer.reset();
+    m_timer.start();
   }
 
   @Override
@@ -60,46 +66,61 @@ public class scorePos extends CommandBase implements RobotXML {
     switch (command) {
       case "stowed":
         wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm_chain.setReference(values.get("stowed_armChain"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm.setReference(values.get("stowed_arm"), CommandMode.POSITION);
 
         break;
       case "score_high":
         arm.setReference(values.get("score_high_arm"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm_chain.setReference(values.get("score_high_armChain"), CommandMode.POSITION);
+        Timer.delay(.2);
         wrist.setReference(values.get("wrist_down"), CommandMode.POSITION);
         break;
       case "score_low":
         arm.setReference(values.get("score_low_armChain"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm_chain.setReference(values.get("score_low_arm"), CommandMode.POSITION);
         break;
       case "store_med":
         arm.setReference(values.get("score_medium_arm"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm_chain.setReference(values.get("score_medium_armChain"), CommandMode.POSITION);
         break;
       case "transport":
         arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm_chain.setReference(values.get("transport_armChain"), CommandMode.POSITION);
 
         break;
       case "pickup_double":
         arm.setReference(values.get("pickup_double_arm"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm_chain.setReference(values.get("pickup_double_armChain"),
             CommandMode.POSITION);
         break;
       case "pickup_single":
         arm.setReference(values.get("pickup_single_arm"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm_chain.setReference(values.get("pickup_single_armChain"),
             CommandMode.POSITION);
         break;
       case "unstow":
         arm.setReference(values.get("unstowed_arm"), CommandMode.POSITION);
+        Timer.delay(.2);
         arm_chain.setReference(values.get("unstowed_armChain"), CommandMode.POSITION);
         break;
       default:
         break;
 
     }
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    m_timer.stop();
   }
 
   @Override
