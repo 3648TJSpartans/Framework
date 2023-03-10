@@ -90,9 +90,9 @@ public class scorePos extends CommandBase implements RobotXML {
         arm_chain.setReference(values.get("score_medium_armChain"), CommandMode.POSITION);
         break;
       case "transport":
-        arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
-        Timer.delay(.2);
         arm_chain.setReference(values.get("transport_armChain"), CommandMode.POSITION);
+        Timer.delay(.2);
+        arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
 
         break;
       case "pickup_double":

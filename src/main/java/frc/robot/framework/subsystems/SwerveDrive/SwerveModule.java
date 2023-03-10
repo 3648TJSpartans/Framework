@@ -15,7 +15,6 @@ import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.ShuffleboardFramework;
 import frc.robot.framework.util.ShuffleboardFramework.ShuffleboardBase;
 
-
 public class SwerveModule {
 
   private double m_chassisAngularOffset = 0;
@@ -26,8 +25,8 @@ public class SwerveModule {
 
   private String driveMotorID = "drive";
   private String turnMotorID = "turn";
-  private String driveEncoderID= "driveEncoder";
-  private String turnEncoderID= "turnEncoder";
+  private String driveEncoderID = "driveEncoder";
+  private String turnEncoderID = "turnEncoder";
 
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
@@ -37,10 +36,13 @@ public class SwerveModule {
    */
   public SwerveModule(Element myElement) {
     element = myElement;
-    tab = ShuffleboardFramework.addSubsystem("swerve_"+element.getAttribute("id"));
-    subsystemColection = new SubsystemCollection(element, "swerve_"+element.getAttribute("id"));
-
-    m_chassisAngularOffset = Double.parseDouble(element.getAttribute("angularOffset"));
+    tab = ShuffleboardFramework.addSubsystem("swerve_" + element.getAttribute("id"));
+    subsystemColection = new SubsystemCollection(element, "swerve_" + element.getAttribute("id"));
+    try {
+      m_chassisAngularOffset = Double.parseDouble(element.getAttribute("angularOffset"));
+    } catch (Exception NumberFormatException) {
+      throw new NumberFormatException("Invalid Format on SwerveModule angularOffset:" + m_chassisAngularOffset);
+    }
     m_desiredState.angle = new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID));
     subsystemColection.encoders.reset(driveEncoderID);
   }
@@ -66,7 +68,7 @@ public class SwerveModule {
     // Apply chassis angular offset to the encoder position to get the position
     // relative to the chassis.
     return new SwerveModulePosition(
-      subsystemColection.encoders.getPosition(driveEncoderID),
+        subsystemColection.encoders.getPosition(driveEncoderID),
         new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID) - m_chassisAngularOffset));
   }
 
@@ -85,7 +87,8 @@ public class SwerveModule {
     SwerveModuleState optimizedDesiredState = SwerveModuleState.optimize(correctedDesiredState,
         new Rotation2d(subsystemColection.encoders.getPosition(turnEncoderID)));
 
-    //System.out.println("desiredDegrees:"+desiredState.angle.getDegrees()+" encoderDegree:"+Math.toDegrees((subsystemColection.encoders.getPosition(turnEncoderID))));
+    // System.out.println("desiredDegrees:"+desiredState.angle.getDegrees()+"
+    // encoderDegree:"+Math.toDegrees((subsystemColection.encoders.getPosition(turnEncoderID))));
 
     // Command driving and turning SPARKS MAX towards their respective setpoints.
     subsystemColection.motors.setOutput(driveMotorID, optimizedDesiredState.speedMetersPerSecond, CommandMode.VELOCITY);

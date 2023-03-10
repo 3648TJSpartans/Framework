@@ -23,7 +23,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="A" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
                 <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
-                  <button button="X" subsystemID="armChain" command="Motor_Set" trigger="Released" setPosition="-60"></button> -->
+                
 
                 <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand>
                 <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand> 
@@ -33,8 +33,8 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- <button button="90" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition=".41"></button>
                 <button button="180" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition=".586"></button> -->
                 <button button="90" type="score_high" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"></button>
-                 <button button="180" type="pickup_double" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"></button>
-                <button button="0" type="scorePos" command="transport" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" rotationSubsystemID="rotaion"></button>
+                 <button button="270" type="pickup_double" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"></button>
+                <button button="0" type="scorePos" command="transport" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"></button>
 
 
 <!-- 

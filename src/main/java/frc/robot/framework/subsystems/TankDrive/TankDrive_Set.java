@@ -32,16 +32,26 @@ public class TankDrive_Set extends CommandBase implements RobotXML {
     @Override
     public void initialize() {
         startTime = System.currentTimeMillis();
-        delayLength = Double.parseDouble((myElement.getAttribute("delayLength")));
+        try {
+            delayLength = Double.parseDouble((myElement.getAttribute("delayLength")));
+        } catch (Exception NumberFormatException) {
+            throw new NumberFormatException("Invalid format in TankDrive_Set on delayLength: " + delayLength);
+        }
     }
 
     @Override
     public void execute() {
-        if (myElement.hasAttribute("setInputForward")) {
-            tankDrive.setInputForward(Double.parseDouble(myElement.getAttribute("setInputForward")));
-        }
-        if (myElement.hasAttribute("setInputTurn")) {
-            tankDrive.setInputTurn(Double.parseDouble(myElement.getAttribute("setInputTurn")));
+        try {
+            if (myElement.hasAttribute("setInputForward")) {
+                tankDrive.setInputForward(Double.parseDouble(myElement.getAttribute("setInputForward")));
+            }
+            if (myElement.hasAttribute("setInputTurn")) {
+                tankDrive.setInputTurn(Double.parseDouble(myElement.getAttribute("setInputTurn")));
+            }
+        } catch (Exception NumberFormatException) {
+            throw new NumberFormatException(
+                    "Invalid Format in TankDrive_Set on setInputForward" + myElement.hasAttribute("setInputForward")
+                            + " setInputTurn: " + myElement.getAttribute("setInputTurn"));
         }
     }
 
