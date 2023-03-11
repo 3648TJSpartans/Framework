@@ -83,7 +83,7 @@
 
     <subsystem type="Motor" id="wrist" >
         <motor id="wrist1" controller="sparkpwm" port="0" >
-            <encoder id="wrist_encoder" vendor="dutycycle" port_one="0"/>
+            <encoder id="wrist_encoder" vendor="dutycycle" port_one="4"/>
             <pid id="PID" kp="3.0"/>
         </motor>
     </subsystem>

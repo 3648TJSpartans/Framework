@@ -30,12 +30,17 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- <button button="A" subsystemID="TankDrive" command="TankDrive_Set" trigger="Pressed" setInputTurn="1" setInputForward="1"></button> -->
                 <!-- <defaultCommand subsystemID="Shooter" axisReference="RIGHT_TRIGGER" command="Motor_Default"></defaultCommand> -->
                 <button button="RESTART" subsystemID="SwerveDrive" command="SwerveDrive_SetRelative" trigger="Pressed"></button>
+                <button button="A" subsystemID="SwerveDrive" command="SwerveDrive_UpdateFieldRelative" trigger="Pressed"></button>
+                 <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="1"></button>
+                <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                  <defaultCommand subsystemID="SwerveDrive"
                         axis_sideway="LEFT_JOYSTICK_Y" scale_sideway="1"
                         axis_forward="LEFT_JOYSTICK_X" scale_forward="1"
                         axis_turn="RIGHT_JOYSTICK_X" scale_turn="1"
                         command="SwerveDrive_Default"
-                        deadzone="0.05"
+                        deadzone="0.1"
                 />
         
 
