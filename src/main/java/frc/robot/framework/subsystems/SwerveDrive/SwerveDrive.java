@@ -70,7 +70,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double xController = 1;
     private double yController = 1;
     private double thetaController = 1;
-    public boolean fieldRelative = false;
+    public boolean fieldRelative = true;
 
     private final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, kTrackWidth / 2), // FRONT LEFT
