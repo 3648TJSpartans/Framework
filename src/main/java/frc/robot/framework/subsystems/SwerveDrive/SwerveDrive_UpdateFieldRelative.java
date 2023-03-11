@@ -8,18 +8,18 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.controller.ControllerBase;
 import frc.robot.framework.robot.*;
 
-public class SwerveDrive_SetRelative extends CommandBase implements RobotXML {
+public class SwerveDrive_UpdateFieldRelative extends CommandBase implements RobotXML {
 
   private Element myElement;
   private SubsystemCollection subsystemColection;
   private SwerveDrive swerveDriveSubsystem;
 
-  public SwerveDrive_SetRelative(Element element) {
+  public SwerveDrive_UpdateFieldRelative(Element element) {
     ReadXML(element);
 
     SubsystemBase temp = RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
     if (temp == null || !(temp instanceof SwerveDrive)) {
-      throw new UnsupportedOperationException("SwerveDrive_SetRelative could not find swerve subsystem(subsystemID):" + element.getAttribute("subSystemID"));
+      throw new UnsupportedOperationException("SwerveDrive_UpdateFieldRelative could not find swerve subsystem(subsystemID):" + element.getAttribute("subSystemID"));
     }
     swerveDriveSubsystem = (SwerveDrive) temp;
     this.addRequirements(swerveDriveSubsystem);
@@ -32,17 +32,7 @@ public class SwerveDrive_SetRelative extends CommandBase implements RobotXML {
 
   @Override
   public void execute() {
-    try {
-      if (swerveDriveSubsystem.getTeleFieldRelative()) {
-        swerveDriveSubsystem.setTeleFieldRelative(false);
-        System.out.println("Field Relative: false");
-      } else {
-        swerveDriveSubsystem.setTeleFieldRelative(true);
-        System.out.println("Field Relative: true");
-      }
-    } catch (Exception e) {
-      throw new NumberFormatException("SwerveDrive_Relative: Error in execute");
-    }
+    swerveDriveSubsystem.updateFieldRelative();
   }
 
   @Override

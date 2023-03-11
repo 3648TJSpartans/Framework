@@ -70,7 +70,6 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double xController = 1;
     private double yController = 1;
     private double thetaController = 1;
-    public boolean fieldRelative = true;
 
     private final SwerveDriveKinematics driveKinematics = new SwerveDriveKinematics(
             new Translation2d(kWheelBase / 2, kTrackWidth / 2), // FRONT LEFT
@@ -81,7 +80,8 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     private double m_currentRotation = 0.0;
     private double m_currentTranslationDir = 0.0;
     private double m_currentTranslationMag = 0.0;
-    public boolean teleFieldRelative = false;
+    public boolean teleFieldRelative = true;
+    private double m_fieldRelativeOffset = 0;
 
     private SlewRateLimiter m_magLimiter = new SlewRateLimiter(1.8);
     private SlewRateLimiter m_rotLimiter = new SlewRateLimiter(2.0);
@@ -250,6 +250,10 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         teleFieldRelative = fieldRelative;
     }
 
+    public void updateFieldRelative(){
+        m_fieldRelativeOffset= -1*subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
+    }
+
     public boolean getTeleFieldRelative() {
         return teleFieldRelative;
     }
@@ -369,7 +373,7 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
 
     public double getGyroAngle() {
         // System.out.println("SwerveGyro"+subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z"));
-        return -1*subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
+        return m_fieldRelativeOffset-(subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z"));
     }
 
     public void setCommandTrajectory(PathPlannerTrajectory trajectory, Timer m_timer) {
