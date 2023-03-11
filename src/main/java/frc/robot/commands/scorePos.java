@@ -77,20 +77,22 @@ public class scorePos extends CommandBase implements RobotXML {
       // break;
       case "score_high":
         isFinished = false;
-        wrist.setReference(values.get("wrist_down"), CommandMode.POSITION);
-        if (m_timer.get() >= .25) {
+        // wrist.setReference(values.get("wrist_down"), CommandMode.POSITION);
+        if (m_timer.get() <= .25 && m_timer.get() >= .2) {
           arm.setReference(values.get("score_high_arm"), CommandMode.POSITION);
-        } else if (m_timer.get() > .4) {
+        }
+        if (m_timer.get() >= .4) {
           arm_chain.setReference(values.get("score_high_armChain"), CommandMode.POSITION);
           isFinished = true;
         }
         break;
       case "score_low":
         isFinished = false;
-        wrist.setReference(values.get("wrist_down"), CommandMode.POSITION);
-        if (m_timer.get() >= .25) {
+        // wrist.setReference(values.get("wrist_down"), CommandMode.POSITION);
+        if (m_timer.get() <= .25 && m_timer.get() >= .2) {
           arm.setReference(values.get("score_low_arm"), CommandMode.POSITION);
-        } else if (m_timer.get() > .4) {
+        }
+        if (m_timer.get() >= .4) {
           arm_chain.setReference(values.get("score_low_armChain"), CommandMode.POSITION);
           isFinished = true;
         }
@@ -106,25 +108,30 @@ public class scorePos extends CommandBase implements RobotXML {
       // }
       // break;
       case "transport":
+        // isFinished = false;
+        // arm_chain.setReference(values.get("transport_armChain"),
+        // CommandMode.POSITION);
+        // if (m_timer.get() <= .25 && m_timer.get() >= .2) {
+        // // wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
+        // }
+        // if (m_timer.get() >= .4) {
+        // arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
+        // isFinished = true;
+        // }
+        // break;
         isFinished = false;
         arm_chain.setReference(values.get("transport_armChain"), CommandMode.POSITION);
         if (m_timer.get() >= .25) {
-          wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
-        } else if (m_timer.get() > .4) {
           arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
           isFinished = true;
         }
         break;
       case "pickup_double":
         isFinished = false;
-        arm.setReference(values.get("pickup_double_arm"), CommandMode.POSITION);
+        arm_chain.setReference(values.get("pickup_double_armChain"), CommandMode.POSITION);
         if (m_timer.get() >= .25) {
-          arm_chain.setReference(values.get("pickup_double_armChain"),
-              CommandMode.POSITION);
-
-          // }else if(m_timer >= .7){
-          // wrist.setReference(values.get("pickup_double_armChain"),
-          // CommandMode.POSITION);
+          arm.setReference(values.get("pickup_double_arm"), CommandMode.POSITION);
+          isFinished = true;
         }
         break;
       // case "pickup_single":
