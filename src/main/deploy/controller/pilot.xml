@@ -35,6 +35,9 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
                 <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <!-- need to grab new postiions for the claw-->
+                 <!-- <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".17"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".74"></button> -->
                  <defaultCommand subsystemID="SwerveDrive"
                         axis_sideway="LEFT_JOYSTICK_Y" scale_sideway="1"
                         axis_forward="LEFT_JOYSTICK_X" scale_forward="1"
