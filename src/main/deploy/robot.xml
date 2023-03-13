@@ -98,7 +98,7 @@
     <subsystem type="Motor" id="arm">
         <motorgroup id="arm1">
             <encoder id="armHex" vendor="dutycycle" port_one="2"/>
-            <pid id="PID" kp="-15.0"/>
+            <pid id="PID" kp="-12.0"/>
             <motor id="left1" side="left" controller="sparkmax" port="9" idleMode="break">
                 <!-- <encoder id="leftEncoder" port="encoder"  /> -->
                 <!-- <pid id="PID" kp="0.005" encoderPort="encoder"  /> -->
