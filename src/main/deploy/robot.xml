@@ -69,16 +69,12 @@
 
     </subsystem>
 
-
-    
-
-    <!-- <subsystem type="Motor" id="rotation">
-        <motor id="rotation1" controller="sparkmax" port="12" idleMode="break">
+<!-- 
+    <subsystem type="Motor" id="intake">
+        <motor id="m_intake" controller="sparkmax" port="13" idleMode="break">
             <encoder id="jointEncoder" port="encoder" />
-            <encoder id="throughEncoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" setZeroOffset="0"/>
-            <pid id="PID" kp="0.1" encoderPort="encoder" />
-        </motor>
-
+             <pid id="PID" kp="0.1" encoderPort="encoder" />
+            </motor>
     </subsystem> -->
 
     <subsystem type="Motor" id="wrist" >
