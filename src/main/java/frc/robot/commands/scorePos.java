@@ -61,10 +61,10 @@ public class scorePos extends CommandBase implements RobotXML {
   public void execute() {
 
     System.out.println("scorePosCommand: " + text);
-    if (myElement.hasAttribute("type")) {
-      command = myElement.getAttribute("type");
-    } else if (myElement.hasAttribute("autoType")) {
+    if (myElement.hasAttribute("autoType")) {
       command = myElement.getAttribute("autoType");
+    } else if (myElement.hasAttribute("type")) {
+      command = myElement.getAttribute("type");
     }
     switch (command) {
       // case "stowed":
