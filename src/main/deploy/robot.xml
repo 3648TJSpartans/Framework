@@ -72,7 +72,7 @@
 
     <subsystem type="Motor" id="claw">
         <motor id="m_intake" controller="sparkmax" port="13" idleMode="break">
-            <encoder id="jointEncoder" port="encoder" />
+            <encoder id="clawEncoder" port="encoder" />
              <pid id="PID" kp="0.1" encoderPort="encoder" />
             </motor>
     </subsystem>

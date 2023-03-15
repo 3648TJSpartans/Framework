@@ -32,18 +32,18 @@ public class scorePos extends CommandBase implements RobotXML {
     SubsystemBase temp_arm = RobotInit.GetSubsystem(element.getAttribute("armSubsystemID"));
     SubsystemBase temp_arm_chain = RobotInit.GetSubsystem(element.getAttribute("armChainSubsystemID"));
     SubsystemBase temp_wrist = RobotInit.GetSubsystem(element.getAttribute("wristSubsystemID"));
-    SubsystemBase temp_claw = RobotInit.GetSubsystem(element.getAttribute("clawSubsystemID"));
+    // SubsystemBase temp_claw =
+    // RobotInit.GetSubsystem(element.getAttribute("clawSubsystemID"));
     // SubsystemBase temp_rotation =
     // RobotInit.GetSubsystem(element.getAttribute("wristSubsystemID"));
     if (temp_arm == null || !(temp_arm instanceof Motor)
         || temp_arm_chain == null || !(temp_arm_chain instanceof Motor)
-        || temp_wrist == null || !(temp_wrist instanceof Motor) || temp_claw == null || !(temp_claw instanceof Motor)) {
+        || temp_wrist == null || !(temp_wrist instanceof Motor)) {
       System.out.println(
           "Arm Chain, Arm, Wrist, or Rotation could not find Motor subsystem with id:"
               + element.getAttribute("armChainSubsystemID") + "," +
               element.getAttribute("armSubsystemID") + "," +
-              element.getAttribute("wristSubsystemID") + "," +
-              element.getAttribute("clawSubsystemID"));
+              element.getAttribute("wristSubsystemID"));
       return;
     }
     arm = (Motor) temp_arm;
@@ -52,8 +52,8 @@ public class scorePos extends CommandBase implements RobotXML {
     this.addRequirements(arm_chain);
     wrist = (Motor) temp_wrist;
     this.addRequirements(wrist);
-    claw = (Motor) temp_claw;
-    this.addRequirements(claw);
+    // claw = (Motor) temp_claw;
+    // this.addRequirements(claw);
   }
 
   @Override
@@ -115,10 +115,10 @@ public class scorePos extends CommandBase implements RobotXML {
         isFinished = false;
 
         wrist.setReference(values.get("wrist_up"), CommandMode.POSITION);
-        claw.setReference(1, CommandMode.PERCENTAGE);
-        if (m_timer.get() <= .2 && m_timer.get() >= .18) {
-          claw.setReference(0, CommandMode.PERCENTAGE);
-        }
+        // claw.setReference(1, CommandMode.PERCENTAGE);
+        // if (m_timer.get() <= .2 && m_timer.get() >= .18) {
+        // claw.setReference(0, CommandMode.PERCENTAGE);
+        // }
         if (m_timer.get() <= .25 && m_timer.get() >= .2) {
           arm_chain.setReference(values.get("transport_armChain"), CommandMode.POSITION);
         }
