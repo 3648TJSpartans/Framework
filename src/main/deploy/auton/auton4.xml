@@ -11,9 +11,10 @@
             <command subsystemID="claw" type="Motor_Set" setPower="-1" id="clawOpen" nextstep="delay2"/>
             <command type="Util_Delay" delayLength=".3" id="delay2" nextstep="clawClosed"/> 
              <command type="Motor_Set" subsystemID="claw" setPower="0" id="clawClosed" nextstep="transport"/>
-            <command type="scorePos" autoType="transport_auto" id="transport" nextstep="calibrateGyroX" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"/>
-            <command type="ADIS16470_Set" id="calibrateGyroX" nextstep="drive" axis="kX"/>
-            <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="balance" 
+            <command type="scorePos" autoType="transport_auto" id="transport" nextstep="delay3" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"/>
+            <command type="Util_Delay" delayLength="2" id="delay3" nextstep="calibrateGyroX"/>
+            <command type="ADIS16470_Set" id="calibrateGyroX" nextstep="driveCharging" axis="kX" />
+            <command type="SwerveDrive_Set" id="driveCharging" subsystemID="SwerveDrive" nextstep="balance" 
             setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="Path2"/> 
             <command type="SwerveDrive_Balance" subsystemID="SwerveDrive" timeout="4" id="balance" deadzone="0.015" kP="0.0075" nextstep="calibrateGyroZ"/>
             <command type="ADIS16470_Set" id="calibrateGyroZ" axis="kZ"/>

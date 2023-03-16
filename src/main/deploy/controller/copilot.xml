@@ -11,13 +11,6 @@ https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to
 Any number of addational parameters can be defined. It's up to the command to consume these.
  -->
         <controller type="LOGITECH" port="1" id="COPILOT">     
-                <!-- <button button="Y" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".42" ></button>
-                <button button="B" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".17"></button>
-                <button button="A" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".74"></button>
-                <button button="X" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPosition=".71"></button>    -->
-
-                <!-- <button button="RIGHT_TRIGGER" subsystem="wrist" command="Motor_Set" trigger="Pressed" setPosition=""></button>
-                <button button="LEFT_TRIGGER" subsystem="wrist" command="Motor_Set" trigger="Pressed" setPosition=""></button>                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  ER" subsystem="wrist" command="Motor_Set" trigger="Pressed" setPosition=""></button> -->
 
                 
 
@@ -25,13 +18,10 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand> 
                 <defaultCommand subsystemID="wrist" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" inverted="true"></defaultCommand>
 
-                <!-- <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2" scale="1"></defaultCommand> -->
-                <!-- <button button="90" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition=".41"></button>
-                <button button="180" subsystemID="arm" command="Motor_Set" trigger="Pressed" setPosition=".586"></button> -->
-                <button button="A" type="transport" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" clawSubsystemID="claw"></button>
-                <button button="X" type="score_high" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" clawSubsystemID="claw"></button>
-                <button button="Y" type="pickup_double" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" clawSubsystemID="claw"></button>
-                 <button button="B" type="score_low" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" clawSubsystemID="claw"></button>
+                <button button="A" type="transport" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>
+                <button button="X" type="score_high" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>
+                <button button="Y" type="pickup_double" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>
+                 <button button="B" type="score_low" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>
 
 <!-- 
 

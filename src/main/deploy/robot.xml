@@ -78,9 +78,10 @@
     </subsystem>
 
     <subsystem type="Motor" id="wrist" >
-       <encoder id="wrist_encoder" vendor="dutycycle" port_one="1"/>
         <motor id="wrist1" controller="sparkmax" port="12" >
-            <pid id="PID" kp="3.0"/>
+         <encoder id="wrist_encoder" type="absolute" port="encoder" />
+          <pid id="PID" kp="0.09" encoderPort="encoder" />
+         <!-- <encoder id="" type="relative" port="encoder"/> -->
         </motor>
     </subsystem>
 

@@ -144,8 +144,8 @@ public class scorePos extends CommandBase implements RobotXML {
         }
         break;
       case "transport_auto":
-      arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
-        if (m_timer.get() >= 2) {
+        arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
+        if (m_timer.get() >= 5) {
           arm_chain.setReference(values.get("transport_armChain"), CommandMode.POSITION);
           isFinished = true;
         }
