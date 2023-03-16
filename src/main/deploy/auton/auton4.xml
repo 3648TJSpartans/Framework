@@ -6,7 +6,17 @@
           <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="scoreHigh" 
             xTranslation ="0" yTranslation = "0" heading="0" setMaxSpeed = "1" setMaxAcceleration = "1" timeout=".3" autonPath="scorePath"/> 
             <command type="scorePos" autoType="score_high_auto" id="scoreHigh" nextstep="wristDown" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"/>
-             <command type="Motor_Set" subsystemID="wrist" setPosition=".3" id="wristDown" nextstep="thing"/>
+             <command type="Motor_Set" subsystemID="wrist" setPosition=".3" id="wristDown" nextstep="delay1"/>
+            <command type="Util_Delay" delayLength="1" id="delay1" nextstep="clawOpen"/>
+            <command subsystemID="claw" type="Motor_Set" setPower="-1" id="clawOpen" nextstep="delay2"/>
+            <command type="Util_Delay" delayLength=".3" id="delay2" nextstep="clawClosed"/> 
+             <command type="Motor_Set" subsystemID="claw" setPower="0" id="clawClosed" nextstep="transport"/>
+            <command type="scorePos" autoType="transport_auto" id="transport" nextstep="calibrateGyroX" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"/>
+            <command type="ADIS16470_Set" id="calibrateGyroX" nextstep="drive" axis="kX"/>
+            <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="balance" 
+            setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="Path2"/> 
+            <command type="SwerveDrive_Balance" subsystemID="SwerveDrive" timeout="4" id="balance" deadzone="0.015" kP="0.0075" nextstep="calibrateGyroZ"/>
+            <command type="ADIS16470_Set" id="calibrateGyroZ" axis="kZ"/>
             
         </SequentialCommandGroup>
     </auton>
