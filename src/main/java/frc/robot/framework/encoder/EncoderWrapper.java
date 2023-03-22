@@ -13,7 +13,7 @@ public class EncoderWrapper implements EncoderBase {
     public EncoderWrapper(Element element) {
 
         String encoderType = element.getAttribute("vendor");
-        try{
+        try {
             int portOne = Integer.parseInt(element.getAttribute("port_one"));
             int portTwo = 0;
             if (!element.getAttribute("port_two").isEmpty()) {
@@ -21,24 +21,34 @@ public class EncoderWrapper implements EncoderBase {
             }
             encoder = getEncoderType(encoderType, portOne, portTwo);
 
-        } catch (Exception e){throw new  NumberFormatException(
-            "Invalid Format on EncoderWrapper vendor:" + encoderType + " portOne: "+element.getAttribute("port_one")+
-            " portTwo: "+element.getAttribute("port_two"));
+        } catch (Exception e) {
+            throw new NumberFormatException(
+                    "Invalid Format on EncoderWrapper vendor:" + encoderType + " portOne: "
+                            + element.getAttribute("port_one") +
+                            " portTwo: " + element.getAttribute("port_two"));
         }
-
-        if ( element.hasAttribute("setPosition") ) {
-            encoder.setPosition(Double.parseDouble(element.getAttribute("setPosition")));
+        try {
+            if (element.hasAttribute("setPosition")) {
+                encoder.setPosition(Double.parseDouble(element.getAttribute("setPosition")));
+            }
+        } catch (Exception e) {
+            throw new NumberFormatException("Invalid Format on setPosition on EcnoderWrapper vendor: " + encoderType
+                    + " setPosition:" + element.getAttribute("setPosition"));
         }
         parseXMLHelper(element);
     }
 
-    private void parseXMLHelper(Element element){
+    private void parseXMLHelper(Element element) {
         if (element.hasAttribute("inverted") && Boolean.parseBoolean(element.getAttribute("inverted"))) {
             encoder.setInverted(true);
         }
-        
-        if (!element.getAttribute("distance_per_pulse").isEmpty()) {
-            encoder.setDistancePerPulse(Double.parseDouble(element.getAttribute("distance_per_pulse")));
+        try {
+            if (!element.getAttribute("distance_per_pulse").isEmpty()) {
+                encoder.setDistancePerPulse(Double.parseDouble(element.getAttribute("distance_per_pulse")));
+            }
+        } catch (Exception e) {
+            throw new NumberFormatException(
+                    "Invalid Format on distance_per_pulse" + element.getAttribute("distance_per_pulse"));
         }
     }
 
@@ -57,11 +67,10 @@ public class EncoderWrapper implements EncoderBase {
             System.out.println(
                     "CAN Encoder found, initalize by passing EncoderBase into the consturctor: " + encoderType);
             return null;
-        } else if (encoderType.toLowerCase().equals("dutycycle")){
+        } else if (encoderType.toLowerCase().equals("dutycycle")) {
             return new DutyCycleEncoder(portOne);
 
-        }
-        else{
+        } else {
             System.out.println("Unknown vendor encoder type: " + encoderType);
             return null;
         }
@@ -95,7 +104,7 @@ public class EncoderWrapper implements EncoderBase {
     @Override
     public void setInverted(boolean inverted) {
         encoder.setInverted(inverted);
-        
+
     }
 
     @Override
@@ -105,7 +114,7 @@ public class EncoderWrapper implements EncoderBase {
 
     @Override
     public void initSendable(SendableBuilder builder) {
-        //builder.setSmartDashboardType("Motor Controller");
+        // builder.setSmartDashboardType("Motor Controller");
         // builder.setActuator(true);
         // builder.setSafeState(this::disable);
         builder.addDoubleProperty("Pos", this::getPosition, this::setPosition);
