@@ -17,7 +17,7 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand>
                 <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand> 
                 <defaultCommand subsystemID="wrist" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" inverted="true"></defaultCommand>
-
+                <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true"></defaultCommand>
                 <button button="A" type="transport" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>
                 <button button="X" type="score_high" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>
                 <button button="Y" type="pickup_double" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>

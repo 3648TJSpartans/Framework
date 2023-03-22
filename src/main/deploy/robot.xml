@@ -71,30 +71,22 @@
 
 
     <subsystem type="Motor" id="claw">
-        <motor id="m_intake" controller="sparkmax" port="13" idleMode="break">
+        <motor id="m_intake" controller="sparkmax" port="12" idleMode="break">
             <encoder id="clawEncoder" port="encoder" />
              <pid id="PID" kp="0.1" encoderPort="encoder" />
             </motor>
     </subsystem>
 
     <subsystem type="Motor" id="wrist" >
-        <motor id="wrist1" controller="sparkmax" port="12" idleMode="break">
+        <motor id="wrist1" controller="sparkmax" port="13" idleMode="break">
         <encoder id="wrist_encoder" type="relative" port="encoder"/>
         <encoder id="wrist_hexencoder" type="absolute" port="data" inverted="true" distance_per_pulse="6.283185307179586" />
         <pid id="PID" encoderPort="data" kp="1" ki="0" kd="0" kf="0" kMinOutput="-1.0" kMaxOutput="1.0" distance_per_pulse="6.283185307179586"
-                    setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
-         <!-- <encoder id="wrist_encoder" type="absolute" port="data"  distance_per_pulse="6.283185307179586"/>
-          <pid id="PID" kp="0.09" encoderPort="data" /> -->
-         <!-- <encoder id="" type="relative" port="encoder"/> -->
+                setPositionPIDWrappingEnabled="true" setPositionPIDWrappingMinInput="0" setPositionPIDWrappingMaxInput="6.283185307179586"/>
         </motor>
     </subsystem>
 
-    <!-- <subsystem type="Motor" id="claw">
-        <motor id="claw1" controller="sparkpwm" port="1" inverted="true">
-            <encoder id="claw_encoder" vendor="dutycycle" port_one="4"/>
-            <pid id="PID" kp="5.0"/>
-        </motor>
-    </subsystem> -->
+
 
     <subsystem type="Motor" id="arm">
         <motorgroup id="arm1">

@@ -12,7 +12,6 @@ import frc.robot.framework.util.CommandMode;
 import frc.robot.framework.util.readTextFile;
 
 public class scorePos extends CommandBase implements RobotXML {
-
   private String text = "noo";
   private Element myElement;
   private String command;
