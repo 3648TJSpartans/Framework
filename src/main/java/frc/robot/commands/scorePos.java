@@ -31,18 +31,19 @@ public class scorePos extends CommandBase implements RobotXML {
     SubsystemBase temp_arm = RobotInit.GetSubsystem(element.getAttribute("armSubsystemID"));
     SubsystemBase temp_arm_chain = RobotInit.GetSubsystem(element.getAttribute("armChainSubsystemID"));
     SubsystemBase temp_wrist = RobotInit.GetSubsystem(element.getAttribute("wristSubsystemID"));
+    SubsystemBase temp_claw = RobotInit.GetSubsystem(element.getAttribute("clawSubsystemID"));
     // SubsystemBase temp_claw =
     // RobotInit.GetSubsystem(element.getAttribute("clawSubsystemID"));
     // SubsystemBase temp_rotation =
     // RobotInit.GetSubsystem(element.getAttribute("wristSubsystemID"));
     if (temp_arm == null || !(temp_arm instanceof Motor)
         || temp_arm_chain == null || !(temp_arm_chain instanceof Motor)
-        || temp_wrist == null || !(temp_wrist instanceof Motor)) {
+        || temp_wrist == null || !(temp_wrist instanceof Motor) || temp_claw == null || !(temp_claw instanceof Motor)) {
       System.out.println(
-          "Arm Chain, Arm, Wrist, or Rotation could not find Motor subsystem with id:"
+          "Arm Chain, Arm, or Wrist could not find Motor subsystem with id:"
               + element.getAttribute("armChainSubsystemID") + "," +
               element.getAttribute("armSubsystemID") + "," +
-              element.getAttribute("wristSubsystemID"));
+              element.getAttribute("wristSubsystemID") + "," + element.getAttribute("clawSubsystemID"));
       return;
     }
     arm = (Motor) temp_arm;
@@ -167,6 +168,8 @@ public class scorePos extends CommandBase implements RobotXML {
       // isFinished = true;
       // }
       // break;
+      case "stay_claw":
+
       default:
         break;
 
