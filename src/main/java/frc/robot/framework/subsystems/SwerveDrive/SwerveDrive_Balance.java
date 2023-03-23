@@ -2,7 +2,6 @@ package frc.robot.framework.subsystems.SwerveDrive;
 
 import org.w3c.dom.Element;
 
-import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -42,6 +41,7 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
 
     @Override
     public void initialize() {
+
         startTime = System.currentTimeMillis();
         try {
             command_timeout = Double.parseDouble((myElement.getAttribute("timeout")));
