@@ -169,7 +169,9 @@ public class scorePos extends CommandBase implements RobotXML {
       // }
       // break;
       case "stay_claw":
-
+        double encoder_value = claw.getMotor().getPosition();
+        wrist.setReference(encoder_value, CommandMode.POSITION);
+        break;
       default:
         break;
 
