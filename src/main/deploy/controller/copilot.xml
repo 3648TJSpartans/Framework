@@ -23,9 +23,10 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="Y" type="pickup_double" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>
                  <button button="B" type="score_low" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" ></button>
                 <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="1"></button>
-                <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" stayPosition="true"></button>
                 <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
-                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" stayPosition="true"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Stay" trigger="Released"></button>
 <!--                    
 
                  <button button="A" command="Util_Limelight" trigger="Pressed"></button>  -->

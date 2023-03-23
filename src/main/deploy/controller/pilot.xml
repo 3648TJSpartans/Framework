@@ -32,9 +32,10 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <button button="RESTART" subsystemID="SwerveDrive" command="SwerveDrive_SetRelative" trigger="Pressed"></button>
                 <button button="A" subsystemID="SwerveDrive" command="SwerveDrive_UpdateFieldRelative" trigger="Pressed"></button>
                  <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="1"></button>
-                <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" stayPosition="true"></button>
+                <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
-                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" stayPosition="true"></button>
+                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" setPower="-.1"></button>
+                
                 <defaultCommand axisReference1="LEFT_TRIGGER" axisReference2="RIGHT_TRIGGER" inverted1="True" deadzone=".2"></defaultCommand>
                  <defaultCommand subsystemID="SwerveDrive"
                         axis_sideway="LEFT_JOYSTICK_Y" scale_sideway="1"

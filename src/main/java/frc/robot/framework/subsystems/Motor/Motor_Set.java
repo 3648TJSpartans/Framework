@@ -56,6 +56,7 @@ public class Motor_Set extends CommandBase implements RobotXML {
         }
         if (myElement.getAttribute("stayPosition") == "true") {
             motor.setReference(motor.getMotor().getPosition(), CommandMode.POSITION);
+            return;
         }
         System.out.println("MotorSet didn't do anything!!!");
     }
