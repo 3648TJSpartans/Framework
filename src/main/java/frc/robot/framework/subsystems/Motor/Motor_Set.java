@@ -7,54 +7,59 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.framework.robot.*;
 import frc.robot.framework.util.CommandMode;
 
-public class Motor_Set extends CommandBase implements RobotXML{
-    
-  private Motor motor;
-  private Element myElement;
-//<command  command="TankDrive_Default" scaleX="2" scaleY=".75"></axis>
+public class Motor_Set extends CommandBase implements RobotXML {
 
-    public Motor_Set(Element element){
-        myElement=element;
-            
-        SubsystemBase temp=RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
-        if (temp==null || !(temp instanceof Motor)){
-            throw new UnsupportedOperationException("Motor_SetPower could not find Motor subsystem with id:"+ element.getAttribute("subsystemID"));
+    private Motor motor;
+    private Element myElement;
+    // <command command="TankDrive_Default" scaleX="2" scaleY=".75"></axis>
+
+    public Motor_Set(Element element) {
+        myElement = element;
+
+        SubsystemBase temp = RobotInit.GetSubsystem(element.getAttribute("subsystemID"));
+        if (temp == null || !(temp instanceof Motor)) {
+            throw new UnsupportedOperationException(
+                    "Motor_SetPower could not find Motor subsystem with id:" + element.getAttribute("subsystemID"));
         }
-        motor = (Motor)temp;
+        motor = (Motor) temp;
         this.addRequirements(motor);
     }
-    
+
     @Override
-    public void initialize(){
+    public void initialize() {
     }
 
     @Override
     public void execute() {
         System.out.println("MotorSet Execute");
-        if (myElement.hasAttribute("incrementPower") && motor.getMode()==CommandMode.PERCENTAGE){
-            motor.setReference(motor.getReference()+Double.parseDouble(myElement.getAttribute("incrementPower")));
+        if (myElement.hasAttribute("incrementPower") && motor.getMode() == CommandMode.PERCENTAGE) {
+            motor.setReference(motor.getReference() + Double.parseDouble(myElement.getAttribute("incrementPower")));
             return;
         }
-        if (myElement.hasAttribute("setPower")){
+        if (myElement.hasAttribute("setPower")) {
             motor.setReference(Double.parseDouble(myElement.getAttribute("setPower")), CommandMode.PERCENTAGE);
             return;
         }
-        if (myElement.hasAttribute("setVelocity")){
+        if (myElement.hasAttribute("setVelocity")) {
             motor.setReference(Double.parseDouble(myElement.getAttribute("setVelocity")), CommandMode.VELOCITY);
             return;
         }
-        if (myElement.hasAttribute("setPosition")){
-            System.out.println("Setting motor position to "+myElement.getAttribute("setPosition"));
+        if (myElement.hasAttribute("setPosition")) {
+            System.out.println("Setting motor position to " + myElement.getAttribute("setPosition"));
             motor.setReference(Double.parseDouble(myElement.getAttribute("setPosition")), CommandMode.POSITION);
             return;
         }
-        if (myElement.hasAttribute("incrementPosition")){
-            motor.setReference(motor.getReference()+Double.parseDouble(myElement.getAttribute("incrementPosition")), CommandMode.POSITION);
+        if (myElement.hasAttribute("incrementPosition")) {
+            motor.setReference(motor.getReference() + Double.parseDouble(myElement.getAttribute("incrementPosition")),
+                    CommandMode.POSITION);
             return;
+        }
+        if (myElement.getAttribute("stayPosition") == "true") {
+            motor.setReference(motor.getMotor().getPosition(), CommandMode.POSITION);
         }
         System.out.println("MotorSet didn't do anything!!!");
     }
-  
+
     @Override
     public boolean isFinished() {
         return true;
@@ -62,11 +67,11 @@ public class Motor_Set extends CommandBase implements RobotXML{
 
     @Override
     public void ReadXML(Element element) {
-      
+
     }
-    
+
     @Override
     public void ReloadConfig() {
-      
+
     }
 }
