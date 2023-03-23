@@ -2,7 +2,6 @@ package frc.robot.framework.subsystems.SwerveDrive;
 
 import org.w3c.dom.Element;
 
-import edu.wpi.first.wpilibj.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,8 +25,6 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
     private double kD = 0;
     private double kF = 0;
 
-    private ADIS16448_IMU gyro;
-
     public SwerveDrive_Balance(Element element) {
         myElement = element;
 
@@ -45,7 +42,6 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
     @Override
     public void initialize() {
 
-        gyro = new ADIS16448_IMU();
         startTime = System.currentTimeMillis();
         try {
             command_timeout = Double.parseDouble((myElement.getAttribute("timeout")));
@@ -93,10 +89,9 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
     @Override
     public void execute() {
 
-        // double gyro = swerveDriveSubsystem.getGyroAngle();
-        double angle = gyro.getAccelX();
+        double gyro = ADIS_16448.m_gyro.getGyroAngleX();
 
-        double motorSpeed = pid.getPowerOutput(angle, 0, CommandMode.VELOCITY);
+        double motorSpeed = pid.getPowerOutput(gyro, 0, CommandMode.VELOCITY);
 
         if (Math.abs(motorSpeed) < deadzone) {
             motorSpeed = 0;
