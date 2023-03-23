@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.ADIS16448_IMU.IMUAxis;
 import frc.robot.framework.sensor.gyroscope.GyroBase;
 
 public class ADIS_16448 implements GyroBase{
-    ADIS16448_IMU m_gyro;
+    public static ADIS16448_IMU m_gyro;
     public ADIS_16448(){
         m_gyro = new ADIS16448_IMU();
     }

@@ -26,8 +26,6 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
     private double kD = 0;
     private double kF = 0;
 
-    private ADIS16448_IMU gyro;
-
     public SwerveDrive_Balance(Element element) {
         myElement = element;
 
@@ -44,8 +42,6 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
 
     @Override
     public void initialize() {
-
-        gyro = new ADIS16448_IMU();
         startTime = System.currentTimeMillis();
         try {
             command_timeout = Double.parseDouble((myElement.getAttribute("timeout")));
@@ -93,8 +89,7 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
     @Override
     public void execute() {
 
-        // double gyro = swerveDriveSubsystem.getGyroAngle();
-        double angle = gyro.getAccelX();
+        double angle = ADIS_16448.m_gyro.getGyroAngleX();
 
         double motorSpeed = pid.getPowerOutput(angle, 0, CommandMode.VELOCITY);
 
