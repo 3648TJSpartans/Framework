@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 
 <robot>
-  <auton id="auton5" nextstep="start">
+  <auton id="score_balance" nextstep="start">
     <SequentialCommandGroup id="start" firststep="drive">
       <command subsystemID="claw" type="Motor_Set" setPower="-1" id="intakestart" nextstep="delaystart"/>
       <command type="Util_Delay" delayLength=".25" id="delaystart" nextstep="intakestop"/>

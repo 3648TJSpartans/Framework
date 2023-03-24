@@ -2,7 +2,7 @@
 <!-- maybe... I'm still thinking if it's worth writing this or writing commandgroup that reads parameters -->
 
 <robot>
-    <auton id="auton1" nextstep="stop">
+    <auton id="do_nothing" nextstep="stop">
         <SequentialCommandGroup id="stop" firststep="drive">
         
         </SequentialCommandGroup>
