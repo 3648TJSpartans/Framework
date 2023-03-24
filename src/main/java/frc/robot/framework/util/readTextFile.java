@@ -27,6 +27,9 @@ public class readTextFile {
             while ((line = br.readLine()) != null) {
 
                 // split the line by :
+                if (line.isEmpty()){
+                    continue;
+                }
                 String[] parts = line.split("=");
 
                 // first part is name, second is number

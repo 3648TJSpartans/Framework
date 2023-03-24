@@ -11,5 +11,3 @@ wrist_down=.68
 wrist_up=.34
 score_low_arm=.43
 score_low_armChain=-29
-
-

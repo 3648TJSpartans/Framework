@@ -2,7 +2,7 @@
 
 <robot>
   <auton id="score_balance" nextstep="start">
-    <SequentialCommandGroup id="start" firststep="drive">
+    <SequentialCommandGroup id="start" firststep="intakestart">
       <command subsystemID="claw" type="Motor_Set" setPower="-1" id="intakestart" nextstep="delaystart"/>
       <command type="Util_Delay" delayLength=".25" id="delaystart" nextstep="intakestop"/>
       <command subsystemID="claw" type="Motor_Set" setPower="0" id="intakestop" nextstep="drive"/>
@@ -17,10 +17,10 @@
       <command type="Util_Delay" delayLength="1" id="delay2" nextstep="clawStop" />
       <command subsystemID="claw" type="Motor_Set" setPower="0" id="clawStop" nextstep="drive-transport"/>
 
-      <parallelCommandGroup id="drive-transport" firststep="drive">
-        <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="stow"
+      <parallelCommandGroup id="drive-transport" firststep="backup" nextstep="balance">
+        <command type="SwerveDrive_Set" id="backup" subsystemID="SwerveDrive" nextstep="stow"
           setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="Path2"/>
-        <command type="scorePos" autoType="transport" id="stow" nextstep="balance" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" 
+        <command type="scorePos" autoType="transport" id="stow" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" 
             clawSubsystemID="claw"/>
       </parallelCommandGroup>
       
