@@ -12,7 +12,7 @@
             clawSubsystemID="claw"/>
              <command type="Motor_Set" subsystemID="wrist" setPosition=".69" id="wristDown" nextstep="stayClaw"/>
              <command type="Motor_Set" subsystemID="claw" setPower="-.5" id="stayClaw" nextstep="delay1"/>
-            <command type="Util_Delay" delayLength="1" id="delay1" nextstep="clawOpen"/>
+            <command type="Util_Delay" delayLength="2" id="delay1" nextstep="clawOpen"/>
             <command subsystemID="claw" type="Motor_Set" setPower="1" id="clawOpen" nextstep="delay2"/>
             <command type="Util_Delay" delayLength="1" id="delay2" nextstep="clawStop" />
             <command subsystemID="claw" type="Motor_Set" setPower="0" id="clawStop" nextstep="thing"/>
