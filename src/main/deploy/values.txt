@@ -1,5 +1,6 @@
 score_high_arm=0.39
-score_high_armChain=-99
+score_high_armChain=-102
+wrist_score=.69
 pickup_double_arm=.423
 pickup_double_armChain=-7
 stowed_arm=.83
@@ -10,3 +11,5 @@ wrist_down=.68
 wrist_up=.34
 score_low_arm=.43
 score_low_armChain=-29
+
+

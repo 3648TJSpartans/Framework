@@ -89,7 +89,9 @@ public class SwerveDrive_Balance extends CommandBase implements RobotXML {
     @Override
     public void execute() {
 
-        double angle = ADIS_16448.m_gyro.getGyroAngleX();
+        double angle = ADIS_16448.m_gyro.getGyroAngleY();
+
+        System.out.println("Angle: " + angle);
 
         double motorSpeed = pid.getPowerOutput(angle, 0, CommandMode.VELOCITY);
 
