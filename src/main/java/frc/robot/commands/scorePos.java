@@ -125,7 +125,7 @@ public class scorePos extends CommandBase implements RobotXML {
         if (m_timer.get() <= .25 && m_timer.get() >= .2) {
           arm_chain.setReference(values.get("transport_armChain"), CommandMode.POSITION);
         }
-        if (m_timer.get() >= .4) {
+        if (m_timer.get() >= .8) {
           arm.setReference(values.get("transport_arm"), CommandMode.POSITION);
           isFinished = true;
         }
