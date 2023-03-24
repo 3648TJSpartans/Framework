@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+
+<robot>
+  <auton id="score_backup" nextstep="start">
+    <SequentialCommandGroup id="start" firststep="intakestart">
+      <command subsystemID="claw" type="Motor_Set" setPower="-1" id="intakestart" nextstep="delaystart"/>
+            <command type="Util_Delay" delayLength=".25" id="delaystart" nextstep="intakestop"/>
+            <command subsystemID="claw" type="Motor_Set" setPower="0" id="intakestop" nextstep="scoreHigh"/>
+          <!--<command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="scoreHigh" 
+            xTranslation ="0" yTranslation = "0" heading="0" setMaxSpeed = "1" setMaxAcceleration = "1" timeout=".3" autonPath="scorePath"/> -->
+            <command type="scorePos" autoType="score_high_auto" id="scoreHigh" nextstep="wristDown" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" 
+            clawSubsystemID="claw"/>
+             <command type="Motor_Set" subsystemID="wrist" setPosition=".69" id="wristDown" nextstep="stayClaw"/>
+             <command type="Motor_Set" subsystemID="claw" setPower="-.5" id="stayClaw" nextstep="delay1"/>
+            <command type="Util_Delay" delayLength="2" id="delay1" nextstep="clawOpen"/>
+            <command subsystemID="claw" type="Motor_Set" setPower="1" id="clawOpen" nextstep="delay2"/>
+            <command type="Util_Delay" delayLength="1" id="delay2" nextstep="clawStop" />
+            <command subsystemID="claw" type="Motor_Set" setPower="0" id="clawStop" nextstep="drive-transport"/>
+
+      <parallelCommandGroup id="drive-transport" firststep="backup">
+        <command type="SwerveDrive_Set" id="backup" subsystemID="SwerveDrive" nextstep="stow"
+          setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="backupPath"/>
+        <command type="scorePos" autoType="transport" id="stow" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" 
+            clawSubsystemID="claw"/>
+      </parallelCommandGroup>
+      
+    </SequentialCommandGroup>
+</auton>
+</robot>    
