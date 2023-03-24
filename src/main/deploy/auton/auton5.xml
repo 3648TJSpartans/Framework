@@ -18,10 +18,13 @@
       <command subsystemID="claw" type="Motor_Set" setPower="0" id="clawStop" nextstep="drive-transport"/>
 
       <parallelCommandGroup id="drive-transport" firststep="drive">
-        <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="balance" 
+        <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="stow"
           setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="Path2"/>
-      <parallelCommandGroup/>
-
+        <command type="scorePos" autoType="transport" id="stow" nextstep="balance" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" 
+            clawSubsystemID="claw"/>
+      </parallelCommandGroup>
+      
+    <command type="SwerveDrive_Balance" id="balance" subsystemID="SwerveDrive" inverted="true" timeout="4" deadzone="0.015" kP="0.005"/>
 
     </SequentialCommandGroup>
 </auton>
