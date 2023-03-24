@@ -19,7 +19,7 @@
 
       <parallelCommandGroup id="drive-transport" firststep="backup" nextstep="balance">
         <command type="SwerveDrive_Set" id="backup" subsystemID="SwerveDrive" nextstep="stow"
-          setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="Path2"/>
+          setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="backupPath"/>
         <command type="scorePos" autoType="transport" id="stow" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" 
             clawSubsystemID="claw"/>
       </parallelCommandGroup>
