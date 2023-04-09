@@ -1,6 +1,6 @@
 # Team 3648 Java FRC Framework
 
-Welcome to the Team 3648 Java FRC Framework! This is a command-based framework that allows teams to easily program their robot using Java for the FIRST Robotics Competition (FRC). This framework is designed to simplify the programming process and make it easier for teams to focus on building their robot.
+Welcome to team 3648's Java FRC Framework! This is a command-based framework that allows teams to easily program their robot using XML for FIRST Robotics Competition (FRC). This framework is designed to simplify the programming process and make it easier for teams to focus on building their robot.
 ## Features
 <ul>
     <li>Uses XML files to store hardware constants such as ports, motor controller type, control mode, etc.</li>
@@ -14,6 +14,7 @@ Welcome to the Team 3648 Java FRC Framework! This is a command-based framework t
 ### Prerequisites
 
 <ul>
+    <li>WPILib</li>
     <li>Java Development Kit (JDK) version 11 or higher.</li>
     <li>FRC RoboRio and a compatible hardware.</li>
 </ul>
@@ -29,8 +30,9 @@ Welcome to the Team 3648 Java FRC Framework! This is a command-based framework t
 ## Usage
 
 <ol>
-    <li>Define your robot hardware constants in the XML files located in the src/main/java/frc/robot/Robot.java file.</li>
-    <li>Write your autonomous program in the src/main/deploy/auton folder.</li>
+    <li>Define your robot hardware constants in src/main/java/frc/robot/Robot.java file.</li>
+    <li>Create your autonomous programs in the src/main/deploy/auton folder.</li>
+    <li>Define your control mappings in the src/main/deploy/controller folder.</li>
     <li>Deploy the code to your robot and run it.</li>
     <li>Monitor the robot through shuffle board and terminal.</li>
 </ol>
