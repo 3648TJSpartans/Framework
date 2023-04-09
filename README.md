@@ -15,7 +15,7 @@ Welcome to the Team 3648 Java FRC Framework! This is a command-based framework t
 
 <ul>
     <li>Java Development Kit (JDK) version 11 or higher.</li>
-    <li>FRC RoboRio and a compatible motor controller.</li>
+    <li>FRC RoboRio and a compatible hardware.</li>
 </ul>
 
 ## Installation
@@ -28,8 +28,6 @@ Welcome to the Team 3648 Java FRC Framework! This is a command-based framework t
 
 ## Usage
 
-For more information on how to use the Framework, please visit out [wiki](https://github.com/3648TJSpartans/Framework/wiki).
-
 <ol>
     <li>Define your robot hardware constants in the XML files located in the src/main/java/frc/robot/Robot.java file.</li>
     <li>Write your autonomous program in the src/main/deploy/auton folder.</li>
@@ -37,7 +35,7 @@ For more information on how to use the Framework, please visit out [wiki](https:
     <li>Monitor the robot through shuffle board and terminal.</li>
 </ol>
 
-## 
+For more information on how to use the Framework, please visit out [wiki](https://github.com/3648TJSpartans/Framework/wiki).
 
 ## Contributing
 
@@ -49,5 +47,3 @@ This framework is licensed under the [MIT License](mit-license.org).
 
 We would like to thank the FIRST Robotics Competition and all the volunteers who make it possible. We would also like to thank the developers of WPILib for their contributions to the FRC community.
 
-
-[WIKI](https://github.com/3648TJSpartans/Framework/wiki)
