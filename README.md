@@ -42,9 +42,7 @@ For more information on how to use the Framework, please visit out [wiki](https:
 ## Contributing
 
 We welcome contributions from other teams who are interested in using or improving our framework. If you have suggestions or improvements, please feel free to fork the repository and submit a pull request.
-## License
 
-This framework is licensed under the [MIT License](mit-license.org).
 ## Acknowledgments
 
 We would like to thank the FIRST Robotics Competition and all the volunteers who make it possible. We would also like to thank the developers of WPILib for their contributions to the FRC community.
