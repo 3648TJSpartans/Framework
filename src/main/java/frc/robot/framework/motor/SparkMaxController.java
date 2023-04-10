@@ -32,33 +32,32 @@ public class SparkMaxController extends MotorController implements EncoderBase {
     private SparkMaxPIDController pidController;
     private RelativeEncoder encoder;
 
-    //I hate this but I have to keep track of it. Only one should be used
+    // I hate this but I have to keep track of it. Only one should be used
     private RelativeEncoder data_RelativeEncoder;
     private AbsoluteEncoder data_AbsoluteEncoder;
 
     public SparkMaxController(Element element, SubsystemCollection collection) {
-        MotorType motorType=MotorType.kBrushless;
-        if (element.getAttribute("motortype").toLowerCase().equals("brushed")){
-            motorType=MotorType.kBrushed;
+        MotorType motorType = MotorType.kBrushless;
+        if (element.getAttribute("motortype").toLowerCase().equals("brushed")) {
+            motorType = MotorType.kBrushed;
         }
-        try{
-            controller = new CANSparkMax(Integer.parseInt(element.getAttribute("port")) , motorType);
-        } catch (NumberFormatException e){
-            throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Port number: '"+ element.getAttribute("port") +"'': Invalid value for 'port'");
+        try {
+            controller = new CANSparkMax(Integer.parseInt(element.getAttribute("port")), motorType);
+        } catch (NumberFormatException e) {
+            throw new NumberFormatException("SparkMaxController id:" + element.getAttribute("id") + " - Port number: '"
+                    + element.getAttribute("port") + "'': Invalid value for 'port'");
         }
         controller.restoreFactoryDefaults();
 
         pidController = controller.getPIDController();
 
-        if (element.getAttribute("idleMode").toLowerCase().equals("break")){
+        if (element.getAttribute("idleMode").toLowerCase().equals("brake")) {
             controller.setIdleMode(IdleMode.kBrake);
-        }
-        else{
+        } else {
             controller.setIdleMode(IdleMode.kCoast);
         }
-        
 
-        //Get encoders.
+        // Get encoders.
         NodeList childNodeList = element.getChildNodes();
         for (int i = 0; i < childNodeList.getLength(); i++) {
             if (childNodeList.item(i).getNodeType() != Node.ELEMENT_NODE) {
@@ -66,127 +65,161 @@ public class SparkMaxController extends MotorController implements EncoderBase {
             }
             Element childElement = (Element) childNodeList.item(i);
             EncoderWrapper encoderWrapper;
-            switch (childElement.getTagName().toLowerCase()){
+            switch (childElement.getTagName().toLowerCase()) {
                 case "encoder":
-                    String xml_port=childElement.getAttribute("port").toLowerCase();
-                    
-                    //data encoder on top
-                    if (xml_port.equals("data")){
-                        
-                        int countsPerRev=8192;
-                        if (childElement.hasAttribute("countsPerRev")){
-                            try{
-                                countsPerRev=Integer.parseInt(childElement.getAttribute("countsPerRev"));
+                    String xml_port = childElement.getAttribute("port").toLowerCase();
 
-                            } catch (NumberFormatException e){
-                                throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - countsPerRev: '"+ childElement.getAttribute("countsPerRev") +"'': Invalid value for 'countsPerRev'");
+                    // data encoder on top
+                    if (xml_port.equals("data")) {
+
+                        int countsPerRev = 8192;
+                        if (childElement.hasAttribute("countsPerRev")) {
+                            try {
+                                countsPerRev = Integer.parseInt(childElement.getAttribute("countsPerRev"));
+
+                            } catch (NumberFormatException e) {
+                                throw new NumberFormatException("SparkMaxController id:" + element.getAttribute("id")
+                                        + " - countsPerRev: '" + childElement.getAttribute("countsPerRev")
+                                        + "'': Invalid value for 'countsPerRev'");
                             }
                         }
-                        
-                        if (childElement.hasAttribute("type")){
-                            if (childElement.getAttribute("type").toLowerCase().equals("relative")){
-                                data_RelativeEncoder=controller.getAlternateEncoder(countsPerRev);
-                                encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderRelativeEncoder(data_RelativeEncoder)); 
-                               
-                            }
-                            else if (childElement.getAttribute("type").toLowerCase().equals("absolute")){ 
-                                data_AbsoluteEncoder = controller.getAbsoluteEncoder(Type.kDutyCycle);
-                                encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderAbsoluteEncoder(data_AbsoluteEncoder));
 
-                                if (childElement.hasAttribute("setZeroOffset")){
-                                    try{
-                                        double zeroOffset=Double.parseDouble(childElement.getAttribute("setZeroOffset"));
+                        if (childElement.hasAttribute("type")) {
+                            if (childElement.getAttribute("type").toLowerCase().equals("relative")) {
+                                data_RelativeEncoder = controller.getAlternateEncoder(countsPerRev);
+                                encoderWrapper = new EncoderWrapper(childElement,
+                                        new SparkMaxEncoderRelativeEncoder(data_RelativeEncoder));
+
+                            } else if (childElement.getAttribute("type").toLowerCase().equals("absolute")) {
+                                data_AbsoluteEncoder = controller.getAbsoluteEncoder(Type.kDutyCycle);
+                                encoderWrapper = new EncoderWrapper(childElement,
+                                        new SparkMaxEncoderAbsoluteEncoder(data_AbsoluteEncoder));
+
+                                if (childElement.hasAttribute("setZeroOffset")) {
+                                    try {
+                                        double zeroOffset = Double
+                                                .parseDouble(childElement.getAttribute("setZeroOffset"));
                                         encoderWrapper.setPosition(zeroOffset);
-                                    } catch (NumberFormatException e){
-                                        throw new NumberFormatException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder id: "+ childElement.getAttribute("id") +": Invalid value for 'setZeroOffset'");
+                                    } catch (NumberFormatException e) {
+                                        throw new NumberFormatException(
+                                                "SparkMaxController id:" + element.getAttribute("id")
+                                                        + " - Encoder id: " + childElement.getAttribute("id")
+                                                        + ": Invalid value for 'setZeroOffset'");
                                     }
                                 }
+                            } else {
+                                throw new UnsupportedOperationException("SparkMaxController id:"
+                                        + element.getAttribute("id")
+                                        + " - Encoder 'type' is not specified. Only 'data' or 'encoder' ports supported");
                             }
-                            else {
-                                throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder 'type' is not specified. Only 'data' or 'encoder' ports supported");
-                            }
-                        }
-                        else{
-                            throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder 'type' is not specified. Only 'data' or 'encoder' ports supported");
+                        } else {
+                            throw new UnsupportedOperationException("SparkMaxController id:"
+                                    + element.getAttribute("id")
+                                    + " - Encoder 'type' is not specified. Only 'data' or 'encoder' ports supported");
                         }
                     }
-                    //Normal encoder on side
+                    // Normal encoder on side
                     else if (xml_port.equals("encoder")) {
                         encoder = controller.getEncoder();
-                        encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderRelativeEncoder(encoder) ); 
+                        encoderWrapper = new EncoderWrapper(childElement, new SparkMaxEncoderRelativeEncoder(encoder));
+                    } else {
+                        throw new UnsupportedOperationException("SparkMaxController id:" + element.getAttribute("id")
+                                + " - Encoder port: " + childElement.getAttribute("port")
+                                + " not supported. Only 'data' or 'encoder' ports supported");
                     }
-                    else{
-                        throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - Encoder port: "+ childElement.getAttribute("port") +" not supported. Only 'data' or 'encoder' ports supported");
-                    }
-                    
-                    super.encoder=encoderWrapper;
+
+                    super.encoder = encoderWrapper;
                     collection.encoders.put(childElement.getAttribute("id"), encoderWrapper);
-                    //ShuffleboardFramework.getSubsystem(collection.subsystemName).addSendableToTab((childElement.getAttribute("id")+Math.random()).substring(0,18), encoderWrapper);
-                    ShuffleboardFramework.getSubsystem(collection.subsystemName).addSendableToTab(childElement.getAttribute("id"), encoderWrapper);
+                    // ShuffleboardFramework.getSubsystem(collection.subsystemName).addSendableToTab((childElement.getAttribute("id")+Math.random()).substring(0,18),
+                    // encoderWrapper);
+                    ShuffleboardFramework.getSubsystem(collection.subsystemName)
+                            .addSendableToTab(childElement.getAttribute("id"), encoderWrapper);
 
                     break;
                 case "pid":
                     SparkMaxPID pid = new SparkMaxPID(childElement, this);
-                    if (childElement.getAttribute("encoderPort").toLowerCase().equals("encoder")){
+                    if (childElement.getAttribute("encoderPort").toLowerCase().equals("encoder")) {
                         pidController.setFeedbackDevice(encoder);
-                    }else if (childElement.getAttribute("encoderPort").toLowerCase().equals("data")){
-                        if (data_RelativeEncoder != null){
+                    } else if (childElement.getAttribute("encoderPort").toLowerCase().equals("data")) {
+                        if (data_RelativeEncoder != null) {
                             pidController.setFeedbackDevice(data_RelativeEncoder);
-                        }
-                        else if (data_AbsoluteEncoder != null){
+                        } else if (data_AbsoluteEncoder != null) {
                             pidController.setFeedbackDevice(data_AbsoluteEncoder);
+                        } else {
+                            throw new UnsupportedOperationException(
+                                    "SparkMaxController: Setting feedback device on Pid - Encoder is not initalized");
                         }
-                        else{
-                            throw new UnsupportedOperationException("SparkMaxController: Setting feedback device on Pid - Encoder is not initalized");
-                        }
-                    }else{
-                        throw new UnsupportedOperationException("SparkMaxController id:"+element.getAttribute("id")+" - PID encoderPort: "+ childElement.getAttribute("encoderPort") +" not supported. Only 'encoder' or 'data' ports supported");
+                    } else {
+                        throw new UnsupportedOperationException("SparkMaxController id:" + element.getAttribute("id")
+                                + " - PID encoderPort: " + childElement.getAttribute("encoderPort")
+                                + " not supported. Only 'encoder' or 'data' ports supported");
                     }
                     pidController.setPositionPIDWrappingEnabled(inverted);
-                    if (childElement.hasAttribute("setPositionPIDWrappingEnabled") && childElement.hasAttribute("setPositionPIDWrappingMinInput") && childElement.hasAttribute("setPositionPIDWrappingMaxInput")){
-                        try{
-                        boolean boolValue = Boolean.parseBoolean(childElement.getAttribute("setPositionPIDWrappingEnabled"));
-                        double min = Double.parseDouble(childElement.getAttribute("setPositionPIDWrappingMinInput")); 
-                        double max = Double.parseDouble(childElement.getAttribute("setPositionPIDWrappingMaxInput")); 
-                        pidController.setPositionPIDWrappingEnabled(boolValue);
-                        pidController.setPositionPIDWrappingMinInput(min);
-                        pidController.setPositionPIDWrappingMaxInput(max);
-                        }catch (Exception e){
-                            System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"+
-                            element.getAttribute("id")+" - setPositionPIDWrappingEnabled: " 
-                            +childElement.getAttribute("setPositionPIDWrappingEnabled")+
-                            " setPositionPIDWrappingMinInput:"+childElement.getAttribute("setPositionPIDWrappingMinInput")+" setPositionPIDWrappingMaxInput:"+childElement.getAttribute("setPositionPIDWrappingMaxInput")+" not supported varible type");
-                        }     
-                    }else if(childElement.hasAttribute("setPositionPIDWrappingEnabled") || childElement.hasAttribute("setPositionPIDWrappingMinInput") || childElement.hasAttribute("setPositionPIDWrappingMaxInput")){
-                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+
-                            element.getAttribute("id")+" - setPositionPIDWrappingEnabled: " 
-                            +childElement.getAttribute("setPositionPIDWrappingEnabled")+
-                            " setPositionPIDWrappingMinInput:"+childElement.getAttribute("setPositionPIDWrappingMinInput")+" setPositionPIDWrappingMaxInput:"+childElement.getAttribute("setPositionPIDWrappingMaxInput")+" not supported varible type");
+                    if (childElement.hasAttribute("setPositionPIDWrappingEnabled")
+                            && childElement.hasAttribute("setPositionPIDWrappingMinInput")
+                            && childElement.hasAttribute("setPositionPIDWrappingMaxInput")) {
+                        try {
+                            boolean boolValue = Boolean
+                                    .parseBoolean(childElement.getAttribute("setPositionPIDWrappingEnabled"));
+                            double min = Double
+                                    .parseDouble(childElement.getAttribute("setPositionPIDWrappingMinInput"));
+                            double max = Double
+                                    .parseDouble(childElement.getAttribute("setPositionPIDWrappingMaxInput"));
+                            pidController.setPositionPIDWrappingEnabled(boolValue);
+                            pidController.setPositionPIDWrappingMinInput(min);
+                            pidController.setPositionPIDWrappingMaxInput(max);
+                        } catch (Exception e) {
+                            System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:" +
+                                    element.getAttribute("id") + " - setPositionPIDWrappingEnabled: "
+                                    + childElement.getAttribute("setPositionPIDWrappingEnabled") +
+                                    " setPositionPIDWrappingMinInput:"
+                                    + childElement.getAttribute("setPositionPIDWrappingMinInput")
+                                    + " setPositionPIDWrappingMaxInput:"
+                                    + childElement.getAttribute("setPositionPIDWrappingMaxInput")
+                                    + " not supported varible type");
+                        }
+                    } else if (childElement.hasAttribute("setPositionPIDWrappingEnabled")
+                            || childElement.hasAttribute("setPositionPIDWrappingMinInput")
+                            || childElement.hasAttribute("setPositionPIDWrappingMaxInput")) {
+                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:" +
+                                element.getAttribute("id") + " - setPositionPIDWrappingEnabled: "
+                                + childElement.getAttribute("setPositionPIDWrappingEnabled") +
+                                " setPositionPIDWrappingMinInput:"
+                                + childElement.getAttribute("setPositionPIDWrappingMinInput")
+                                + " setPositionPIDWrappingMaxInput:"
+                                + childElement.getAttribute("setPositionPIDWrappingMaxInput")
+                                + " not supported varible type");
                     }
 
-                    if(childElement.hasAttribute("kMinOutput")&& childElement.hasAttribute("kMaxOutput")){
-                            try{
-                                double min = Double.parseDouble(childElement.getAttribute("kMinOutput"));
-                                double max = Double.parseDouble(childElement.getAttribute("kMaxOutput"));
-                                pidController.setOutputRange(min, max);
-                            }catch (Exception e){
-                                System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kMinOutput: "+childElement.getAttribute("kMinOutput")+"kMaxOutput"+childElement.getAttribute("kMaxOutput"));
-                            }
-                    }else if (childElement.hasAttribute("kMinOutput") || childElement.hasAttribute("kMaxOutput")){
-                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"+element.getAttribute("id")+"kMinOutput: "+childElement.getAttribute("kMinOutput")+"kMaxOutput"+childElement.getAttribute("kMaxOutput"));
+                    if (childElement.hasAttribute("kMinOutput") && childElement.hasAttribute("kMaxOutput")) {
+                        try {
+                            double min = Double.parseDouble(childElement.getAttribute("kMinOutput"));
+                            double max = Double.parseDouble(childElement.getAttribute("kMaxOutput"));
+                            pidController.setOutputRange(min, max);
+                        } catch (Exception e) {
+                            System.out.println("Invalid Format in PIDWrapping on SparkMaxController id:"
+                                    + element.getAttribute("id") + "kMinOutput: "
+                                    + childElement.getAttribute("kMinOutput") + "kMaxOutput"
+                                    + childElement.getAttribute("kMaxOutput"));
+                        }
+                    } else if (childElement.hasAttribute("kMinOutput") || childElement.hasAttribute("kMaxOutput")) {
+                        System.out.println("Invalid Fields in PIDWrapping on SparkMaxController id:"
+                                + element.getAttribute("id") + "kMinOutput: " + childElement.getAttribute("kMinOutput")
+                                + "kMaxOutput" + childElement.getAttribute("kMaxOutput"));
                     }
-                    super.pid=pid;
+                    super.pid = pid;
                     collection.pids.put(element.getAttribute("id"), pid);
                     break;
                 case "analog":
-                    AnalogInBase analogSparkMax = new SparkMaxAnalogIn(controller.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute)); 
+                    AnalogInBase analogSparkMax = new SparkMaxAnalogIn(
+                            controller.getAnalog(SparkMaxAnalogSensor.Mode.kAbsolute));
                     collection.analogInputs.put(element.getAttribute("id"), analogSparkMax);
                     break;
                 default:
                     break;
             }
         }
-        
+
         controller.burnFlash();
     }
 
@@ -255,21 +288,19 @@ public class SparkMaxController extends MotorController implements EncoderBase {
     @Override
     public void setPosition(double position) {
         encoder.setPosition(position);
-        
+
     }
 
     @Override
-    public PIDBase getPID(){
-        if (pid !=null)
-           return pid;
+    public PIDBase getPID() {
+        if (pid != null)
+            return pid;
         else
             throw new UnsupportedOperationException("SparkMaxController: pid is null. Can't getPID");
     }
 
-    
-
     @Override
-    public void set(double speed){
+    public void set(double speed) {
         controller.set(speed);
     }
 
@@ -287,7 +318,6 @@ public class SparkMaxController extends MotorController implements EncoderBase {
     public void stopMotor() {
         controller.stopMotor();
     }
-
 
     @Override
     public void initSendable(SendableBuilder builder) {
