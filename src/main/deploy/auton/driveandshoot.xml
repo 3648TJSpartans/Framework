@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 
 <robot>
-<auton id="driveandshoot" nextstep="drive">
-<SequentialCommandGroup id="start" firststep="forward">
- <command type="TankDrive_Set" id="forward" subsystemID="TankDrive" nextstep="intakesuck"
-                setInputTurn="0" setInputForward="0.3" delayLength="3" />
-<command type="Motor_Set" subsystemID="intakeMotor" setPower=".3" id="intakesuck" nextstep="intake_stall"/>
-<command type="Util_Delay" delayLength="2" id="intake_stall" nextstep="intakestop"/>
-<command type="Motor_Set" subsystemID="intakeMotor" setPower="0" id="intakestop" nextstep="hopper_start"/>
-<command type="Motor_Set" subsystemID="HopperMotor" setPower=".5" id="hopper_start" nextstep="hopper_stall"/>
-<command type="Util_Delay" delayLength="1" id="hopper_stall" nextstep="hopperstop"/>
-<command type="Motor_Set" subsystemID="HopperMotor" setPower="0" id="hopperstop" nextstep="revStart"/>
-<command type="Motor_Set" subsystemID="revMotor" setPower=".7" id="revStart" nextstep="revStall"/>
-<command type="Util_Delay" delayLength="1" id="revStall" nextstep="shooter"/>
-<command type="Motor_Set" subsystemID="shooter" id="shooter" setPower="1" nextstep="shooter_stall"/>
-<command type="Util_Delay" delayLength="2" id="shooter_stall" nextstep="revStop"/>
-<command type="Motor_Set" subsystemID="revMotor" setPower="0" id="revStop" nextstep="shooterStop"/> 
-<command type="Motor_Set" subsystemID="shooter" id="shooterStop" nextstep="stop"/>
-</SequentialCommandGroup>
-</auton>
+<auton id="driveandshoot" nextstep="start">
+        <SequentialCommandGroup id="start" firststep="forward">
+            <command type="TankDrive_Set" id="forward" subsystemID="TankDrive" nextstep="intakesuck"
+                            setInputTurn="0" setInputForward="0.3" delayLength="3" />
+            <command type="Motor_Set" subsystemID="intakeMotor" setPower=".3" id="intakesuck" nextstep="intake_stall"/>
+            <command type="Util_Delay" delayLength="2" id="intake_stall" nextstep="intakestop"/>
+            <command type="Motor_Set" subsystemID="intakeMotor" setPower="0" id="intakestop" nextstep="hopper_start"/>
+            <command type="Motor_Set" subsystemID="HopperMotor" setPower=".5" id="hopper_start" nextstep="hopper_stall"/>
+            <command type="Util_Delay" delayLength="1" id="hopper_stall" nextstep="hopperstop"/>
+            <command type="Motor_Set" subsystemID="HopperMotor" setPower="0" id="hopperstop" nextstep="revStart"/>
+            <command type="Motor_Set" subsystemID="revMotor" setPower=".7" id="revStart" nextstep="revStall"/>
+            <command type="Util_Delay" delayLength="1" id="revStall" nextstep="shooter"/>
+            <command type="Motor_Set" subsystemID="shooter" id="shooter" setPower="1" nextstep="shooter_stall"/>
+            <command type="Util_Delay" delayLength="2" id="shooter_stall" nextstep="revStop"/>
+            <command type="Motor_Set" subsystemID="revMotor" setPower="0" id="revStop" nextstep="shooterStop"/> 
+            <command type="Motor_Set" subsystemID="shooter" id="shooterStop" nextstep="stop"/>
+        </SequentialCommandGroup>
+    </auton>
 </robot>
