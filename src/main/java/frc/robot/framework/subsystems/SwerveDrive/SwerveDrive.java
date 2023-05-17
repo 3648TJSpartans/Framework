@@ -250,8 +250,8 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
         teleFieldRelative = fieldRelative;
     }
 
-    public void updateFieldRelative(){
-        m_fieldRelativeOffset= -1*subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
+    public void updateFieldRelative() {
+        m_fieldRelativeOffset = -1 * subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z");
     }
 
     public boolean getTeleFieldRelative() {
@@ -372,8 +372,9 @@ public class SwerveDrive extends SubsystemBase implements RobotXML {
     }
 
     public double getGyroAngle() {
-        // System.out.println("SwerveGyro"+subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z"));
-        return m_fieldRelativeOffset-(subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z"));
+        // System.out.println("SwerveGyro"+subsystemColection.gyroscopes.getGYROAngle("swerveGyro",
+        // "Z"));
+        return m_fieldRelativeOffset - (subsystemColection.gyroscopes.getGYROAngle("swerveGyro", "Z"));
     }
 
     public void setCommandTrajectory(PathPlannerTrajectory trajectory, Timer m_timer) {

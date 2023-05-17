@@ -11,14 +11,27 @@
   "NTProvider": {
     "types": {
       "/FMSInfo": "FMSInfo",
+      "/LiveWindow/Ungrouped/DigitalInput[2]": "Digital Input",
+      "/LiveWindow/Ungrouped/PIDController[1]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[2]": "PIDController",
+      "/LiveWindow/Ungrouped/PIDController[3]": "PIDController",
+      "/LiveWindow/Ungrouped/Scheduler": "Scheduler",
       "/Shuffleboard/Robot/AutonCommand": "String Chooser",
       "/Shuffleboard/Robot/SwerveDrive": "Subsystem",
+      "/Shuffleboard/Robot/TankDrive": "Subsystem",
+      "/Shuffleboard/Robot/aim": "Subsystem",
       "/Shuffleboard/Robot/arm": "Subsystem",
       "/Shuffleboard/Robot/armChain": "Subsystem",
       "/Shuffleboard/Robot/claw": "Subsystem",
       "/Shuffleboard/Robot/rotation": "Subsystem",
+      "/Shuffleboard/Robot/shooter": "Subsystem",
       "/Shuffleboard/Robot/test": "Subsystem",
       "/Shuffleboard/Robot/wrist": "Subsystem",
+      "/Shuffleboard/TankDrive/frc.robot.framework.motor.SparkController@68971f97": "Motor Controller",
+      "/Shuffleboard/TankDrive/frc.robot.framework.motor.SparkController@6f227711": "Motor Controller",
+      "/Shuffleboard/TankDrive/left": "Motor Controller",
+      "/Shuffleboard/TankDrive/right": "Motor Controller",
+      "/Shuffleboard/aim/m_aim": "Motor Controller",
       "/Shuffleboard/arm/arm1": "Motor Controller",
       "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@116259b6": "Motor Controller",
       "/Shuffleboard/arm/frc.robot.framework.motor.SparkMaxController@1821d244": "Motor Controller",
@@ -32,6 +45,7 @@
       "/Shuffleboard/claw/claw1": "Motor Controller",
       "/Shuffleboard/claw/m_intake": "Motor Controller",
       "/Shuffleboard/rotation/rotation1": "Motor Controller",
+      "/Shuffleboard/shooter/m_shooter": "Motor Controller",
       "/Shuffleboard/swerve_back_left/drive": "Motor Controller",
       "/Shuffleboard/swerve_back_left/turn": "Motor Controller",
       "/Shuffleboard/swerve_back_right/drive": "Motor Controller",
@@ -40,7 +54,8 @@
       "/Shuffleboard/swerve_front_left/turn": "Motor Controller",
       "/Shuffleboard/swerve_front_right/drive": "Motor Controller",
       "/Shuffleboard/swerve_front_right/turn": "Motor Controller",
-      "/Shuffleboard/wrist/wrist1": "Motor Controller"
+      "/Shuffleboard/wrist/wrist1": "Motor Controller",
+      "/Shuffleboard/wrist/wrist_motor": "Motor Controller"
     }
   },
   "NetworkTables": {
