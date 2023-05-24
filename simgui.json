@@ -40,7 +40,8 @@
       "/Shuffleboard/swerve_front_left/turn": "Motor Controller",
       "/Shuffleboard/swerve_front_right/drive": "Motor Controller",
       "/Shuffleboard/swerve_front_right/turn": "Motor Controller",
-      "/Shuffleboard/wrist/wrist1": "Motor Controller"
+      "/Shuffleboard/wrist/wrist1": "Motor Controller",
+      "/Shuffleboard/wrist/wrist_motor": "Motor Controller"
     }
   },
   "NetworkTables": {
