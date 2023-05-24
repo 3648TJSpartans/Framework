@@ -102,6 +102,10 @@
     <motor id="m_shooterMotor" controller="sparkmax" port="6">
     </motor>
 </subsystem>
+<subsystem type="Solenoid" id="Intake_Solenoid" >
+        <solenoid id="solenoid1" vendor="CTREPCM" port="7" type="single" inverted="true"/>
+         <solenoid id="solenoid2" vendor="CTREPCM" port="2" type="single" inverted="true"/> 
+    </subsystem>
     <!-- <subsystem type="Motor" id="rotation">
         <motor id="rotation1" controller="sparkmax" port="12" idleMode="break">
             <encoder id="jointEncoder" port="encoder" />

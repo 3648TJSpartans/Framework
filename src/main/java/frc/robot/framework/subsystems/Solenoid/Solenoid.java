@@ -14,11 +14,14 @@ public class Solenoid extends SubsystemBase implements RobotXML {
     private Element myElement;
     private SubsystemCollection subsystemColection;
     private boolean extended;
+    private String subsystem;
 
-    public Solenoid(Element element, String subsystem) {
-        tab = ShuffleboardFramework.getSubsystem(subsystem);
-        ReadXML(element);
+    public Solenoid(Element element) {
         myElement = element;
+        subsystem = element.getAttribute("id");
+        tab = ShuffleboardFramework.getSubsystem(subsystem);
+
+        ReadXML(element);
 
     }
 
@@ -30,7 +33,7 @@ public class Solenoid extends SubsystemBase implements RobotXML {
     }
 
     public void setExtended(boolean input_extended) {
-         extended= input_extended;
+        extended = input_extended;
     }
 
     @Override
@@ -45,7 +48,6 @@ public class Solenoid extends SubsystemBase implements RobotXML {
 
     @Override
     public void ReloadConfig() {
-        
 
     }
 }

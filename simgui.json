@@ -14,6 +14,7 @@
       "/Shuffleboard/HopperMotor/m_HopperMotor": "Motor Controller",
       "/Shuffleboard/Robot/AutonCommand": "String Chooser",
       "/Shuffleboard/Robot/HopperMotor": "Subsystem",
+      "/Shuffleboard/Robot/Intake_Solenoid": "Subsystem",
       "/Shuffleboard/Robot/SwerveDrive": "Subsystem",
       "/Shuffleboard/Robot/TankDrive": "Subsystem",
       "/Shuffleboard/Robot/TurretAim": "Subsystem",
