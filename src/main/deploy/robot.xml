@@ -83,6 +83,7 @@
     </subsystem>
 
 <subsystem type="Motor" id="TurretAim">
+     <encoder id="turret_hex" vendor="dutycycle" port_one="2"/>
     <motor id="m_turrent_aim" controller="sparkpwm" port="2">
     </motor>
 </subsystem>
