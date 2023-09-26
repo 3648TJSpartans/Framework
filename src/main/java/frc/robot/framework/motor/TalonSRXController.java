@@ -20,6 +20,8 @@ public class TalonSRXController extends MotorController implements EncoderBase{
     public void setReference(double reference, CommandMode mode) {
         if (inverted)
             reference*=-1;
+        
+        this.mode=mode;
         switch (mode) {
             case PERCENTAGE:
                 controller.set(TalonSRXControlMode.PercentOutput,reference);
@@ -32,24 +34,7 @@ public class TalonSRXController extends MotorController implements EncoderBase{
                 break;
         }
     }
-
-    public void setReference(CommandMode mode, double reference) {
-        if (inverted)
-            reference*=-1;
-        this.mode=mode;
-        switch (this.mode) {
-            case PERCENTAGE:
-                controller.set(TalonSRXControlMode.PercentOutput,reference);
-                break;        
-            case POSITION:
-                controller.set(TalonSRXControlMode.Position,reference);
-                break;
-            case VELOCITY:
-                controller.set(TalonSRXControlMode.Velocity,reference);
-                break;
-        }
-    }
-
+    
     @Override
     public int getTicks() {
         
