@@ -44,9 +44,26 @@ public class SparkController extends MotorController {
 
     @Override
     public void setReference(double reference, CommandMode mode) {
-        if (inverted)
+        if (inverted){
             reference*=-1;
+        }
+        super.mode=mode;
+        
+        switch (super.mode) {
+            case PERCENTAGE:
+                controller.set(reference);
+                break;        
+            case POSITION:
+                controller.set(pid.getPowerOutput(encoder.getPosition(), reference, mode));
+                break;
+            case VELOCITY:
+                controller.set(pid.getPowerOutput(encoder.getVelocity(), reference, mode));
+                break; 
 
+            default:
+                break;
+        }
+        
         //TODO: SparmPWM does not support position/velocity yet! If you're using PID, set mode to PRECENTAGE and pass over your desired power
         //if (mode == CommandMode.PERCENTAGE)
         controller.set(reference);
