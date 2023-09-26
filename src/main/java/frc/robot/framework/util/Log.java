@@ -15,26 +15,32 @@ public class Log {
     private long startTime;
     private FileWriter outputfile;
     private String[] headers;
-    private static final String path=Filesystem.getOperatingDirectory() + "/Logs/";
+    private static final String logBaseDirectory=Filesystem.getOperatingDirectory() + "/Logs/";
 
     public Log(String subsystem, String[] headers) {
         this.subsystem = subsystem;
         this.headers = headers;
-        cleanUp(7,".csv");
+        cleanUpOldFiles(new File(logBaseDirectory), System.currentTimeMillis() -(7 * 24 * 60 * 60 * 1000));
         setupLog();
     }
 
-    public void cleanUp(long nday, String extension) {
-        File fold = new File(path);
-        if (fold.exists()) {
-            File[] listAllFiles = fold.listFiles();
-            long Deletion = System.currentTimeMillis() -(nday * 24 * 60 * 60 * 1000);
-            for (File listFile: listAllFiles) {
-                if (listFile.getName().endsWith(extension) &&
-                    listFile.lastModified() < Deletion) {
-                    if (!listFile.delete()) {
-                        System.out.println("Logging: Can't cleanup directory "+path+listFile.getName());
-                    }
+    private void cleanUpOldFiles(File filePath, long deletionTime) {
+        if (filePath.isDirectory()) {
+            File[] listFiles = filePath.listFiles();
+            if (listFiles != null && listFiles.length > 0) {
+                for (File file : listFiles) {
+                    cleanUpOldFiles(file, deletionTime);
+                }
+            }
+            String[] folderContent = filePath.list();
+            if (folderContent != null && folderContent.length == 0) {
+                filePath.delete();
+            }
+        }
+        else { //is file
+            if (filePath.lastModified() < deletionTime) {
+                if (!filePath.delete()) {
+                    System.out.println("LoggingCleanup: Can't cleanup file "+logBaseDirectory+filePath.getName());
                 }
             }
         }
@@ -54,13 +60,21 @@ public class Log {
         }
 
         try {
-            File folder = new File(Filesystem.getOperatingDirectory() + "/Logs/");
+            String folderLocation;
+            if (DriverStation.getEventName().isEmpty() || DriverStation.getMatchNumber()<1){
+                folderLocation=logBaseDirectory + (DriverStation.getEventName().isEmpty()? "Testing" : DriverStation.getEventName()+'-'+DriverStation.getMatchNumber()) +"/";
+            }
+            else{
+                //TODO: format as 12-12-2023_15:15:15 or something like that
+                folderLocation=logBaseDirectory + java.time.LocalDateTime.now().format(DateTimeFormatter.ISO_DATE) + "-" + Instant.now().toEpochMilli()+"/";
+            }
+            
+            File folder = new File(folderLocation);
             folder.mkdirs(); //checks and if folder doesn't exist, creates it
 
             startTime = Instant.now().toEpochMilli();
 
-            File file = new File(Filesystem.getOperatingDirectory() + "/Logs/"
-                + java.time.LocalDateTime.now().format(DateTimeFormatter.ISO_DATE) + "-" + Instant.now().toEpochMilli() + "-" + subsystem + ".csv");
+            File file = new File(folderLocation + subsystem + ".csv");
             file.createNewFile();
             outputfile = new FileWriter(file);
 
