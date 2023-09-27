@@ -73,40 +73,40 @@
      -->
  <subsystem type="TankDrive" id="TankDrive">
         <motorgroup id="left">
-            <motor id="left1" side="left" controller="sparkpwm" port="5" />
-               <motor id="left2" side="left" controller="sparkpwm" port="4" />
+            <motor id="left1" side="left" controller="sparkmax" port="3" />
+               <motor id="left2" side="left" controller="sparkmax" port="4" />
         </motorgroup>
         <motorgroup id="right">
-            <motor id="right1" side="right" controller="sparkpwm" port="3" />
-               <motor id="right2" side="right" controller="sparkpwm" port="1" />
+            <motor id="right1" side="right" controller="sparkmax" port="6" />
+               <motor id="right2" side="right" controller="sparkmax" port="1" />
         </motorgroup>
     </subsystem>
 
 <subsystem type="Motor" id="TurretAim">
      <encoder id="turret_hex" vendor="dutycycle" port_one="2"/>
-    <motor id="m_turrent_aim" controller="sparkpwm" port="2">
-    </motor>
+    <motor id="m_turrent_aim" controller="sparkpwm" port="2"/>
 </subsystem>
 <subsystem type="Motor" id="revMotor">
-    <motor id="m_revMotor" controller="sparkpwm" port="0">
+    <motor id="m_revMotor" controller="sparkpwm" port="1">
     </motor>
 </subsystem>
+
 <subsystem type="Motor" id="intakeMotor">
-    <motor id="m_intakeMotor" controller="sparkpwm" port="6">
-    </motor>
+    <motor id="m_intakeMotor" controller="sparkpwm" port="4"/>
 </subsystem>
+
 <subsystem type="Motor" id="HopperMotor">
     <motor id="m_HopperMotor" controller="sparkpwm" port="7">
     </motor>
 </subsystem>
 <subsystem type="Motor" id="shooter">
-    <motor id="m_shooterMotor" controller="sparkmax" port="6">
+    <motor id="m_shooterMotor" controller="sparkmax" port="12">
     </motor>
 </subsystem>
-<subsystem type="Solenoid" id="Intake_Solenoid" >
+<!-- <subsystem type="Solenoid" id="Intake_Solenoid" >
         <solenoid id="solenoid1" vendor="CTREPCM" port="7" type="single" inverted="true"/>
          <solenoid id="solenoid2" vendor="CTREPCM" port="2" type="single" inverted="true"/> 
-    </subsystem>
+    </subsystem> -->
     <!-- <subsystem type="Motor" id="rotation">
         <motor id="rotation1" controller="sparkmax" port="12" idleMode="break">
             <encoder id="jointEncoder" port="encoder" />

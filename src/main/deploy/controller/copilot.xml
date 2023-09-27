@@ -34,21 +34,20 @@ Any number of addational parameters can be defined. It's up to the command to co
                 <!-- <button button="90" type="score_high" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"></button>
                  <button button="180" type="pickup_double" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist"></button>
                 <button button="0" type="transport" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" rotationSubsystemID="rotaion"></button> -->
-                <button button="LEFT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Pressed" setPower="1"></button>
+
+
+                <!-- <button button="LEFT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Pressed" setPower="1"></button>
                  <button button="RIGHT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
                   <button button="LEFT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Released" setPower="0"></button>
-                 <button button="RIGHT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Released" setPower="0"></button>
+                 <button button="RIGHT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Released" setPower="0"></button> -->
                 <defaultCommand subsystemID="HopperMotor" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand>
                 <defaultCommand subsystemID="shooter" axisReference="RIGHT_TRIGGER" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand>
-                 <button button="A" subsystemID="intakeMotor" command="Motor_Set" trigger="Pressed" setPower="1"></button>
+                 <!-- <button button="A" subsystemID="intakeMotor" command="Motor_Set" trigger="Pressed" setPower="1"></button>
                  <button button="A" subsystemID="intakeMotor" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
                   <button button="A" subsystemID="intakeMotor" command="Motor_Set" trigger="Released" setPower="0"></button>
-                 <button button="A" subsystemID="intakeMotor" command="Motor_Set" trigger="Released" setPower="0"></button>
+                 <button button="A" subsystemID="intakeMotor" command="Motor_Set" trigger="Released" setPower="0"></button> -->
                   <defaultCommand subsystemID="TurretAim" axisReference="LEFT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand>
 
 
-<!-- 
-
-                 <button button="A" command="Util_Limelight" trigger="Pressed"></button>  -->
         </controller> 
 </robot>
