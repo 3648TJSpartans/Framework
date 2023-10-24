@@ -5,8 +5,8 @@
     <auton id="balance" nextstep="start">
         <SequentialCommandGroup id="start" firststep="drive">
             <command type="SwerveDrive_Set" id="drive" subsystemID="SwerveDrive" nextstep="balance" 
-            setMaxSpeed = "1" setMaxAcceleration = "1" timeout="3" autonPath="Path2"/> 
-            <command type="SwerveDrive_Balance" subsystemID="SwerveDrive" inverted="true" timeout="4" id="balance" deadzone="0.015" kP="0.005"/>
+            setMaxSpeed = "2" setMaxAcceleration = "2" timeout="3" autonPath="Path2"/> 
+            <command type="SwerveDrive_Balance" subsystemID="SwerveDrive" inverted="true" timeout="10" id="balance" deadzone="0.015" kP="0.005"/>
             
 
         </SequentialCommandGroup>
