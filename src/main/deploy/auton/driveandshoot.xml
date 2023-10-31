@@ -2,7 +2,7 @@
 
 <robot>
 <auton id="driveandshoot" nextstep="start">
-        <!-- <SequentialCommandGroup id="start" firststep="forward">
+        <SequentialCommandGroup id="start" firststep="forward">
             <command type="TankDrive_Set" id="forward" subsystemID="TankDrive" nextstep="intakesuck"
                             setInputTurn="0" setInputForward="0.3" delayLength="3" />
             <command type="Motor_Set" subsystemID="intakeMotor" setPower=".3" id="intakesuck" nextstep="intake_stall"/>
@@ -17,6 +17,6 @@
             <command type="Util_Delay" delayLength="2" id="shooter_stall" nextstep="revStop"/>
             <command type="Motor_Set" subsystemID="revMotor" setPower="0" id="revStop" nextstep="shooterStop"/> 
             <command type="Motor_Set" subsystemID="shooter" id="shooterStop" nextstep="stop"/>
-        </SequentialCommandGroup> -->
+        </SequentialCommandGroup>
     </auton>
 </robot>
