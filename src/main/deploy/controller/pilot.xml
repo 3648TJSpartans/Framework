@@ -38,6 +38,11 @@ Any number of addational parameters can be defined. It's up to the command to co
                         deadzone="0.05"
                 /> -->
                 <defaultCommand subsystemID="TankDrive" axisForward="LEFT_JOYSTICK_Y" axisTurn="RIGHT_JOYSTICK_X" command="TankDrive_Default" scaleX="0.1" scaleY="0.1"></defaultCommand> 
+                <button button="RIGHT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Pressed" setPower="1" />
+                <button button="RIGHT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Released" setPower="0" />
+
+                 <button button="LEFT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
+                <button button="LEFT_SHOULDER" subsystemID="intakeMotor" command="Motor_Set" trigger="Released" setPower="0"></button>
                 <!-- <button button="LEFT_TRIGGER" trigger="pressed" subsystemID="Intake_Solenoid" command="Solenoid_Set" extended="true" />
                 <button button="RIGHT_TRIGGER" trigger="pressed" subsystemID="Intake_Solenoid" command="Solenoid_Set" extended="false"/> -->
 

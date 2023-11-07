@@ -87,7 +87,7 @@
     <motor id="m_turrent_aim" controller="sparkpwm" port="2"/>
 </subsystem>
 <subsystem type="Motor" id="revMotor">
-    <motor id="m_revMotor" controller="sparkpwm" port="1">
+    <motor id="m_revMotor" controller="sparkpwm" port="7">
     </motor>
 </subsystem>
 
@@ -96,7 +96,7 @@
 </subsystem>
 
 <subsystem type="Motor" id="HopperMotor">
-    <motor id="m_HopperMotor" controller="sparkpwm" port="7">
+    <motor id="m_HopperMotor" controller="sparkpwm" port="0">
     </motor>
 </subsystem>
 <subsystem type="Motor" id="shooter">
