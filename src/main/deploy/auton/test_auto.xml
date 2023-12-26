@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+
+<robot>
+    <auton id="test_auto" nextstep="start">
+             <SequentialCommandGroup id="start" firststep="first_step">
+
+      </SequentialCommandGroup>
+    </auton>
+</robot>

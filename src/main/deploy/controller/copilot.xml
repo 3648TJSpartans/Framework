@@ -1,34 +1,12 @@
 <?xml version="1.0"?>
 <robot>
-<!-- 
-actions=
-"Pressed"=tempButton.whenPressed(base); if not running, starts 1 time when pressed
-"Held"=tempButton.whileHeld(base); if not running, constantly runs or starts it while held.
-"WhenHeld"=tempButton.whenHeld(base); if not running, starts it 1 time and continues it execution until finished or not held. Does not restart
-"Released"=tempButton.whenReleased(base); if not running, starts it 1 time when released
-"Toggle"=tempButton.toggleWhenPressed(base); Generally not recommended. If stopped, starts. If started, stops. 
-https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
-Any number of addational parameters can be defined. It's up to the command to consume these.
- -->
+
         <controller type="LOGITECH" port="1" id="COPILOT">     
+
+        <defaultCommand subsystemID="TestMotor" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default"></defaultCommand> 
 
                 
 
-                <defaultCommand subsystemID="armChain" axisReference="LEFT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand>
-                <defaultCommand subsystemID="arm" axisReference="LEFT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" inverted="true" scale=".7"></defaultCommand> 
-                <defaultCommand subsystemID="wrist" axisReference="RIGHT_JOYSTICK_Y" command="Motor_Default" deadzone=".2" ></defaultCommand>
-                <!-- <defaultCommand subsystemID="claw" axisReference="RIGHT_JOYSTICK_X" command="Motor_Default" deadzone=".2" inverted="true"></defaultCommand> -->
-                <button button="A" type="transport" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" clawSubsystemID="claw"></button>
-                <button button="X" type="score_high" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" clawSubsystemID="claw"></button>
-                <button button="Y" type="pickup_double" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" clawSubsystemID="claw"></button>
-                 <button button="B" type="score_low" command="scorePos" trigger="Pressed" armSubsystemID="arm" armChainSubsystemID="armChain" wristSubsystemID="wrist" clawSubsystemID="claw"></button>
-                <!-- <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="1"></button>
-                <button button="LEFT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" stayPosition="true"></button>
-                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Pressed" setPower="-1"></button>
-                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Set" trigger="Released" stayPosition="true"></button>
-                <button button="RIGHT_SHOULDER" subsystemID="claw" command="Motor_Stay" trigger="Released"></button> -->
-<!--                    
-
-                 <button button="A" command="Util_Limelight" trigger="Pressed"></button>  -->
+                
         </controller> 
 </robot>
